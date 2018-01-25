@@ -75,7 +75,6 @@ class App extends React.Component {
     return (
       <div className = "container">
         <Header/>
-        <hr/>
         <Body1/>
         <Body2/>
       </div>
