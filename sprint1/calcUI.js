@@ -1,8 +1,4 @@
-/* First Attempt at Distance Calculator Site - Paul Barstad 
-
-UI is not currently centered, might be easiest to left justify everything.
-
-*/
+/* First Attempt at Distance Calculator Site - Paul Barstad */
 
 
 
@@ -19,7 +15,7 @@ class Header extends React.Component{
 class Longitude extends React.Component{
   render() {
     return (
-      <div className="col-md-4 text-center">
+      <div className="col-3 text-center">
         Longitude:
         <input type="text" className="text-left form-control" />
       </div>
@@ -31,7 +27,7 @@ class Latitude extends React.Component{
   render() {
     return (
      
-      <div className="col-4 text-center">
+      <div className="col-3 text-center">
         Latitude:
         <input type="text" className="text-left form-control" />
       </div>
@@ -39,22 +35,53 @@ class Latitude extends React.Component{
   }
 }
 
-class Calc extends React.Component{
+class Miles extends React.Component{
   render() {
     return (
       <div className="col-sm text-center">
         <br></br>
-        <button className="btn btn-primary mr-sm-2" type="submit" value="submit" >Calculate!</button>
+        <button className="btn btn-primary mr-sm-2" type="submit" value="submit"
+          >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Miles&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
       </div>
     )
   }
 }
 
+class Kilometers extends React.Component{
+  render() {
+    return (
+      <div className="col-sm text-center">
+        <br></br>
+        <button className="btn btn-primary mr-sm-2" type="submit" value="submit" >Kilometers</button>  
+      </div>
+    )
+  }
+}
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+} 
+
 class Answer extends React.Component{
   render() {
     return (
-      <div className="col-4 text-center">
-        <br></br>
+      <div className="col-3 text-center">
         Distance:
         <input type="text" className="text-left form-control mr-sm-2"/>
       </div>
@@ -70,12 +97,15 @@ class Main extends React.Component {
           <div className="row">
             <Longitude/>
             <Latitude/>
+            <Miles/>
+            <Kilometers/>
+            
+            <Answer/>
           </div>
-          <Calc/>
-          <Answer/>
         </div>
     );
   }
 }
 
 ReactDOM.render(<Main />, document.getElementById("root"));
+
