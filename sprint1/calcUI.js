@@ -34,7 +34,7 @@ class Longitude extends React.Component{
   render() {
     return (
       <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
-        <input type="text" className="text-left form-control" id="long-in" placeholder="Longitude"/>
+        <input type="text" className="text-left form-control" id="long-in" placeholder="Longitude" pattern="([0-9]{1,3}°\s*[0-9]{1,2}\x27\s*[0-9]{1,2}\x22\s*[NESW]\s*){2}|([0-9]{1,2}°\s*[0-9]*\.?[0-9]+\x27\s*[NESW]\s*){2}|([+-]?[0-9]*\.?[0-9]+°\s*[NESW]\s*){2}|([+-]?[0-9]*\.?[0-9]+\s+[+-]?[0-9]*\.?[0-9]+\s*)/>
       </div>
     )
   }
@@ -45,7 +45,7 @@ class Latitude extends React.Component{
     return (
      
       <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
-        <input type="text" className="text-left form-control" id="lat-in" placeholder="Latitude"/>
+        <input type="text" className="text-left form-control" id="lat-in" placeholder="Latitude" pattern="([0-9]{1,3}°\s*[0-9]{1,2}\x27\s*[0-9]{1,2}\x22\s*[NESW]\s*){2}|([0-9]{1,2}°\s*[0-9]*\.?[0-9]+\x27\s*[NESW]\s*){2}|([+-]?[0-9]*\.?[0-9]+°\s*[NESW]\s*){2}|([+-]?[0-9]*\.?[0-9]+\s+[+-]?[0-9]*\.?[0-9]+\s*)/>
       </div>
     )
   }
