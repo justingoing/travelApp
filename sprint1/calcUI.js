@@ -71,7 +71,7 @@ class Answer extends React.Component{
       <div className="col offset-2 col-8 text-center">
        <br></br>
         Distance:
-        <input type="text" className="text-left form-control mr-sm-2"/>
+        <input type="text" className="text-left form-control mr-sm-2" disabled/>
       </div>
     )
   }
