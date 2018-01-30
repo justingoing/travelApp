@@ -9,11 +9,9 @@
 /**
   Makes sure that the user input is valid
 */
-function validateLatLong()
+function validateLatLong(elem_name)
 {
-//TODO we need to know the element (maybe an arg to this function?) to check validity of
-//  var valid = document.getElementById('input').checkValidity();
-//  document.getElementById('checker').innerHTML = valid;
+  return document.getElementById(elem_name).checkValidity();
 }
 
 /**
@@ -105,13 +103,10 @@ function parseCoord(input)
   Takes a string (could be in various location coordinate formats)
   and returns a decimal value
 */
-function toDecimalFormat(input)
+function toDecimalFormat(lat_in, long_in)
 {
-  var latitude = getLatitude(input);
-  var longitude = getLongitude(input);
-
-  latitude = parseCoord(latitude);
-  longitude = parseCoord(longitude);
+  var latitude = parseCoord(lat_in);
+  var longitude = parseCoord(long_in);
   
 //TODO know what element to display to (or handle this differently depending on UI)
    //now we can do something with these decial values

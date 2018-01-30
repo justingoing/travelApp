@@ -34,8 +34,7 @@ class Longitude extends React.Component{
   render() {
     return (
       <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
-        Longitude:
-        <input type="text" className="text-left form-control" />
+        <input type="text" className="text-left form-control" id="long-in" placeholder="Longitude"/>
       </div>
     )
   }
@@ -46,8 +45,7 @@ class Latitude extends React.Component{
     return (
      
       <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
-        Latitude:
-        <input type="text" className="text-left form-control" />
+        <input type="text" className="text-left form-control" id="lat-in" placeholder="Latitude"/>
       </div>
     )
   }
