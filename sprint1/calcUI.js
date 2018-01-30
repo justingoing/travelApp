@@ -56,7 +56,7 @@ class Calc extends React.Component{
     return (
       <div className="col-sm text-center">
       <br/>
-        <button className="btn btn-primary mr-sm-2" type="submit" value="submit" >Calculate!</button>
+        <button className="btn btn-primary mr-sm-2" type="submit" value="submit" onClick={checkValidity.bind(this)}>Calculate!</button>
       </div>
     )
   }

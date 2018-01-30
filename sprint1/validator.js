@@ -99,6 +99,21 @@ function parseCoord(input)
   return degrees;
 }
 
+function checkValidity()
+{
+  console.log("test");
+  //if(!validateLatLong('lat-in'))
+  //{
+  //  return false;
+  //}
+  //if(!validateLatLong('long-in'))
+  //{
+  //  return false;
+  //}
+  //return true;
+
+}
+
 /**
   Takes a string (could be in various location coordinate formats)
   and returns a decimal value
