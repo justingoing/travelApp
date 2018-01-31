@@ -171,7 +171,7 @@ var FirstCoordinate = (function (_React$Component3) {
       return React.createElement(
         'div',
         { className: 'col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center' },
-        React.createElement('input', { type: 'text', required: true, className: 'text-left form-control', id: 'cord1', placeholder: 'Coordinate 1', pattern: '([0-9]{1,3}°\\s*[0-9]{1,2}\\x27\\s*[0-9]{1,2}\\x22\\s*[EW]\\s*)|([0-9]{1,2}°\\s*[0-9]*\\.?[0-9]+\\x27\\s*[EW]\\s*)|([+-]?[0-9]*\\.?[0-9]+°\\s*[EW]\\s*)|([+-]?[0-9]*\\.?[0-9]+\\s*)' })
+        React.createElement('input', { type: 'text', required: true, className: 'text-left form-control', id: 'cord1', placeholder: 'Coordinate 1', pattern: '([+-]?[0-9]{1,3}°\\s*[0-9]{1,2}\\x27\\s*[0-9]{1,2}\\x22\\s*[NSEW]\\s*){2}|[+-]?([0-9]{1,2}°\\s*[0-9]*\\.?[0-9]+\\x27\\s*[NSEW]\\s*){2}|([+-]?[0-9]*\\.?[0-9]+°\\s*[ENSW]\\s*){2}|([+-]?[0-9]*\\.?[0-9]+\\s*){2}' })
       );
     }
   }]);
@@ -194,7 +194,7 @@ var SecondCoordinate = (function (_React$Component4) {
       return React.createElement(
         'div',
         { className: 'col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center' },
-        React.createElement('input', { type: 'text', required: true, className: 'text-left form-control', id: 'cord2', placeholder: 'Coordinate 2', pattern: '([0-9]{1,3}°\\s*[0-9]{1,2}\\x27\\s*[0-9]{1,2}\\x22\\s*[NS]\\s*)|([0-9]{1,2}°\\s*[0-9]*\\.?[0-9]+\\x27\\s*[NS]\\s*)|([+-]?[0-9]*\\.?[0-9]+°\\s*[NS]\\s*)|([+-]?[0-9]*\\.?[0-9]+\\s*)' })
+        React.createElement('input', { type: 'text', required: true, className: 'text-left form-control', id: 'cord2', placeholder: 'Coordinate 2', pattern: '([+-]?[0-9]{1,3}°\\s*[0-9]{1,2}\\x27\\s*[0-9]{1,2}\\x22\\s*[NEWS]\\s*){2}|([+-]?[0-9]{1,2}°\\s*[0-9]*\\.?[0-9]+\\x27\\s*[NEWS]\\s*){2}|([+-]?[0-9]*\\.?[0-9]+°\\s*[NEWS]\\s*){2}|([+-]?[0-9]*\\.?[0-9]+\\s*){2}' })
       );
     }
   }]);
@@ -215,30 +215,24 @@ var Calc = (function (_React$Component5) {
     key: 'onClickLogic',
     value: function onClickLogic() {
       var shouldProcess = true;
-      if (!document.getElementById('lat-in1').checkValidity()) {
-        window.alert("Please check the format of your first latitude");
+      if (!document.getElementById('cord1').checkValidity()) {
+        window.alert("Please check the format of your first coordinate");
         shouldProcess = false;
       }
-      if (!document.getElementById('long-in1').checkValidity()) {
-        window.alert("Please check the format of your first longitude");
+      if (!document.getElementById('cord2').checkValidity()) {
+        window.alert("Please check the format of your second coordinate");
         shouldProcess = false;
       }
-      if (!document.getElementById('lat-in2').checkValidity()) {
-        window.alert("Please check the format of your second latitude");
-        shouldProcess = false;
-      }
-      if (!document.getElementById('long-in2').checkValidity()) {
-        window.alert("Please check the format of your second longitude");
-        shouldProcess = false;
-      }
-
-      if (shouldProcess) {
-        var lat = (0, _validatorJs.parseCoord)(document.getElementById('lat-in1').value);
-        var lon = (0, _validatorJs.parseCoord)(document.getElementById('long-in1').value);
-
-        /*      window.alert("lat: " + lat + ", long: " + lon); */
-        /*calculateGreatCircleDistance(100, 60, 105, 62, true)*/
-      }
+      /*
+          if(shouldProcess)
+          {
+            var lat = parseCoord(document.getElementById('lat-in').value);
+            var lon = parseCoord(document.getElementById('long-in1').value);
+      
+            window.alert("lat: " + lat + ", long: " + lon); 
+            /*calculateGreatCircleDistance(100, 60, 105, 62, true)
+          }
+      */
     }
   }, {
     key: 'render',
