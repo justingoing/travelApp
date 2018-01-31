@@ -57,13 +57,13 @@ Epics planned for this release.
 #### What went well
 * *Isaac*: *We all worked well together and learned a lot. We were able to commit to meeting and didn't save it all for the end*
 * *Sam*
-* *Justin*
+* *Justin*: *We've established a good intial rapport and are working together quite well.*
 * *Paul*
 
 #### Problems encountered and resolutions
 * *Isaac*: *Learning JavaScript!*
 * *Sam*
-* *Justin*
+* *Justin*: *breaking apart tasks was initially problematic. Weve decided to assign tasks in zenhub to coordinate*
 * *Paul*
 
 ## Retrospective
