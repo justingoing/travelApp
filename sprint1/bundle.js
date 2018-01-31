@@ -171,7 +171,7 @@ var Longitude = (function (_React$Component3) {
       return React.createElement(
         'div',
         { className: 'col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center' },
-        React.createElement('input', { type: 'text', required: true, className: 'text-left form-control', id: 'long-in2', placeholder: 'Longitude', pattern: '([0-9]{1,3}°\\s*[0-9]{1,2}\\x27\\s*[0-9]{1,2}\\x22\\s*[EW]\\s*)|([0-9]{1,2}°\\s*[0-9]*\\.?[0-9]+\\x27\\s*[NESW]\\s*)|([+-]?[0-9]*\\.?[0-9]+°\\s*[NESW]\\s*)|([+-]?[0-9]*\\.?[0-9]+\\s+[+-]?[0-9]*\\.?[0-9]+\\s*)' })
+        React.createElement('input', { type: 'text', required: true, className: 'text-left form-control', id: 'long-in1', placeholder: 'Longitude', pattern: '([0-9]{1,3}°\\s*[0-9]{1,2}\\x27\\s*[0-9]{1,2}\\x22\\s*[EW]\\s*)|([0-9]{1,2}°\\s*[0-9]*\\.?[0-9]+\\x27\\s*[EW]\\s*)|([+-]?[0-9]*\\.?[0-9]+°\\s*[EW]\\s*)|([+-]?[0-9]*\\.?[0-9]+\\s*)' })
       );
     }
   }]);
@@ -194,7 +194,7 @@ var Latitude = (function (_React$Component4) {
       return React.createElement(
         'div',
         { className: 'col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center' },
-        React.createElement('input', { type: 'text', required: true, className: 'text-left form-control', id: 'lat-in1', placeholder: 'Latitude', pattern: '([0-9]{1,3}°\\s*[0-9]{1,2}\\x27\\s*[0-9]{1,2}\\x22\\s*[NS]\\s*)|([0-9]{1,2}°\\s*[0-9]*\\.?[0-9]+\\x27\\s*[NESW]\\s*)|([+-]?[0-9]*\\.?[0-9]+°\\s*[NESW]\\s*)|([+-]?[0-9]*\\.?[0-9]+\\s+[+-]?[0-9]*\\.?[0-9]+\\s*)' })
+        React.createElement('input', { type: 'text', required: true, className: 'text-left form-control', id: 'lat-in1', placeholder: 'Latitude', pattern: '([0-9]{1,3}°\\s*[0-9]{1,2}\\x27\\s*[0-9]{1,2}\\x22\\s*[NS]\\s*)|([0-9]{1,2}°\\s*[0-9]*\\.?[0-9]+\\x27\\s*[NS]\\s*)|([+-]?[0-9]*\\.?[0-9]+°\\s*[NS]\\s*)|([+-]?[0-9]*\\.?[0-9]+\\s*)' })
       );
     }
   }]);
@@ -214,9 +214,19 @@ var Calc = (function (_React$Component5) {
   _createClass(Calc, [{
     key: 'onClickLogic',
     value: function onClickLogic() {
-      if ((0, _validatorJs.checkValidity)()) {
-        var lat = (0, _validatorJs.parseCoord)(document.getElementById('lat-in').value);
-        var lon = (0, _validatorJs.parseCoord)(document.getElementById('long-in').value);
+      var shouldProcess = true;
+      if (!document.getElementById('lat-in1').checkValidity()) {
+        window.alert("Please check the format of your latitude");
+        shouldProcess = false;
+      }
+      if (!document.getElementById('long-in1').checkValidity()) {
+        window.alert("Please check the format of your longitude");
+        shouldProcess = false;
+      }
+
+      if (shouldProcess) {
+        var lat = (0, _validatorJs.parseCoord)(document.getElementById('lat-in1').value);
+        var lon = (0, _validatorJs.parseCoord)(document.getElementById('long-in1').value);
 
         window.alert("lat: " + lat + ", long: " + lon);
         /*calculateGreatCircleDistance(100, 60, 105, 62, true)*/
@@ -383,7 +393,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.parseCoord = parseCoord;
-exports.checkValidity = checkValidity;
 function validateLatLong(elem_name) {
   return document.getElementById(elem_name).checkValidity();
 }
@@ -455,19 +464,6 @@ function parseCoord(input) {
   }
 
   return degrees;
-}
-
-function checkValidity() {
-  console.log("test");
-  if (!validateLatLong('lat-in')) {
-    window.alert("Please check the format of your latitude");
-    return false;
-  }
-  if (!validateLatLong('long-in')) {
-    window.alert("Please check the format of your longitude");
-    return false;
-  }
-  return true;
 }
 
 /***/ })

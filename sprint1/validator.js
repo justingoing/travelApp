@@ -99,19 +99,3 @@ export function parseCoord(input)
   return degrees;
 }
 
-export function checkValidity()
-{
-  console.log("test");
-  if(!validateLatLong('lat-in'))
-  {
-    window.alert("Please check the format of your latitude");
-    return false;
-  }
-  if(!validateLatLong('long-in'))
-  {
-    window.alert("Please check the format of your longitude");
-    return false;
-  }
-  return true;
-}
-
