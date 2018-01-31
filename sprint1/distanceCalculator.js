@@ -18,7 +18,7 @@ function toRadians(degrees) {
  * using the chord length formula. If the boolean useKilometers parameter is set to true,
  * then the function returns the distance in kilometers; otherwise, returns distance in miles.
  */
-function calculateGreatCircleDistance(lat1, lon1, lat2, lon2, useKilometers) {
+export function calculateGreatCircleDistance(lat1, lon1, lat2, lon2, useKilometers) {
 	//Values for radius
 	var radiusMiles = 3958.7613;
   var radiusKilometers = 6371.0088;

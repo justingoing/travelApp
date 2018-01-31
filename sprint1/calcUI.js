@@ -1,6 +1,6 @@
 /* First Attempt at Distance Calculator Site - Paul Barstad */
 
-
+import {calculateGreatCircleDistance} from './distanceCalculator.js';
 
 class Header extends React.Component{
   render() {
@@ -56,7 +56,7 @@ class Calc extends React.Component{
     return (
       <div className="col-sm text-center">
       <br/>
-        <button className="btn btn-primary mr-sm-2" type="submit" value="submit" onClick={checkValidity.bind(this)}>Calculate!</button>
+        <button className="btn btn-primary mr-sm-2" type="submit" value="submit" onClick={calculateGreatCircleDistance(100, 60, 105, 62, true)/*checkValidity.bind(this)*/}>Calculate!</button>
       </div>
     )
   }
@@ -70,6 +70,7 @@ class Answer extends React.Component{
        <br></br>
         Distance:
         <input type="text" className="text-left form-control mr-sm-2" disabled/>
+
       </div>
     )
   }
