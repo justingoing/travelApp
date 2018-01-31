@@ -31,41 +31,21 @@ class Button extends React.Component{
   }
 }
 
-class Longitude extends React.Component{
+class FirstCoordinate extends React.Component{
   render() {
     return (
       <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
-        <input type="text" required className="text-left form-control" id="long-in1" placeholder="Longitude" pattern="([0-9]{1,3}°\s*[0-9]{1,2}\x27\s*[0-9]{1,2}\x22\s*[EW]\s*)|([0-9]{1,2}°\s*[0-9]*\.?[0-9]+\x27\s*[EW]\s*)|([+-]?[0-9]*\.?[0-9]+°\s*[EW]\s*)|([+-]?[0-9]*\.?[0-9]+\s*)"/>
+        <input type="text" required className="text-left form-control" id="cord1" placeholder="Coordinate 1" pattern="([0-9]{1,3}°\s*[0-9]{1,2}\x27\s*[0-9]{1,2}\x22\s*[EW]\s*)|([0-9]{1,2}°\s*[0-9]*\.?[0-9]+\x27\s*[EW]\s*)|([+-]?[0-9]*\.?[0-9]+°\s*[EW]\s*)|([+-]?[0-9]*\.?[0-9]+\s*)"/>
       </div>
     )
   }
 }
 
-class Latitude extends React.Component{
+class SecondCoordinate extends React.Component{
   render() {
     return (
       <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
-        <input type="text" required className="text-left form-control" id="lat-in1" placeholder="Latitude" pattern="([0-9]{1,3}°\s*[0-9]{1,2}\x27\s*[0-9]{1,2}\x22\s*[NS]\s*)|([0-9]{1,2}°\s*[0-9]*\.?[0-9]+\x27\s*[NS]\s*)|([+-]?[0-9]*\.?[0-9]+°\s*[NS]\s*)|([+-]?[0-9]*\.?[0-9]+\s*)"/>
-      </div>
-    )
-  }
-}
-
-class Longitude2 extends React.Component{
-  render() {
-    return (
-      <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
-        <input type="text" required className="text-left form-control" id="long-in2" placeholder="Longitude2" pattern="([0-9]{1,3}°\s*[0-9]{1,2}\x27\s*[0-9]{1,2}\x22\s*[EW]\s*)|([0-9]{1,2}°\s*[0-9]*\.?[0-9]+\x27\s*[EW]\s*)|([+-]?[0-9]*\.?[0-9]+°\s*[EW]\s*)|([+-]?[0-9]*\.?[0-9]+\s*)"/>
-      </div>
-    )
-  }
-}
-
-class Latitude2 extends React.Component{
-  render() {
-    return (
-      <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
-        <input type="text" required className="text-left form-control" id="lat-in2" placeholder="Latitude2" pattern="([0-9]{1,3}°\s*[0-9]{1,2}\x27\s*[0-9]{1,2}\x22\s*[NS]\s*)|([0-9]{1,2}°\s*[0-9]*\.?[0-9]+\x27\s*[NS]\s*)|([+-]?[0-9]*\.?[0-9]+°\s*[NS]\s*)|([+-]?[0-9]*\.?[0-9]+\s*)"/>
+        <input type="text" required className="text-left form-control" id="cord2" placeholder="Coordinate 2" pattern="([0-9]{1,3}°\s*[0-9]{1,2}\x27\s*[0-9]{1,2}\x22\s*[NS]\s*)|([0-9]{1,2}°\s*[0-9]*\.?[0-9]+\x27\s*[NS]\s*)|([+-]?[0-9]*\.?[0-9]+°\s*[NS]\s*)|([+-]?[0-9]*\.?[0-9]+\s*)"/>
       </div>
     )
   }
@@ -135,13 +115,8 @@ class Main extends React.Component {
         <div>
           <Header/>
           <div className="row">
-            <Latitude/>
-            <Longitude/>
-          </div>
-          <br/>
-          <div className="row">
-            <Latitude2/>
-            <Longitude2/>
+            <FirstCoordinate/>
+            <SecondCoordinate/>
           </div>
           <br/>
           <Button/>
