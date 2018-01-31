@@ -17,7 +17,7 @@ function validateLatLong(elem_name)
 /**
   Gets the latidude from an input string
 */
-function getLatitude(input)
+export function getLatitude(input)
 {
   // we know input is validated so we can search for North or South
   var search = input.search(/[NS]/);
@@ -38,7 +38,7 @@ function getLatitude(input)
 /**
   Gets the longitude from an input string
 */
-function getLongitude(input)
+export function getLongitude(input)
 {
   // we  know input is validated so we know we can go from North/South to the end
   var search = input.search(/[NS]/);
@@ -58,11 +58,14 @@ function getLongitude(input)
 
 export function parseCoord(input)
 {
-	var seconds = 0;
+  var seconds = 0;
   var minutes = 0;
   var degrees = 0;
+  var direction = 1;
 
-  //check for double quotes  40°26'56"N 40°26'56"E format
+  if(input.indexOf('S') > -1 || input.indexOf('W') > -1)
+    direction = -1;
+
   if(input.indexOf('\x22') > -1)
   {
 
@@ -96,6 +99,6 @@ export function parseCoord(input)
   }
   
 
-  return degrees;
+  return degrees * direction;
 }
 

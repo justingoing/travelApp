@@ -223,16 +223,21 @@ var Calc = (function (_React$Component5) {
         window.alert("Please check the format of your second coordinate");
         shouldProcess = false;
       }
-      /*
-          if(shouldProcess)
-          {
-            var lat = parseCoord(document.getElementById('lat-in').value);
-            var lon = parseCoord(document.getElementById('long-in1').value);
-      
-            window.alert("lat: " + lat + ", long: " + lon); 
-            /*calculateGreatCircleDistance(100, 60, 105, 62, true)
-          }
-      */
+
+      if (shouldProcess) {
+        var lat1 = (0, _validatorJs.getLatitude)(document.getElementById('cord1').value);
+        var lon1 = (0, _validatorJs.getLongitude)(document.getElementById('cord1').value);
+        var lat2 = (0, _validatorJs.getLatitude)(document.getElementById('cord2').value);
+        var lon2 = (0, _validatorJs.getLongitude)(document.getElementById('cord2').value);
+
+        lat1 = (0, _validatorJs.parseCoord)(lat1);
+        lon1 = (0, _validatorJs.parseCoord)(lon1);
+        lat2 = (0, _validatorJs.parseCoord)(lat2);
+        lon2 = (0, _validatorJs.parseCoord)(lon2);
+
+        window.alert("lat1: " + lat1 + ", long1: " + lon1 + ", lat2: " + lat2 + ", long2: " + lon2);
+        /*calculateGreatCircleDistance(100, 60, 105, 62, true)*/
+      }
     }
   }, {
     key: 'render',
@@ -394,6 +399,8 @@ function calculateGreatCircleDistance(lat1, lon1, lat2, lon2, useKilometers) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.getLatitude = getLatitude;
+exports.getLongitude = getLongitude;
 exports.parseCoord = parseCoord;
 function validateLatLong(elem_name) {
   return document.getElementById(elem_name).checkValidity();
@@ -402,6 +409,7 @@ function validateLatLong(elem_name) {
 /**
   Gets the latidude from an input string
 */
+
 function getLatitude(input) {
   // we know input is validated so we can search for North or South
   var search = input.search(/[NS]/);
@@ -419,6 +427,7 @@ function getLatitude(input) {
 /**
   Gets the longitude from an input string
 */
+
 function getLongitude(input) {
   // we  know input is validated so we know we can go from North/South to the end
   var search = input.search(/[NS]/);
@@ -437,8 +446,10 @@ function parseCoord(input) {
   var seconds = 0;
   var minutes = 0;
   var degrees = 0;
+  var direction = 1;
 
-  //check for double quotes  40°26'56"N 40°26'56"E format
+  if (input.indexOf('S') > -1 || input.indexOf('W') > -1) direction = -1;
+
   if (input.indexOf('\x22') > -1) {
 
     var start = input.indexOf('\x27');
@@ -465,7 +476,7 @@ function parseCoord(input) {
     degrees = parseFloat(input);
   }
 
-  return degrees;
+  return degrees * direction;
 }
 
 /***/ })

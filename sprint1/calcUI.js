@@ -2,6 +2,8 @@
 
 import {calculateGreatCircleDistance} from './distanceCalculator.js';
 import {parseCoord} from './validator.js';
+import {getLatitude} from './validator.js';
+import {getLongitude} from './validator.js';
 
 class Header extends React.Component{
   render() {
@@ -64,16 +66,23 @@ class Calc extends React.Component{
       window.alert("Please check the format of your second coordinate");
       shouldProcess = false;
     }
-/*
+
     if(shouldProcess)
     {
-      var lat = parseCoord(document.getElementById('lat-in').value);
-      var lon = parseCoord(document.getElementById('long-in1').value);
+      var lat1 = getLatitude(document.getElementById('cord1').value);
+      var lon1 = getLongitude(document.getElementById('cord1').value);
+      var lat2 = getLatitude(document.getElementById('cord2').value);
+      var lon2 = getLongitude(document.getElementById('cord2').value);
 
-      window.alert("lat: " + lat + ", long: " + lon); 
-      /*calculateGreatCircleDistance(100, 60, 105, 62, true)
+      lat1 = parseCoord(lat1);
+      lon1 = parseCoord(lon1);
+      lat2 = parseCoord(lat2);
+      lon2 = parseCoord(lon2);
+
+      window.alert("lat1: " + lat1 + ", long1: " + lon1 + ", lat2: " + lat2 + ", long2: " + lon2); 
+      /*calculateGreatCircleDistance(100, 60, 105, 62, true)*/
     }
-*/
+
   }
 
   render() {
