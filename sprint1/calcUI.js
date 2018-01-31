@@ -76,12 +76,22 @@ class Calc extends React.Component{
     var shouldProcess = true;
     if(!document.getElementById('lat-in1').checkValidity())
     {
-      window.alert("Please check the format of your latitude");
+      window.alert("Please check the format of your first latitude");
       shouldProcess = false;
     }
     if(!document.getElementById('long-in1').checkValidity())
     {
-      window.alert("Please check the format of your longitude");
+      window.alert("Please check the format of your first longitude");
+      shouldProcess = false;
+    }
+    if(!document.getElementById('lat-in2').checkValidity())
+    {
+      window.alert("Please check the format of your second latitude");
+      shouldProcess = false;
+    }
+    if(!document.getElementById('long-in2').checkValidity())
+    {
+      window.alert("Please check the format of your second longitude");
       shouldProcess = false;
     }
 
@@ -90,7 +100,7 @@ class Calc extends React.Component{
       var lat = parseCoord(document.getElementById('lat-in1').value);
       var lon = parseCoord(document.getElementById('long-in1').value);
 
-      window.alert("lat: " + lat + ", long: " + lon);
+/*      window.alert("lat: " + lat + ", long: " + lon); */
       /*calculateGreatCircleDistance(100, 60, 105, 62, true)*/
     }
   }
