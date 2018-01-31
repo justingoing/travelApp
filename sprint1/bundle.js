@@ -84,6 +84,8 @@ var _distanceCalculatorJs = __webpack_require__(1);
 
 var _validatorJs = __webpack_require__(2);
 
+var bigBadGlobalVariableKilometers = false;
+
 var Header = (function (_React$Component) {
   _inherits(Header, _React$Component);
 
@@ -114,13 +116,39 @@ var Header = (function (_React$Component) {
 var Button = (function (_React$Component2) {
   _inherits(Button, _React$Component2);
 
-  function Button() {
+  function Button(props) {
     _classCallCheck(this, Button);
 
-    _get(Object.getPrototypeOf(Button.prototype), 'constructor', this).apply(this, arguments);
+    _get(Object.getPrototypeOf(Button.prototype), 'constructor', this).call(this, props);
+
+    this.state = {
+      km: false,
+      text: "Miles"
+    };
   }
 
   _createClass(Button, [{
+    key: 'setKM',
+    value: function setKM(event, obj) {
+      console.log("Hello");
+      console.log(obj);
+      console.log(event);
+
+      if (event === true) {
+        this.setState({ km: true });
+        this.setState({ text: "Kilometers" });
+        bigBadGlobalVariableKilometers = true;
+        document.getElementById("dropdown").innerHTML = "Kilometers";
+      } else {
+        this.setState({ km: false });
+        this.setState({ text: "Miles" });
+        bigBadGlobalVariableKilometers = false;
+        document.getElementById("dropdown").innerHTML = "Miles";
+      }
+
+      console.log(bigBadGlobalVariableKilometers);
+    }
+  }, {
     key: 'render',
     value: function render() {
       return React.createElement(
@@ -132,19 +160,19 @@ var Button = (function (_React$Component2) {
           React.createElement(
             'button',
             { type: 'button', id: 'dropdown', className: 'btn btn-primary dropdown-toggle', 'data-toggle': 'dropdown' },
-            'Select Distance type'
+            'Miles'
           ),
           React.createElement(
             'div',
             { className: 'dropdown-menu' },
             React.createElement(
               'a',
-              { className: 'dropdown-item', href: '#' },
+              { className: 'dropdown-item', onClick: this.setKM.bind(this, false), href: '#' },
               'Miles'
             ),
             React.createElement(
               'a',
-              { className: 'dropdown-item', href: '#' },
+              { className: 'dropdown-item', onClick: this.setKM.bind(this, true), href: '#' },
               'Kilometers'
             )
           )
@@ -235,8 +263,8 @@ var Calc = (function (_React$Component5) {
         lat2 = (0, _validatorJs.parseCoord)(lat2);
         lon2 = (0, _validatorJs.parseCoord)(lon2);
 
-        var distance = Math.round((0, _distanceCalculatorJs.calculateGreatCircleDistance)(lat1, lon1, lat2, lon2, true));
-        document.getElementById("answer_box").value = distance + "km";
+        var distance = Math.round((0, _distanceCalculatorJs.calculateGreatCircleDistance)(lat1, lon1, lat2, lon2, bigBadGlobalVariableKilometers));
+        document.getElementById("answer_box").value = distance + (bigBadGlobalVariableKilometers ? " km" : " mi");
       }
     }
   }, {

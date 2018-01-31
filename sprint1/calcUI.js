@@ -5,6 +5,8 @@ import {parseCoord} from './validator.js';
 import {getLatitude} from './validator.js';
 import {getLongitude} from './validator.js';
 
+var bigBadGlobalVariableKilometers = false;
+
 class Header extends React.Component{
   render() {
     return (
@@ -16,16 +18,48 @@ class Header extends React.Component{
 }
 
 class Button extends React.Component{
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        km: false,
+        text: "Miles"
+      }
+    }
+
+    setKM(event, obj) {
+        console.log("Hello");
+        console.log(obj);
+        console.log(event);
+
+        if (event === true) {
+            this.setState({km: true});
+            this.setState({text: "Kilometers"});
+            bigBadGlobalVariableKilometers = true;
+            document.getElementById("dropdown").innerHTML = "Kilometers";
+
+        } else {
+            this.setState({km: false});
+            this.setState({text: "Miles"});
+            bigBadGlobalVariableKilometers = false;
+            document.getElementById("dropdown").innerHTML = "Miles";
+        }
+
+        console.log(bigBadGlobalVariableKilometers);
+
+    }
+
+
   render(){
     return(                               
       <div className="text-center">
         <div className="dropdown">
     <button type="button" id="dropdown" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-      Select Distance type
+      Miles
     </button>
     <div className="dropdown-menu">
-      <a className="dropdown-item" href="#">Miles</a>
-      <a className="dropdown-item" href="#">Kilometers</a>
+      <a className="dropdown-item" onClick={this.setKM.bind(this, false)} href="#">Miles</a>
+      <a className="dropdown-item" onClick={this.setKM.bind(this, true)} href="#">Kilometers</a>
   </div>
 </div>
       </div>
@@ -79,8 +113,8 @@ class Calc extends React.Component{
       lat2 = parseCoord(lat2);
       lon2 = parseCoord(lon2);
 
-      var distance = Math.round(calculateGreatCircleDistance(lat1, lon1, lat2, lon2, true));
-      document.getElementById("answer_box").value = distance + "km";
+      var distance = Math.round(calculateGreatCircleDistance(lat1, lon1, lat2, lon2, bigBadGlobalVariableKilometers));
+      document.getElementById("answer_box").value = distance + (bigBadGlobalVariableKilometers ? " km" : " mi");
     }
   }
 
