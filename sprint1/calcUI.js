@@ -20,7 +20,7 @@ class Button extends React.Component{
     return(                               
       <div className="text-center">
         <div className="dropdown">
-    <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+    <button type="button" id="dropdown" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
       Select Distance type
     </button>
     <div className="dropdown-menu">
@@ -79,10 +79,9 @@ class Calc extends React.Component{
       lat2 = parseCoord(lat2);
       lon2 = parseCoord(lon2);
 
-      window.alert("lat1: " + lat1 + ", long1: " + lon1 + ", lat2: " + lat2 + ", long2: " + lon2); 
-      /*calculateGreatCircleDistance(100, 60, 105, 62, true)*/
+      var distance = Math.round(calculateGreatCircleDistance(lat1, lon1, lat2, lon2, true));
+      document.getElementById("answer_box").value = distance + "km";
     }
-
   }
 
   render() {
@@ -102,7 +101,7 @@ class Answer extends React.Component{
       <div className="col offset-2 col-8 text-center">
        <br></br>
         Distance:
-        <input type="text" className="text-left form-control mr-sm-2" disabled/>
+        <input type="text" id="answer_box" className="text-left form-control mr-sm-2" disabled/>
 
       </div>
     )
