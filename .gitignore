@@ -1,4 +1,4 @@
-*/.DS_Store
-*/.Rhistory
+*.DS_Store
+*.Rhistory
 */node_modules/*
-*/.idea
+*.idea
