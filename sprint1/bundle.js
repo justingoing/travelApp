@@ -202,8 +202,54 @@ var Latitude = (function (_React$Component4) {
   return Latitude;
 })(React.Component);
 
-var Calc = (function (_React$Component5) {
-  _inherits(Calc, _React$Component5);
+var Longitude2 = (function (_React$Component5) {
+  _inherits(Longitude2, _React$Component5);
+
+  function Longitude2() {
+    _classCallCheck(this, Longitude2);
+
+    _get(Object.getPrototypeOf(Longitude2.prototype), 'constructor', this).apply(this, arguments);
+  }
+
+  _createClass(Longitude2, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'div',
+        { className: 'col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center' },
+        React.createElement('input', { type: 'text', required: true, className: 'text-left form-control', id: 'long-in2', placeholder: 'Longitude2', pattern: '([0-9]{1,3}°\\s*[0-9]{1,2}\\x27\\s*[0-9]{1,2}\\x22\\s*[EW]\\s*)|([0-9]{1,2}°\\s*[0-9]*\\.?[0-9]+\\x27\\s*[EW]\\s*)|([+-]?[0-9]*\\.?[0-9]+°\\s*[EW]\\s*)|([+-]?[0-9]*\\.?[0-9]+\\s*)' })
+      );
+    }
+  }]);
+
+  return Longitude2;
+})(React.Component);
+
+var Latitude2 = (function (_React$Component6) {
+  _inherits(Latitude2, _React$Component6);
+
+  function Latitude2() {
+    _classCallCheck(this, Latitude2);
+
+    _get(Object.getPrototypeOf(Latitude2.prototype), 'constructor', this).apply(this, arguments);
+  }
+
+  _createClass(Latitude2, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'div',
+        { className: 'col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center' },
+        React.createElement('input', { type: 'text', required: true, className: 'text-left form-control', id: 'lat-in2', placeholder: 'Latitude2', pattern: '([0-9]{1,3}°\\s*[0-9]{1,2}\\x27\\s*[0-9]{1,2}\\x22\\s*[NS]\\s*)|([0-9]{1,2}°\\s*[0-9]*\\.?[0-9]+\\x27\\s*[NS]\\s*)|([+-]?[0-9]*\\.?[0-9]+°\\s*[NS]\\s*)|([+-]?[0-9]*\\.?[0-9]+\\s*)' })
+      );
+    }
+  }]);
+
+  return Latitude2;
+})(React.Component);
+
+var Calc = (function (_React$Component7) {
+  _inherits(Calc, _React$Component7);
 
   function Calc() {
     _classCallCheck(this, Calc);
@@ -251,8 +297,8 @@ var Calc = (function (_React$Component5) {
   return Calc;
 })(React.Component);
 
-var Answer = (function (_React$Component6) {
-  _inherits(Answer, _React$Component6);
+var Answer = (function (_React$Component8) {
+  _inherits(Answer, _React$Component8);
 
   function Answer() {
     _classCallCheck(this, Answer);
@@ -276,8 +322,8 @@ var Answer = (function (_React$Component6) {
   return Answer;
 })(React.Component);
 
-var Main = (function (_React$Component7) {
-  _inherits(Main, _React$Component7);
+var Main = (function (_React$Component9) {
+  _inherits(Main, _React$Component9);
 
   function Main() {
     _classCallCheck(this, Main);
@@ -300,6 +346,13 @@ var Main = (function (_React$Component7) {
             { className: 'row' },
             React.createElement(Latitude, null),
             React.createElement(Longitude, null)
+          ),
+          React.createElement('br', null),
+          React.createElement(
+            'div',
+            { className: 'row' },
+            React.createElement(Latitude2, null),
+            React.createElement(Longitude2, null)
           ),
           React.createElement('br', null),
           React.createElement(Button, null),

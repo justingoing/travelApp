@@ -51,6 +51,26 @@ class Latitude extends React.Component{
   }
 }
 
+class Longitude2 extends React.Component{
+  render() {
+    return (
+      <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
+        <input type="text" required className="text-left form-control" id="long-in2" placeholder="Longitude2" pattern="([0-9]{1,3}°\s*[0-9]{1,2}\x27\s*[0-9]{1,2}\x22\s*[EW]\s*)|([0-9]{1,2}°\s*[0-9]*\.?[0-9]+\x27\s*[EW]\s*)|([+-]?[0-9]*\.?[0-9]+°\s*[EW]\s*)|([+-]?[0-9]*\.?[0-9]+\s*)"/>
+      </div>
+    )
+  }
+}
+
+class Latitude2 extends React.Component{
+  render() {
+    return (
+      <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
+        <input type="text" required className="text-left form-control" id="lat-in2" placeholder="Latitude2" pattern="([0-9]{1,3}°\s*[0-9]{1,2}\x27\s*[0-9]{1,2}\x22\s*[NS]\s*)|([0-9]{1,2}°\s*[0-9]*\.?[0-9]+\x27\s*[NS]\s*)|([+-]?[0-9]*\.?[0-9]+°\s*[NS]\s*)|([+-]?[0-9]*\.?[0-9]+\s*)"/>
+      </div>
+    )
+  }
+}
+
 class Calc extends React.Component{
   onClickLogic() {
     var shouldProcess = true;
@@ -107,6 +127,11 @@ class Main extends React.Component {
           <div className="row">
             <Latitude/>
             <Longitude/>
+          </div>
+          <br/>
+          <div className="row">
+            <Latitude2/>
+            <Longitude2/>
           </div>
           <br/>
           <Button/>
