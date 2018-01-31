@@ -56,13 +56,13 @@ Epics planned for this release.
 
 #### What went well
 * *Isaac*: *We all worked well together and learned a lot. We were able to commit to meeting and didn't save it all for the end*
-* *Sam*
+* *Sam*: *I think we're getting to a good point as a team, and I think that we've set up a lot of the initial structure, like webpack and got Javascript/React working.*
 * *Justin*: *We've established a good intial rapport and are working together quite well.*
 * *Paul*: *As a team we communicated our struggles, things that were incorrect and needed fixing well through Slack.*
 
 #### Problems encountered and resolutions
 * *Isaac*: *Learning JavaScript!*
-* *Sam*
+* *Sam*: *Git and JavaScript*
 * *Justin*: *breaking apart tasks was initially problematic. Weve decided to assign tasks in zenhub to coordinate*
 * *Paul*: *Getting used to git was difficult. Luckily Isaac was very knowledgeable and we got some good practice in this sprint to continue using branches, before committing to master.*
 
@@ -71,6 +71,6 @@ Epics planned for this release.
 Topic | Teamwork | Process | Tools
 :--- | :--- | :--- | :---
 What we will change this time |  |  | 
-What we did well |  |  | 
-What we need to work on |  |  |
-What we will change next time |  |  | 
+What we did well | Communication was really good, we all have similar expectations, so there was no conflict there.  | Good meetings, good pair programming. | We knew how to use a browser really well
+What we need to work on | Assigning Tasks |  Branch Management | Javascript and React!!
+What we will change next time | Assign tasks better. | Set standards for using branches. | Use IntelliJ/IDE's
