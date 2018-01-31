@@ -42,20 +42,29 @@ Epics planned for this release.
 ## Review
 
 #### Completed user stories (epics) in Sprint Backlog 
-* *user story*:  *comments*
-* 
+* *Implement Great Circle Algorithm*:  *Sam*
+* *Set Up Webpack*: *Sam*
+* *User Input UI*: *Justin/Paul*
+* *Add Lat/Lon UI Fields*: *Justin/Paul*
+* *Read User Input and Validate*: *Wrote these functions in JS. Exported so it could be webpacked into React*
+* *Output UI*: *Justin*
+* *Integrate UI and Calculator*: *Wrote functions in react to call our JS and set values in our HTMl elements*
+* *Distance Calculator*: *Completed all basic tasks and issues. Integrated back together and tested*
 
 #### Incomplete user stories / epics in Sprint Backlog 
-* *user story*: *Explanation...*
-*
+* *none*
 
 #### What went well
-* *something*
-*
+* *Isaac*: *We all worked well together and learned a lot. We were able to commit to meeting and didn't save it all for the end*
+* *Sam*
+* *Justin*
+* *Paul*
 
 #### Problems encountered and resolutions
-* *something*
-*
+* *Isaac*: *Learning JavaScript!*
+* *Sam*
+* *Justin*
+* *Paul*
 
 ## Retrospective
 
