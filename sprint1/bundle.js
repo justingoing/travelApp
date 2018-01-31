@@ -72,15 +72,17 @@
 
 
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _distanceCalculatorJs = __webpack_require__(1);
+
+var _validatorJs = __webpack_require__(2);
 
 var Header = (function (_React$Component) {
   _inherits(Header, _React$Component);
@@ -88,19 +90,19 @@ var Header = (function (_React$Component) {
   function Header() {
     _classCallCheck(this, Header);
 
-    _get(Object.getPrototypeOf(Header.prototype), "constructor", this).apply(this, arguments);
+    _get(Object.getPrototypeOf(Header.prototype), 'constructor', this).apply(this, arguments);
   }
 
   _createClass(Header, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       return React.createElement(
-        "div",
-        { className: "jumbotron text-center" },
+        'div',
+        { className: 'jumbotron text-center' },
         React.createElement(
-          "h1",
+          'h1',
           null,
-          "Dave Matthews Band - Distance Calculator"
+          'Dave Matthews Band - Distance Calculator'
         )
       );
     }
@@ -115,35 +117,35 @@ var Button = (function (_React$Component2) {
   function Button() {
     _classCallCheck(this, Button);
 
-    _get(Object.getPrototypeOf(Button.prototype), "constructor", this).apply(this, arguments);
+    _get(Object.getPrototypeOf(Button.prototype), 'constructor', this).apply(this, arguments);
   }
 
   _createClass(Button, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       return React.createElement(
-        "div",
-        { className: "text-center" },
+        'div',
+        { className: 'text-center' },
         React.createElement(
-          "div",
-          { className: "dropdown" },
+          'div',
+          { className: 'dropdown' },
           React.createElement(
-            "button",
-            { type: "button", className: "btn btn-primary dropdown-toggle", "data-toggle": "dropdown" },
-            "Select Distance type"
+            'button',
+            { type: 'button', className: 'btn btn-primary dropdown-toggle', 'data-toggle': 'dropdown' },
+            'Select Distance type'
           ),
           React.createElement(
-            "div",
-            { className: "dropdown-menu" },
+            'div',
+            { className: 'dropdown-menu' },
             React.createElement(
-              "a",
-              { className: "dropdown-item", href: "#" },
-              "Miles"
+              'a',
+              { className: 'dropdown-item', href: '#' },
+              'Miles'
             ),
             React.createElement(
-              "a",
-              { className: "dropdown-item", href: "#" },
-              "Kilometers"
+              'a',
+              { className: 'dropdown-item', href: '#' },
+              'Kilometers'
             )
           )
         )
@@ -160,16 +162,16 @@ var Longitude = (function (_React$Component3) {
   function Longitude() {
     _classCallCheck(this, Longitude);
 
-    _get(Object.getPrototypeOf(Longitude.prototype), "constructor", this).apply(this, arguments);
+    _get(Object.getPrototypeOf(Longitude.prototype), 'constructor', this).apply(this, arguments);
   }
 
   _createClass(Longitude, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       return React.createElement(
-        "div",
-        { className: "col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center" },
-        React.createElement("input", { type: "text", className: "text-left form-control", id: "long-in", placeholder: "Longitude", pattern: "([0-9]{1,3}°\\s*[0-9]{1,2}\\x27\\s*[0-9]{1,2}\\x22\\s*[NESW]\\s*){2}|([0-9]{1,2}°\\s*[0-9]*\\.?[0-9]+\\x27\\s*[NESW]\\s*){2}|([+-]?[0-9]*\\.?[0-9]+°\\s*[NESW]\\s*){2}|([+-]?[0-9]*\\.?[0-9]+\\s+[+-]?[0-9]*\\.?[0-9]+\\s*)" })
+        'div',
+        { className: 'col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center' },
+        React.createElement('input', { type: 'text', required: true, className: 'text-left form-control', id: 'long-in2', placeholder: 'Longitude', pattern: '([0-9]{1,3}°\\s*[0-9]{1,2}\\x27\\s*[0-9]{1,2}\\x22\\s*[EW]\\s*)|([0-9]{1,2}°\\s*[0-9]*\\.?[0-9]+\\x27\\s*[NESW]\\s*)|([+-]?[0-9]*\\.?[0-9]+°\\s*[NESW]\\s*)|([+-]?[0-9]*\\.?[0-9]+\\s+[+-]?[0-9]*\\.?[0-9]+\\s*)' })
       );
     }
   }]);
@@ -183,16 +185,16 @@ var Latitude = (function (_React$Component4) {
   function Latitude() {
     _classCallCheck(this, Latitude);
 
-    _get(Object.getPrototypeOf(Latitude.prototype), "constructor", this).apply(this, arguments);
+    _get(Object.getPrototypeOf(Latitude.prototype), 'constructor', this).apply(this, arguments);
   }
 
   _createClass(Latitude, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       return React.createElement(
-        "div",
-        { className: "col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center" },
-        React.createElement("input", { type: "text", className: "text-left form-control", id: "lat-in", placeholder: "Latitude", pattern: "([0-9]{1,3}°\\s*[0-9]{1,2}\\x27\\s*[0-9]{1,2}\\x22\\s*[NESW]\\s*){2}|([0-9]{1,2}°\\s*[0-9]*\\.?[0-9]+\\x27\\s*[NESW]\\s*){2}|([+-]?[0-9]*\\.?[0-9]+°\\s*[NESW]\\s*){2}|([+-]?[0-9]*\\.?[0-9]+\\s+[+-]?[0-9]*\\.?[0-9]+\\s*)" })
+        'div',
+        { className: 'col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center' },
+        React.createElement('input', { type: 'text', required: true, className: 'text-left form-control', id: 'lat-in1', placeholder: 'Latitude', pattern: '([0-9]{1,3}°\\s*[0-9]{1,2}\\x27\\s*[0-9]{1,2}\\x22\\s*[NS]\\s*)|([0-9]{1,2}°\\s*[0-9]*\\.?[0-9]+\\x27\\s*[NESW]\\s*)|([+-]?[0-9]*\\.?[0-9]+°\\s*[NESW]\\s*)|([+-]?[0-9]*\\.?[0-9]+\\s+[+-]?[0-9]*\\.?[0-9]+\\s*)' })
       );
     }
   }]);
@@ -206,20 +208,31 @@ var Calc = (function (_React$Component5) {
   function Calc() {
     _classCallCheck(this, Calc);
 
-    _get(Object.getPrototypeOf(Calc.prototype), "constructor", this).apply(this, arguments);
+    _get(Object.getPrototypeOf(Calc.prototype), 'constructor', this).apply(this, arguments);
   }
 
   _createClass(Calc, [{
-    key: "render",
+    key: 'onClickLogic',
+    value: function onClickLogic() {
+      if ((0, _validatorJs.checkValidity)()) {
+        var lat = (0, _validatorJs.parseCoord)(document.getElementById('lat-in').value);
+        var lon = (0, _validatorJs.parseCoord)(document.getElementById('long-in').value);
+
+        window.alert("lat: " + lat + ", long: " + lon);
+        /*calculateGreatCircleDistance(100, 60, 105, 62, true)*/
+      }
+    }
+  }, {
+    key: 'render',
     value: function render() {
       return React.createElement(
-        "div",
-        { className: "col-sm text-center" },
-        React.createElement("br", null),
+        'div',
+        { className: 'col-sm text-center' },
+        React.createElement('br', null),
         React.createElement(
-          "button",
-          { className: "btn btn-primary mr-sm-2", type: "submit", value: "submit", onClick: (0, _distanceCalculatorJs.calculateGreatCircleDistance)(100, 60, 105, 62, true) /*checkValidity.bind(this)*/ },
-          "Calculate!"
+          'button',
+          { className: 'btn btn-primary mr-sm-2', type: 'submit', value: 'submit', onClick: this.onClickLogic.bind(this) },
+          'Calculate!'
         )
       );
     }
@@ -234,18 +247,18 @@ var Answer = (function (_React$Component6) {
   function Answer() {
     _classCallCheck(this, Answer);
 
-    _get(Object.getPrototypeOf(Answer.prototype), "constructor", this).apply(this, arguments);
+    _get(Object.getPrototypeOf(Answer.prototype), 'constructor', this).apply(this, arguments);
   }
 
   _createClass(Answer, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       return React.createElement(
-        "div",
-        { className: "col offset-2 col-8 text-center" },
-        React.createElement("br", null),
-        "Distance:",
-        React.createElement("input", { type: "text", className: "text-left form-control mr-sm-2", disabled: true })
+        'div',
+        { className: 'col offset-2 col-8 text-center' },
+        React.createElement('br', null),
+        'Distance:',
+        React.createElement('input', { type: 'text', className: 'text-left form-control mr-sm-2', disabled: true })
       );
     }
   }]);
@@ -259,26 +272,26 @@ var Main = (function (_React$Component7) {
   function Main() {
     _classCallCheck(this, Main);
 
-    _get(Object.getPrototypeOf(Main.prototype), "constructor", this).apply(this, arguments);
+    _get(Object.getPrototypeOf(Main.prototype), 'constructor', this).apply(this, arguments);
   }
 
   _createClass(Main, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       return React.createElement(
-        "div",
-        { className: "container" },
+        'div',
+        { className: 'container' },
         React.createElement(
-          "div",
+          'div',
           null,
           React.createElement(Header, null),
           React.createElement(
-            "div",
-            { className: "row" },
+            'div',
+            { className: 'row' },
             React.createElement(Latitude, null),
             React.createElement(Longitude, null)
           ),
-          React.createElement("br", null),
+          React.createElement('br', null),
           React.createElement(Button, null),
           React.createElement(Calc, null),
           React.createElement(Answer, null)
@@ -347,6 +360,114 @@ function calculateGreatCircleDistance(lat1, lon1, lat2, lon2, useKilometers) {
   var circleDistance = (useKilometers == true ? radiusKilometers : radiusMiles) * centralAngle;
 
   return circleDistance;
+}
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * validator.js 
+ * Validate input from the user and pass it to the distance calculator
+ * 
+ * @author Isaac Gentz
+ */
+
+/**
+  Makes sure that the user input is valid
+*/
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.parseCoord = parseCoord;
+exports.checkValidity = checkValidity;
+function validateLatLong(elem_name) {
+  return document.getElementById(elem_name).checkValidity();
+}
+
+/**
+  Gets the latidude from an input string
+*/
+function getLatitude(input) {
+  // we know input is validated so we can search for North or South
+  var search = input.search(/[NS]/);
+  var latitude = "";
+  // coordinate must be in decimal format
+  if (search == -1) {
+    latitude = input.substring(0, input.search(" "));
+  } else {
+    latitude = input.substring(0, search + 1);
+  }
+
+  return latitude;
+}
+
+/**
+  Gets the longitude from an input string
+*/
+function getLongitude(input) {
+  // we  know input is validated so we know we can go from North/South to the end
+  var search = input.search(/[NS]/);
+
+  var longitude = "";
+  if (search == -1) {
+    longitude = input.substr(input.search(' '));
+  } else {
+    longitude = input.substring(search + 1);
+  }
+
+  return longitude;
+}
+
+function parseCoord(input) {
+  var seconds = 0;
+  var minutes = 0;
+  var degrees = 0;
+
+  //check for double quotes  40°26'56"N 40°26'56"E format
+  if (input.indexOf('\x22') > -1) {
+
+    var start = input.indexOf('\x27');
+    var end = input.indexOf('\x22');
+    // go from the single quote to the double quote
+    seconds = parseFloat(input.substring(start + 1, end));
+    seconds /= 3600; //convert seconds to degrees
+  }
+
+  // check for single quotes 40° 26.767′ N 79° 58.933′ W or above format
+  if (input.indexOf('\x27') > -1) {
+    start = input.indexOf('°');
+    end = input.indexOf('\x27');
+    minutes = parseFloat(input.substring(start + 1, end));
+    minutes /= 60; //convert minutes to degrees
+  }
+
+  if (input.indexOf('°') > -1) {
+    start = 0;
+    end = input.indexOf('°');
+    degrees = parseFloat(input.substring(start, end));
+    degrees += minutes + seconds;
+  } else {
+    degrees = parseFloat(input);
+  }
+
+  return degrees;
+}
+
+function checkValidity() {
+  console.log("test");
+  if (!validateLatLong('lat-in')) {
+    window.alert("Please check the format of your latitude");
+    return false;
+  }
+  if (!validateLatLong('long-in')) {
+    window.alert("Please check the format of your longitude");
+    return false;
+  }
+  return true;
 }
 
 /***/ })

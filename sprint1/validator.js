@@ -56,7 +56,7 @@ function getLongitude(input)
   return longitude;
 }
 
-function parseCoord(input)
+export function parseCoord(input)
 {
 	var seconds = 0;
   var minutes = 0;
@@ -99,35 +99,19 @@ function parseCoord(input)
   return degrees;
 }
 
-function checkValidity()
+export function checkValidity()
 {
   console.log("test");
-  //if(!validateLatLong('lat-in'))
-  //{
-  //  return false;
-  //}
-  //if(!validateLatLong('long-in'))
-  //{
-  //  return false;
-  //}
-  //return true;
-
-}
-
-/**
-  Takes a string (could be in various location coordinate formats)
-  and returns a decimal value
-*/
-function toDecimalFormat(lat_in, long_in)
-{
-  var latitude = parseCoord(lat_in);
-  var longitude = parseCoord(long_in);
-  
-//TODO know what element to display to (or handle this differently depending on UI)
-   //now we can do something with these decial values
-//   document.getElementById('checker').innerHTML =latitude;
-//   document.getElementById('format').innerHTML = longitude;
-
-
+  if(!validateLatLong('lat-in'))
+  {
+    window.alert("Please check the format of your latitude");
+    return false;
+  }
+  if(!validateLatLong('long-in'))
+  {
+    window.alert("Please check the format of your longitude");
+    return false;
+  }
+  return true;
 }
 
