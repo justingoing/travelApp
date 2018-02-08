@@ -57,6 +57,7 @@ Date | Tasks done  | Tasks in progress | Impediments
 :--- | :--- | :--- | :--- 
 *date* | *@task only* | *@task only* | none
 2/6/18 |Streamlined tasks after seeing new code |Save File #78, Display Trip in Table/Itinerary #85, JSOn Validate Check (Client) #81, SVG Display #75 | Learn new code from TripCo executives 
+2/8/18 |Streamlined tasks after seeing new code |Save File #78, Display Trip in Table/Itinerary #85, JSOn Validate Check (Client) #81, SVG Display #75 | Learn new code from TripCo executives 
  
 
 ## Review
