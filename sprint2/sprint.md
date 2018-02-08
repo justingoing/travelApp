@@ -56,7 +56,7 @@ Story Points |  2, 2, 3, 3, 8, 2, 5, 3, 3, 8, 3, 3, 13  | *value*
 Date | Tasks done  | Tasks in progress | Impediments 
 :--- | :--- | :--- | :--- 
 *date* | *@task only* | *@task only* | none
- | | | 
+2/6/18 |Streamlined tasks after seeing new code |Save File #78, Display Trip in Table/Itinerary #85, JSOn Validate Check (Client) #81, SVG Display #75 | Learn new code from TripCo executives 
  
 
 ## Review
