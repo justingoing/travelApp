@@ -1,6 +1,7 @@
 .idea/
 *.iml
 
+*/node_modules/
 client/node_modules/
 client/public/
 client/*.log
