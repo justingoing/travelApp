@@ -61,6 +61,10 @@ class Trip extends Component {
   /* Saves the map and itinerary to the local file system.
    */
   saveTFFI(){
+    var Saver = require('file-saver');
+    var blob = new Blob(["In the future, we will save JSON here. "], {type: "text/plain;charset=utf-8"});
+    Saver.saveAs(blob, "hello-world.json");
+
   }
 
   /* Renders the buttons, map, and itinerary.
