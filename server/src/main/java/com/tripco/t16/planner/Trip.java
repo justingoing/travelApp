@@ -37,25 +37,45 @@ public class Trip {
   }
 
   /**
+   * Returns an SVG with the Colorado borders
+   * @return
+   */
+  private String borderSVG() {
+    return "<svg width=\"300\" height=\"300\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><rect width=\"300\" height=\"100\" style=\"fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)\" /</svg>";
+  }
+
+  /**
    * Returns an SVG containing the background and the legs of the trip.
    * @return
    */
   private String svg() {
+
+
+
+
     InputStream in = this.getClass().getResourceAsStream("/colorado.svg");
     BufferedReader br;
     br = new BufferedReader(new InputStreamReader(in));
 
-
-    String read = "", cur;
+    // read Colorado background
+    String colo_background = "", cur;
     try {
       while ((cur = br.readLine()) != null)
-        read += cur;
+        colo_background += cur;
     } catch (IOException e) {
       e.printStackTrace();
       return this.defaultSVG;
     }
 
-    return read;
+    String outer = "<svg width=\"1066.6073\" height=\"783.0824\" xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\">" +
+            "<!-- (original colorado svg here) -->" +
+            colo_background +
+            "<svg width=\"1066.6073\" height=\"783.0824\">" +
+            "<!-- Border SVG Here -->"+
+            "</svg>" +
+            "</svg>";
+
+    return outer;
   }
 
   /**
