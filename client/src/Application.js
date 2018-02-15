@@ -36,7 +36,7 @@ class Application extends Component {
     if ((!tffi.hasOwnProperty('type') || tffi.type !== "trip") ||
         (!tffi.hasOwnProperty('places') || tffi.places === null)) {
         tffi = defaultTrip;
-        console.log("Error! Invalid TFFI file!")
+        window.alert("Invalid TFFI!!");
     } else {
         //Make sure we have the places array.
         if (!tffi.hasOwnProperty('places') || tffi.places === null) {
