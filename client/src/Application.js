@@ -29,7 +29,6 @@ class Application extends Component {
 
     if (!tffi.hasOwnProperty('distances') || tffi.distances === null) {
       tffi.distances = [];
-      tffi.map = "";
     }
 
     this.setState({trip:tffi});
