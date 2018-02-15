@@ -59,12 +59,12 @@ Date | Tasks done  | Tasks in progress | Impediments
 2/6/18 |Streamlined tasks after seeing new code |Save File #78, Display Trip in Table/Itinerary #85, JSOn Validate Check (Client) #81, SVG Display #75 | Learn new code from TripCo executives 
 2/8/18 |Streamlined tasks after seeing new code |Save File #78, Display Trip in Table/Itinerary #85, JSOn Validate Check (Client) #81, SVG Display #75 | Learn new code from TripCo executives 
 2/11/18 |Streamlined tasks after seeing new code |Save File #78, Display Trip in Table/Itinerary #85, JSOn Validate Check (Client) #81, SVG Display #75 | Learn new code from TripCo executives 
- 
+2/15/18 |  #101, #97, #96, #78, #86, #94 | #99, #95, #85, #81, #100, #75 | none
 
 ## Review
 
 #### Completed epics in Sprint Backlog 
-* *user story*:  *comments*
+* *#60 Let user load a file with destinations*:  *Sam got this knocked out pretty quickly*
 * 
 
 #### Incomplete epics in Sprint Backlog 
