@@ -26,6 +26,12 @@ class Application extends Component {
   updateTrip(tffi){
     console.log("updateTrip");
     console.log(tffi);
+
+    if (!tffi.hasOwnProperty('distances') || tffi.distances === null) {
+      tffi.distances = [];
+      tffi.map = "";
+    }
+
     this.setState({trip:tffi});
   }
 
