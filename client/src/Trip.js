@@ -20,30 +20,11 @@ class Trip extends Component {
    * state for this object.
    */
   fetchResponse(){
-    // need to get the request body from the trip in state object.
-    let requestBody = {
-        "type"    : "trip",
-        "title"   : "PLANNING",
-        "options" : { 
-          "distance":"miles",
-          "optimization":"none"
-        },
-        "places"  : [
-          {"id":"dnvr", "name":"Denver", "latitude": "", "longitude": ""},
-          {"id":"bldr", "name":"Boulder", "latitude": "", "longitude": ""},
-          {"id":"foco", "name":"Fort Collins", "latitude": "", "longitude": ""},
-          {"id":"grly", "name":"Greeley", "latitude": "", "longitude": ""},
-          {"id":"fomo", "name":"Fort Morgan", "latitude": "", "longitude": ""},
-          {"id":"frst", "name":"Firestone", "latitude": "", "longitude": ""}
-          ]
-      };
-
     console.log(process.env.SERVICE_URL);
-    console.log(requestBody);
-
+    console.log("POSTing: " + this.props.trip);
     return fetch(process.env.SERVICE_URL + '/plan', {
       method:"POST",
-      body: JSON.stringify(requestBody)
+      body: JSON.stringify(this.props.trip)
     });
   }
 
@@ -61,6 +42,20 @@ class Trip extends Component {
   /* Saves the map and itinerary to the local file system.
    */
   saveTFFI(){
+    //Create saver object and contents
+    var Saver = require('file-saver');
+    var blob = new Blob([JSON.stringify(this.props.trip)], {type: "text/plain;charset=utf-8"});
+
+    //Create title
+    var title = this.props.trip.title;
+    if (title === "") {
+      title = "Trip.json"
+    } else {
+      title += ".json";
+    }
+
+    //Save file
+    Saver.saveAs(blob, title);
   }
 
   /* Renders the buttons, map, and itinerary.
