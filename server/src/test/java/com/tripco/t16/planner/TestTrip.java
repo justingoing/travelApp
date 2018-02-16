@@ -37,4 +37,13 @@ public class TestTrip {
     // Call the equals() method of the first object on the second object.
     assertEquals(expectedDistances, trip.distances);
   }
+
+  @Test
+  /**
+   * Make sure that files in our resources folder load properly
+   */
+  public void testResources() {
+    assertNotEquals(trip.defaultSVG, trip.getSVGFromFile("/colorado.svg"));
+    assertNotEquals(trip.defaultSVG, trip.getSVGFromFile("/borders.svg"));
+  }
 }
