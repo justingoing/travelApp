@@ -46,4 +46,13 @@ public class TestTrip {
     assertNotEquals(trip.defaultSVG, trip.getSVGFromFile("/colorado.svg"));
     assertNotEquals(trip.defaultSVG, trip.getSVGFromFile("/borders.svg"));
   }
+
+  @Test
+  public void testNormalization() {
+    assertEquals(1, (long)trip.normalizeLat(37)); // make sure that max lat goes to 1
+    assertEquals(0, (long)trip.normalizeLat(41)); // make sure min lat goes to 0
+    assertEquals(1, (long)trip.normalizeLong(-102.05)); // make sure that max long goes to 1
+    assertEquals(0, (long)trip.normalizeLong(-109.05)); // make sure that min long goes to 0
+
+  }
 }
