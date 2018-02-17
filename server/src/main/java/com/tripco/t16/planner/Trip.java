@@ -31,6 +31,12 @@ public class Trip {
    */
   public void plan() {
 
+    for(int i = 0; i < this.places.size(); i++) {
+      //System.out.println(this.places.get(i).name);
+      validateLatitude(this.places.get(i).latitude);
+      validateLongitude(this.places.get(i).longitude);
+    }
+
     this.map = svg();
     this.distances = legDistances();
 
