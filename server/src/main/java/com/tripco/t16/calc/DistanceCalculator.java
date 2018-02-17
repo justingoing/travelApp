@@ -7,6 +7,17 @@ package com.tripco.t16.calc;
  */
 public class DistanceCalculator {
 
+    public static final double COLORADO_RIGHT = -102.05;
+    public static final double COLORADO_LEFT = -109.05;
+    public static final double COLORADO_TOP = 41.0;
+    public static final double COLORADO_BOTTOM = 37.0;
+
+
+    public static boolean isInColorado(double lat1, double lon1) {
+        return (lat1 <= COLORADO_TOP && lat1 >= COLORADO_BOTTOM &&
+                lon1 <= COLORADO_RIGHT && lon1 >= COLORADO_LEFT);
+    }
+
     /**
      * Takes two lat-lon pairs, and returns the great circle distance between the two,
      * using the chord length formula. If the boolean useKilometers parameter is set to true,
@@ -49,5 +60,13 @@ public class DistanceCalculator {
 
 
         return circleDistance;
+    }
+
+    public static double toLatitude(String string) {
+        return 0;
+    }
+
+    public static double toLongitude(String string) {
+        return 0;
     }
 }

@@ -29,4 +29,12 @@ public class TestDistanceCalculator {
         assertEquals(Math.round(DistanceCalculator.calculateGreatCircleDistance(10, 50, 50, 10, false)), 3581
                 , .000001);
     }
+
+    @Test
+    public void testInColorado() {
+        assertTrue(DistanceCalculator.isInColorado(39.5, -107));
+        assertTrue(DistanceCalculator.isInColorado(DistanceCalculator.COLORADO_BOTTOM, DistanceCalculator.COLORADO_LEFT));
+        assertFalse(DistanceCalculator.isInColorado(-39.5, -107));
+        assertFalse(DistanceCalculator.isInColorado(39.5, 107));
+    }
 }
