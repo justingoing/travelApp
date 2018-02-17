@@ -21,6 +21,14 @@ public class TestTrip {
   @Before
   public void initialize() {
     trip = new Trip();
+    trip.places = new ArrayList<Place>();
+    Place test = new Place();
+    test.id = "dnvr";
+    test.name = "Denver";
+    test.latitude = "39.7392° N";
+    test.longitude = "104.9903° W";
+    trip.places.add(test);
+    trip.places.add(test);
   }
 
   @Test
@@ -45,5 +53,17 @@ public class TestTrip {
   public void testResources() {
     assertNotEquals(trip.defaultSVG, trip.getSVGFromFile("/colorado.svg"));
     assertNotEquals(trip.defaultSVG, trip.getSVGFromFile("/borders.svg"));
+  }
+
+  @Test
+  public void testLatLong() {
+    //valid
+    assertTrue(trip.validateLatitude("40° 35' 6.9288\" N"));
+    assertTrue(trip.validateLongitude("105° 5' 3\" W"));
+
+    //invalid
+    assertFalse(trip.validateLatitude("HELLO"));
+    assertFalse(trip.validateLongitude("104 5 5"));
+
   }
 }

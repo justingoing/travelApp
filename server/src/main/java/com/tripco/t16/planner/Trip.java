@@ -91,4 +91,44 @@ public class Trip {
     return dist;
   }
 
+  public boolean validateLatitude(String latIN) {
+    System.out.println("Latitude: " + latIN);
+    if(latIN.matches("\\s*\\d+°\\s*\\d+'\\s*\\d+\\.?\\d*\"\\s*[N|S]")) //degrees minutes seconds
+      System.out.println("Matches #1");
+    else if(latIN.matches("\\s*\\d+°\\s*\\d+\\.?\\d*'\\s*[N|S]")) //degrees decimal minutes
+      System.out.println("Matches #2");
+    else if(latIN.matches("\\s*-?\\d+\\.?\\d*°\\s*[N|S]")) //decimal degrees
+      System.out.println("Matches #3");
+    else if(latIN.matches("\\s*-?\\d+\\.?\\d*\\s*[N|S]")) //floating point
+      System.out.println("Matches #4");
+    else if(latIN.matches("\\s*-?\\d+\\.?\\d*\\s*"))
+      System.out.println("Matches #5");
+    else {
+      System.out.println("No match!");
+      return false;
+      //ERROR OUT??
+    }
+    return true;
+  }
+
+  public boolean validateLongitude(String longIN) {
+    System.out.println("Longitude: " + longIN);
+    if(longIN.matches("\\s*\\d+°\\s*\\d+'\\s*\\d+\\.?\\d*\"\\s*[E|W]")) //degrees minutes seconds
+      System.out.println("Matches #1");
+    else if(longIN.matches("\\s*\\d+°\\s*\\d+\\.?\\d*'\\s*[E|W]")) //degrees decimal minutes
+      System.out.println("Matches #2");
+    else if(longIN.matches("\\s*-?\\d+\\.?\\d*°\\s*[E|W]")) //decimal degrees
+      System.out.println("Matches #3");
+    else if(longIN.matches("\\s*-?\\d+\\.?\\d*\\s*[E|W]")) //floating point
+      System.out.println("Matches #4");
+    else if(longIN.matches("\\s*-?\\d+\\.?\\d*\\s*"))
+      System.out.println("Matches #5");
+    else {
+      System.out.println("No match!");
+      return false;
+      //ERROR OUT?
+    }
+    return true;
+  }
+
 }
