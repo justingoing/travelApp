@@ -73,4 +73,25 @@ public class TestTrip {
     assertFalse(trip.validateLongitude("104 5 5"));
 
   }
+
+
+  private static final double delta = 0.01;
+  @Test
+  public void testDecimalConversion() {
+    //degrees minutes seconds
+    assertEquals(40.58526, trip.convertToDecimal("40° 35' 6.9288\" N"), delta);
+
+    //floating point numbers valid
+    assertEquals(-79.982, trip.convertToDecimal("-79.982"), delta);
+
+    //west returns a negative and just degrees minutes
+    assertEquals(-105.5927, trip.convertToDecimal("105° 35.56' W"), delta);
+
+    //just degrees and direction
+    assertEquals(39.7392, trip.convertToDecimal("39.7392° N"), delta);
+
+    //also works with the weird characters
+    assertEquals(-40.58526, trip.convertToDecimal("40º 35′ 6.9288″ W"), delta);
+  }
+
 }
