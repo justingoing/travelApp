@@ -21,6 +21,14 @@ public class TestTrip {
   @Before
   public void initialize() {
     trip = new Trip();
+    trip.places = new ArrayList<Place>();
+    Place test = new Place();
+    test.id = "dnvr";
+    test.name = "Denver";
+    test.latitude = "39.7392° N";
+    test.longitude = "104.9903° W";
+    trip.places.add(test);
+    trip.places.add(test);
   }
 
   @Test
@@ -45,5 +53,24 @@ public class TestTrip {
   public void testResources() {
     assertNotEquals(trip.defaultSVG, trip.getSVGFromFile("/colorado.svg"));
     assertNotEquals(trip.defaultSVG, trip.getSVGFromFile("/borders.svg"));
+  }
+
+  @Test
+  public void testLatLong() {
+    //valid
+    assertTrue(trip.validateLatitude("40° 35' 6.9288\" N")); //degrees minutes seconds w/ direction
+    assertTrue(trip.validateLongitude("105° 5' 3\" W"));
+    assertTrue(trip.validateLatitude("40.446° N")); //decimal degrees w/ direction
+    assertTrue(trip.validateLongitude("79.982° W"));
+    assertTrue(trip.validateLatitude("40.445")); //decimal degrees only
+    assertTrue(trip.validateLongitude("-79.982"));
+    assertTrue(trip.validateLatitude("40° 35.568' N")); //decimal degrees w/ decimal on minutes
+    assertTrue(trip.validateLongitude("105° 35.56' W"));
+    assertTrue(trip.validateLongitude("40º 35′ 6.9288″ W")); //tests prime symbols and ordinal indicator
+
+    //invalid
+    assertFalse(trip.validateLatitude("HELLO"));
+    assertFalse(trip.validateLongitude("104 5 5"));
+
   }
 }
