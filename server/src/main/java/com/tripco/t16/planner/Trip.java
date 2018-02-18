@@ -39,6 +39,12 @@ public class Trip {
    * It might need to reorder the places in the future.
    */
   public void plan() {
+    for(int i = 0; i < this.places.size(); i++) {
+      //System.out.println(this.places.get(i).name);
+      validateLatitude(this.places.get(i).latitude);
+      validateLongitude(this.places.get(i).longitude);
+    }
+
     this.map = svg();
     this.distances = legDistances();
 
@@ -185,16 +191,54 @@ public class Trip {
   /**
    * Inner class for passing around coordinates nicely
    */
-  public class Coords
-  {
+  public class Coords {
     double x;
     double y;
 
-    public Coords(double x, double y)
-    {
+    public Coords(double x, double y) {
       this.x = x;
       this.y = y;
     }
+  }
+
+  public boolean validateLatitude(String latIN) {
+    System.out.println("Latitude: " + latIN);
+    if(latIN.matches("\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+\\.?\\d*[\"|″]\\s*[N|S]")) //degrees minutes seconds
+      System.out.println("Matches #1");
+    else if(latIN.matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[N|S]")) //degrees decimal minutes
+      System.out.println("Matches #2");
+    else if(latIN.matches("\\s*-?\\d+\\.?\\d*[°|º]\\s*[N|S]")) //decimal degrees
+      System.out.println("Matches #3");
+    else if(latIN.matches("\\s*-?\\d+\\.?\\d*\\s*[N|S]")) //floating point
+      System.out.println("Matches #4");
+    else if(latIN.matches("\\s*-?\\d+\\.?\\d*\\s*"))
+      System.out.println("Matches #5");
+    else {
+      System.out.println("No match!");
+      return false;
+      //ERROR OUT??
+    }
+    return true;
+  }
+
+  public boolean validateLongitude(String longIN) {
+    System.out.println("Longitude: " + longIN);
+    if(longIN.matches("\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+\\.?\\d*[\"|″]\\s*[E|W]")) //degrees minutes seconds
+      System.out.println("Matches #1");
+    else if(longIN.matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[E|W]")) //degrees decimal minutes
+      System.out.println("Matches #2");
+    else if(longIN.matches("\\s*-?\\d+\\.?\\d*[°|º]\\s*[E|W]")) //decimal degrees
+      System.out.println("Matches #3");
+    else if(longIN.matches("\\s*-?\\d+\\.?\\d*\\s*[E|W]")) //floating point
+      System.out.println("Matches #4");
+    else if(longIN.matches("\\s*-?\\d+\\.?\\d*\\s*"))
+      System.out.println("Matches #5");
+    else {
+      System.out.println("No match!");
+      return false;
+      //ERROR OUT?
+    }
+    return true;
   }
 
 }

@@ -10,22 +10,60 @@ class Application extends Component {
   constructor(props){
     super(props);
     this.state = {
-      trip: { // default TFFI
-        type: "trip",
-        title: "",
-        options : {distance: "miles"},
-        places: [],
-        distances: [],
-        map: "<svg width=\"1920\" height=\"20\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><g></g></svg>"
-      }
+        trip: this.getDefaultTFFI()
     }
     this.updateTrip = this.updateTrip.bind(this);
     this.updateOptions = this.updateOptions.bind(this);
   }
 
+  getDefaultTFFI() {
+      let t = {
+          type: "trip",
+              title: "",
+              options : {distance: "miles"},
+              places: [],
+              distances: [],
+              map: "<svg width=\"1920\" height=\"20\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><g></g></svg>"
+      }
+
+      return t;
+  }
+
   updateTrip(tffi){
-    console.log("updateTrip");
-    console.log(tffi);
+    var defaultTrip = this.getDefaultTFFI();
+
+    //If we don't have the required TFFI stuff, let's just go with the default object.
+    if ((!tffi.hasOwnProperty('type') || tffi.type !== "trip") ||
+        (!tffi.hasOwnProperty('places') || tffi.places === null)) {
+        tffi = defaultTrip;
+        window.alert("Invalid TFFI!!");
+    } else {
+        //Make sure we have the places array.
+        if (!tffi.hasOwnProperty('places') || tffi.places === null) {
+            tffi.places = defaultTrip.places;
+        }
+
+        //Make sure we have the distances array.
+        if (!tffi.hasOwnProperty('distances') || tffi.distances === null) {
+            tffi.distances = defaultTrip.distances;
+        }
+
+        //Make sure we have a title.
+        if (!tffi.hasOwnProperty('title') || tffi.title === null) {
+            tffi.title = defaultTrip.title;
+        }
+
+        //Ensure that we have options.
+        if (!tffi.hasOwnProperty('options') || tffi.options === null) {
+            tffi.options = defaultTrip.options;
+        }
+
+        //Ensure that we have at least the distances
+        if (!tffi.hasOwnProperty('options.distance') || tffi.options.distance === null) {
+            tffi.options.distance = defaultTrip.options.distance;
+        }
+    }
+
     this.setState({trip:tffi});
   }
 

@@ -1,0 +1,968 @@
+{
+  "type"      : "trip",
+  "title"     : "Test-Trip",
+  "options"   : { "distance":"miles" },
+  "places"    : [
+    {
+      "id": "pbarstad",
+      "name": "105 West Brewing Company",
+      "municipality": "Castle Rock",
+      "latitude": "39°22'51\" N",
+      "longitude": "104°52'06\" W",
+      "elevation": "6430.4"
+    }
+  ,
+    {
+      "id": "jgoing",
+      "name": "300 Suns Brewing",
+      "municipality": "Longmont",
+      "latitude": "40°09'34\" N",
+      "longitude": "105°06'07\" W",
+      "elevation": "5249"
+    }
+  ,
+    {
+      "id": "benalperim",
+      "name": "4B's Brewery",
+      "municipality": "Cedaredge",
+      "latitude": "38°54'02\" N",
+      "longitude": "107°55'33\" W",
+      "elevation": "6220"
+    }
+  ,
+
+    {
+
+      "id":"marcelaf",
+      "name":"7 Hermits Brewing Company",
+      "municipality":"Eagle",
+      "latitude":"39°38'27\" N",
+      "longitude":"106°49'49\" W",
+      "elevation":"6791"
+    }
+  ,
+    {
+      "id": "smegana",
+      "name": "Alpine Dog Brewery",
+      "municipality": "Denver",
+      "latitude": "39°44'43\" N",
+      "longitude": "104°58'33\" W",
+      "elevation": "5282"
+    }
+  ,
+    {
+      "id": "hottar",
+      "name": "Amicas Pizza & Microbrewery",
+      "municipality": "Salida",
+      "latitude": "38°32'25\" N",
+      "longitude": "105°59'54\" W",
+      "elevation": "7067"
+    }
+  ,
+    {
+      "id":"amalott",
+      "name":"Anheuser Busch",
+      "municipality":"Fort Collins",
+      "latitude":"40°37'2.93\" N",
+      "longitude":"105°0'18.49\" W",
+      "elevation":"5125"
+    }
+  ,
+    {
+      "id": "coldren",
+      "name": "Aspen Brewing Company",
+      "municipality": "Aspen",
+      "latitude": "39°11'24\" N",
+      "longitude": "106°49'06\" W",
+      "elevation": "8000"
+    }
+  ,
+    {
+      "id": "Smagisano",
+      "name": "Avery Brewing Company",
+      "municipality": "Boulder",
+      "latitude": "40°3'45\" N",
+      "longitude": "105°12'17\" W",
+      "elevation": "5183"
+    }
+  ,
+    {
+      "id": "isaac6",
+      "name": "Big Air Brewery",
+      "municipality": "Edwards",
+      "latitude": "39°64'58.16\" N",
+      "longitude": "106°59'39.24\" W",
+      "elevation": "7222"
+    }
+  ,
+    {
+      "id":"kablack",
+      "name":"Black Bottle Brewery",
+      "municipality":"Fort Collins",
+      "latitude":"40°33'59\" N",
+      "longitude":"105°04'43\" W",
+      "elevation":"5035"
+    }
+  ,
+    {
+      "id": "jsearl",
+      "name": "Blue Moon Brewing Company",
+      "municipality": "Denver",
+      "latitude": "39°46'24.8\" N",
+      "longitude": "104°58'36.6\" W",
+      "elevation": "5183.2"
+    }
+  ,
+    {
+      "id":"tcostell",
+      "name":"Bonfire Brewing",
+      "municipality":"Eagle",
+      "latitude":"39°39'20\" N",
+      "longitude":"106°49'47\" W",
+      "elevation":"6601"
+    }
+  ,
+
+    {
+      "id": "kalinski",
+      "name": "Bootstrap Brewing Co.",
+      "municipality": "Niwot",
+      "latitude": "40°05'59\" N",
+      "longitude": "105°10'06\" W",
+      "elevation": "5183"
+    }
+  ,
+    {
+      "id":"darik",
+      "name":"Breckenridge Brewery & Pub",
+      "municipality":"Breckenridge",
+      "latitude":"39°28'33\" N",
+      "longitude":"106°02'38\" W",
+      "elevation":"9646"
+    }
+  ,
+    {
+      "id": "davidsim",
+      "name": "Bristol Brewing Company",
+      "municipality": "Colorado Springs",
+      "latitude": "38°48'40\" N",
+      "longitude": "104°49'38\" W",
+      "elevation": "7841"
+    }
+  ,
+    {
+      "id": "cutreap",
+      "name": "Butcherknife Brewing Company",
+      "municipality": "Steamboat Springs",
+      "latitude": "40°30'39.3\"N",
+      "longitude": "106°51'28.1\"W ",
+      "elevation": "6726"
+    }
+
+
+  ,
+
+    {
+      "id": "tnickels",
+      "name": "Carver Brewing Co.",
+      "municipality": "Durango",
+      "latitude": "37°16'11\" N",
+      "longitude": "107°52'49\" W",
+      "elevation": "6512"
+    }
+  ,
+    {
+      "id":"ikegentz",
+      "name":"Caution Brewing Company",
+      "municipality":"Denver",
+      "latitude":"39°41'52\" N",
+      "longitude":"105°4'55\" W",
+      "elevation":"5539"
+    }
+  ,
+    {
+      "id": "ayares97",
+      "name": "Cerberus Brewing Company",
+      "municipality": "Colorado Springs",
+      "latitude": "38°49'58\" N",
+      "longitude": "104°50'14\" W",
+      "elevation": "6003"
+    }
+  ,
+    {
+      "id":"jordantp",
+      "name":"Cerebral Brewing",
+      "municipality":"Denver",
+      "latitude":"39°44'22\" N",
+      "longitude":"104°56'42\" W",
+      "elevation":"5413"
+    }
+  ,
+    {
+      "id":"diegob",
+      "name":"Chain Reaction Brewing",
+      "municipality":"Denver",
+      "latitude":"39°41'58.32\" N",
+      "longitude":"105°0'4.29\" W",
+      "elevation":"5295"
+    }
+  ,
+    {
+      "id":"jdenesha",
+      "name":"City Star Brewing",
+      "municipality":"Berthoud",
+      "latitude":"40°18'18.36\" N",
+      "longitude":"105°4'44.4\" W",
+      "elevation":"5033"
+    }
+  ,
+    {
+      "id":"amadey",
+      "name":"Comrade Brewing Company",
+      "municipality":"Denver",
+      "latitude":"39°40'32.34\" N",
+      "longitude":"104°53'54.5424\" W",
+      "elevation":"5444"
+    }
+  ,
+    {
+      "id": "cblacks",
+      "name": "Coopersmith's Pub & Brewing",
+      "municipality": "Fort Collins",
+      "latitude": "40°35'14.7\" N",
+      "longitude": "105°4'32.3\" W",
+      "elevation": "4982"
+    }
+  ,
+    {
+      "id":"lwilson1",
+      "name":"Copper Club Brewing",
+      "municipality":"Fruita",
+      "latitude":"39°09'33.0\" N",
+      "longitude":"108°43'53.4\" W",
+      "elevation":"4514"
+    }
+  ,
+    {
+      "id":"chrismha",
+      "name":"Crow Hop Brewing",
+      "municipality":"Loveland",
+      "latitude":"40°23'40.48\" N",
+      "longitude":"105°4'26.65\" W",
+      "elevation":"4978"
+    }
+
+  ,
+    {
+      "id": "awlong",
+      "name": "Dillon Dam Brewery",
+      "municipality": "Dillon",
+      "latitude": "39°37'39\" N",
+      "longitude": "106°3'37.08\"  W",
+      "elevation": "8893"
+    }
+  ,
+    {
+      "id":"geektron",
+      "name":"Dry Dock Brewing Company",
+      "municipality":"Aurora",
+      "latitude":"39°39'09\" N",
+      "longitude":"104°48'43\" W",
+      "elevation":"5709"
+    }
+  ,
+    {
+      "id": "ewanlp",
+      "name": "Durango Brewing Company",
+      "municipality": "Durango",
+      "latitude": "37°17'51\" N",
+      "longitude": "107°52'18\" W",
+      "elevation": "6660"
+    }
+  ,
+    {
+      "id": "adair",
+      "name": "Eddyline Brewing",
+      "municipality": "Buena Vista",
+      "latitude": "38°50'26.01\" N",
+      "longitude": "106°7'57.43\" W",
+      "elevation": "7965"
+    }
+  ,
+    {
+      "id":"henryjb9",
+      "name":"Elk Mountain Brewing Inc",
+      "municipality":"Parker",
+      "latitude":"39°31'36\" N",
+      "longitude":"104°46'12\" W",
+      "elevation":"5966"
+    }
+  ,
+    {
+      "id": "npaul24",
+      "name": "Fate Brewing Company",
+      "municipality": "Boulder",
+      "latitude": "40°57.3\" N",
+      "longitude": "105°14'44.7\" W",
+      "elevation": "5253.3"
+    }
+  ,
+    {
+      "id":"firefox",
+      "name":"Epic Brewing Company",
+      "municipality":"Denver",
+      "latitude":"39°45'47\" N",
+      "longitude":"104°58'52\" W",
+      "elevation":"5204"
+    }
+  ,
+    {
+      "id":"haydenc",
+      "name":"Equinox Brewing",
+      "municipality":"Fort Collins",
+      "latitude":"40°59'00\" N",
+      "longitude":"105°08'00\" W",
+      "elevation":"5003"
+    }
+  ,
+    {
+      "id": "jsalzano",
+      "name": "Estes Park Brewery",
+      "municipality": "Estes Park",
+      "latitude": "40°22'17\" N",
+      "longitude": "105°31'34\" W",
+      "elevation": "7644"
+    }
+  ,
+    {
+      "id":"msmith91",
+      "name":"Florence Brewing Company",
+      "municipality":"Florence",
+      "latitude":"38°23'19.24\" N",
+      "longitude":"105°07'05.83\" W",
+      "elevation":"5186"
+    }
+  ,
+    {
+      "id":"eblocker",
+      "name":"Flying Dog",
+      "municipality":"Denver",
+      "latitude":"39°45'01\" N",
+      "longitude":"104°59'00\" W",
+      "elevation":"7152"
+    }
+
+  ,
+
+    {
+      "id":"tc30",
+      "name":"Funkwerks, Inc.",
+      "municipality":"Fort Collins",
+      "latitude":"40°34'59.5164\" N",
+      "longitude":"105°2'31.65\" W",
+      "elevation":"4921"
+    }
+  ,
+    {
+      "id": "zwomeldo",
+      "name": "Gilded Goat Brewing Company",
+      "municipality": "Fort Collins",
+      "latitude": "40°32'24.1\" N",
+      "longitude": "107°04'31.6\" W",
+      "elevation": "5097"
+    }
+  ,
+    {
+      "id": "bwedward",
+      "name": "Gravity Brewing",
+      "municipality": "Louisville",
+      "latitude": "39°58'33.888\" N",
+      "longitude": "105°7'43.1436\" W",
+      "elevation": "5337"
+    }
+  ,
+    {
+      "id":"wcschoonover",
+      "name":"Gunbarrel Brewing Company",
+      "municipality":"Boulder",
+      "latitude":"40°04'41\" N",
+      "longitude":"105°11'21\" W",
+      "elevation":"5175"
+    }
+  ,
+    {
+      "id":"stockeh",
+      "name":"High Hops Brewery",
+      "municipality":"Windsor",
+      "latitude":"40°28'52.9\" N",
+      "longitude":"104°56'08.1\" W",
+      "elevation":"4793"
+    }
+  ,
+    {
+      "id":"zgarno",
+      "name":"Horse and Dragon Brewing Company",
+      "municipality":"Fort Collins",
+      "latitude":"40°35'22.52\" N",
+      "longitude":"105°2'44.68\" W",
+      "elevation":"4933"
+    }
+  ,
+    {
+      "id": "calvinle",
+      "name": "Jessup Farm Barrel House",
+      "municipality": "Fort Collins",
+      "latitude": "40°33'43\" N",
+      "longitude": "105°2'16\" W",
+      "elevation": "4939"
+    }
+  ,
+    {
+      "id":"amroot96",
+      "name":"Launch Pad Brewery",
+      "municipality":"Aurora",
+      "latitude":"39°42'02\" N",
+      "longitude":"104°47'23\" W",
+      "elevation":"5597"
+    }
+  ,
+    {
+      "id":"jpode",
+      "name":"Left Hand Brewing Company",
+      "municipality":"Longmont",
+      "latitude":"40°15'83\" N",
+      "longitude":"105°11'50\" W",
+      "elevation":"4984"
+    }
+
+  ,
+
+    {
+      "id":"bovairds",
+      "name": "Liquid Mechanics Brewing",
+      "municipality":"Lafayette",
+      "latitude":"39°31'59.9\" N",
+      "longitude":"105°06'12.7\" W",
+      "elevation":"5303"
+    }
+  ,
+    {
+      "id": "jrindnls",
+      "name": "Lone Tree Brewing Company",
+      "municipality": "Lone Tree",
+      "latitude": "39°33'26\" N",
+      "longitude": "104°53'31\" W",
+      "elevation": "5948"
+    }
+  ,
+    {
+      "id": "jjserva",
+      "name": "Loveland Aleworks",
+      "municipality": "Loveland",
+      "latitude": "40°23'43\" N",
+      "longitude": "105°04'38\" W",
+      "elevation": "4983"
+    }
+  ,
+    {
+      "id": "addymmoran",
+      "name": "Mad Jack's Mountain Brewery",
+      "municipality": "Bailey",
+      "latitude": "39°24'09\" N",
+      "longitude": "105°28'47\" W",
+      "elevation": "7739"
+    }
+  ,
+    {
+      "id": "jjpk",
+      "name": "Mahogany Ridge Brewery",
+      "municipality": "Steamboat",
+      "latitude": "40°29'01\" N",
+      "longitude": "106°49'52\" W",
+      "elevation": "8606"
+
+    }
+  ,
+    {
+      "id":"nicno90",
+      "name":"Mockery Brewing",
+      "municipality":"Denver",
+      "latitude":"39°46'19.5\" N",
+      "longitude":"104°58'46.9\" W",
+      "elevation":"8518"
+    }
+  ,
+    {
+      "id":"camnagel",
+      "name":"Moffat Brewing Company",
+      "municipality":"Winter Park",
+      "latitude":"39°53'08.4\" N",
+      "longitude":"105°45'32.9\" W",
+      "elevation":"9173"
+    }
+  ,
+    {
+      "id": "mcclured",
+      "name": "Mountain Toad Brewing",
+      "municipality": "Golden",
+      "latitude": "39°45'30.4\" N",
+      "longitude": "105°13'26.9\" W",
+      "elevation": "5681.7"
+    }
+
+  ,
+    {
+      "id":"kolya",
+      "name":"New Belgium Brewing Company",
+      "municipality":"Fort Collins",
+      "latitude":"40°35'35\" N",
+      "longitude":"105°04'06\" W",
+      "elevation":"4955"
+    }
+  ,
+    {
+      "id": "cloerj",
+      "name": "Odell Brewing Company",
+      "municipality": "Fort Collins",
+      "latitude": "40°35'21\" N",
+      "longitude": "105°03'45\" W",
+      "elevation": "4944"
+    }
+  ,
+    {
+      "id":"ehuston",
+      "name":"Oskar Blues Brewery",
+      "municipality":"Longmont",
+      "latitude":"40°08'29.20\" N",
+      "longitude":"105°07'20.00\" W",
+      "elevation":"4986"
+    }
+  ,
+
+    {
+      "id":"psghotge",
+      "name":"Ouray Brewery",
+      "municipality":"Ouray",
+      "latitude":"38°01'12\" N",
+      "longitude":"107°40'35\" W",
+      "elevation":"7808"
+    }
+
+  ,
+
+    {
+      "id":"btroksa",
+      "name":"Outer Range Brewery",
+      "municipality":"Frisco",
+      "latitude":"39°35'20\" N",
+      "longitude":"106°05'57\" W",
+      "elevation":"9154"
+    }
+  ,
+    {
+      "id": "milewood",
+      "name": "Parts & Labor Brewing Company",
+      "municipality": "Sterling",
+      "latitude": "40°37'30\" N",
+      "longitude": "103°12'36\" W",
+      "elevation": "3933"
+    }
+  ,
+    {
+      "id": "mrd1992",
+      "name": "Platt Park Brewing",
+      "municipality": "Denver",
+      "latitude": "39°40'56\" N",
+      "logitude": "104°58'50\" W",
+      "elevation": "5298"
+    }
+  ,
+    {
+      "id": "lexgarr",
+      "name": "Prost Brewing Company",
+      "municipality": "Denver",
+      "latitude": "39°45'40\" N",
+      "longitude": "105°00'25\" W",
+      "elevation": "5233"
+    }
+  ,
+
+    {
+      "id":"mlnash2",
+      "name":"Pug Ryan’s Brewery",
+      "municipality":"Dillon",
+      "latitude":"39°37'40\" N",
+      "longitude":"106°02'47\" W",
+      "elevation":"9240"
+    }
+  ,
+    {
+
+      "id":"thejfromc",
+      "name":"Rally King Brewing",
+      "municipality":"Fort Collins",
+      "latitude":"40°33'57.84\" N",
+      "longitude":"105°3'24.135\" W",
+      "elevation":"4944"
+    }
+  ,
+    {
+      "id":"rrob1487",
+      "name":"Ratio Beerworks",
+      "municipality":"Denver",
+      "latitude":"39°76'15\" N",
+      "longitude":"104°98'10\" W",
+      "elevation":"5285"
+    }
+  ,
+    {
+      "id":"junyiliu",
+      "name":"Revolution Brewing",
+      "municipality":"Paonia",
+      "latitude":"38°52'10.15\" N",
+      "longitude":"107°35'50.80\" W",
+      "elevation":"5655"
+    }
+  ,
+
+    {
+      "id":"crgold",
+      "name":"Riff Raff Brewing Co.",
+      "municipality":"Pagosa Springs",
+      "latitude":"37°16'08\" N",
+      "longitude":"107°00'26\" W",
+      "elevation":"7096"
+    }
+
+
+  ,
+    {
+      "id": "hanlonmj",
+      "name": "Sanitas Brewing Company",
+      "municipality": "Boulder",
+      "latitude": "40°00'59\" N",
+      "longitude": "105°14'50\" W",
+      "elevation": "5430"
+    }
+
+
+  ,
+    {
+      "id": "rmil",
+      "name": "SKA Brewing",
+      "municipality": "Durango",
+      "latitude": "37°14'04\" N",
+      "longitude": "107°52'40\" W",
+      "elevation": "8923"
+    }
+  ,
+    {
+      "id": "dboston1",
+      "name": "SKEYE Brewing",
+      "municipality": "Longmont",
+      "latitude": "40°09'06\" N",
+      "longitude": "105°07'49\" W",
+      "elevation": "5075"
+    }
+  ,
+
+    {
+      "id": "wnr210",
+      "name": "Smiling Toad Brewery",
+      "municipality": "Colorado Springs",
+      "latitude": "38°48'23\" N",
+      "longitude": "104°50'18\" W",
+      "elevation": "6072"
+    }
+  ,
+    {
+      "id":"ahinter",
+      "name":"Snowbank Brewing",
+      "municipality":"Fort Collins",
+      "latitude":"40°35'24\" N",
+      "longitude":"105°3'31.32\" W",
+      "elevation":"5034"
+    }
+  ,
+    {
+      "id": "alexfro",
+      "name": "Something Brewery",
+      "municipality": "Brighton",
+      "latitude": "39°59'18.0\" N",
+      "longitude": "104°49'16.8\" W",
+      "elevation": "4984"
+    }
+  ,
+    {
+      "id":"ajbieber",
+      "name":"Station 26 Brewing Co.",
+      "municipality":"Denver",
+      "latitude":"39°46'05\" N",
+      "longitude":"104°54'21\" W",
+      "elevation":"5288"
+    }
+  ,
+    {
+      "id":"jbcarter",
+      "name":"Storybook Brewing",
+      "municipality":"Colorado Springs",
+      "latitude":"38°52'38\" N",
+      "longitude":"104°48'42\" W",
+      "elevation":"6365"
+    }
+  ,
+    {
+      "id":"mzjin",
+      "name":"The Eldo Brewery",
+      "municipality":"Crested Butte",
+      "latitude":"38°52'11\" N",
+      "longitude":"106°59'12\" W",
+      "elevation":"8919"
+    }
+  ,
+    {
+      "id":"cntorres",
+      "name":"The Walter Brewing Company",
+      "municipality":"Pueblo",
+      "latitude":"38°15'44\" N",
+      "longitude":"104°36'36\" W",
+      "elevation":"4652"
+    }
+  ,
+    {
+      "id": "edc",
+      "name": "Three Four Beer Co",
+      "municipality": "Fort Collins",
+      "latitude": "40°34'30\" N",
+      "longitude": "105°5'47\" W",
+      "elevation": "5029.8"
+    }
+  ,
+    {
+      "id":"connorbc",
+      "name": "Tommyknocker Brewery & Pub",
+      "municipality":"Idaho Springs",
+      "latitude":"39°44'27\" N",
+      "longitude":"105°31'03\" W",
+      "elevation":"7526"
+    }
+  ,
+    {
+      "id":"mzjin",
+      "name":"Trinity Brewing Company",
+      "municipality":"Colorado Springs",
+      "latitude":"38°53'50.82\" N",
+      "longitude":"104°51'15.62\" W",
+      "elevation":"6380"
+    }
+
+  ,
+    {
+      "id":"dluckner",
+      "name":"Two Mile High Brewing Company",
+      "municipality":"Leadville",
+      "latitude":"39°15'27.82\" N",
+      "longitude":"106°17'12.62\" W",
+      "elevation":"12008"
+    }
+
+  ,
+
+    {
+      "id": "dcdennis",
+      "name": "Two Rascals Brewing Company",
+      "municipality": "Montrose",
+      "latitude": "38°28'43.76\" N",
+      "longitude": "107°52'48.04\" W",
+      "elevation": "1767"
+    }
+  ,
+    {
+      "id":"abee77",
+      "name":"Two22 Brew",
+      "municipality":"Centennial",
+      "latitude":"39°38'07\" N",
+      "longitude":"104°45'32\" W",
+      "elevation":"5872"
+    }
+  ,
+    {
+      "id": "shaders",
+      "name": "Upslope Brewing Company",
+      "municipality": "Boulder",
+      "latitude": "40°3'47\" N",
+      "longitude": "105°16'46\" W",
+      "elevation": "5537.9"
+    }
+  ,
+    {
+      "id": "natemort",
+      "name": "Ursula Brewery",
+      "municipality": "Aurora",
+      "latitude": "39°44'54.2\"N",
+      "longitude": "104°50'17.0\"W",
+      "elevation": "5422"
+    }
+  ,
+    {
+      "id":"Jatanche",
+      "name":"Vail Brewing Company",
+      "municipality":"Vail",
+      "latitude":"39°36'54\" N",
+      "longitude":"106°28'10\" W",
+      "elevation":"9645.7"
+    }
+  ,
+    {
+      "id": "larkwt",
+      "name": "Verboten Brewing",
+      "municipality": "Loveland",
+      "latitude": "40°23'48\" N",
+      "logitude": "105°04'30\" W",
+      "elevation": "4984"
+    }
+  ,
+    {
+      "id": "lburford",
+      "name": "Very Nice Brewing Company",
+      "municipality": "Nederland",
+      "latitude": "39°57'17\" N",
+      "longitude": "105°30'32\" W",
+      "elevation": "10085"
+    }
+  ,
+    {
+      "id":"araelee",
+      "name":"WeldWerks Brewing",
+      "municipality":"Greeley",
+      "latitude":"40°25'41.505\" N",
+      "longitude":"104°41'25.261\" W",
+      "elevation":"4655"
+    }
+  ,
+    {
+      "id":"kdc898",
+      "name":"Wild Woods Brewery",
+      "municipality":"Boulder",
+      "latitude":"40°00'58\" N",
+      "longitude":"105°13'33\" W",
+      "elevation":"5430"
+    }
+  ,
+
+    {
+      "id": "ckl229",
+      "name": "Wiley Roots Brewing Company",
+      "municipality": "Greeley",
+      "latitude": "40° 25’ 35\" N ",
+      "longitude": "104°41’18\" W",
+      "elevation": "4656"
+    }
+  ,
+    {
+      "id":"cinva",
+      "name":"Wonderland Brewing",
+      "municipality":"Broomfield",
+      "latitude":"39°54'29\" N",
+      "longitude":"105°03'21\" W",
+      "elevation":"7119"
+    }
+  ,
+    {
+      "id":"bnewell1",
+      "name":"Wynkoop Brewing Company",
+      "municipality":"Denver",
+      "latitude":"39°45'12\" N",
+      "longitude":"104°59'54\" W",
+      "elevation":"5187"
+    }
+  ,
+    {
+      "id":"evanjs",
+      "name":"Yak & Yeti Restaurant & Brewpub",
+      "municipality":"Arvada",
+      "latitude":"39°48'07\" N",
+      "longitude":"105°05'03\" W",
+      "elevation":"5446"
+    }
+  ,
+    {
+      "id": "tgsteven",
+      "name": "Yampa Valley Brewing Company",
+      "municipality": "Hayden",
+      "latitude": "40°29'44\" N",
+      "logitude": "107°15'26\" W",
+      "elevation": "6345"
+    }
+  ,
+    {
+      "id":"sgthun",
+      "name":"Zwei Brewing",
+      "municipality":"Fort Collins",
+      "latitude":"40°52'27\" N",
+      "longitude":"105°07'83\" W",
+      "elevation":"5032"
+    }
+  ,
+    {
+      "id":"davematt",
+      "name":"Steamworks Brewing Company",
+      "municipality":"Durango",
+      "latitude":"37°16'20.47\" N",
+      "longitude":"107°52'47.83\" W",
+      "elevation":"6566"
+    }
+  ,
+    {
+      "id":"davematt",
+      "name":"Steamworks Brewing Company",
+      "municipality":"Durango",
+      "latitude":"37°16'20.47\" N",
+      "longitude":"107°52'47.83\" W",
+      "elevation":"6566"
+    }
+  ,
+    {
+      "id":"kmyrams",
+      "name":"Telluride Brewing Company",
+      "municipality":"Telluride",
+      "latitude":"37°56'45\" N",
+      "longitude":"107°52'34\" W",
+      "elevation":"8729"
+    }
+
+  ,
+    {
+      "id":"xdd",
+      "name": "Odyssey Beerwekrs",
+      "municipality":"Arvada",
+      "latitude":"39°48'11\" N",
+      "longitude":"105°03'09\" W",
+      "elevation":"7119"
+    }
+
+  ,
+    {
+      "id":"kartikkhurana1898",
+      "name":"West Flanders Brewing Co.",
+      "municipality":"Boulder",
+      "latitude":"40°01'19.0\" N",
+      "longitude":"105°16'51.2\" W",
+      "elevation":"5355"
+    }
+
+
+  ,
+    {
+      "id": "djchap",
+      "name": "Mountain Toad Brewing",
+      "municipality": "Golden",
+      "latitude": "39°45'29\" N",
+      "longitude": "105°13'27\" W",
+      "elevation": "5774"
+    }
+  ]
+}
+
+
+
