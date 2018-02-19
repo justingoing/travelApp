@@ -20,10 +20,51 @@ class Itinerary extends Component {
     return {distance, units, dests, dists};
   }
 
+  createRows(){
+
+  }
+
   render() {
     let table = this.createTable();
+    var length = this.props.trip.places.length;
 
     return(
+
+
+
+        <div id="itinerary">
+            <h4>Round trip distance of {table.distance} {table.units}. </h4>
+            <table className="table table-responsive table-bordered">
+                <thead>
+                <tr className="table-info">
+                    <th className="align-middle">Destination</th>
+                    <th className="align-middle">{table.units}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <script>
+                    function createRows() {
+                    var myRows;
+                    for (var i = 0; i < length; i++) {
+                    myRows += "<tr>";
+                    myRows += "<td> this.props.trip.places[i] </td>";
+                    myRows += "<td> this.props.trip.distances[i] </td>";
+                    myRows += "</tr>";
+                }
+                    document.write(myRows);
+                }
+
+                </script>
+                <script>
+                    this.createRows();
+
+                </script>
+                </tbody>
+            </table>
+        </div>
+
+
+        /*
         <div id="itinerary">
           <h4>Round trip distance of {table.distance} {table.units}. </h4>
           <table className="table table-responsive table-bordered">
@@ -41,6 +82,7 @@ class Itinerary extends Component {
             </tbody>
           </table>
         </div>
+        */
     )
   }
 }
