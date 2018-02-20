@@ -23,10 +23,9 @@ class Itinerary extends Component {
   createRows() {
     var rows = '';
     for(var i = 0; i < this.prop.trip.places.length; i++){
-      rows += "<tr>";
-      rows += "<th className=\"table-info align-middle\">";
-      rows += this.props.trip.places[i] + this.prop.trip.distances[i] + "</tr>" ;
+      rows += "<tr><td>" + this.props.trip.places[i] + "</td><td>" + this.prop.trip.distances[i] + "</td></tr>" ;
     }
+    document.write(rows);
   }
 
   render() {
