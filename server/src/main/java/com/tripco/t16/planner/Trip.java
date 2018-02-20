@@ -96,7 +96,7 @@ public class Trip {
       Coords cur = this.getMappedCoords(coords.get(i).x, coords.get(i).y);
       Coords nex = this.getMappedCoords(coords.get(i+1).x, coords.get(i+1).y);
 
-      svg += "<line stroke=\"#7FFF00\" y2=\"" + nex.y + "\" x2=\"" + nex.x +
+      svg += "<line stroke=\"%237FFF00\" y2=\"" + nex.y + "\" x2=\"" + nex.x +
               "\" y1=\"" + cur.y + "\" x1=\"" + cur.x + "\" stroke-width=\"5\" fill=\"none\"/>";
 
       svg += "<circle cx=\"" + cur.x + "\" cy=\" " + cur.y + " \" r=\"" + Trip.DEST_RADIUS + "\" stroke=\"black\" stroke-width=\"3\" fill=\"red\" />";
