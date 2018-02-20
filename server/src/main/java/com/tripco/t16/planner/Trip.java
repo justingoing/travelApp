@@ -33,10 +33,17 @@ public class Trip {
    * It might need to reorder the places in the future.
    */
   public void plan() {
+
+    double decimalLat = 0;
+    double decimalLong = 0;
+
     for(int i = 0; i < this.places.size(); i++) {
       //System.out.println(this.places.get(i).name);
       validateLatitude(this.places.get(i).latitude);
       validateLongitude(this.places.get(i).longitude);
+
+      decimalLat = convertToDecimal(this.places.get(i).latitude);
+      decimalLong = convertToDecimal(this.places.get(i).longitude);
     }
 
     this.map = svg();
@@ -202,43 +209,106 @@ public class Trip {
   }
 
   public boolean validateLatitude(String latIN) {
-    System.out.println("Latitude: " + latIN);
+    //System.out.println("Latitude: " + latIN);
     if(latIN.matches("\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+\\.?\\d*[\"|″]\\s*[N|S]")) //degrees minutes seconds
-      System.out.println("Matches #1");
+      return true; //System.out.println("Matches #1");
     else if(latIN.matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[N|S]")) //degrees decimal minutes
-      System.out.println("Matches #2");
+      return true; //System.out.println("Matches #2");
     else if(latIN.matches("\\s*-?\\d+\\.?\\d*[°|º]\\s*[N|S]")) //decimal degrees
-      System.out.println("Matches #3");
+      return true; //System.out.println("Matches #3");
     else if(latIN.matches("\\s*-?\\d+\\.?\\d*\\s*[N|S]")) //floating point
-      System.out.println("Matches #4");
+      return true; //System.out.println("Matches #4");
     else if(latIN.matches("\\s*-?\\d+\\.?\\d*\\s*"))
-      System.out.println("Matches #5");
+      return true; //System.out.println("Matches #5");
     else {
+      System.out.println("Latitude: " + latIN);
       System.out.println("No match!");
       return false;
       //ERROR OUT??
     }
-    return true;
   }
 
   public boolean validateLongitude(String longIN) {
-    System.out.println("Longitude: " + longIN);
+    //System.out.println("Longitude: " + longIN);
     if(longIN.matches("\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+\\.?\\d*[\"|″]\\s*[E|W]")) //degrees minutes seconds
-      System.out.println("Matches #1");
+      return true; //System.out.println("Matches #1");
     else if(longIN.matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[E|W]")) //degrees decimal minutes
-      System.out.println("Matches #2");
+      return true; //System.out.println("Matches #2");
     else if(longIN.matches("\\s*-?\\d+\\.?\\d*[°|º]\\s*[E|W]")) //decimal degrees
-      System.out.println("Matches #3");
+      return true; //System.out.println("Matches #3");
     else if(longIN.matches("\\s*-?\\d+\\.?\\d*\\s*[E|W]")) //floating point
-      System.out.println("Matches #4");
+      return true; //System.out.println("Matches #4");
     else if(longIN.matches("\\s*-?\\d+\\.?\\d*\\s*"))
-      System.out.println("Matches #5");
+      return true; //System.out.println("Matches #5");
     else {
+      System.out.println("Longitude: " + longIN);
       System.out.println("No match!");
       return false;
       //ERROR OUT?
     }
-    return true;
+  }
+
+  public double convertToDecimal(String conv) {
+
+    double seconds = 0;
+    double minutes = 0;
+    double degrees = 0;
+    double direction = 1;
+
+    if(conv.contains("W") || conv.contains("S"))
+      direction = -1;
+
+    int degreeSymbol = 0;
+    int minuteSymbol = 0;
+    int secondSymbol = 0;
+
+    boolean foundMinute = false;
+    boolean foundSecond = false;
+
+    for(int i = 0; i < conv.length(); i++) {
+      char current = conv.charAt(i);
+
+      if(current == '\'' || current == '′') {
+        minuteSymbol = i;
+        foundMinute = true;
+      }
+
+      if(current == '\"' || current == '″') {
+        secondSymbol = i;
+        foundSecond = true;
+      }
+
+      if(current == '°' || current == 'º')
+        degreeSymbol = i;
+    }
+
+    if(foundSecond) {
+      seconds = Double.parseDouble(conv.substring(minuteSymbol + 1, secondSymbol));
+      seconds /= 3600; //convert seconds to degrees
+    }
+    if(foundMinute) {
+      minutes = Double.parseDouble(conv.substring(degreeSymbol+1,minuteSymbol));
+      minutes /= 60; //convert minutes to degrees
+    }
+
+    if(foundMinute == true && foundSecond == true) { //input has both minutes and seconds
+      degrees = Double.parseDouble(conv.substring(0,degreeSymbol));
+      degrees += (minutes + seconds);
+    }
+    else if (foundMinute == true) { //input has minutes
+      degrees = Double.parseDouble(conv.substring(0,degreeSymbol));
+      degrees += minutes;
+    }
+    else if (degreeSymbol != 0) { //just degrees with symbol and direction
+      degrees = Double.parseDouble(conv.substring(0, degreeSymbol));
+    }
+    else { //just number
+      degrees = Double.parseDouble(conv);
+    }
+
+    System.out.println(degrees);
+
+    return degrees * direction;
   }
 
 }
