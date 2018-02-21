@@ -158,12 +158,11 @@ public class Trip {
    */
   private String svg() {
     String colorado = this.getSVGFromFile("/colorado.svg");
-    String borders = this.getSVGFromFile("/borders.svg");
 
     String finalSVG =
             "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
             "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1066.6073\" height=\"783.0824\">\n" +
-              colorado + borders + this.getLegsAsSVG() +
+              colorado + this.getLegsAsSVG() +
             "</svg>";
 
     return finalSVG;

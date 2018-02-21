@@ -8,3 +8,5 @@ client/*.log
 
 client_bundle/
 target/
+
+client/package-lock.json
