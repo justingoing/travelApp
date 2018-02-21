@@ -56,11 +56,11 @@ class Application extends Component {
         //Ensure that we have options.
         if (!tffi.hasOwnProperty('options') || tffi.options === null) {
             tffi.options = defaultTrip.options;
-        }
-
-        //Ensure that we have at least the distances
-        if (!tffi.hasOwnProperty('options.distance') || tffi.options.distance === null) {
-            tffi.options.distance = defaultTrip.options.distance;
+        } else {
+            //Ensure that we have at least the distances
+            if (!tffi.options.hasOwnProperty('distance') || tffi.options.distance === null) {
+                tffi.options.distance = defaultTrip.options.distance;
+            }
         }
     }
 
@@ -68,8 +68,9 @@ class Application extends Component {
   }
 
   updateOptions(options){
-    console.log(options);
-    // update the options in the trip.
+    if (options === "kilometers" || options === "miles") {
+        this.state.trip.options.distance = options;
+    }
   }
 
   render() {
