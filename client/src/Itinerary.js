@@ -11,19 +11,23 @@ class Itinerary extends Component {
     let distance = 0;  // need to sum this from real the trip
     let units = this.props.trip.options.distance;
 
+    let dests = this.props.trip.places.map((item) => item.name);
+    let dists = this.props.trip.places.map((item) => item.distances);
+
+    /*
     //console.log(this.props.trip.places);
     let dests = this.props.trip.places.map((item) => <td>{item.name}</td>);
     let dists = this.props.trip.distances.map((item) => <td>{item}</td>);
-
-    console.log(this.props.trip);
+    */
 
     return {distance, units, dests, dists};
   }
 
-  createRows() {
+  createRows(table) {
+    //console.log("go")
     var rows = '';
-    for(var i = 0; i < this.prop.trip.places.length; i++){
-      rows += "<tr><td>" + this.props.trip.places[i] + "</td><td>" + this.prop.trip.distances[i] + "</td></tr>" ;
+    for(var i = 0; i < table.dests.length; i++){
+      rows += "<tr>" + table.dests[i] + table.dists[i] + "</tr>";
     }
     document.write(rows);
   }
@@ -46,13 +50,10 @@ class Itinerary extends Component {
               </tr>
             </thead>
             <tbody>
-              <script>
-                createRows();
-              </script>
+              <script type="text/javascript"> createRows(table) </script>
             </tbody>
           </table>
         </div>
-
 
 
         /*
