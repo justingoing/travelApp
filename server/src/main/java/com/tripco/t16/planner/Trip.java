@@ -189,22 +189,12 @@ public class Trip {
     //Create empty list of distances and get an arraylist of coords.
     ArrayList<Integer> dist = new ArrayList<Integer>();
 
-    // Add a zero distance at the beginning,
-    // coz it's zero miles from somewhere to itself.
-    if (coords.size() > 0) {
-        dist.add(0);
-    }
-
     //And then calculate the distances.
-    for (int i = 1; i < coords.size(); i++) {
+    for (int i = 1; i <= coords.size(); i++) {
       Coords p1 = this.coords.get(i - 1);
-      Coords p2 = this.coords.get(i);
+      Coords p2 = this.coords.get(i % coords.size());
 
       boolean useKilometers = (options != null && options.distance != null && options.distance.equalsIgnoreCase("kilometers"));
-      System.out.println("Use Kilometers? " + useKilometers);
-      System.out.println("but options are " + options);
-      System.out.println("but options are2 " + (options != null ? options.distance : ""));
-
       dist.add((int) Math.round(DistanceCalculator.calculateGreatCircleDistance(p1.x, p1.y, p2.x, p2.y, useKilometers)));
     }
 

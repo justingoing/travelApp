@@ -20,8 +20,17 @@ class Itinerary extends Component {
     let distance = this.calcDistance();  // need to sum this from real the trip
     let units = this.props.trip.options.distance;
 
-    let dests = this.props.trip.places.map((item) => <td>{item.name}</td>);
+    let dests = this.props.trip.places.map((item, index) => <td key={index}>{item.name}</td>);
     let dists = this.props.trip.distances.map((item) => <td>{item}</td>);
+
+    if (dists.length > 0) {
+        dists.unshift(<td key={-1}> {0} </td>)
+    }
+
+    if (dests.length > 0) {
+        dests.push(<td key={-1}> {dests[0].props.children} </td>)
+    }
+
 
     console.log(this.props.trip);
 
