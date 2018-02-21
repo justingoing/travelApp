@@ -52,7 +52,6 @@ public class TestTrip {
    */
   public void testResources() {
     assertNotEquals(trip.defaultSVG, trip.getSVGFromFile("/colorado.svg"));
-    assertNotEquals(trip.defaultSVG, trip.getSVGFromFile("/borders.svg"));
   }
 
   @Test
