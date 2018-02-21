@@ -9,16 +9,37 @@ class Options extends Component{
   constructor(props) {
     super(props);
     this.changeOption = this.changeOption.bind(this);
+
+    this.state = {
+        buttonKMStyle: "btn btn-outline-dark ",
+        buttonMIStyle: "btn btn-outline-dark active"
+    }
   }
 
-  changeOption(arg) {
-    console.log(arg);
-    //this.props.updateOptions(arg);
+  changeOption(e, useKM) {
+    e.preventDefault();
+      this.props.updateOptions(useKM ? "kilometers" : "miles");
+      this.calcStyles(useKM);
+  }
+
+    calcStyles(useKilometers) {
+        let defaultStyle = "btn btn-outline-dark ";
+
+        if (useKilometers) {
+            this.setState({buttonKMStyle: defaultStyle + "active"});
+            this.setState({buttonMIStyle: defaultStyle});
+        } else {
+            this.setState({buttonMIStyle: defaultStyle + "active"});
+            this.setState({buttonKMStyle: defaultStyle});
+        }
+    }
+
+  componentWillReceiveProps(nextProps) {
+      this.calcStyles(nextProps.options.distance === "kilometers");
   }
 
   render() {
-    // @todo need to update the options when a button is pressed
-    return(
+      return(
         <div id="options" className="card">
           <div className="card-header bg-info text-white">
             Options
@@ -26,11 +47,11 @@ class Options extends Component{
           <div className="card-body">
             <p>Highlight the options you wish to use.</p>
             <div className="btn-group btn-group-toggle" data-toggle="buttons">
-              <label className="btn btn-outline-dark active">
-                <input type="radio" id="miles" name="distance" autcomplete="off" defaultChecked/> Miles
+              <label className={this.state.buttonMIStyle}>
+                <input type="radio" id="miles" name="distance" autcomplete="off" onClick={(e) => this.changeOption(e, false)} defaultChecked/> Miles
               </label>
-              <label className="btn btn-outline-dark ">
-                <input type="radio" id="kilometers" name="distance" autcomplete="off"/> Kilometers
+              <label className={this.state.buttonKMStyle}>
+                <input type="radio" id="kilometers" name="distance" autcomplete="off" onClick={(e) => this.changeOption(e, true)}/> Kilometers
               </label>
             </div>
           </div>
