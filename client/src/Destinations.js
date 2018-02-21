@@ -25,8 +25,7 @@ class Destinations extends Component {
     }
 
   render() {
-    // need to clean up the button
-    const count = 99; // need to count the number in the trip
+    const count = this.props.trip.places.length;
     return (
         <div id="destinations" className="card">
           <div className="card-header bg-info text-white">
