@@ -82,12 +82,7 @@ public class Trip {
   public String getLegsAsSVG()
   {
     // Hardcoded for testing
-    ArrayList<Coords> coords = new ArrayList<Coords>();
-    coords.add(new Coords(40.456, -105.053));
-    coords.add(new Coords(39.654, -106.123));
-    coords.add(new Coords(37.76, (double)-104));
-    coords.add(new Coords((double)39, -108.2));
-    coords.add(new Coords(40.5, -103.2)); //Sterling
+    ArrayList<Coords> coords = placesToCoords();
 
     String svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1066.6073\" height=\"783.0824\">";
 
@@ -181,17 +176,40 @@ public class Trip {
    */
   private ArrayList<Integer> legDistances() {
 
+    //Create empty list of distances and get an arraylist of coords.
     ArrayList<Integer> dist = new ArrayList<Integer>();
+    ArrayList<Coords> coords = placesToCoords();
 
-    // hardcoded example
-    dist.add(12);
-    dist.add(23);
-    dist.add(34);
-    dist.add(45);
-    dist.add(65);
-    dist.add(19);
+    // Add a zero distance at the beginning,
+    // coz it's zero miles from somewhere to itself.
+    if (coords.size() > 0) {
+        dist.add(0);
+    }
+
+    //And then calculate the distances.
+    for (int i = 1; i < coords.size(); i++) {
+      Coords p1 = coords.get(i - 1);
+      Coords p2 = coords.get(i);
+
+      dist.add((int) Math.round(DistanceCalculator.calculateGreatCircleDistance(p1.x, p1.y, p2.x, p2.y, false)));
+    }
 
     return dist;
+  }
+
+  /**
+   * Returns an arraylist containing a list of coordinates in the same order as the
+   * places arraylist. In each coord, X is the latitude, Y is the longitude.
+   *
+   * @return
+   */
+  private ArrayList<Coords> placesToCoords() {
+    ArrayList<Coords> coords = new ArrayList<>();
+    for (Place p : places) {
+      coords.add(new Coords(convertToDecimal(p.latitude), convertToDecimal(p.longitude)));
+    }
+
+    return coords;
   }
 
   /**
