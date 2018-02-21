@@ -227,13 +227,13 @@ public class Trip {
 
   public boolean validateLatitude(String latIN) {
     //System.out.println("Latitude: " + latIN);
-    if(latIN.matches("\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+\\.?\\d*[\"|″]\\s*[N|S]")) //degrees minutes seconds
+    if(latIN.matches("\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+\\.?\\d*[\"|″]\\s*[N|S]\\s*")) //degrees minutes seconds
       return true; //System.out.println("Matches #1");
-    else if(latIN.matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[N|S]")) //degrees decimal minutes
+    else if(latIN.matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[N|S]\\s*")) //degrees decimal minutes
       return true; //System.out.println("Matches #2");
-    else if(latIN.matches("\\s*-?\\d+\\.?\\d*[°|º]\\s*[N|S]")) //decimal degrees
+    else if(latIN.matches("\\s*-?\\d+\\.?\\d*[°|º]\\s*[N|S]\\s*")) //decimal degrees
       return true; //System.out.println("Matches #3");
-    else if(latIN.matches("\\s*-?\\d+\\.?\\d*\\s*[N|S]")) //floating point
+    else if(latIN.matches("\\s*-?\\d+\\.?\\d*\\s*[N|S]\\s*")) //floating point
       return true; //System.out.println("Matches #4");
     else if(latIN.matches("\\s*-?\\d+\\.?\\d*\\s*"))
       return true; //System.out.println("Matches #5");
@@ -247,13 +247,13 @@ public class Trip {
 
   public boolean validateLongitude(String longIN) {
     //System.out.println("Longitude: " + longIN);
-    if(longIN.matches("\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+\\.?\\d*[\"|″]\\s*[E|W]")) //degrees minutes seconds
+    if(longIN.matches("\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+(\\.\\d*)?[\"|″]\\s*[E|W]\\s*")) //degrees minutes seconds
       return true; //System.out.println("Matches #1");
-    else if(longIN.matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[E|W]")) //degrees decimal minutes
+    else if(longIN.matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[E|W]\\s*")) //degrees decimal minutes
       return true; //System.out.println("Matches #2");
-    else if(longIN.matches("\\s*-?\\d+\\.?\\d*[°|º]\\s*[E|W]")) //decimal degrees
+    else if(longIN.matches("\\s*-?\\d+\\.?\\d*[°|º]\\s*[E|W]\\s*")) //decimal degrees
       return true; //System.out.println("Matches #3");
-    else if(longIN.matches("\\s*-?\\d+\\.?\\d*\\s*[E|W]")) //floating point
+    else if(longIN.matches("\\s*-?\\d+\\.?\\d*\\s*[E|W]\\s*")) //floating point
       return true; //System.out.println("Matches #4");
     else if(longIN.matches("\\s*-?\\d+\\.?\\d*\\s*"))
       return true; //System.out.println("Matches #5");
@@ -323,7 +323,7 @@ public class Trip {
       degrees = Double.parseDouble(conv);
     }
 
-    System.out.println(degrees);
+    //System.out.println(degrees);
 
     return degrees * direction;
   }
