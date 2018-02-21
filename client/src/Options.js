@@ -22,16 +22,21 @@ class Options extends Component{
       this.calcStyles(useKM);
   }
 
-  calcStyles(useKilometers) {
-      let defaultStyle = "btn btn-outline-dark ";
+    calcStyles(useKilometers) {
+        let defaultStyle = "btn btn-outline-dark ";
 
-      if (useKilometers) {
-          this.setState({buttonKMStyle: defaultStyle + "active"});
-          this.setState({buttonMIStyle: defaultStyle});
-      } else {
-          this.setState({buttonMIStyle: defaultStyle + "active"});
-          this.setState({buttonKMStyle: defaultStyle});
-      }
+        if (useKilometers) {
+            this.setState({buttonKMStyle: defaultStyle + "active"});
+            this.setState({buttonMIStyle: defaultStyle});
+        } else {
+            this.setState({buttonMIStyle: defaultStyle + "active"});
+            this.setState({buttonKMStyle: defaultStyle});
+        }
+    }
+
+  componentWillReceiveProps(nextProps) {
+      console.log(nextProps.options.distance);
+      this.calcStyles(nextProps.options.distance === "kilometers");
   }
 
   render() {
