@@ -191,7 +191,12 @@ public class Trip {
       Coords p1 = coords.get(i - 1);
       Coords p2 = coords.get(i);
 
-      dist.add((int) Math.round(DistanceCalculator.calculateGreatCircleDistance(p1.x, p1.y, p2.x, p2.y, false)));
+      boolean useKilometers = (options != null && options.distance != null && options.distance.equalsIgnoreCase("kilometers"));
+      System.out.println("Use Kilometers? " + useKilometers);
+      System.out.println("but options are " + options);
+      System.out.println("but options are2 " + (options != null ? options.distance : ""));
+
+      dist.add((int) Math.round(DistanceCalculator.calculateGreatCircleDistance(p1.x, p1.y, p2.x, p2.y, useKilometers)));
     }
 
     return dist;
