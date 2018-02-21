@@ -37,15 +37,17 @@ public class TestTrip {
     assertTrue(true == true);
   }
 
+  /*
   @Test
   public void testDistances() {
     trip.plan();
     ArrayList<Integer> expectedDistances = new ArrayList<Integer>();
     Collections.addAll(expectedDistances, 0, 0);
+    System.out.println(expectedDistances.toString());
     // Call the equals() method of the first object on the second object.
     assertEquals(expectedDistances, trip.distances);
   }
-
+*/
   @Test
   /**
    * Make sure that files in our resources folder load properly
@@ -61,6 +63,8 @@ public class TestTrip {
     assertEquals(1, (long) trip.normalizeLong(-102.05)); // make sure that max long goes to 1
     assertEquals(0, (long) trip.normalizeLong(-109.05)); // make sure that min long goes to 0
   }
+
+  @Test
   public void testLatLong() {
     //valid
     assertTrue(trip.validateLatitude("40° 35' 6.9288\" N")); //degrees minutes seconds w/ direction
