@@ -68,8 +68,9 @@ class Application extends Component {
   }
 
   updateOptions(options){
-    console.log(options);
-    // update the options in the trip.
+    if (options === "kilometers" || options === "miles") {
+        this.state.trip.options.distance = options;
+    }
   }
 
   render() {
