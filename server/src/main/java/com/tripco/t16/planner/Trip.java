@@ -105,6 +105,12 @@ public class Trip {
         svg += "<circle cx=\"" + nex.x + "\" cy=\" " + nex.y + " \" r=\"" + Trip.DEST_RADIUS + "\" stroke=\"black\" stroke-width=\"3\" fill=\"red\" />";
     }
 
+    Coords start = this.getMappedCoords(this.coords.get(0).x, this.coords.get(0).y);
+    Coords end = this.getMappedCoords(this.coords.get(this.coords.size()-1).x, this.coords.get(this.coords.size()-1).y);
+
+    svg += "<line stroke=\"%237FFF00\" y2=\"" + end.y + "\" x2=\"" + end.x +
+            "\" y1=\"" + start.y + "\" x1=\"" + start.x + "\" stroke-width=\"5\" fill=\"none\"/>";
+
     svg += "</svg>";
     return svg;
   }
