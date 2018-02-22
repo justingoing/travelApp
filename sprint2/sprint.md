@@ -60,13 +60,17 @@ Date | Tasks done  | Tasks in progress | Impediments
 2/8/18 |Streamlined tasks after seeing new code |Save File #78, Display Trip in Table/Itinerary #85, JSOn Validate Check (Client) #81, SVG Display #75 | Learn new code from TripCo executives 
 2/11/18 |Streamlined tasks after seeing new code |Save File #78, Display Trip in Table/Itinerary #85, JSOn Validate Check (Client) #81, SVG Display #75 | Learn new code from TripCo executives 
 2/15/18 |  #101, #97, #96, #78, #86, #94 | #99, #95, #85, #81, #100, #75 | none
-
+2/18/18 | #138,#135,#63,#134,#58,#65,#112,#62,#137,#136,#130,#129,#133,#128,#132,#131,#122,#103,#127,#109,#126,#125,#124,#115,#121,#102,#123,#57,#120,#108,#73,#119,#116,#117,#104,#75,#113,#100,#105,#59,#81,#64 | none | none
 ## Review
 
 #### Completed epics in Sprint Backlog 
 * *#60 Let user load a file with destinations*:  *Sam got this knocked out pretty quickly*
-* 
-
+* *#63 plan the trip in the order the user provided*
+* *#57 Plan trips in the state of colorado*
+* *#65 Give user option of iles or kilometers*
+* *#62 Show map of the round trip*
+* *#59 Let user load a file with destination*
+* *#64 Let user save their trip
 #### Incomplete epics in Sprint Backlog 
 * *user story*: *explanation...*
 *
