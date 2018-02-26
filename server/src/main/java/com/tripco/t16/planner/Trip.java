@@ -52,7 +52,8 @@ public class Trip {
     this.coords = this.placesToCoords();
 
     this.map = svg();
-    this.distances = legDistances();
+    nearestNeighbor();
+    //this.distances = legDistances();
 
   }
 
@@ -276,7 +277,7 @@ public class Trip {
     double degrees = 0;
     double direction = 1;
 
-    if(conv.contains("W") || conv.contains("S"))
+    if (conv.contains("W") || conv.contains("S"))
       direction = -1;
 
     int degreeSymbol = 0;
@@ -286,63 +287,101 @@ public class Trip {
     boolean foundMinute = false;
     boolean foundSecond = false;
 
-    for(int i = 0; i < conv.length(); i++) {
+    for (int i = 0; i < conv.length(); i++) {
       char current = conv.charAt(i);
 
-      if(current == '\'' || current == '′') {
+      if (current == '\'' || current == '′') {
         minuteSymbol = i;
         foundMinute = true;
       }
 
-      if(current == '\"' || current == '″') {
+      if (current == '\"' || current == '″') {
         secondSymbol = i;
         foundSecond = true;
       }
 
-      if(current == '°' || current == 'º')
+      if (current == '°' || current == 'º')
         degreeSymbol = i;
     }
 
-    if(foundSecond) {
-      if(conv.charAt(minuteSymbol+1) == ' ') {
+    if (foundSecond) {
+      if (conv.charAt(minuteSymbol + 1) == ' ') {
         //System.out.println("found space");
-        seconds = Double.parseDouble(conv.substring(minuteSymbol+2, secondSymbol));
-      }
-      else {
+        seconds = Double.parseDouble(conv.substring(minuteSymbol + 2, secondSymbol));
+      } else {
         //System.out.println("no spacing");
-        seconds = Double.parseDouble(conv.substring(minuteSymbol+1, secondSymbol));
+        seconds = Double.parseDouble(conv.substring(minuteSymbol + 1, secondSymbol));
       }
       seconds /= 3600; //convert seconds to degrees
     }
-    if(foundMinute) {
-      if(conv.charAt(degreeSymbol+1) == ' ') {
-        minutes = Double.parseDouble(conv.substring(degreeSymbol+2, minuteSymbol));
-      }
-      else {
-        minutes = Double.parseDouble(conv.substring(degreeSymbol+1, minuteSymbol));
+    if (foundMinute) {
+      if (conv.charAt(degreeSymbol + 1) == ' ') {
+        minutes = Double.parseDouble(conv.substring(degreeSymbol + 2, minuteSymbol));
+      } else {
+        minutes = Double.parseDouble(conv.substring(degreeSymbol + 1, minuteSymbol));
       }
 
       minutes /= 60; //convert minutes to degrees
     }
 
-    if(foundMinute == true && foundSecond == true) { //input has both minutes and seconds
-      degrees = Double.parseDouble(conv.substring(0,degreeSymbol));
-      degrees += (minutes + seconds);
-    }
-    else if (foundMinute == true) { //input has minutes
-      degrees = Double.parseDouble(conv.substring(0,degreeSymbol));
-      degrees += minutes;
-    }
-    else if (degreeSymbol != 0) { //just degrees with symbol and direction
+    if (foundMinute == true && foundSecond == true) { //input has both minutes and seconds
       degrees = Double.parseDouble(conv.substring(0, degreeSymbol));
-    }
-    else { //just number
+      degrees += (minutes + seconds);
+    } else if (foundMinute == true) { //input has minutes
+      degrees = Double.parseDouble(conv.substring(0, degreeSymbol));
+      degrees += minutes;
+    } else if (degreeSymbol != 0) { //just degrees with symbol and direction
+      degrees = Double.parseDouble(conv.substring(0, degreeSymbol));
+    } else { //just number
       degrees = Double.parseDouble(conv);
     }
 
     //System.out.println(degrees);
 
     return degrees * direction;
+  }
+
+
+  /**
+   *
+   * @param places
+   */
+  public void nearestNeighbor(List<Place> places) {
+    //Validate argument
+    if (places == null || places.size() <= 0) {
+      return;
+    }
+
+    //Populate our unvisited list.
+    LinkedList<Place> unvisited = new LinkedList<>();
+    for (Place p : places) {
+      unvisited.add(p);
+    }
+
+    //Structures that hold the output
+    ArrayList<Place> route = new ArrayList<>();
+    ArrayList<Integer> dists = new ArrayList<>();
+
+    //Add initial position
+    route.add(unvisited.remove(0));
+
+    //Loop through
+    while (unvisited.size() > 0) {
+      Place nearest = unvisited.get(0);
+      for (int i = 0; i < places.size(); i++) {
+
+      }
+
+
+    }
+
+    //Set stuff
+    places = route;
+    distances = dists;
+  }
+
+  public void twoOpt() {
+
   }
 
 }

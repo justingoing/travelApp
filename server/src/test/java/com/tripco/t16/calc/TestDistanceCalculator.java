@@ -11,23 +11,21 @@ public class TestDistanceCalculator {
     @Test
     public void testCommutative() {
         assertEquals(DistanceCalculator.calculateGreatCircleDistance(37, 102.05, 41, 109.05, false),
-                DistanceCalculator.calculateGreatCircleDistance(41, 109.05, 37, 102.05, false), .000001);
+                DistanceCalculator.calculateGreatCircleDistance(41, 109.05, 37, 102.05, false));
         assertNotEquals(DistanceCalculator.calculateGreatCircleDistance(37, 102.05, 41, 102.05, false),
-                DistanceCalculator.calculateGreatCircleDistance(41, 109.05, 37, 102.05, false), .000001);
+                DistanceCalculator.calculateGreatCircleDistance(41, 109.05, 37, 102.05, false));
     }
 
     @Test
     public void testMilesKM() {
         assertNotEquals(DistanceCalculator.calculateGreatCircleDistance(37, 102.05, 41, 109.05, true),
-                DistanceCalculator.calculateGreatCircleDistance(41, 109.05, 37, 102.05, false), .000001);
+                DistanceCalculator.calculateGreatCircleDistance(41, 109.05, 37, 102.05, false));
     }
 
     @Test
     public void testSpecific() {
-        assertEquals(Math.round(DistanceCalculator.calculateGreatCircleDistance(10, 50, 50, 10, true)), 5764
-                , .000001);
-        assertEquals(Math.round(DistanceCalculator.calculateGreatCircleDistance(10, 50, 50, 10, false)), 3581
-                , .000001);
+        assertEquals(DistanceCalculator.calculateGreatCircleDistance(10, 50, 50, 10, true), 5764);
+        assertEquals(DistanceCalculator.calculateGreatCircleDistance(10, 50, 50, 10, false), 3581);
     }
 
     @Test
