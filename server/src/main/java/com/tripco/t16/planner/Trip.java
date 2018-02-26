@@ -9,6 +9,7 @@ import spark.Request;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.tripco.t16.calc.DistanceCalculator;
 
@@ -195,8 +196,8 @@ public class Trip {
       Coords p1 = this.coords.get(i - 1);
       Coords p2 = this.coords.get(i % coords.size());
 
-      boolean useKilometers = (options != null && options.distance != null && options.distance.equalsIgnoreCase("kilometers"));
-      dist.add((int) Math.round(DistanceCalculator.calculateGreatCircleDistance(p1.x, p1.y, p2.x, p2.y, useKilometers)));
+      boolean useKilometers = (options != null && options.useKilometers());
+      dist.add(DistanceCalculator.calculateGreatCircleDistance(p1.x, p1.y, p2.x, p2.y, useKilometers));
     }
 
     return dist;
@@ -346,7 +347,7 @@ public class Trip {
    *
    * @param places
    */
-  public void nearestNeighbor(List<Place> places) {
+  public void nearestNeighbor() {
     //Validate argument
     if (places == null || places.size() <= 0) {
       return;
@@ -367,9 +368,17 @@ public class Trip {
 
     //Loop through
     while (unvisited.size() > 0) {
-      Place nearest = unvisited.get(0);
-      for (int i = 0; i < places.size(); i++) {
+      Place lastPlace = route.get(route.size() - 1);
+      Place nearest = null;
+      int dist = Integer.MAX_VALUE;
 
+      for (Place currentPlace : places) {
+        nearest.latitude += DistanceCalculator.calculateGreatCircleDistance(
+                convertToDecimal(lastPlace.latitude),
+                convertToDecimal(lastPlace.longitude),
+                convertToDecimal(currentPlace.latitude),
+                convertToDecimal(currentPlace.longitude),
+                false);
       }
 
 

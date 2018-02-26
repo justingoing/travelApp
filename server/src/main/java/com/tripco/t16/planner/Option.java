@@ -9,4 +9,7 @@ public class Option {
   public String distance;
   public String optimization;
 
+  public boolean useKilometers() {
+    return (distance != null && distance.equalsIgnoreCase("kilometers"));
+  }
 }
