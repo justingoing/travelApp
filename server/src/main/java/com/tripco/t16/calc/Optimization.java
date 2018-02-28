@@ -1,6 +1,12 @@
 package com.tripco.t16.calc;
 
 
+import com.tripco.t16.planner.Place;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 public class Optimization {
     public void nearestNeighbor(List<Place> places) {
         //Validate argument

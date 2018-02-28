@@ -21,7 +21,7 @@ public class DistanceCalculator {
      *
      * @param latitude - The longitude to check
      * @param longitude - The latitude to check
-     * @return
+     * @return - True if the position is in Colorado, false otherwise.
      */
     public static boolean isInColorado(double latitude, double longitude) {
         return (latitude <= COLORADO_TOP && latitude >= COLORADO_BOTTOM
@@ -38,12 +38,12 @@ public class DistanceCalculator {
      * @param lon1 - Longitude of the first point
      * @param lat2 - Latitude of the second point
      * @param lon2 - Longitude of the second point
-     * @param useKilometers - Parameter to set if we should output our distance as kilometers.
+     * @param radius - The radius of the earth, in whatever unit we so desire.
      * @return - Rounded distance between points.
      */
     public static int calculateGreatCircleDistance(double lat1, double lon1,
                                                     double lat2, double lon2,
-                                                    boolean useKilometers) {
+                                                    double radius) {
         //Convert to radians
         lat1 = Math.toRadians(lat1);
         lon1 = Math.toRadians(lon1);
@@ -61,11 +61,8 @@ public class DistanceCalculator {
         double centralAngle = 2.0 * Math.asin(c / 2.0);
 
 
-        //Use the correct radius (KM or MI)
-        double circleDistance =
-                (useKilometers == true ? EARTH_RADIUS_KM : EARTH_RADIUS_MI) * centralAngle;
-
-
-        return Math.round(circleDistance);
+        //Use the correct radius
+        double circleDistance = radius * centralAngle;
+        return (int) Math.round(circleDistance);
     }
 }
