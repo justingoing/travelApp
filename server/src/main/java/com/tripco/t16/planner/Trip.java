@@ -196,8 +196,7 @@ public class Trip {
       Coords p1 = this.coords.get(i - 1);
       Coords p2 = this.coords.get(i % coords.size());
 
-      boolean useKilometers = (options != null && options.useKilometers());
-      dist.add(DistanceCalculator.calculateGreatCircleDistance(p1.x, p1.y, p2.x, p2.y, useKilometers));
+      dist.add(DistanceCalculator.calculateGreatCircleDistance(p1.x, p1.y, p2.x, p2.y, options.getRadius()));
     }
 
     return dist;
@@ -345,7 +344,7 @@ public class Trip {
 
   /**
    *
-   * @param places
+   * @param
    */
   public void nearestNeighbor() {
     //Validate argument
@@ -378,7 +377,7 @@ public class Trip {
                 convertToDecimal(lastPlace.longitude),
                 convertToDecimal(currentPlace.latitude),
                 convertToDecimal(currentPlace.longitude),
-                false);
+                options.getRadius());
       }
 
 
