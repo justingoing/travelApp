@@ -23,6 +23,23 @@ public class Option {
   }
 
   /**
+   * Returns the optimization level the TFFI file requested.
+   *
+   * Potential optimization values:
+   * 0 - No optimization
+   * 1 - Nearest-Neighbor optimization
+   *
+   * @return
+   */
+  public int getOptimizationLevel() {
+    if (optimization.trim().equals("1")) {
+      return 1;
+    }
+
+    return 0;
+  }
+
+  /**
    * Gets the number of optimization levels that we support.
    * Will be greater or equal to zero; currently set to return 1.
    *
