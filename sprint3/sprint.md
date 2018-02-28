@@ -1,4 +1,4 @@
-# Sprint 2 - *t16* - *Dave Matthews Band*
+# Sprint 3 - *t16* - *Dave Matthews Band*
 
 ## Goal
 
@@ -9,8 +9,8 @@
 
 * Web application ready for demo and potential customer release.
 * Sprint Review and Restrospectives completed (sprint.md).
-* Product Increment release `v2.0` created on GitHub with appropriate version number and name, a description based on the Release Notes template, and the arhived files.
-* Version in pom.xml should be `<version>2.0.0</version>`.
+* Product Increment release `v3.0` created on GitHub with appropriate version number and name, a description based on the Release Notes template, and the arhived files.
+* Version in pom.xml should be `<version>3.0.0</version>`.
 * Javadoc and unit tests for public methods.
 * ~~Coverage at least 50% overall and for each class.~~
 
@@ -60,9 +60,9 @@ Date | Tasks done  | Tasks in progress | Impediments
 :--- | :--- | :--- | :---
 *date* | *@task only* | *@task only* | none
 2/22/18 | Developed sprint3 plan |Plan 3 in canvas | none | none
+2/28/18 | Further broke down epics into tasks, added new tasks for sql DB integration, broke down epic: let user select destinations for trip | sam - nearest neighbor, Isaac - connect to sql, justin - create search bar, paul - logos on ui, | midterms
 
-## Review
-
+## ReviewUI
 #### Completed epics in Sprint Backlog
 * *none*
 
