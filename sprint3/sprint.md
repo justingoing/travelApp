@@ -60,9 +60,9 @@ Date | Tasks done  | Tasks in progress | Impediments
 :--- | :--- | :--- | :---
 *date* | *@task only* | *@task only* | none
 2/22/18 | Developed sprint3 plan |Plan 3 in canvas | none | none
+2/28/18 | Further broke down epics into tasks, added new tasks for sql DB integration, broke down epic: let user select destinations for trip | sam - nearest neighbor, Isaac - connect to sql, justin - create search bar, paul - logos on ui, | midterms
 
-## Review
-
+## ReviewUI
 #### Completed epics in Sprint Backlog
 * *none*
 
