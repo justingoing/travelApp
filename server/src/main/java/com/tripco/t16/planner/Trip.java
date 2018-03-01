@@ -1,16 +1,7 @@
 package com.tripco.t16.planner;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.tripco.t16.server.HTTP;
-import spark.Request;
-
 import java.io.*;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 
 import com.tripco.t16.calc.DistanceCalculator;
 
@@ -51,7 +42,10 @@ public class Trip {
       }
     }
 
-    this.places = nearestNeighbor();
+    if (options.getOptimizationLevel() == 1) {
+      this.places = nearestNeighbor();
+    }
+
     this.coords = placesToCoords();
     this.distances = legDistances();
     this.map = svg();
@@ -269,7 +263,7 @@ public class Trip {
     }
   }
 
-  public double convertToDecimal(String conv) {
+  public static double convertToDecimal(String conv) {
 
     double seconds = 0;
     double minutes = 0;
@@ -339,276 +333,4 @@ public class Trip {
 
     return degrees * direction;
   }
-
-
-  /**
-   *
-   */
-  public ArrayList<Place> nearestNeighbor() {
-    //O(N)
-    //TODO optimize
-    PlaceDistPair[] placesArray = new PlaceDistPair[places.size()];
-    for (int i = 0; i < places.size(); i++) {
-      placesArray[i] = new PlaceDistPair();
-      placesArray[i].place = places.get(i);
-    }
-
-    int[][] distanceMatrix = new int[placesArray.length][placesArray.length];
-
-    //O(N^2)
-    //Rip through calculating the distance matrix.
-    //TODO optimize by 1/2
-    for (int i = 0; i < distanceMatrix.length; i++) {
-      for (int j = 0; j < distanceMatrix[i].length; j++) {
-        if (i == j) {
-          continue;
-        }
-
-        int distance = DistanceCalculator.calculateGreatCircleDistance(
-                convertToDecimal(placesArray[i].place.latitude),
-                convertToDecimal(placesArray[i].place.longitude),
-                convertToDecimal(placesArray[j].place.latitude),
-                convertToDecimal(placesArray[j].place.longitude), options.getRadius());
-        distanceMatrix[i][j] = distance;
-      }
-    }
-
-    int bestStart = -1;
-    ArrayList<Place> bestPlaces = new ArrayList<>();
-    int bestDistance = Integer.MAX_VALUE;
-
-    for (int startLoc = 0; startLoc < placesArray.length; startLoc++) {
-      ArrayList<Place> tmpPlaces = new ArrayList<>();
-      int distance = 0;
-
-      //Starting from point zero:
-      Place start = placesArray[startLoc].place;
-      placesArray[startLoc].visited = true;
-      int currentIndex = 0;
-      tmpPlaces.add(start);
-
-      for (int i = 1; i < placesArray.length; i++) {
-        //Find closest neighbor
-        PlaceDistPair nearestNeighbor = null;
-        int closest = Integer.MAX_VALUE;
-        int id = -1;
-        for (int j = 0; j < distanceMatrix[currentIndex].length; j++) {
-          if (distanceMatrix[currentIndex][j] < closest &&
-                  !placesArray[j].visited) {
-            closest = distanceMatrix[currentIndex][j];
-            nearestNeighbor = placesArray[j];
-            id = j;
-          }
-        }
-
-        if (nearestNeighbor != null) {
-          currentIndex = id;
-          tmpPlaces.add(nearestNeighbor.place);
-          placesArray[id].visited = true;
-          distance += closest;
-        }
-      }
-
-      if (distance < bestDistance) {
-        bestStart = startLoc;
-        bestPlaces = tmpPlaces;
-      }
-
-
-      //Reset
-      for (int i = 0; i < placesArray.length; i++) {
-        placesArray[i].visited = false;
-      }
-    }
-
-
-    return bestPlaces;
-  }
-
-//  /**
-//   *
-//   * @return
-//   */
-//  public int testStartPosition(NearestNeighborEntry[] entries, int startIndex) {
-//    ArrayList<NearestNeighborEntry> visited = new ArrayList<>();
-//    for (int i = 0; i < entries.length) {
-//      if ()
-//    }
-//  }
-//
-//  /**
-//   *
-//   * @param
-//   */
-//  public void nearestNeighbor() {
-//    //Validate argument
-//    if (places == null || places.size() <= 0) {
-//      return;
-//    }
-//
-//    System.out.println("NEAREST NEIGHBOR");
-//
-//    //Structures that hold the output
-//    ArrayList<Place> bestRoute = new ArrayList<>();
-//    ArrayList<Integer> bestDists = new ArrayList<>();
-//    int bestTotal = Integer.MAX_VALUE;
-//
-//    //Try every possible starting location.
-//    for (Place p : places) {
-//      ArrayList<Place> route = new ArrayList<>();
-//      ArrayList<Integer> dists = new ArrayList<>();
-//      int total = 0;
-//
-//      //Populate our unvisited list.
-//      ArrayList<Place> unvisited = new ArrayList<>();
-//      for (Place p2 : places) {
-//        if (p2 != p) {
-//          unvisited.add(p2);
-//        }
-//      }
-//
-//      //Start location
-//      Place start = p;
-//      Place previousPlace = p;
-//      Place bestPlace = null;
-//      int shortestDist = Integer.MAX_VALUE;
-//
-//      //Loop through the unvisited nodes, finding the shortest distance
-//      for (Place candidate : unvisited) {
-//        int dist = DistanceCalculator.calculateGreatCircleDistance(convertToDecimal(previousPlace.latitude),
-//                convertToDecimal(previousPlace.longitude),
-//                convertToDecimal(candidate.latitude),
-//                convertToDecimal(candidate.longitude), options.getRadius());
-//
-//        if (dist < shortestDist) {
-//          shortestDist = dist;
-//          bestPlace = candidate;
-//        }
-//
-//        previousPlace = candidate;
-//
-//
-//        if (bestPlace == null) {
-//          int toEndDist = DistanceCalculator.calculateGreatCircleDistance(convertToDecimal(previousPlace.latitude),
-//                  convertToDecimal(previousPlace.longitude),
-//                  convertToDecimal(start.latitude),
-//                  convertToDecimal(start.longitude), options.getRadius());
-//          dists.add(toEndDist);
-//        } else {
-//          route.add(bestPlace);
-//          dists.add(shortestDist);
-//        }
-//      }
-//
-//      //Update best distances.
-//      if (total < bestTotal) {
-//        bestDists = dists;
-//        bestRoute = route;
-//        bestTotal = total;
-//      }
-//    }
-//
-//    //Set stuff
-//    places = bestRoute;
-//    distances = bestDists;
-//  }
-
-  /**
-   *
-   * @param places
-   * @return
-   */
-  private HashMap<CityPair, Integer> calculatePairWiseDistances(Place[] places) {
-    HashMap<CityPair, Integer> output = new HashMap<>();
-
-    for (int i = 0; i < places.length; i++) {
-      for (int j = i + 1; j < places.length; j++) {
-        int distance = DistanceCalculator.calculateGreatCircleDistance(
-                convertToDecimal(places[i].latitude),
-                convertToDecimal(places[i].longitude),
-                convertToDecimal(places[j].latitude),
-                convertToDecimal(places[j].longitude), options.getRadius());
-
-        output.put(new CityPair(places[i], places[j]), distance);
-      }
-    }
-    return output;
-  }
-
-//  private NearestNeighborEntry[] getClosestTwoCities(Place[] places) {
-//    NearestNeighborEntry[] entries = new NearestNeighborEntry[places.length];
-//
-//    for (int i = 0; i < places.length; i++) {
-//      NearestNeighborEntry currentEntry = new NearestNeighborEntry(places[i]);
-//      for (int j = 0; j < places.length; j++) {
-//        if (j == i) {
-//          continue;
-//        }
-//
-//        int distance = DistanceCalculator.calculateGreatCircleDistance(
-//                convertToDecimal(places[i].latitude),
-//                convertToDecimal(places[i].longitude),
-//                convertToDecimal(places[j].latitude),
-//                convertToDecimal(places[j].longitude), options.getRadius());
-//
-//        //Update closest if necessary
-//        currentEntry.updateClosestFromPlace(distance, places[j]);
-//      }
-//      entries[i] = currentEntry;
-//    }
-//
-//    return entries;
-//  }
-
-//  private static class NearestNeighborEntry {
-//    public final Place place;
-//
-//
-//    public NearestNeighborEntry(Place place) {
-//      this.place = place;
-//      closestDistance = Integer.MAX_VALUE;
-//      secondClosestDistance = Integer.MAX_VALUE;
-//    }
-//
-//    public NearestNeighborEntry(Place place, int closestDistance, Place closestPlace,
-//                                int secondClosestDistance, Place secondClosestPlace) {
-//      this.place = place;
-//      this.closestDistance = closestDistance;
-//      this.closestPlace = closestPlace;
-//      this.secondClosestDistance = secondClosestDistance;
-//      this.secondClosestPlace = secondClosestPlace;
-//    }
-//
-//    public void updateClosestFromPlace(int distance, Place place) {
-//      if (closestDistance > distance) {
-//        secondClosestPlace =  closestPlace;
-//        secondClosestDistance = closestDistance;
-//        closestDistance = distance;
-//        closestPlace = place;
-//      }
-//    }
-//  }
-
-  private static class PlaceDistPair {
-    public Place place;
-    public boolean visited;
-  }
-
-  public static class CityPair {
-    public final Place p1;
-    public final Place p2;
-
-    public CityPair(Place p1, Place p2) {
-      this.p1 = p1;
-      this.p2 = p2;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-      CityPair pair = (CityPair) obj;
-      return (p1 == pair.p1 && p2 == pair.p2) ||
-              (p1 == pair.p2 && p2 == pair.p1);
-    }
-  }
-
 }
