@@ -54,6 +54,9 @@ class Options extends Component{
                 <input type="radio" id="kilometers" name="distance" autcomplete="off" onClick={(e) => this.changeOption(e, true)}/> Kilometers
               </label>
             </div>
+              <br></br><br></br>
+              <input type="range"></input>
+              <p>Zero Optimization - Full Optimization</p>
           </div>
         </div>
     )
