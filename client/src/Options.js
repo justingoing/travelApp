@@ -41,7 +41,7 @@ class Options extends Component{
   render() {
       return(
         <div id="options" className="card">
-          <div className="card-header bg-info text-white">
+          <div className="card-header bg-dark text-white">
             Options
           </div>
           <div className="card-body">

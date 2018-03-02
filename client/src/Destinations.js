@@ -28,7 +28,7 @@ class Destinations extends Component {
     const count = this.props.trip.places.length;
     return (
         <div id="destinations" className="card">
-          <div className="card-header bg-info text-white">
+          <div className="card-header bg-dark text-white">
             Destinations
           </div>
           <div className="card-body">

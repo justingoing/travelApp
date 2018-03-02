@@ -11,16 +11,17 @@ class Header extends Component{
     return(
         <div id="header" className="jumbotron" style={{backgroundColor: "#1E4D28"}}>
 
-            <div className="row text-white" >
-                <div class="col-12 col-sm-12 col-md-6  col-lg-7 col-xl-8" >
-                    <br></br>
-                    <h3 style={{color:"#FFF"}}>TripCo <small>t{this.props.number} {this.props.name}</small></h3>
-                </div>
-                <div className="col-8 col-sm-7 col-md-6 col-lg-5 col-xl-4 align-self-right">
-                    <img className="img-fluid" src="http://www.cs.colostate.edu/~davematt/logos/CS_unit_identifiers/CompSci-NS-CSU-1-Hrev.png">
-                    </img>
-                </div>
+            <div className="col-8 col-sm-7 col-md-6 col-lg-5 col-xl-4 align-self-left">
+                <img className="img-fluid" src="http://www.cs.colostate.edu/~davematt/logos/CS_unit_identifiers/CompSci-NS-CSU-1-Hrev.png">
+                </img>
             </div>
+
+            <div class="col-12 col-sm-12 col-md-6  col-lg-7 col-xl-8" >
+                <br></br>
+                <h3 style={{color:"#FFF"}}>TripCo <small>t{this.props.number} {this.props.name}</small></h3>
+            </div>
+
+
 
 
 
