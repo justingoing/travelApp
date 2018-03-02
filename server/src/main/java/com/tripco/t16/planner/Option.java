@@ -4,7 +4,6 @@ import com.tripco.t16.calc.DistanceCalculator;
 
 /**
  * Describes the options to apply when planning a trip in TFFI format.
- * At this point we are only using the values provided.
  */
 public class Option {
 
@@ -12,40 +11,35 @@ public class Option {
   public String optimization;
 
   /**
-   * Gets the radius of the earth in whatever units of measurement we are using.
-   * Currently only supports kilometers and miles.
+   * Gets the radius of the earth in whatever units of measurement we are using. Currently only
+   * supports kilometers and miles.
    *
    * @return - The radius of the earth in some unit of measurement.
    */
   public double getRadius() {
-    return distance.equalsIgnoreCase("kilometers") ?
-            DistanceCalculator.EARTH_RADIUS_KM : DistanceCalculator.EARTH_RADIUS_MI;
+    return (distance != null && distance.equalsIgnoreCase("kilometers")) ?
+        DistanceCalculator.EARTH_RADIUS_KM : DistanceCalculator.EARTH_RADIUS_MI;
   }
 
   /**
    * Returns the optimization level the TFFI file requested.
    *
-   * Potential optimization values:
-   * 0 - No optimization
-   * 1 - Nearest-Neighbor optimization
-   *
-   * @return
+   * Range of optimization values: [0, 1], where 0 - No optimization, 1 - Highest level of
+   * optimization
    */
-  public int getOptimizationLevel() {
-    if (optimization.trim().equals("1")) {
-      return 1;
+  public float getOptimizationLevel() {
+    // Check if we even have this flag
+    if (optimization == null) {
+      return 0;
+    }
+
+    // Otherwise try to convert to a float
+    try {
+      return Float.valueOf(optimization.trim());
+    } catch (NumberFormatException e) {
+      e.printStackTrace();
     }
 
     return 0;
-  }
-
-  /**
-   * Gets the number of optimization levels that we support.
-   * Will be greater or equal to zero; currently set to return 1.
-   *
-   * @return - The number of optimization levels the server supports.
-   */
-  public static int getNumOptimizationLevels() {
-    return 1;
   }
 }

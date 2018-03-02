@@ -5,145 +5,146 @@ import com.tripco.t16.planner.Place;
 import com.tripco.t16.planner.Trip;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
+/**
+ * Code to optimize trips, based on graph algorithms, like nearest-neighbor, two-opt, and
+ * three-opt.
+ *
+ * @author Samuel Kaessner
+ */
 public class Optimization {
-    public void nearestNeighbor(List<Place> places) {
-        //Validate argument
-        if (places == null || places.size() <= 0) {
-            return;
-        }
 
-        //Populate our unvisited list.
-        LinkedList<Place> unvisited = new LinkedList<>();
-        for (Place p : places) {
-            unvisited.add(p);
-        }
-
-        //Structures that hold the output
-        ArrayList<Place> route = new ArrayList<>();
-        ArrayList<Integer> distances = new ArrayList<>();
-
-        while (unvisited.size() > 0) {
-            Place nearest = unvisited.get(0);
-            for (int i = 0; i < places.size(); i++) {
-
-            }
-        }
+  /**
+   * Implements the nearest-neighbor graph algorithm.
+   */
+  public static ArrayList<Place> nearestNeighbor(final ArrayList<Place> places, double radius) {
+    //Quick sanity check
+    if (places == null || places.size() == 0) {
+      return places;
     }
 
-    public void twoOpt() {
-
+    //O(N) - Creates a place record array based on the places
+    PlaceRecord[] placesArray = new PlaceRecord[places.size()];
+    for (int i = 0; i < places.size(); i++) {
+      placesArray[i] = new PlaceRecord(places.get(i));
     }
 
-    /**
-     * Implements the nearest neighbor.
-     *
-     *
-     */
-    public ArrayList<Place> nearestNeighbor(ArrayList<Place> places, double radius) {
-        //O(N) - Creates a place record array based on the places
-        PlaceRecord[] placesArray = new PlaceRecord[places.size()];
-        for (int i = 0; i < places.size(); i++) {
-            placesArray[i] = new PlaceRecord(places.get(i));
+    //Get the distances between each place.
+    int[][] distanceMatrix = calculateDistanceMatrix(placesArray, radius);
+
+    ArrayList<Place> bestPlaces = new ArrayList<>();
+    int bestDistance = Integer.MAX_VALUE;
+
+    //Try the nearest neighbor algorithm, starting from each city
+    for (int startLoc = 0; startLoc < placesArray.length; startLoc++) {
+      ArrayList<Place> tmpPlaces = new ArrayList<>();
+      int distance = 0;
+
+      // Set current index to our start id.
+      int currentIndex = startLoc;
+
+      //Add starting position.
+      tmpPlaces.add(placesArray[startLoc].place);
+      placesArray[startLoc].visited = true;
+
+      // Run the nearest-neighbor algorithm (places.size - 1) times
+      int iterationCounter = 0;
+      while (iterationCounter < (placesArray.length)) {
+        //Find closest neighbor
+        PlaceRecord nearestNeighbor = null;
+        int closest = Integer.MAX_VALUE;
+        int id = -1;
+
+        //Loop through and find the closest, unvisited place
+        for (int j = 0; j < distanceMatrix[currentIndex].length; j++) {
+          //Find the closest place that isn't visited.
+          if (distanceMatrix[currentIndex][j] < closest &&
+              !placesArray[j].visited) {
+            closest = distanceMatrix[currentIndex][j];
+            nearestNeighbor = placesArray[j];
+            id = j;
+          }
         }
 
-
-        ArrayList<Place> bestPlaces = new ArrayList<>();
-        int bestDistance = Integer.MAX_VALUE;
-
-        for (int startLoc = 0; startLoc < placesArray.length; startLoc++) {
-            ArrayList<Place> tmpPlaces = new ArrayList<>();
-            int distance = 0;
-
-            //Starting from point zero:
-            Place start = placesArray[startLoc].place;
-            placesArray[startLoc].visited = true;
-            int currentIndex = startLoc;
-            tmpPlaces.add(start);
-
-            for (int i = 0; i < placesArray.length; i++) {
-                //Find closest neighbor
-                PlaceRecord nearestNeighbor = null;
-                int closest = Integer.MAX_VALUE;
-                int id = -1;
-                for (int j = 0; j < distanceMatrix[currentIndex].length; j++) {
-                    if (distanceMatrix[currentIndex][j] < closest &&
-                            !placesArray[j].visited) {
-                        closest = distanceMatrix[currentIndex][j];
-                        nearestNeighbor = placesArray[j];
-                        id = j;
-                    }
-                }
-
-                if (nearestNeighbor != null) {
-                    currentIndex = id;
-                    tmpPlaces.add(nearestNeighbor.place);
-                    placesArray[id].visited = true;
-                    distance += closest;
-                }
-            }
-
-            if (distance < bestDistance) {
-                bestDistance = distance;
-                bestPlaces = tmpPlaces;
-            }
-
-
-            //Reset
-            for (int i = 0; i < placesArray.length; i++) {
-                placesArray[i].visited = false;
-            }
+        // Go to nearest neighbor and update
+        if (nearestNeighbor != null) {
+          currentIndex = id;
+          tmpPlaces.add(nearestNeighbor.place);
+          placesArray[id].visited = true;
+          distance += closest;
         }
+        iterationCounter++;
+      }
+
+      //Add in the final leg of the trip:
+      distance += getDistanceBetween(placesArray[0].place,
+          placesArray[placesArray.length - 1].place, radius);
 
 
-        return bestPlaces;
+      // Check if the *entire trip* is shorter than our
+      // best found trip, and if so, update.
+      if (distance < bestDistance) {
+        System.out.println("Dist:" + distance);
+        bestDistance = distance;
+        bestPlaces = tmpPlaces;
+      }
+
+      // Reset the visited flags
+      for (PlaceRecord record : placesArray) {
+        record.visited = false;
+      }
     }
 
-    /**
-     * O(N^2) - where N is the size of records.
-     * Calculates the great-circle distances between each pair of cities.
-     *
-     * @return - a matrix
-     */
-    private int[][] calculateDistanceMatrix(PlaceRecord[] records, double radius) {
-        int[][] distanceMatrix = new int[records.length][records.length];
+    return bestPlaces;
+  }
 
-        //Calculate all the distances
-        for (int i = 0; i < distanceMatrix.length; i++) {
-            for (int j = i; j < distanceMatrix[i].length; j++) {
+  private static int getDistanceBetween(Place p1, Place p2, double radius) {
+    return DistanceCalculator.calculateGreatCircleDistance(
+        Trip.convertToDecimal(p1.latitude),
+        Trip.convertToDecimal(p1.longitude),
+        Trip.convertToDecimal(p2.latitude),
+        Trip.convertToDecimal(p2.longitude), radius);
+  }
 
-                // Set diagonals to zero
-                if (i == j) {
-                    distanceMatrix[i][j] = 0;
-                    continue;
-                }
+  /**
+   * O(N^2) - where N is the size of records. Calculates the great-circle distances between each
+   * pair of cities.
+   *
+   * @return - a matrix
+   */
+  private static int[][] calculateDistanceMatrix(PlaceRecord[] records, double radius) {
+    int[][] distanceMatrix = new int[records.length][records.length];
 
-                // Calculate great circle distance.
-                int distance = DistanceCalculator.calculateGreatCircleDistance(
-                        Trip.convertToDecimal(records[i].place.latitude),
-                        Trip.convertToDecimal(records[i].place.longitude),
-                        Trip.convertToDecimal(records[j].place.latitude),
-                        Trip.convertToDecimal(records[j].place.longitude), radius);
-                distanceMatrix[i][j] = distance;
-            }
+    //Calculate all the distances
+    for (int i = 0; i < distanceMatrix.length; i++) {
+      for (int j = i; j < distanceMatrix[i].length; j++) {
+
+        // Set diagonals to zero
+        if (i == j) {
+          distanceMatrix[i][j] = 0;
+          continue;
         }
 
-        return distanceMatrix;
+        // Calculate great circle distance.
+        int distance = getDistanceBetween(records[i].place, records[j].place, radius);
+        distanceMatrix[i][j] = distance;
+      }
     }
 
+    return distanceMatrix;
+  }
 
-    /**
-     * Holds a place and a record of whether or not we
-     * have visited this.
-     */
-    private static class PlaceRecord {
-        private final Place place;
-        private boolean visited;
 
-        private PlaceRecord(Place place) {
-            this.place = place;
-        }
+  /**
+   * Holds a place and a record of whether or not we have visited this.
+   */
+  private static class PlaceRecord {
+
+    private final Place place;
+    private boolean visited;
+
+    private PlaceRecord(Place place) {
+      this.place = place;
     }
+  }
 }

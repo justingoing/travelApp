@@ -4,12 +4,13 @@ import java.io.*;
 import java.util.ArrayList;
 
 import com.tripco.t16.calc.DistanceCalculator;
+import com.tripco.t16.calc.Optimization;
 
 /**
  * The Trip class supports TFFI so it can easily be converted to/from Json by Gson.
- *
  */
 public class Trip {
+
   // The variables in this class should reflect TFFI.
   public String type;
   public String title;
@@ -24,26 +25,24 @@ public class Trip {
 
   public static final String DEST_RADIUS = "10";
 
-  /** The top level method that does planning.
-   * At this point it just adds the map and distances for the places in order.
-   * It might need to reorder the places in the future.
+  /**
+   * The top level method that does planning. At this point it just adds the map and distances for
+   * the places in order. It might need to reorder the places in the future.
    */
   public void plan() {
-
-    for(int i = this.places.size()-1; i >= 0; --i)
-    {
+    for (int i = this.places.size() - 1; i >= 0; --i) {
       try {
-        if (!this.validateLatitude(this.places.get(i).latitude) || !this.validateLongitude(this.places.get(i).longitude)) {
+        if (!this.validateLatitude(this.places.get(i).latitude) ||
+            !this.validateLongitude(this.places.get(i).longitude)) {
           this.places.remove(i);
         }
-      }catch(NullPointerException e)
-      {
+      } catch (NullPointerException e) {
         this.places.remove(i);
       }
     }
 
-    if (options.getOptimizationLevel() == 1) {
-      this.places = nearestNeighbor();
+    if (options.getOptimizationLevel() >= .5) {
+      this.places = Optimization.nearestNeighbor(places, options.getRadius());
     }
 
     this.coords = placesToCoords();
@@ -53,19 +52,20 @@ public class Trip {
 
   /**
    * Read in an SVG file and convert to a String to display
+   *
    * @param filename File to read
    * @return SVG as a String
    */
-  public String getSVGFromFile(String filename)
-  {
+  public String getSVGFromFile(String filename) {
     InputStream in = this.getClass().getResourceAsStream(filename);
     BufferedReader br;
     br = new BufferedReader(new InputStreamReader(in));
 
     String read = "", cur;
     try {
-      while ((cur = br.readLine()) != null)
+      while ((cur = br.readLine()) != null) {
         read += cur;
+      }
     } catch (IOException e) {
       e.printStackTrace();
       return this.defaultSVG;
@@ -75,50 +75,51 @@ public class Trip {
   }
 
   /**
-   * Loop through each coordinate in the trip and generate a 'leg'
-   * for the SVG map, drawing a line b/n consecutive destinations
+   * Loop through each coordinate in the trip and generate a 'leg' for the SVG map, drawing a line
+   * b/n consecutive destinations
    *
    * @return A String SVG of trip 'legs' to be sent to the server
    */
-  public String getLegsAsSVG()
-  {
+  public String getLegsAsSVG() {
     // Hardcoded for testing
 
     String svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1066.6073\" height=\"783.0824\">";
 
-    for(int i = 0; i < coords.size()-1; ++i)
-    {
+    for (int i = 0; i < coords.size() - 1; ++i) {
       Coords cur = this.getMappedCoords(this.coords.get(i).x, this.coords.get(i).y);
-      Coords nex = this.getMappedCoords(this.coords.get(i+1).x, this.coords.get(i+1).y);
+      Coords nex = this.getMappedCoords(this.coords.get(i + 1).x, this.coords.get(i + 1).y);
 
       svg += "<line stroke=\"%237FFF00\" y2=\"" + nex.y + "\" x2=\"" + nex.x +
-              "\" y1=\"" + cur.y + "\" x1=\"" + cur.x + "\" stroke-width=\"5\" fill=\"none\"/>";
+          "\" y1=\"" + cur.y + "\" x1=\"" + cur.x + "\" stroke-width=\"5\" fill=\"none\"/>";
 
-      svg += "<circle cx=\"" + cur.x + "\" cy=\" " + cur.y + " \" r=\"" + Trip.DEST_RADIUS + "\" stroke=\"black\" stroke-width=\"3\" fill=\"red\" />";
+      svg += "<circle cx=\"" + cur.x + "\" cy=\" " + cur.y + " \" r=\"" + Trip.DEST_RADIUS
+          + "\" stroke=\"black\" stroke-width=\"3\" fill=\"red\" />";
 
-      if(i == this.coords.size()-2)
-        svg += "<circle cx=\"" + nex.x + "\" cy=\" " + nex.y + " \" r=\"" + Trip.DEST_RADIUS + "\" stroke=\"black\" stroke-width=\"3\" fill=\"red\" />";
+      if (i == this.coords.size() - 2) {
+        svg += "<circle cx=\"" + nex.x + "\" cy=\" " + nex.y + " \" r=\"" + Trip.DEST_RADIUS
+            + "\" stroke=\"black\" stroke-width=\"3\" fill=\"red\" />";
+      }
     }
 
     Coords start = this.getMappedCoords(this.coords.get(0).x, this.coords.get(0).y);
-    Coords end = this.getMappedCoords(this.coords.get(this.coords.size()-1).x, this.coords.get(this.coords.size()-1).y);
+    Coords end = this.getMappedCoords(this.coords.get(this.coords.size() - 1).x,
+        this.coords.get(this.coords.size() - 1).y);
 
     svg += "<line stroke=\"%237FFF00\" y2=\"" + end.y + "\" x2=\"" + end.x +
-            "\" y1=\"" + start.y + "\" x1=\"" + start.x + "\" stroke-width=\"5\" fill=\"none\"/>";
+        "\" y1=\"" + start.y + "\" x1=\"" + start.x + "\" stroke-width=\"5\" fill=\"none\"/>";
 
     svg += "</svg>";
     return svg;
   }
 
   /**
-   * Get a lat/long pair as coordinates mapped to our svg
-   * (within the Colorado border)
+   * Get a lat/long pair as coordinates mapped to our svg (within the Colorado border)
+   *
    * @param lat Latitude
    * @param lon Longitude
    * @return Mapped coordinates as a pair
    */
-  public Coords getMappedCoords(double lat, double lon)
-  {
+  public Coords getMappedCoords(double lat, double lon) {
     double scaleX = 994;
     double scaleY = 749;
     double transX = 38;
@@ -136,48 +137,47 @@ public class Trip {
   }
 
   /**
-   * Get the normalized latitude
-   * Note: It is inverted so that it matches SVG convention of
-   * top left being (0,0)
+   * Get the normalized latitude Note: It is inverted so that it matches SVG convention of top left
+   * being (0,0)
+   *
    * @param lat Latitude to be normalized
    * @return Normalized latitude
    */
-  public double normalizeLat(double lat)
-  {
+  public double normalizeLat(double lat) {
     // Note these are inverted so that we can get SVG coords going top-down instead of bottom-up
-    return (lat - DistanceCalculator.COLORADO_TOP) / (DistanceCalculator.COLORADO_BOTTOM - DistanceCalculator.COLORADO_TOP);
+    return (lat - DistanceCalculator.COLORADO_TOP) / (DistanceCalculator.COLORADO_BOTTOM
+        - DistanceCalculator.COLORADO_TOP);
   }
 
   /**
    * Get the normalized longitude
+   *
    * @param lon Longitude to be normalized
    * @return Normalized longitude
    */
-  public double normalizeLong(double lon)
-  {
-    return (lon - DistanceCalculator.COLORADO_LEFT) / (DistanceCalculator.COLORADO_RIGHT - DistanceCalculator.COLORADO_LEFT);
+  public double normalizeLong(double lon) {
+    return (lon - DistanceCalculator.COLORADO_LEFT) / (DistanceCalculator.COLORADO_RIGHT
+        - DistanceCalculator.COLORADO_LEFT);
   }
 
   /**
    * Returns an SVG containing the background and the legs of the trip.
-   * @return
    */
   private String svg() {
     String colorado = this.getSVGFromFile("/colorado.svg");
 
     String finalSVG =
-            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
+        "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
             "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1066.6073\" height=\"783.0824\">\n" +
-              colorado + this.getLegsAsSVG() +
+            colorado + this.getLegsAsSVG() +
             "</svg>";
 
     return finalSVG;
   }
 
   /**
-   * Returns the distances between consecutive places,
-   * including the return to the starting point to make a round trip.
-   * @return
+   * Returns the distances between consecutive places, including the return to the starting point to
+   * make a round trip.
    */
   private ArrayList<Integer> legDistances() {
 
@@ -189,17 +189,16 @@ public class Trip {
       Coords p1 = this.coords.get(i - 1);
       Coords p2 = this.coords.get(i % coords.size());
 
-      dist.add(DistanceCalculator.calculateGreatCircleDistance(p1.x, p1.y, p2.x, p2.y, options.getRadius()));
+      dist.add(DistanceCalculator
+          .calculateGreatCircleDistance(p1.x, p1.y, p2.x, p2.y, options.getRadius()));
     }
 
     return dist;
   }
 
   /**
-   * Returns an arraylist containing a list of coordinates in the same order as the
-   * places arraylist. In each coord, X is the latitude, Y is the longitude.
-   *
-   * @return
+   * Returns an arraylist containing a list of coordinates in the same order as the places
+   * arraylist. In each coord, X is the latitude, Y is the longitude.
    */
   private ArrayList<Coords> placesToCoords() {
     ArrayList<Coords> coords = new ArrayList<>();
@@ -214,6 +213,7 @@ public class Trip {
    * Inner class for passing around coordinates nicely
    */
   public class Coords {
+
     double x;
     double y;
 
@@ -225,17 +225,23 @@ public class Trip {
 
   public boolean validateLatitude(String latIN) {
     //System.out.println("Latitude: " + latIN);
-    if(latIN.matches("\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+\\.?\\d*[\"|″]\\s*[N|S]\\s*")) //degrees minutes seconds
+    if (latIN.matches(
+        "\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+\\.?\\d*[\"|″]\\s*[N|S]\\s*")) //degrees minutes seconds
+    {
       return true; //System.out.println("Matches #1");
-    else if(latIN.matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[N|S]\\s*")) //degrees decimal minutes
+    } else if (latIN
+        .matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[N|S]\\s*")) //degrees decimal minutes
+    {
       return true; //System.out.println("Matches #2");
-    else if(latIN.matches("\\s*-?\\d+\\.?\\d*[°|º]\\s*[N|S]\\s*")) //decimal degrees
+    } else if (latIN.matches("\\s*-?\\d+\\.?\\d*[°|º]\\s*[N|S]\\s*")) //decimal degrees
+    {
       return true; //System.out.println("Matches #3");
-    else if(latIN.matches("\\s*-?\\d+\\.?\\d*\\s*[N|S]\\s*")) //floating point
+    } else if (latIN.matches("\\s*-?\\d+\\.?\\d*\\s*[N|S]\\s*")) //floating point
+    {
       return true; //System.out.println("Matches #4");
-    else if(latIN.matches("\\s*-?\\d+\\.?\\d*\\s*"))
+    } else if (latIN.matches("\\s*-?\\d+\\.?\\d*\\s*")) {
       return true; //System.out.println("Matches #5");
-    else {
+    } else {
       System.out.println("Latitude: " + latIN);
       System.out.println("No match!");
       return false;
@@ -245,17 +251,23 @@ public class Trip {
 
   public boolean validateLongitude(String longIN) {
     //System.out.println("Longitude: " + longIN);
-    if(longIN.matches("\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+(\\.\\d*)?[\"|″]\\s*[E|W]\\s*")) //degrees minutes seconds
+    if (longIN.matches(
+        "\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+(\\.\\d*)?[\"|″]\\s*[E|W]\\s*")) //degrees minutes seconds
+    {
       return true; //System.out.println("Matches #1");
-    else if(longIN.matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[E|W]\\s*")) //degrees decimal minutes
+    } else if (longIN
+        .matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[E|W]\\s*")) //degrees decimal minutes
+    {
       return true; //System.out.println("Matches #2");
-    else if(longIN.matches("\\s*-?\\d+\\.?\\d*[°|º]\\s*[E|W]\\s*")) //decimal degrees
+    } else if (longIN.matches("\\s*-?\\d+\\.?\\d*[°|º]\\s*[E|W]\\s*")) //decimal degrees
+    {
       return true; //System.out.println("Matches #3");
-    else if(longIN.matches("\\s*-?\\d+\\.?\\d*\\s*[E|W]\\s*")) //floating point
+    } else if (longIN.matches("\\s*-?\\d+\\.?\\d*\\s*[E|W]\\s*")) //floating point
+    {
       return true; //System.out.println("Matches #4");
-    else if(longIN.matches("\\s*-?\\d+\\.?\\d*\\s*"))
+    } else if (longIN.matches("\\s*-?\\d+\\.?\\d*\\s*")) {
       return true; //System.out.println("Matches #5");
-    else {
+    } else {
       System.out.println("Longitude: " + longIN);
       System.out.println("No match!");
       return false;
@@ -270,8 +282,9 @@ public class Trip {
     double degrees = 0;
     double direction = 1;
 
-    if (conv.contains("W") || conv.contains("S"))
+    if (conv.contains("W") || conv.contains("S")) {
       direction = -1;
+    }
 
     int degreeSymbol = 0;
     int minuteSymbol = 0;
@@ -293,8 +306,9 @@ public class Trip {
         foundSecond = true;
       }
 
-      if (current == '°' || current == 'º')
+      if (current == '°' || current == 'º') {
         degreeSymbol = i;
+      }
     }
 
     if (foundSecond) {
