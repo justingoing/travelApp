@@ -32,7 +32,15 @@ class Destinations extends Component {
             Destinations
           </div>
           <div className="card-body">
-            <p>Load destinations from a file.</p>
+              <p>Search destinations to add</p>
+              <div class="wrap">
+                  <div class="search">
+                      <input type="text" class="searchTerm" placeholder="What are you looking for?"/>
+                      <button type="submit">Search!</button>
+                  </div>
+              </div>
+          <br/>
+            <p>Or load destinations from a file.</p>
             <div className="form-group" role="group">
                 <input type="file" className="form-control-file" onChange={this.loadTFFI} id="tffifile" />
             </div>
