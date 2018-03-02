@@ -61,6 +61,7 @@ Date | Tasks done  | Tasks in progress | Impediments
 *date* | *@task only* | *@task only* | none
 2/22/18 | Developed sprint3 plan |Plan 3 in canvas | none | none
 2/28/18 | Further broke down epics into tasks, added new tasks for sql DB integration, broke down epic: let user select destinations for trip | sam - nearest neighbor, Isaac - connect to sql, justin - create search bar, paul - logos on ui, | midterms
+2/29/18 | continuing to work on tasks, UI logos completed, nearest neighbor completed, discussed next tasks to be done through the weekend | justin - create search bar, Isaac - connect to sql | None
 
 ## ReviewUI
 #### Completed epics in Sprint Backlog
@@ -73,11 +74,9 @@ Date | Tasks done  | Tasks in progress | Impediments
 #### What went well
 * *Teamwork and communication - we continue to keep an open stream of coordination and communication*
 * *Improving on our ability to break things down into small "bite sized" tasks*
-*
 
 #### Problems encountered and resolutions
 * *None yet*
-*
 
 ## Retrospective
 
@@ -86,4 +85,4 @@ Topic | Teamwork | Process | Tools
 What we will change this time |  |  |
 What we did well |  |  |
 What we need to work on |  |  |
-What we will change next time |  |  | 
+What we will change next time |  |  |
