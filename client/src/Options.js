@@ -38,6 +38,7 @@ class Options extends Component{
       this.calcStyles(nextProps.options.distance === "kilometers");
   }
 
+
   render() {
       return(
         <div id="options" className="card">
@@ -55,9 +56,8 @@ class Options extends Component{
               </label>
             </div>
               <br></br><br></br>
-              <input type="range"></input>
-              <p>Zero Optimization - Full Optimization</p>
-          </div>
+              <p>Zero Optimization   <input type="range" name="slider" value="0" min="0" max="1" value="0" ></input>   Full Optimization</p>
+            </div>
         </div>
     )
   }
