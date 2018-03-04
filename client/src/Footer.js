@@ -15,7 +15,7 @@ class Footer extends Component {
           <h4 style={{color:"#FFF"}}>© TripCo t{this.props.number} {this.props.name} 2018</h4>
 
             <div className="row text-white" >
-                <div class="col-12 col-sm-12 col-md-6  col-lg-7 col-xl-8" >
+                <div className="col-12 col-sm-12 col-md-6  col-lg-7 col-xl-8" >
                     <p><br/>&copy; Copyright 2018</p>
                 </div>
                 <div className="col-8 col-sm-7 col-md-6 col-lg-5 col-xl-4 align-self-right">

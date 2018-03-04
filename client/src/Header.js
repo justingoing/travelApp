@@ -16,7 +16,7 @@ class Header extends Component{
                 </img>
             </div>
 
-            <div class="col-12 col-sm-12 col-md-6  col-lg-7 col-xl-8" >
+            <div className="col-12 col-sm-12 col-md-6  col-lg-7 col-xl-8" >
                 <br></br>
                 <h3 style={{color:"#FFF"}}>TripCo <small>t{this.props.number} {this.props.name}</small></h3>
             </div>
