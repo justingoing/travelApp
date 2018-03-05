@@ -77,14 +77,13 @@ public class Optimization {
       }
 
       //Add in the final leg of the trip:
-      distance += getDistanceBetween(placesArray[0].place,
-          placesArray[placesArray.length - 1].place, radius);
+      distance += getDistanceBetween(tmpPlaces.get(0),
+          tmpPlaces.get(tmpPlaces.size() - 1), radius);
 
 
       // Check if the *entire trip* is shorter than our
       // best found trip, and if so, update.
       if (distance < bestDistance) {
-        System.out.println("Dist:" + distance);
         bestDistance = distance;
         bestPlaces = tmpPlaces;
       }
@@ -128,6 +127,7 @@ public class Optimization {
         // Calculate great circle distance.
         int distance = getDistanceBetween(records[i].place, records[j].place, radius);
         distanceMatrix[i][j] = distance;
+        distanceMatrix[j][i] = distance;
       }
     }
 

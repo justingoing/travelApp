@@ -39,8 +39,8 @@ public class TestOptimization {
 
     Place p = makeFrom(DistanceCalculator.COLORADO_BOTTOM, DistanceCalculator.COLORADO_LEFT);
     Place p2 = makeFrom(DistanceCalculator.COLORADO_TOP, DistanceCalculator.COLORADO_LEFT);
-    Place p3 = makeFrom(DistanceCalculator.COLORADO_BOTTOM, DistanceCalculator.COLORADO_RIGHT);
-    Place p4 = makeFrom(37.5, -102.8);
+    Place p3 = makeFrom(DistanceCalculator.COLORADO_TOP, DistanceCalculator.COLORADO_RIGHT);
+    Place p4 = makeFrom(DistanceCalculator.COLORADO_BOTTOM, DistanceCalculator.COLORADO_RIGHT);
 
     output.add(p);
     output.add(p2);
@@ -72,7 +72,6 @@ public class TestOptimization {
     places.add(p);
     places.add(p2);
     places.add(p3);
-
     assertEquals(Optimization.nearestNeighbor(places, DistanceCalculator.EARTH_RADIUS_MI),
         output);
   }
