@@ -10,9 +10,17 @@ class Application extends Component {
   constructor(props){
     super(props);
     this.state = {
-        trip: this.getDefaultTFFI()
+        trip: this.getDefaultTFFI(),
+        query: {
+          version: 2,
+          type: "query",
+          query: "",
+          places: []
+        }
     }
+
     this.updateTrip = this.updateTrip.bind(this);
+    this.updateQuery = this.updateQuery.bind(this);
     this.updateOptions = this.updateOptions.bind(this);
   }
 
@@ -73,6 +81,17 @@ class Application extends Component {
     }
   }
 
+  updateQuery(query){
+    this.state.query.query = this.escapeRegExp(query);
+    console.log(this.state.query);
+  }
+
+  //From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions.
+  //Makes sure someone can't crash the client by putting in an invalid character.
+  escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+  }
+
   render() {
     return(
         <div id="application" className="container">
@@ -81,7 +100,7 @@ class Application extends Component {
                 <Options options={this.state.trip.options} updateOptions={this.updateOptions}/>
             </div>
             <div className="col-12">
-                <Destinations trip={this.state.trip} updateTrip={this.updateTrip}/>
+                <Destinations trip={this.state.trip} updateTrip={this.updateTrip} updateQuery={this.updateQuery}/>
             </div>
             <div className="col-12">
                 <Trip trip={this.state.trip} updateTrip={this.updateTrip} />
@@ -90,6 +109,30 @@ class Application extends Component {
         </div>
     )
   }
+
+
+  /* Sends a request to the server with the query for destinations.
+   */
+  fetchQueryResponse(){
+    console.log(process.env.SERVICE_URL);
+    console.log("POSTing: " + JSON.stringify(this.state.query));
+    return fetch(process.env.SERVICE_URL + '/query', {
+      method:"POST",
+      body: JSON.stringify(this.state.query)
+    });
+  }
+
+  async query(){
+    try {
+      let serverResponse = await this.fetchQueryResponse();
+      let queryTFFI = await serverResponse.json();
+      console.log(queryTFFI);
+      this.setState({query: queryTFFI})
+    } catch(err) {
+      console.error(err);
+    }
+  }
+
 }
 
 export default Application;

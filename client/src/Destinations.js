@@ -11,17 +11,33 @@ class Destinations extends Component {
   constructor(props) {
     super(props);
     this.loadTFFI = this.loadTFFI.bind(this);
+    this.createQuery = this.createQuery.bind(this);
   }
 
+  /**
+   * Loads a TFFI file in from disk.
+   * @param event - Event this method is being called from.
+   */
   loadTFFI(event) {
-    var props = this.props;
-    var reader = new FileReader();
+    let props = this.props;
+    let reader = new FileReader();
     reader.onload = function (e) {
       var object = JSON.parse(reader.result);
       props.updateTrip(object);
     };
 
     reader.readAsText(event.target.files[0]);
+  }
+
+  /**
+   * Creates a query based on the contents of the form this
+   * method is called from.
+   *
+   * @param event
+   */
+  createQuery(event) {
+    event.preventDefault();
+    this.props.updateQuery(event.target.value);
   }
 
   render() {
@@ -32,17 +48,13 @@ class Destinations extends Component {
             Destinations
           </div>
           <div className="card-body">
-            <p>Search destinations to add</p>
+            <p>Search destinations to add:</p>
               <div className="input-group" role="group">
                 <input type="text" className="form-control"
-                       placeholder="What are you looking for?"/>
-                <button className="btn btn-primary "
-                        style={{border: "#3E4551", backgroundColor: "#3E4551"}}
-                        onClick={this.plan} type="button">Submit!
-                </button>
+                       placeholder="What are you looking for?" onChange={this.createQuery}/>
               </div>
             <br/>
-            <p>Or load destinations from a file.</p>
+            <p>Or load destinations from a file:</p>
 
             <div className="input-group" role="group">
               <span className="btn btn-primary"
@@ -55,7 +67,7 @@ class Destinations extends Component {
               </span>
               <input type="text" className="form-control" readOnly/>
             </div>
-            <h5>There are {count} destinations. </h5>
+            <h5>There are {count} destinations.</h5>
           </div>
         </div>
     )
