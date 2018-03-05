@@ -13,16 +13,16 @@ class Destinations extends Component {
     this.loadTFFI = this.loadTFFI.bind(this);
   }
 
-    loadTFFI(event) {
-        var props = this.props;
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var object = JSON.parse(reader.result);
-            props.updateTrip(object);
-        };
+  loadTFFI(event) {
+    var props = this.props;
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      var object = JSON.parse(reader.result);
+      props.updateTrip(object);
+    };
 
-        reader.readAsText(event.target.files[0]);
-    }
+    reader.readAsText(event.target.files[0]);
+  }
 
   render() {
     const count = this.props.trip.places.length;
@@ -32,17 +32,28 @@ class Destinations extends Component {
             Destinations
           </div>
           <div className="card-body">
-              <p>Search destinations to add</p>
-              <div class="wrap">
-                  <div class="search">
-                      <input type="text" class="searchTerm" placeholder="What are you looking for?"/>
-                      <button type="submit">Search!</button>
-                  </div>
+            <p>Search destinations to add</p>
+              <div className="input-group" role="group">
+                <input type="text" className="form-control"
+                       placeholder="What are you looking for?"/>
+                <button className="btn btn-primary "
+                        style={{border: "#3E4551", backgroundColor: "#3E4551"}}
+                        onClick={this.plan} type="button">Submit!
+                </button>
               </div>
-          <br/>
+            <br/>
             <p>Or load destinations from a file.</p>
-            <div className="form-group" role="group">
-                <input type="file" className="form-control-file" onChange={this.loadTFFI} id="tffifile" />
+
+            <div className="input-group" role="group">
+              <span className="btn btn-primary"
+                    style={{border: "#3E4551", backgroundColor: "#3E4551"}}>
+                        Browse&hellip;
+                <input type="file"
+                       style={{display: "none"}}
+                       onChange={this.loadTFFI}
+                       id="tffifile"/>
+              </span>
+              <input type="text" className="form-control" readOnly/>
             </div>
             <h5>There are {count} destinations. </h5>
           </div>
