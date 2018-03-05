@@ -15,7 +15,7 @@ class Application extends Component {
     }
     this.updateTrip = this.updateTrip.bind(this);
     this.updateOptions = this.updateOptions.bind(this);
-    this.updateQuery = this.updateOptions();
+    this.updateQuery = this.updateQuery.bind(this);
   }
 
   //query template
