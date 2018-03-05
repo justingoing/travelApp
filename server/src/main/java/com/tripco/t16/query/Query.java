@@ -42,10 +42,10 @@ public class Query {
     }
 
     /**
-     * Convert the find object to json
+     * Convert the find object to json.
      * @return 'jsonified' find object
      */
-    public String getFind () {
+    public String getFind() {
         Gson gson = new Gson();
         return gson.toJson(find);
     }

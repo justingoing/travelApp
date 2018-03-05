@@ -99,7 +99,7 @@ public class MicroServer {
     return (new Plan(request)).getTrip();
   }
 
-  /** A REST API to support querying the database of places
+  /** A REST API to support querying the database of places.
    *
    * @param  request
    * @param response
