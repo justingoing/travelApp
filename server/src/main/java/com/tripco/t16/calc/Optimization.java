@@ -80,7 +80,6 @@ public class Optimization {
       distance += getDistanceBetween(tmpPlaces.get(0),
           tmpPlaces.get(tmpPlaces.size() - 1), radius);
 
-
       // Check if the *entire trip* is shorter than our
       // best found trip, and if so, update.
       if (distance < bestDistance) {

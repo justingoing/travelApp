@@ -11,6 +11,7 @@ import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
 public class TestOptimization {
+
   private Random rand = new Random();
 
   @Test
