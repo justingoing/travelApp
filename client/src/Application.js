@@ -10,10 +10,32 @@ class Application extends Component {
   constructor(props){
     super(props);
     this.state = {
-        trip: this.getDefaultTFFI()
+        trip: this.getDefaultTFFI(),
+        query: this.getQueryTFFI()
     }
     this.updateTrip = this.updateTrip.bind(this);
     this.updateOptions = this.updateOptions.bind(this);
+    this.updateQuery = this.updateOptions();
+  }
+
+  //query template
+  getQueryTFFI(){
+      let q = {
+          version: 2,
+          type: "query",
+          query: "",
+          places: []
+      }
+      return q;
+  }
+
+  //populate with search
+  updateQuery(query){
+      this.state.query.query = this.escapeRegExp(query);
+  }
+
+  escapeRegExp(string){
+      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
   getDefaultTFFI() {
@@ -25,7 +47,6 @@ class Application extends Component {
               distances: [],
               map: "<svg width=\"1920\" height=\"20\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><g></g></svg>"
       }
-
       return t;
   }
 
