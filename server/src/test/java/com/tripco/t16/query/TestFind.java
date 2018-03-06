@@ -26,7 +26,7 @@ public class TestFind {
     // assertTrue checks if a statement is true
     assertTrue(true);
   }
-/*
+
   @Test
   public void testFind() {
     // check if doing a query on our db for gibberish returns nothing
@@ -39,7 +39,7 @@ public class TestFind {
     // make sure that querying for legit results gives us some places
 
     /* --------------------------------------------- */
- /*   find.query = "sterling";
+    find.query = "sterling";
     find.performQuery(false);
 
     assertTrue(find.places.size() > 0);
@@ -49,7 +49,7 @@ public class TestFind {
     /* --------------------------------------------- */
 
     // Create a stream to hold the output
-/*    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
     PrintStream ps = new PrintStream(baos);
     // IMPORTANT: Save the old System.out!
     PrintStream old = System.out;
@@ -66,7 +66,7 @@ public class TestFind {
     /* --------------------------------------------- */
     // make sure that sql injection attack fails
     /* --------------------------------------------- */
-/*    find.query = "; Drop table test -- true = true";
+    find.query = "; Drop table test -- true = true";
 
     // Create a stream to hold the output
     baos = new ByteArrayOutputStream();
@@ -84,7 +84,7 @@ public class TestFind {
     assertTrue(baos.toString().contains(Find.injectionMessage));
 
   }
-*/
+
 }
 
 
