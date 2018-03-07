@@ -19,6 +19,6 @@ addons:
   mariadb: '10.0'
 before_script:
   - mysql -u root -e 'CREATE DATABASE testDB;'
-  - mysql -u root -e 'CREATE TABLE testDB.airports(id VARCHAR(255), name VARCHAR(255), municipality VARCHAR(255), keywords VARCHAR(255));'
-  - mysql -u root -e 'INSERT INTO testDB.airports(id, name, municipality, keywords) VALUES('DIA', 'Denver International Airport', 'DEN', 'Denver');'
-  - mysql -u root -e 'INSERT INTO testDB.airports(id, name, municipality, keywords) VALUES('SMA', 'Sterling Municial Airport', 'STE', 'Sterling');'
+  - mysql -u root  testDB -e 'CREATE TABLE testDB.airports(id VARCHAR(255), name VARCHAR(255), municipality VARCHAR(255), keywords VARCHAR(255));'
+  - mysql -u root -e "INSERT INTO testDB.airports(id, name, municipality, keywords) VALUES('DIA', 'Denver International Airport', 'DEN', 'Denver');"
+  - mysql -u root -e "INSERT INTO testDB.airports(id, name, municipality, keywords) VALUES('SMA', 'Sterling Municial Airport', 'STE', 'Sterling');"
