@@ -4,6 +4,10 @@ class Itinerary extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+
+    };
+
     this.createTable = this.createTable.bind(this);
   }
 
@@ -30,7 +34,7 @@ class Itinerary extends Component {
 
     let tableData = [];
     for (let i = 0; i < dests.length - 1; i++) {
-      tableData.push(this.renderRow(i, dests[i], dests[i + 1], dists[i]));
+      tableData.push(this.renderRow(i, dests[i], dests[i + 1], dists[i]), false);
     }
 
 
@@ -40,6 +44,7 @@ class Itinerary extends Component {
   }
 
   _startDrag() {
+
     console.log("Starting drag");
   }
 
@@ -47,8 +52,10 @@ class Itinerary extends Component {
     console.log("Done");
   }
 
-  _updateDrag() {
+  _updateDrag(event) {
     console.log("Updating");
+    console.log(event.clientX);
+    console.log(event.clientY);
   }
 
   _leaveDrag() {
@@ -68,7 +75,7 @@ class Itinerary extends Component {
 
     let opacity = selected ? 0.3 : 1.0;
 
-    return (<tr key={key} style={{opacity: opacity}}>{source}{destination}{distance}<td>{dragHandle}</td></tr>);
+    return (<tr key={key} style={{opacity: opacity}}>{source}{destination}{distance}</tr>);
   }
 
 
