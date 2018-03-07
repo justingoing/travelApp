@@ -17,8 +17,10 @@ public class Option {
    * @return - The radius of the earth in some unit of measurement.
    */
   public double getRadius() {
-    return (distance != null && distance.name != null && distance.name.equalsIgnoreCase("kilometers")) ?
-        DistanceCalculator.EARTH_RADIUS_KM : DistanceCalculator.EARTH_RADIUS_MI;
+    return
+        (distance != null && distance.name != null && distance.name.equalsIgnoreCase("kilometers"))
+            ?
+            DistanceCalculator.EARTH_RADIUS_KM : DistanceCalculator.EARTH_RADIUS_MI;
   }
 
   /**
