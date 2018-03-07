@@ -7,8 +7,8 @@ import com.tripco.t16.calc.DistanceCalculator;
  */
 public class Option {
 
-  public String distance;
-  public String optimization;
+  public Distance distance;
+  public Float optimization;
 
   /**
    * Gets the radius of the earth in whatever units of measurement we are using. Currently only
@@ -17,8 +17,10 @@ public class Option {
    * @return - The radius of the earth in some unit of measurement.
    */
   public double getRadius() {
-    return (distance != null && distance.equalsIgnoreCase("kilometers")) ?
-        DistanceCalculator.EARTH_RADIUS_KM : DistanceCalculator.EARTH_RADIUS_MI;
+    return
+        (distance != null && distance.name != null && distance.name.equalsIgnoreCase("kilometers"))
+            ?
+            DistanceCalculator.EARTH_RADIUS_KM : DistanceCalculator.EARTH_RADIUS_MI;
   }
 
   /**
@@ -33,13 +35,6 @@ public class Option {
       return 0;
     }
 
-    // Otherwise try to convert to a float
-    try {
-      return Float.valueOf(optimization.trim());
-    } catch (NumberFormatException e) {
-      e.printStackTrace();
-    }
-
-    return 0;
+    return optimization;
   }
 }

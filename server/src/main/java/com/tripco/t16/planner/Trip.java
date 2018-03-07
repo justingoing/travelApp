@@ -18,6 +18,7 @@ public class Trip {
   public ArrayList<Place> places;
   public ArrayList<Integer> distances;
   public String map;
+  public Integer version;
 
   public ArrayList<Coords> coords;
 
