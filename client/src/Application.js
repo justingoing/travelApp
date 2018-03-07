@@ -10,66 +10,70 @@ class Application extends Component {
   constructor(props){
     super(props);
     this.state = {
-        trip: this.getDefaultTFFI()
-    }
+        trip: this.getDefaultTrip(),
+        query: this.getDefaultQuery(),
+        config: this.getDefaultConfig()
+    };
     this.updateTrip = this.updateTrip.bind(this);
     this.updateOptions = this.updateOptions.bind(this);
   }
 
-  getDefaultTFFI() {
+  getDefaultTrip() {
       let t = {
+          version: 2,
           type: "trip",
-              title: "",
-              options : {distance: "miles"},
-              places: [],
-              distances: [],
-              map: "<svg width=\"1920\" height=\"20\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><g></g></svg>"
-      }
+          title: "",
+          options : {distance: {name: "miles", radius: "3958.7613"}, optimization: 0},
+          places: [],
+          distances: [],
+          map: "<svg width=\"1920\" height=\"20\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><g></g></svg>"
+      };
 
       return t;
   }
 
+  getDefaultQuery() {
+    let t = {
+      version: 2,
+      type: "query",
+      query: "",
+      places: []
+    };
+    return t;
+  }
+
+  getDefaultConfig() {
+    let t = {
+      version: 2,
+      type: "config",
+      optimization: 1
+    };
+    return t;
+  }
+
   updateTrip(tffi){
-    var defaultTrip = this.getDefaultTFFI();
+    let copyTFFI = Object.assign({}, this.state.trip);
+    Object.assign(copyTFFI, tffi);
 
-    //If we don't have the required TFFI stuff, let's just go with the default object.
-    if ((!tffi.hasOwnProperty('type') || tffi.type !== "trip") ||
-        (!tffi.hasOwnProperty('places') || tffi.places === null)) {
-        tffi = defaultTrip;
-        window.alert("Invalid TFFI!!");
-    } else {
-        //Make sure we have the places array.
-        if (!tffi.hasOwnProperty('places') || tffi.places === null) {
-            tffi.places = defaultTrip.places;
-        }
+    let nextTFFI = {
+      version: copyTFFI.version,
+      type: copyTFFI.type,
+      title: copyTFFI.title,
+      options: {distance: {name: copyTFFI.options.distance.name, radius: copyTFFI.options.distance.radius},
+        optimization: copyTFFI.options.optimization},
+      places: copyTFFI.places,
+      distances: copyTFFI.distances,
+      map: copyTFFI.map
+    };
 
-        //Make sure we have the distances array.
-        if (!tffi.hasOwnProperty('distances') || tffi.distances === null) {
-            tffi.distances = defaultTrip.distances;
-        }
-
-        //Make sure we have a title.
-        if (!tffi.hasOwnProperty('title') || tffi.title === null) {
-            tffi.title = defaultTrip.title;
-        }
-
-        //Ensure that we have options.
-        if (!tffi.hasOwnProperty('options') || tffi.options === null) {
-            tffi.options = defaultTrip.options;
-        } else {
-            //Ensure that we have at least the distances
-            if (!tffi.options.hasOwnProperty('distance') || tffi.options.distance === null) {
-                tffi.options.distance = defaultTrip.options.distance;
-            }
-        }
-    }
-
-    this.setState({trip:tffi});
+    this.setState({trip: nextTFFI});
   }
 
   updateOptions(options){
-    if (options === "kilometers" || options === "miles") {
-        this.state.trip.options.distance = options;
+    if (options === "kilometers") {
+      this.state.trip.options.distance = {name: "kilometers", radius: "6371.0088"};
+    } else if(options === "miles") {
+      this.state.trip.options.distance = {name: "miles", radius: "3958.7613"};
     }
   }
 

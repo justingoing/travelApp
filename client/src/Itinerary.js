@@ -5,7 +5,6 @@ class Itinerary extends Component {
     super(props);
 
     this.state = {
-
     };
 
     this.createTable = this.createTable.bind(this);
@@ -22,11 +21,10 @@ class Itinerary extends Component {
 
   createTable () {
     let distance = this.calcDistance();  // need to sum this from real the trip
-    let units = this.props.trip.options.distance;
+    let units = this.props.trip.options.distance.name;
 
-
-    let dests = this.props.trip.places.map((item, index) => <td key={index}> {item.name} </td>);
-    let dists = this.props.trip.distances.map((item, index) => <td key={index}> {item}</td>);
+    let dests = this.props.trip.places.map((item, index) => <td key={"de" + index}> {item.name} </td>);
+    let dists = this.props.trip.distances.map((item, index) => <td key={"di" + index}> {item}</td>);
 
     if (dests.length > 0) {
         dests.push(<td key={-1}> {dests[0].props.children} </td>);

@@ -35,7 +35,7 @@ class Options extends Component{
     }
 
   componentWillReceiveProps(nextProps) {
-      this.calcStyles(nextProps.options.distance === "kilometers");
+      this.calcStyles(nextProps.options.distance.name === "kilometers");
   }
 
     onInput() {
