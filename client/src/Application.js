@@ -16,6 +16,16 @@ class Application extends Component {
     };
     this.updateTrip = this.updateTrip.bind(this);
     this.updateOptions = this.updateOptions.bind(this);
+    this.updateQuery = this.updateQuery.bind(this);
+  }
+
+  //populate with search
+  updateQuery(query){
+      this.state.query.query = this.escapeRegExp(query);
+  }
+
+  escapeRegExp(string){
+      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
   getDefaultTrip() {
@@ -98,7 +108,8 @@ class Application extends Component {
             </div>
             <div className="col-12">
               <Destinations trip={this.state.trip}
-                            updateTrip={this.updateTrip}/>
+                            updateTrip={this.updateTrip}
+                            query={this.state.query} updateQuery={this.updateQuery}/>
             </div>
             <div className="col-12">
               <Trip trip={this.state.trip} updateTrip={this.updateTrip}/>
