@@ -108,7 +108,8 @@ class Application extends Component {
             </div>
             <div className="col-12">
               <Destinations trip={this.state.trip}
-                            updateTrip={this.updateTrip}/>
+                            updateTrip={this.updateTrip}
+                            query={this.state.query} updateQuery={this.updateQuery}/>
             </div>
             <div className="col-12">
               <Trip trip={this.state.trip} updateTrip={this.updateTrip}/>

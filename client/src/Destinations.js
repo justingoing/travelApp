@@ -33,17 +33,12 @@ class Destinations extends Component {
     }
 
     async sendSearch(){
-        //get the search value
-        var search = document.getElementById("mySearch").value;
-        console.log(search);
-        //add search to query tffi
-        this.props.updateQuery(search);
-
-        //send request to server
+        //get the search value, put it in query field, and send it
+        this.props.updateQuery(document.getElementById("mySearch").value);
         try{
-            //let searchResponse = await this.searchResponse(search);
-            //let searchTFFI = await searchResponse.json();
-            //console.log(searchTFFI)
+            let searchResponse = await this.searchResponse();
+            let searchTFFI = await searchResponse.json();
+            console.log("server response: " + searchTFFI);
             //TODO handle the response from server
         }catch(err){
             console.error(err)
