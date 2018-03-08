@@ -226,7 +226,7 @@ public class Trip {
   public boolean validateLatitude(String latIN) {
     //System.out.println("Latitude: " + latIN);
     if (latIN.matches(
-        "\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+\\.?\\d*[\"|″]?\\s*[N|S]\\s*")) //degrees minutes seconds
+        "\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+\\.?\\d*[\"|″]?\\s*[N|S]\\s*")) //DMS
     {
       return true; //System.out.println("Matches #1");
     } else if (latIN
@@ -252,7 +252,7 @@ public class Trip {
   public boolean validateLongitude(String longIN) {
     //System.out.println("Longitude: " + longIN);
     if (longIN.matches(
-        "\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+(\\.\\d*)?[\"|″]?\\s*[E|W]\\s*")) //degrees minutes seconds
+        "\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+(\\.\\d*)?[\"|″]?\\s*[E|W]\\s*")) //DMS
     {
       return true; //System.out.println("Matches #1");
     } else if (longIN
