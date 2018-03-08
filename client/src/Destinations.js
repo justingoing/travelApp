@@ -38,8 +38,7 @@ class Destinations extends Component {
         try{
             let searchResponse = await this.searchResponse();
             let searchTFFI = await searchResponse.json();
-            console.log("server response: " + searchTFFI);
-            //TODO handle the response from server
+            this.props.query.places = searchTFFI.places;
         }catch(err){
             console.error(err)
         }
