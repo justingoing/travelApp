@@ -11,6 +11,7 @@ class Destinations extends Component {
   constructor(props) {
     super(props);
     this.loadTFFI = this.loadTFFI.bind(this);
+    this.sendSearch = this.sendSearch.bind(this);
   }
 
     loadTFFI(event) {
@@ -34,13 +35,15 @@ class Destinations extends Component {
     async sendSearch(){
         //get the search value
         var search = document.getElementById("mySearch").value;
-        //update query with the search
+        console.log(search);
+        //add search to query tffi
         this.props.updateQuery(search);
+
         //send request to server
         try{
-            let searchResponse = await this.searchResponse(search);
-            let searchTFFI = await searchResponse.json();
-            console.log(searchTFFI)
+            //let searchResponse = await this.searchResponse(search);
+            //let searchTFFI = await searchResponse.json();
+            //console.log(searchTFFI)
             //TODO handle the response from server
         }catch(err){
             console.error(err)
@@ -56,13 +59,10 @@ class Destinations extends Component {
           </div>
           <div className="card-body">
               <p>Search destinations to add</p>
-              <form>
-                  <div>
-                      <input type="search" id="mySearch" name="q" placeholder="Enter the name of a Place..."/>
-                      <span className="validity"></span>
-                      <button type="submit" onClick={this.sendSearch}>Search!</button>
+                  <div className="input-group" role="group">
+                          <input type="text" className="form-control" id="mySearch" placeholder="Search for a place..."/>
+                           <button className="btn btn-primary " style={{border: "#3E4551", backgroundColor: "#3E4551"}} onClick={this.sendSearch} type="button">Search</button>
                   </div>
-              </form>
           <br/>
             <p>Or load destinations from a file.</p>
             <div className="form-group" role="group">
