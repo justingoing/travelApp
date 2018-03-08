@@ -86,6 +86,10 @@ class Application extends Component {
     } else if (options === "miles") {
       this.state.trip.options.distance = {name: "miles", radius: "3958.7613"};
     }
+    if(options >= 0 && options <= 1) {
+      this.state.trip.options.optimization = options;
+      console.log("optimization = ", this.state.trip.options.optimization);
+    }
   }
 
   render() {
