@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import SearchTable from './SearchTable';
 
 /* Destinations reside in the parent object so they may be shared
  * with the Trip object.
@@ -38,7 +39,11 @@ class Destinations extends Component {
         try{
             let searchResponse = await this.searchResponse();
             let searchTFFI = await searchResponse.json();
-            this.props.query.places = searchTFFI.places;
+            console.log("searchTFFI");
+            console.log(searchTFFI);
+            this.props.updateQuery(searchTFFI);
+            console.log("after: ");
+            console.log(this.props.query.places);
         }catch(err){
             console.error(err)
         }
@@ -62,21 +67,7 @@ class Destinations extends Component {
                   </div>
                   <br/>
                   <p>Search Results</p>
-                  <div>
-                    <table className="table table-responsive">
-                      <thead>
-                        <tr className="table-info">
-                          <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Id</th>
-                          <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Name</th>
-                          <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Latitude</th>
-                          <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Longitude</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {}
-                      </tbody>
-                     </table>
-                  </div>
+                  <SearchTable destinations = {this.props.query}/>
           <br/>
             <p>Or load destinations from a file.</p>
             <div className="form-group" role="group">

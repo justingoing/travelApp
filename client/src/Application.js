@@ -20,13 +20,24 @@ class Application extends Component {
   }
 
   //populate with search
-  updateQuery(query){
-      this.state.query.query = this.escapeRegExp(query);
-  }
+  updateQuery(searchTFFI){
+      let copyTFFI = Object.assign({}, this.state.query);
 
+      Object.assign(copyTFFI, searchTFFI);
+      let nextTFFI = {
+        version: copyTFFI.version,
+        type: copyTFFI.type,
+        query: copyTFFI.query,
+        places: copyTFFI.places
+      };
+
+      this.setState({query: nextTFFI});
+  }
+  /*
   escapeRegExp(string){
       return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
+  */
 
   getDefaultTrip() {
     let t = {
