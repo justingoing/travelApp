@@ -55,6 +55,7 @@ class Application extends Component {
   }
 
   updateTrip(tffi) {
+    console.log("Updating... starts as", tffi);
     let copyTFFI = Object.assign({}, this.state.trip);
     Object.assign(copyTFFI, tffi);
 
@@ -75,6 +76,7 @@ class Application extends Component {
     };
 
     this.setState({trip: nextTFFI});
+    console.log("After updateTrip...");
   }
 
   updateOptions(options) {
@@ -95,19 +97,20 @@ class Application extends Component {
   render() {
     return (
         <div id="application" className="container">
-          <div className="row">
+
+        <div className="col-12">
+          <Destinations trip={this.state.trip} updateTrip={this.updateTrip}/>
+        </div>
+
+
             <div className="col-12">
-              <Options options={this.state.trip.options}
-                       updateOptions={this.updateOptions}/>
+              <Options options={this.state.trip.options} updateOptions={this.updateOptions}/>
             </div>
-            <div className="col-12">
-              <Destinations trip={this.state.trip}
-                            updateTrip={this.updateTrip}/>
-            </div>
+
             <div className="col-12">
               <Trip trip={this.state.trip} updateTrip={this.updateTrip}/>
             </div>
-          </div>
+
         </div>
     )
   }

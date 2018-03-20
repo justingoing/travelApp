@@ -33,9 +33,9 @@ class Destinations extends Component {
           </div>
           <div className="card-body">
               <p>Search destinations to add</p>
-              <div class="wrap">
-                  <div class="search">
-                      <input type="text" class="searchTerm" placeholder="What are you looking for?"/>
+              <div className="wrap">
+                  <div className="search">
+                      <input type="text" className="searchTerm" placeholder="What are you looking for?"/>
                       <button type="submit">Search!</button>
                   </div>
               </div>
