@@ -42,6 +42,9 @@ class Destinations extends Component {
         }catch(err){
             console.error(err)
         }
+
+        console.log("Query places are now: ");
+        console.log(this.props.query.places);
     }
 
   render() {
@@ -56,6 +59,23 @@ class Destinations extends Component {
                   <div className="input-group" role="group">
                           <input type="text" className="form-control" id="mySearch" placeholder="Search for a place..."/>
                            <button className="btn btn-primary " style={{border: "#3E4551", backgroundColor: "#3E4551"}} onClick={this.sendSearch} type="button">Search</button>
+                  </div>
+                  <br/>
+                  <p>Search Results</p>
+                  <div>
+                    <table className="table table-responsive">
+                      <thead>
+                        <tr className="table-info">
+                          <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Id</th>
+                          <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Name</th>
+                          <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Latitude</th>
+                          <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Longitude</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {}
+                      </tbody>
+                     </table>
                   </div>
           <br/>
             <p>Or load destinations from a file.</p>
