@@ -56,7 +56,8 @@ class Application extends Component {
 
   updateTrip(tffi) {
     console.log("Updating... starts as", tffi);
-    let copyTFFI = Object.assign({}, this.state.trip);
+    console.log(this.state.trip.options.optimization);
+    let copyTFFI = Object.assign(this.getDefaultTrip(), this.state.trip);
     Object.assign(copyTFFI, tffi);
 
     let nextTFFI = {
@@ -75,8 +76,14 @@ class Application extends Component {
       map: copyTFFI.map
     };
 
+      nextTFFI = Object.assign(this.getDefaultTrip(), nextTFFI);
     this.setState({trip: nextTFFI});
-    console.log("After updateTrip...");
+
+    //this.updateOptions("miles");
+    //this.updateOptions(0.6);
+
+      console.log("After updateTrip...", this.state.trip);
+
   }
 
   updateOptions(options) {
