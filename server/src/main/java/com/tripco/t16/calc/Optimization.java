@@ -133,6 +133,34 @@ public class Optimization {
     return distanceMatrix;
   }
 
+  public static ArrayList<Place> TwoOpt(final ArrayList<Place> places, double radius)
+  {
+    // Get a starting nearest neighbor that we can further optimize
+    ArrayList<Place> trip = nearestNeighbor(places, DistanceCalculator.EARTH_RADIUS_MI);
+
+
+
+    return trip;
+  }
+
+  /**
+   * Reverses a trip in place
+   * @param route The route to be reversed
+   * @param i1 Start
+   * @param k End
+   */
+  private void TwoOptReverse(Place[] route, int i1, int k)
+  {
+    while(i1 < k)
+    {
+      Place temp = route[i1];
+      route[i1] = route[k];
+      route[k] = temp;
+      i1++;
+      k--;
+    }
+  }
+
 
   /**
    * Holds a place and a record of whether or not we have visited this.

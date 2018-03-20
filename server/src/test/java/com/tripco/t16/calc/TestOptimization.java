@@ -77,6 +77,15 @@ public class TestOptimization {
         output);
   }
 
+  @Test
+  public void test2OptReverse() {
+    ArrayList<Place> places = new ArrayList<>();
+    places.add(makeFrom(DistanceCalculator.COLORADO_TOP, DistanceCalculator.COLORADO_LEFT));
+    places.add(makeFrom(DistanceCalculator.COLORADO_TOP, DistanceCalculator.COLORADO_RIGHT));
+    places.add(makeFrom(DistanceCalculator.COLORADO_BOTTOM, DistanceCalculator.COLORADO_LEFT));
+    places.add(makeFrom(DistanceCalculator.COLORADO_BOTTOM, DistanceCalculator.COLORADO_RIGHT));
+  }
+
   private Place makeFrom(double lat, double lon) {
     Place p = new Place();
     int random = rand.nextInt();
