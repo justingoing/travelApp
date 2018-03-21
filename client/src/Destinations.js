@@ -27,6 +27,8 @@ class Destinations extends Component {
 
     searchResponse(){
       //POST request
+      console.log("the query");
+      console.log(this.props.query);
       return fetch(process.env.SERVICE_URL + '/query', {
           method: "POST",
           body: JSON.stringify(this.props.query)
@@ -35,21 +37,17 @@ class Destinations extends Component {
 
     async sendSearch(){
         //get the search value, put it in query field, and send it
-        this.props.updateQuery(document.getElementById("mySearch").value);
+        //this.props.updateQuery(document.getElementById("mySearch").value);
+        this.props.checkSQL(document.getElementById("mySearch").value);
         try{
             let searchResponse = await this.searchResponse();
             let searchTFFI = await searchResponse.json();
-            console.log("searchTFFI");
-            console.log(searchTFFI);
             this.props.updateQuery(searchTFFI);
-            console.log("after: ");
-            console.log(this.props.query.places);
+            console.log("the result");
+            console.log(this.props.query);
         }catch(err){
             console.error(err)
         }
-
-        console.log("Query places are now: ");
-        console.log(this.props.query.places);
     }
 
   render() {

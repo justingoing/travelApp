@@ -8,40 +8,29 @@ class SearchTable extends Component {
   }
 
   createTable() {
+    console.log("Search Table Props");
+    console.log(this.props);
 
-                let ids = 1;
-                let name = 2;
-                let lat = 3;
-                let long = 4;
-                let tableData = 5;
+    let ids = this.props.destinations.places.map((item, index) => <td key={"id" + index}> {item.id} </td>);
+    let dests = this.props.destinations.places.map((item, index) => <td key={"dest" + index}> {item.name} </td>);
+    let lats = this.props.destinations.places.map((item, index) => <td key={"lat" + index}> {item.latitude} </td>);
+    let long = this.props.destinations.places.map((item, index) => <td key={"long" + index}> {item.longitude} </td>);
 
-                /*
-                let ids = this.props.query.places.map((item,index) => <td key={"de" + index}> {item.id}</td>);
-                let name = this.props.query.places.map((item,index) => <td key={"de" + index}> {item.name}</td>);
-                let lat = this.props.query.places.map((item,index) => <td key={"de" + index}> {item.latitude}</td>);
-                let long = this.props.query.places.map((item,index) => <td key={"de" + index}> {item.longitude}</td>);
-                */
+    let tableData = [];
 
-                /*
-                let dests = this.props.trip.places.map(
-                    (item, index) => <td key={"de" + index}> {item.name} </td>);
-                let dists = this.props.trip.distances.map(
-                    (item, index) => <td key={"di" + index}> {item}</td>);
+    for(let i = 0; i < ids.length; i++){
+      tableData.push(this.renderRow(i, ids[i], dests[i], lats[i], long[i]), false);
+    }
 
-                if (dests.length > 0) {
-                  dests.push(<td key={-1}> {dests[0].props.children} </td>);
-                }
+    return {ids, dests, lats, long, tableData};
+  }
 
+  renderRow(key, ids, dests, lat, long, selected) {
+      let opacity = selected ? 0.3 : 1.0;
 
-                let tableData = [];
-                for (let i = 0; i < ids.length - 1; i++) {
-                  tableData.push(this.renderRow(ids[i]),
-                      false);
-                }
-                */
+      return (<tr key={key} style={{opacity: opacity}}>{ids}{dests}{lat}{long}</tr>);
+  }
 
-                return {ids, name, lat, long, tableData};
-              }
 
   render(){
     let table = this.createTable();
