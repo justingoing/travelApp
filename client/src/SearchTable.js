@@ -26,9 +26,20 @@ class SearchTable extends Component {
   }
 
   renderRow(key, ids, dests, lat, long, selected) {
+
+      let addition = (
+              <td className="align-right"><span>
+                <button style={{color: "#FFF", backgroundColor: "#3E4551"}}
+                        onClick={(e) => this.props.addToTrip(key, ids, dests, lat, long)}
+                        className="pull-right btn btn-default">
+                  Add to Trip
+                </button>
+              </span></td>
+          );
+
       let opacity = selected ? 0.3 : 1.0;
 
-      return (<tr key={key} style={{opacity: opacity}}>{ids}{dests}{lat}{long}</tr>);
+      return (<tr key={key} style={{opacity: opacity}}>{ids}{dests}{lat}{long}{addition}</tr>);
   }
 
 
@@ -43,6 +54,7 @@ class SearchTable extends Component {
                     <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Name</th>
                     <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Latitude</th>
                     <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Longitude</th>
+                    <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Options</th>
                    </tr>
                   </thead>
                   <tbody>
