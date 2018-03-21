@@ -167,13 +167,13 @@ public class Find {
    * Populate our object with information from the query so that we can convert back to json.
    */
   public void performQuery(boolean shouldPrint) {
-    if(!Find.isInputGood(this.query))
+    if(!Find.isInputGood(query))
     {
       this.places = new ArrayList<>();
       System.out.println(Find.injectionMessage);
       return;
     }
 
-    this.queryDB(this.query, dbId, dbPass, shouldPrint);
+    this.queryDB(query, dbId, dbPass, shouldPrint);
   }
 }

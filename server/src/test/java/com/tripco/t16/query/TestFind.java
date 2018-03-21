@@ -36,14 +36,14 @@ public class TestFind {
     // check if doing a query on our db for gibberish returns nothing
     find.type = "query";
     find.query = "abcdefghijklmnop12345666789";
-    find.performQuery(false);
+    find.performQuery(true);
 
     assertTrue(find.places.size() == 0);
     /* --------------------------------------------- */
     // make sure that querying for legit results gives us some places
 
     /* --------------------------------------------- */
-    find.query = "Sterling";
+    find.query = "Denver";
     find.performQuery(false);
 
     assertTrue(find.places.size() > 0);
