@@ -249,32 +249,6 @@ public class Trip {
     }
   }
 
-  public boolean validateLongitude(String longIN) {
-    //System.out.println("Longitude: " + longIN);
-    if (longIN.matches(
-        "\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+(\\.\\d*)?[\"|″]?\\s*[E|W]\\s*")) //DMS
-    {
-      return true; //System.out.println("Matches #1");
-    } else if (longIN
-        .matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[E|W]\\s*")) //degrees decimal minutes
-    {
-      return true; //System.out.println("Matches #2");
-    } else if (longIN.matches("\\s*-?\\d+\\.?\\d*[°|º]\\s*[E|W]\\s*")) //decimal degrees
-    {
-      return true; //System.out.println("Matches #3");
-    } else if (longIN.matches("\\s*-?\\d+\\.?\\d*\\s*[E|W]\\s*")) //floating point
-    {
-      return true; //System.out.println("Matches #4");
-    } else if (longIN.matches("\\s*-?\\d+\\.?\\d*\\s*")) {
-      return true; //System.out.println("Matches #5");
-    } else {
-      System.out.println("Longitude: " + longIN);
-      System.out.println("No match!");
-      return false;
-      //ERROR OUT?
-    }
-  }
-
   public static double convertToDecimal(String conv) {
 
     double seconds = 0;
