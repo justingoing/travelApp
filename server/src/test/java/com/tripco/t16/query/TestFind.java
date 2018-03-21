@@ -17,7 +17,11 @@ public class TestFind {
   // Setup to be done before every test in TestPlan
   @Before
   public void initialize() {
-    find = new Find();
+    if (System.getenv("TRAVIS") != null) {
+      find = new Find("com.mysql.jdbc.Driver", "localhost/testDB", "travis", "");
+    } else {
+      find = new Find();
+    }
     find.places = new ArrayList<>();
   }
 
