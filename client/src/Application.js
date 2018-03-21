@@ -18,6 +18,7 @@ class Application extends Component {
     this.updateOptions = this.updateOptions.bind(this);
     this.updateQuery = this.updateQuery.bind(this);
     this.checkSQL = this.checkSQL.bind(this);
+    this.addToTrip = this.addToTrip.bind(this);
   }
 
   //populate with search
@@ -147,13 +148,28 @@ class Application extends Component {
     }
   }
 
+  addToTrip(key, id, name, lat, long){
+
+    let newPlace = {
+      id: id.props.children[1],
+      name: name.props.children[1],
+      latitude: lat.props.children[1],
+      longitude: long.props.children[1]
+    }
+
+    this.state.trip.places.push(newPlace);
+
+    console.log("trip added");
+    console.log(this.state.trip);
+  }
+
   render() {
     return (
         <div id="application" className="container">
             <div className="col-12">
               <Destinations trip={this.state.trip}
                             updateTrip={this.updateTrip}
-                            query={this.state.query} updateQuery={this.updateQuery}  checkSQL={this.checkSQL}/>
+                            query={this.state.query} updateQuery={this.updateQuery}  checkSQL={this.checkSQL} addToTrip={this.addToTrip}/>
               <Options options={this.state.trip.options} updateOptions={this.updateOptions}/>
             </div>
             <div className="col-12">
