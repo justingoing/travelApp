@@ -128,13 +128,10 @@ class Application extends Component {
     return (
         <div id="application" className="container">
             <div className="col-12">
-              <Options options={this.state.trip.options} updateOptions={this.updateOptions}/>
               <Destinations trip={this.state.trip}
                             updateTrip={this.updateTrip}
                             query={this.state.query} updateQuery={this.updateQuery}/>
-            </div>
-
-            <div className="col-12">
+              <Options options={this.state.trip.options} updateOptions={this.updateOptions}/>
               <Trip trip={this.state.trip} updateTrip={this.updateTrip}/>
             </div>
 
