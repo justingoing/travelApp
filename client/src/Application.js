@@ -17,16 +17,33 @@ class Application extends Component {
     this.updateTrip = this.updateTrip.bind(this);
     this.updateOptions = this.updateOptions.bind(this);
     this.updateQuery = this.updateQuery.bind(this);
+    this.checkSQL = this.checkSQL.bind(this);
   }
 
   //populate with search
-  updateQuery(query){
-      this.state.query.query = this.escapeRegExp(query);
+  updateQuery(searchTFFI){
+      let copyTFFI = Object.assign({}, this.state.query);
+
+      Object.assign(copyTFFI, searchTFFI);
+      let nextTFFI = {
+        version: copyTFFI.version,
+        type: copyTFFI.type,
+        query: copyTFFI.query,
+        places: copyTFFI.places
+      };
+
+      this.setState({query: nextTFFI});
   }
+
+  checkSQL(query){
+        this.state.query.query = this.escapeRegExp(query);
+    }
+
 
   escapeRegExp(string){
       return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
+
 
   getDefaultTrip() {
     let t = {
@@ -136,8 +153,10 @@ class Application extends Component {
             <div className="col-12">
               <Destinations trip={this.state.trip}
                             updateTrip={this.updateTrip}
-                            query={this.state.query} updateQuery={this.updateQuery}/>
+                            query={this.state.query} updateQuery={this.updateQuery}  checkSQL={this.checkSQL}/>
               <Options options={this.state.trip.options} updateOptions={this.updateOptions}/>
+            </div>
+            <div className="col-12">
               <Trip trip={this.state.trip} updateTrip={this.updateTrip}/>
             </div>
 

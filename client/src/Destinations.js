@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import SearchTable from './SearchTable';
 
 /* Destinations reside in the parent object so they may be shared
  * with the Trip object.
@@ -26,6 +27,8 @@ class Destinations extends Component {
 
     searchResponse(){
       //POST request
+      console.log("the query");
+      console.log(this.props.query);
       return fetch(process.env.SERVICE_URL + '/query', {
           method: "POST",
           body: JSON.stringify(this.props.query)
@@ -34,11 +37,14 @@ class Destinations extends Component {
 
     async sendSearch(){
         //get the search value, put it in query field, and send it
-        this.props.updateQuery(document.getElementById("mySearch").value);
+        //this.props.updateQuery(document.getElementById("mySearch").value);
+        this.props.checkSQL(document.getElementById("mySearch").value);
         try{
             let searchResponse = await this.searchResponse();
             let searchTFFI = await searchResponse.json();
-            this.props.query.places = searchTFFI.places;
+            this.props.updateQuery(searchTFFI);
+            console.log("the result");
+            console.log(this.props.query);
         }catch(err){
             console.error(err)
         }
@@ -57,6 +63,9 @@ class Destinations extends Component {
                           <input type="text" className="form-control" id="mySearch" placeholder="Search for a place..."/>
                            <button className="btn btn-primary " style={{border: "#3E4551", backgroundColor: "#3E4551"}} onClick={this.sendSearch} type="button">Search</button>
                   </div>
+                  <br/>
+                  <p>Search Results</p>
+                  <SearchTable destinations = {this.props.query}/>
           <br/>
             <p>Or load destinations from a file.</p>
             <div className="form-group" role="group">
