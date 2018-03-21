@@ -34,7 +34,7 @@ class Application extends Component {
       type: "trip",
       title: "",
       options: {
-        distance: {name: "miles", radius: "3958.7613"},
+        distance: this.miles(),
         optimization: 0
       },
       places: [],
@@ -65,7 +65,7 @@ class Application extends Component {
   }
 
   updateTrip(tffi) {
-    let copyTFFI = Object.assign({}, this.state.trip);
+    let copyTFFI = Object.assign(this.getDefaultTrip(), this.state.trip);
     Object.assign(copyTFFI, tffi);
 
     let nextTFFI = {
@@ -84,37 +84,63 @@ class Application extends Component {
       map: copyTFFI.map
     };
 
+    nextTFFI = this.checkOptionsV1(nextTFFI, tffi);
+
     this.setState({trip: nextTFFI});
+  }
+
+  checkOptionsV1(nextTFFI, incomingTFFI) {
+
+    if (!nextTFFI.options.distance.name || !nextTFFI.options.distance.radius) {
+      //Check if incoming tffi is v1
+      if (incomingTFFI.options.name === "kilometers") {
+        nextTFFI.options.distance = this.kilometers();
+      } else if (incomingTFFI.options.name === "miles") {
+        nextTFFI.options.distance = this.miles();
+      } else {
+        nextTFFI.options.distance = this.miles();
+      }
+    }
+
+    // Set optimization if undefined (likely caused by a v1 file).
+    if (!nextTFFI.options.optimization) {
+      nextTFFI.options.optimization = this.state.trip.options.optimization;
+    }
+
+    return nextTFFI;
+  }
+
+  miles() {
+    return {name: "miles", radius: "3958.7613"};
+  }
+
+  kilometers() {
+    return {name: "kilometers", radius: "6371.0088"};
   }
 
   updateOptions(options) {
     if (options === "kilometers") {
-      this.state.trip.options.distance = {
-        name: "kilometers",
-        radius: "6371.0088"
-      };
+      this.state.trip.options.distance = this.kilometers();
     } else if (options === "miles") {
-      this.state.trip.options.distance = {name: "miles", radius: "3958.7613"};
+      this.state.trip.options.distance = this.miles();
+    }
+    if(options >= 0 && options <= 1) {
+      this.state.trip.options.optimization = options;
+      console.log("optimization = ", this.state.trip.options.optimization);
     }
   }
 
   render() {
     return (
         <div id="application" className="container">
-          <div className="row">
-            <div className="col-12">
-              <Options options={this.state.trip.options}
-                       updateOptions={this.updateOptions}/>
-            </div>
             <div className="col-12">
               <Destinations trip={this.state.trip}
                             updateTrip={this.updateTrip}
                             query={this.state.query} updateQuery={this.updateQuery}/>
-            </div>
-            <div className="col-12">
+              <Options options={this.state.trip.options} updateOptions={this.updateOptions}/>
               <Trip trip={this.state.trip} updateTrip={this.updateTrip}/>
             </div>
-          </div>
+
         </div>
     )
   }
