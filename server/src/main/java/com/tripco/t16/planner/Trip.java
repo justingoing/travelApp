@@ -18,6 +18,7 @@ public class Trip {
   public ArrayList<Place> places;
   public ArrayList<Integer> distances;
   public String map;
+  public Integer version;
 
   public ArrayList<Coords> coords;
 
@@ -85,29 +86,28 @@ public class Trip {
 
     String svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1066.6073\" height=\"783.0824\">";
 
+    Coords start = this.getMappedCoords(this.coords.get(0).x, this.coords.get(0).y);
+    Coords end = this.getMappedCoords(this.coords.get(this.coords.size() - 1).x,
+            this.coords.get(this.coords.size() - 1).y);
+
+    svg += "<line stroke=\"#1E4D2B\" y2=\"" + end.y + "\" x2=\"" + end.x
+            + "\" y1=\"" + start.y + "\" x1=\"" + start.x + "\" stroke-width=\"5\" fill=\"none\"/>";
+
     for (int i = 0; i < coords.size() - 1; ++i) {
       Coords cur = this.getMappedCoords(this.coords.get(i).x, this.coords.get(i).y);
       Coords nex = this.getMappedCoords(this.coords.get(i + 1).x, this.coords.get(i + 1).y);
 
-      svg += "<line stroke=\"%237FFF00\" y2=\"" + nex.y + "\" x2=\"" + nex.x +
-          "\" y1=\"" + cur.y + "\" x1=\"" + cur.x + "\" stroke-width=\"5\" fill=\"none\"/>";
+      svg += "<line stroke=\"#1E4D2B\" y2=\"" + nex.y + "\" x2=\"" + nex.x
+              + "\" y1=\"" + cur.y + "\" x1=\"" + cur.x + "\" stroke-width=\"5\" fill=\"none\"/>";
 
       svg += "<circle cx=\"" + cur.x + "\" cy=\" " + cur.y + " \" r=\"" + Trip.DEST_RADIUS
-          + "\" stroke=\"black\" stroke-width=\"3\" fill=\"red\" />";
+          + "\" stroke=\"#1E4D2B\" stroke-width=\"3\" fill=\"#C8C372\" />";
 
       if (i == this.coords.size() - 2) {
         svg += "<circle cx=\"" + nex.x + "\" cy=\" " + nex.y + " \" r=\"" + Trip.DEST_RADIUS
-            + "\" stroke=\"black\" stroke-width=\"3\" fill=\"red\" />";
+            + "\" stroke=\"#1E4D2B\" stroke-width=\"3\" fill=\"#C8C372\" />";
       }
     }
-
-    Coords start = this.getMappedCoords(this.coords.get(0).x, this.coords.get(0).y);
-    Coords end = this.getMappedCoords(this.coords.get(this.coords.size() - 1).x,
-        this.coords.get(this.coords.size() - 1).y);
-
-    svg += "<line stroke=\"%237FFF00\" y2=\"" + end.y + "\" x2=\"" + end.x +
-        "\" y1=\"" + start.y + "\" x1=\"" + start.x + "\" stroke-width=\"5\" fill=\"none\"/>";
-
     svg += "</svg>";
     return svg;
   }
@@ -226,7 +226,7 @@ public class Trip {
   public boolean validateLatitude(String latIN) {
     //System.out.println("Latitude: " + latIN);
     if (latIN.matches(
-        "\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+\\.?\\d*[\"|″]\\s*[N|S]\\s*")) //degrees minutes seconds
+        "\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+\\.?\\d*[\"|″]?\\s*[N|S]\\s*")) //DMS
     {
       return true; //System.out.println("Matches #1");
     } else if (latIN
@@ -252,7 +252,7 @@ public class Trip {
   public boolean validateLongitude(String longIN) {
     //System.out.println("Longitude: " + longIN);
     if (longIN.matches(
-        "\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+(\\.\\d*)?[\"|″]\\s*[E|W]\\s*")) //degrees minutes seconds
+        "\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+(\\.\\d*)?[\"|″]?\\s*[E|W]\\s*")) //DMS
     {
       return true; //System.out.println("Matches #1");
     } else if (longIN
