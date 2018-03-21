@@ -174,6 +174,6 @@ public class Find {
       return;
     }
 
-    this.queryDB(this.query, dbId, dbPass, shouldPrint);
+    this.queryDB(this.query, dbI, dbPass, shouldPrint);
   }
 }
