@@ -33,8 +33,8 @@ public class Trip {
   public void plan() {
     for (int i = this.places.size() - 1; i >= 0; --i) {
       try {
-        if (!this.validateLatitude(this.places.get(i).latitude) ||
-            !this.validateLongitude(this.places.get(i).longitude)) {
+        if (!this.validateLatLong(this.places.get(i).latitude) ||
+            !this.validateLatLong(this.places.get(i).longitude)) {
           this.places.remove(i);
         }
       } catch (NullPointerException e) {
@@ -223,20 +223,20 @@ public class Trip {
     }
   }
 
-  public boolean validateLatitude(String latIN) {
+  public boolean validateLatLong(String latIN) {
     //System.out.println("Latitude: " + latIN);
     if (latIN.matches(
-        "\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+\\.?\\d*[\"|″]?\\s*[N|S]\\s*")) //DMS
+        "\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+\\.?\\d*[\"|″]?\\s*[N|S|E|W]\\s*")) //DMS
     {
       return true; //System.out.println("Matches #1");
     } else if (latIN
-        .matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[N|S]\\s*")) //degrees decimal minutes
+        .matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[N|S|E|W]\\s*")) //degrees decimal minutes
     {
       return true; //System.out.println("Matches #2");
-    } else if (latIN.matches("\\s*-?\\d+\\.?\\d*[°|º]\\s*[N|S]\\s*")) //decimal degrees
+    } else if (latIN.matches("\\s*-?\\d+\\.?\\d*[°|º]\\s*[N|S|E|W]\\s*")) //decimal degrees
     {
       return true; //System.out.println("Matches #3");
-    } else if (latIN.matches("\\s*-?\\d+\\.?\\d*\\s*[N|S]\\s*")) //floating point
+    } else if (latIN.matches("\\s*-?\\d+\\.?\\d*\\s*[N|S|E|W]\\s*")) //floating point
     {
       return true; //System.out.println("Matches #4");
     } else if (latIN.matches("\\s*-?\\d+\\.?\\d*\\s*")) {
