@@ -52,6 +52,7 @@ public class TestFind {
     // make sure we can print some json lookin' stuff -- capture console output
     /* --------------------------------------------- */
 
+
     // Create a stream to hold the output
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     PrintStream ps = new PrintStream(baos);
