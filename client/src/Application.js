@@ -84,11 +84,18 @@ class Application extends Component {
       map: copyTFFI.map
     };
 
+    nextTFFI = this.checkOptionsV1(nextTFFI, tffi);
+
+    this.setState({trip: nextTFFI});
+  }
+
+  checkOptionsV1(nextTFFI, incomingTFFI) {
+
     if (!nextTFFI.options.distance.name || !nextTFFI.options.distance.radius) {
       //Check if incoming tffi is v1
-      if (tffi.options.name === "kilometers") {
+      if (incomingTFFI.options.name === "kilometers") {
         nextTFFI.options.distance = this.kilometers();
-      } else if (tffi.options.name === "miles") {
+      } else if (incomingTFFI.options.name === "miles") {
         nextTFFI.options.distance = this.miles();
       } else {
         nextTFFI.options.distance = this.miles();
@@ -100,8 +107,7 @@ class Application extends Component {
       nextTFFI.options.optimization = this.state.trip.options.optimization;
     }
 
-    this.setState({trip: nextTFFI});
-
+    return nextTFFI;
   }
 
   miles() {
