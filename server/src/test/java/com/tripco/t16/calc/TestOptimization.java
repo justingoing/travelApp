@@ -78,12 +78,57 @@ public class TestOptimization {
   }
 
   @Test
-  public void test2OptReverse() {
+  public void testCrossCase() {
+    ArrayList<Place> places = new ArrayList<>();
+    places.add(makeFrom(DistanceCalculator.COLORADO_TOP, DistanceCalculator.COLORADO_LEFT));
+    places.add(makeFrom(DistanceCalculator.COLORADO_BOTTOM, DistanceCalculator.COLORADO_RIGHT));
+    places.add(makeFrom(DistanceCalculator.COLORADO_TOP, DistanceCalculator.COLORADO_RIGHT));
+    places.add(makeFrom(DistanceCalculator.COLORADO_BOTTOM, DistanceCalculator.COLORADO_LEFT));
+
+    System.out.println("FIND ME!");
+    System.out.println(places);
+    System.out.println(Optimization.TwoOpt(places, DistanceCalculator.EARTH_RADIUS_MI));
+  }
+
+  @Test
+  public void test2OptSwap() {
+    ArrayList<Place> places = new ArrayList<>();
+    places.add(makeFrom(DistanceCalculator.COLORADO_TOP, DistanceCalculator.COLORADO_LEFT));
+    places.add(makeFrom(DistanceCalculator.COLORADO_BOTTOM, DistanceCalculator.COLORADO_RIGHT));
+    places.add(makeFrom(DistanceCalculator.COLORADO_TOP, DistanceCalculator.COLORADO_RIGHT));
+    places.add(makeFrom(DistanceCalculator.COLORADO_BOTTOM, DistanceCalculator.COLORADO_LEFT));
+
+    System.out.println("TESTING 2 OPT SWAP!!!");
+
+    for(int i = 0; i < places.size(); ++i)
+    {
+      System.out.println(places.get(i));
+    }
+
+    Place[] pass = new Place[places.size()];
+    pass = places.toArray(pass);
+    Place[] swapped = Optimization.TwoOptSwap(pass, 1, 2);
+
+    System.out.println("TESTING 2 OPT SWAP REDOUX!!!");
+
+    for(int i = 0; i < swapped.length; ++i)
+    {
+      System.out.println(swapped[i]);
+    }
+
+    /* TODO FINISH the Assert */
+
+  }
+
+  @Test
+  public void test2OptDistance() {
     ArrayList<Place> places = new ArrayList<>();
     places.add(makeFrom(DistanceCalculator.COLORADO_TOP, DistanceCalculator.COLORADO_LEFT));
     places.add(makeFrom(DistanceCalculator.COLORADO_TOP, DistanceCalculator.COLORADO_RIGHT));
-    places.add(makeFrom(DistanceCalculator.COLORADO_BOTTOM, DistanceCalculator.COLORADO_LEFT));
     places.add(makeFrom(DistanceCalculator.COLORADO_BOTTOM, DistanceCalculator.COLORADO_RIGHT));
+    places.add(makeFrom(DistanceCalculator.COLORADO_BOTTOM, DistanceCalculator.COLORADO_LEFT));
+
+    System.out.println(Optimization.getTripDistance(places, DistanceCalculator.EARTH_RADIUS_MI));
   }
 
   private Place makeFrom(double lat, double lon) {
