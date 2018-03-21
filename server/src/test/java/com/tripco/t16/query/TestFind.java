@@ -29,6 +29,7 @@ public class TestFind {
   public void testTrue() {
     // assertTrue checks if a statement is true
     assertTrue(true);
+    assertTrue(true);
   }
 
   @Test
