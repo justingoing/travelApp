@@ -43,7 +43,7 @@ public class TestFind {
     // make sure that querying for legit results gives us some places
 
     /* --------------------------------------------- */
-    find.query = "sterling";
+    find.query = "Sterling";
     find.performQuery(false);
 
     assertTrue(find.places.size() > 0);
