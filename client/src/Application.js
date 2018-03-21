@@ -24,13 +24,15 @@ class Application extends Component {
       type: "trip",
       title: "",
       options: {
-        distance: {name: "miles", radius: "3958.7613"},
+        distance: this.miles(),
         optimization: 0
       },
       places: [],
       distances: [],
       map: "<svg width=\"1920\" height=\"20\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><g></g></svg>"
     };
+
+    console.log("t: ", t);
 
     return t;
   }
@@ -76,24 +78,39 @@ class Application extends Component {
       map: copyTFFI.map
     };
 
-      nextTFFI = Object.assign(this.getDefaultTrip(), nextTFFI);
+    if (!nextTFFI.options.distance.name || !nextTFFI.options.distance.radius) {
+      //Check if incoming tffi is v1
+      if (tffi.options.name === "kilometers") {
+        nextTFFI.options.distance = this.kilometers();
+      } else if (tffi.options.name === "miles") {
+        nextTFFI.options.distance = this.miles();
+      } else {
+        nextTFFI.options.distance = this.miles();
+      }
+    }
+
+    // Set optimization if undefined (likely caused by a v1 file).
+    if (!nextTFFI.options.optimization) {
+      nextTFFI.options.optimization = this.state.trip.options.optimization;
+    }
+
     this.setState({trip: nextTFFI});
 
-    //this.updateOptions("miles");
-    //this.updateOptions(0.6);
+  }
 
-      console.log("After updateTrip...", this.state.trip);
+  miles() {
+    return {name: "miles", radius: "3958.7613"};
+  }
 
+  kilometers() {
+    return {name: "kilometers", radius: "6371.0088"};
   }
 
   updateOptions(options) {
     if (options === "kilometers") {
-      this.state.trip.options.distance = {
-        name: "kilometers",
-        radius: "6371.0088"
-      };
+      this.state.trip.options.distance = this.kilometers();
     } else if (options === "miles") {
-      this.state.trip.options.distance = {name: "miles", radius: "3958.7613"};
+      this.state.trip.options.distance = this.miles();
     }
     if(options >= 0 && options <= 1) {
       this.state.trip.options.optimization = options;
