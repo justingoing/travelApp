@@ -141,7 +141,7 @@ public class Optimization {
     //O(N) - Creates a place record array based on the nearest neighbor trip
     PlaceRecord[] placesArray = new PlaceRecord[trip.size()];
     for (int i = 0; i < trip.size(); i++) {
-      placesArray[i] = new PlaceRecord(places.get(i));
+      placesArray[i] = new PlaceRecord(trip.get(i));
     }
     // Calulate distances between all nodes one time. Matrix should be in order of trip
     int[][] distanceMatrix = calculateDistanceMatrix(placesArray, radius);
@@ -158,7 +158,6 @@ public class Optimization {
     boolean improved = true;
 
     while (improved) {
-      System.out.println("RUNNING 2 OPT");
       int best_distance = Optimization
           .getTripDistance(cur_route, distanceMatrix, tripOrder);
       improved = false;
@@ -167,13 +166,15 @@ public class Optimization {
         for (int k = i + 1; k < trip.size() - 1; ++k) {
           Place[] cur_arr = new Place[cur_route.size()];
           cur_arr = cur_route.toArray(cur_arr);
+          int[] tempOrder = Arrays.copyOf(tripOrder, tripOrder.length);
           ArrayList<Place> new_route = new ArrayList<>(
-              Arrays.asList(Optimization.TwoOptSwap(cur_arr, i, k, tripOrder)));
+              Arrays.asList(Optimization.TwoOptSwap(cur_arr, i, k, tempOrder)));
           int new_distance = Optimization
-              .getTripDistance(new_route, distanceMatrix, tripOrder);
+              .getTripDistance(new_route, distanceMatrix, tempOrder);
 
           if (new_distance < best_distance) {
             cur_route = new_route;
+            tripOrder = tempOrder;
             improved = true;
           }
         }
@@ -189,24 +190,20 @@ public class Optimization {
    * @param route The route we want to swap
    * @param i Start of middle segment
    * @param k End of middle segment
-   * @param tripOrder Indexes into distance array
    */
-  public static Place[] TwoOptSwap(Place[] route, int i, int k, int[] tripOrder) {
-    //1. take route[0] to route[i-1] and add them in order to new_route
-    //2. take route[i] to route[k] and add them in reverse order to new_route
-    //3. take route[k+1] to end and add them in order to new_route
-    //return new_route;
+  private static Place[] TwoOptSwap(Place[] route, int i, int k, int[] tempOrder) {
     Place[] new_route = new Place[route.length];
+
+    int[] tempTrip = Arrays.copyOf(tempOrder, tempOrder.length);
 
     for (int start = 0; start <= i - 1; ++start) {
       new_route[start] = route[start];
       //don't modify trip order since these first elements stay in place
     }
 
-    int[] tempTrip = tripOrder.clone();
     for (int mid = i; mid <= k; ++mid) {
       new_route[k - (mid - i)] = route[mid];
-      tripOrder[k - (mid - i)] = tempTrip[mid]; //reverse order of these middle elements
+      tempOrder[k - (mid - i)] = tempTrip[mid]; //reverse order of these middle elements
     }
 
     for (int last = k + 1; last < route.length; ++last) {
@@ -224,13 +221,8 @@ public class Optimization {
    * @param tripOrder Array of indexes into the distance matrix (place's order in the trip)
    * @return The summed distance
    */
-  public static int getTripDistance(ArrayList<Place> places, int[][] distanceMatrix,
+  private static int getTripDistance(ArrayList<Place> places, int[][] distanceMatrix,
       int[] tripOrder) {
-    //Quick sanity check
-    if (places == null || places.size() == 0) {
-      return 0;
-    }
-
     int dist = 0;
 
     for (int i = 0; i < tripOrder.length; ++i)

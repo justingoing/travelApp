@@ -90,9 +90,17 @@ public class TestOptimization {
     places.get(3).name = "BOTTOM LEFT";
 
 
-    System.out.println("FIND ME!");
     System.out.println(places);
-    System.out.println(Optimization.TwoOpt(places, DistanceCalculator.EARTH_RADIUS_MI));
+    ArrayList<Place> results = Optimization.TwoOpt(places, DistanceCalculator.EARTH_RADIUS_MI);
+    for(Place place : results)
+      System.out.println(place.name);
+
+    // check that 2 opt returns an uncrossed version of the trip
+    assertEquals("TOP LEFT", results.get(0).name);
+    assertEquals("BOTTOM LEFT", results.get(1).name);
+    assertEquals("BOTTOM RIGHT", results.get(2).name);
+    assertEquals("TOP RIGHT", results.get(3).name);
+
   }
 
   private Place makeFrom(double lat, double lon) {
