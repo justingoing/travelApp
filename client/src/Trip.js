@@ -13,6 +13,8 @@ class Trip extends Component {
 
     this.plan = this.plan.bind(this);
     this.saveTFFI = this.saveTFFI.bind(this);
+    this.reverseTrip = this.reverseTrip.bind(this);
+    this.setNewStart = this.setNewStart.bind(this);
   }
 
   /* Sends a request to the server with the destinations and options.
@@ -58,6 +60,38 @@ class Trip extends Component {
     Saver.saveAs(blob, title);
   }
 
+  reverseTrip() {
+    console.log(this.props);
+
+    let places = this.props.trip.places;
+    let distances = this.props.trip.distances;
+    let newState = {
+      places: places.reverse(),
+      distances: distances.reverse()
+    };
+    this.props.updateTrip(newState);
+  }
+
+  setNewStart(index) {
+    let distancesCopy = Trip.reorder(this.props.trip.distances, index);
+    let placesCopy = Trip.reorder(this.props.trip.places, index);
+
+    let newState = {
+      places: placesCopy,
+      distances: distancesCopy
+    };
+
+    this.props.updateTrip(newState);
+  }
+
+  static reorder(array, index) {
+    if (index < 0 || index >= array.length) {
+      return array;
+    }
+
+    return array.slice(index).concat(array.slice(0, index));
+  }
+
   /* Renders the buttons, map, and itinerary.
    * The title should be specified before the plan or save buttons are valid.
    */
@@ -78,8 +112,11 @@ class Trip extends Component {
               <button className="btn btn-primary " style={{border: "#3E4551", backgroundColor: "#3E4551"}} onClick={this.saveTFFI} type="button">Save</button>
             </span>
             </div>
-            <Map trip={this.props.trip} />
-            <Itinerary trip={this.props.trip} />
+            <div>
+              <button className="btn btn-primary " style={{border: "#3E4551", backgroundColor: "#3E4551"}} onClick={this.reverseTrip} type="button">Reverse Trip</button>
+            </div>
+              <Map trip={this.props.trip} />
+            <Itinerary trip={this.props.trip} setNewStart={this.setNewStart}/>
           </div>
         </div>
     )

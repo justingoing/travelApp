@@ -41,10 +41,12 @@ class Options extends Component {
   onInput() {
     var input = document.getElementById("typeinp");
     var currentVal = input.value;
-    console.log("value is ", currentVal); //here's how to see value of slider or input.value or document.getElementById("typeinp")
+    this.props.updateOptions(currentVal);
+    //console.log("value is ", currentVal); //here's how to see value of slider or input.value or document.getElementById("typeinp")
     this.setState({
       value: currentVal
     })
+
   }
 
   render() {
@@ -68,10 +70,8 @@ class Options extends Component {
               </label>
             </div>
             <br></br><br></br>
-            <p>Zero Optimization <input id="typeinp" type="range" min="0"
-                                        max="1" step=".01" defaultValue="0"
-                                        onChange={this.onInput.bind(
-                                            this)}/> Full Optimization</p>
+            <p>Zero Optimization <input id="typeinp" type="range" min="0" max="1" step=".01" defaultValue="0"
+                onChange={this.onInput.bind(this)}/> Full Optimization</p>
           </div>
         </div>
     )

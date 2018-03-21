@@ -64,6 +64,8 @@ Date | Tasks done  | Tasks in progress | Impediments
 2/29/18 | continuing to work on tasks, UI logos completed, nearest neighbor completed, discussed next tasks to be done through the weekend | justin - create search bar, Isaac - connect to sql | None
 3/7/18 | coordinated how to merge all our work on the search bar, progress on drag and drop, coordinated how to condense updateTrip | isaac - continuing on DB, Justin - waiting changes to Destinations.js to complete search-bar, paul - working on options, sam - 2opt, drag and drop, working on tffi format |
 3/8/18 | search bar complete, discussed what to accomplish next, coordinated on future plans for displaying in trip | tweaking existing code, planning display search in table |
+3/20/18 | coordinating what is left to be completed, redistributing tasks for completion, audit issues to be closed | justin - display search results sam - drag and drop, ike - server and travis completion | dustin' the rust off from spring break
+
 
 ## ReviewUI
 #### Completed epics in Sprint Backlog
