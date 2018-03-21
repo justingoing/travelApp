@@ -7,12 +7,13 @@ class Itinerary extends Component {
     this.state = {};
 
     this.createTable = this.createTable.bind(this);
+    this.reorderItinerary = this.reorderItinerary.bind(this);
   }
 
   //loop through distances, sum, and return the total
   calcDistance() {
-    var tempDist = 0;
-    for (var i = 0; i < this.props.trip.distances.length; i++) {
+    let tempDist = 0;
+    for (let i = 0; i < this.props.trip.distances.length; i++) {
       tempDist += this.props.trip.distances[i];
     }
     return tempDist;
@@ -37,53 +38,35 @@ class Itinerary extends Component {
           false);
     }
 
-    console.log(this.props.trip);
-
     return {distance, units, tableData};
   }
 
-  _startDrag() {
-
-    console.log("Starting drag");
+  reorderItinerary(event, index) {
+    this.props.setNewStart(index);
   }
 
-  _endDrag() {
-    console.log("Done");
-  }
-
-  _updateDrag(event) {
-    console.log("Updating");
-    console.log(event.clientX);
-    console.log(event.clientY);
-  }
-
-  _leaveDrag() {
-    console.log("Leaving");
-  }
-
-  renderRow(key, source, destination, distance, selected) {
+  renderRow(key, source, destination, distance) {
     let dragHandle = (
-        <span>
-          <button className="pull-right btn btn-default"
-                  onMouseDown={this._startDrag.bind(this)}
-                  onMouseMove={this._updateDrag.bind(this)}
-                  onMouseUp={this._endDrag.bind(this)}
-                  onMouseLeave={this._leaveDrag.bind(this)}>ClickNDrag</button>
-        </span>
+        <td className="align-right"><span>
+          <button style={{color: "#FFF", backgroundColor: "#3E4551"}}
+                  onClick={(e) => this.reorderItinerary(e, key)}
+                  className="pull-right btn btn-default">
+            Make Start Location.
+          </button>
+        </span></td>
     );
 
-    let opacity = selected ? 0.3 : 1.0;
+    let dist = distance === undefined ? <td>---</td> : distance;
 
-    return (<tr key={key}
-                style={{opacity: opacity}}>{source}{destination}{distance}</tr>);
+    return (<tr key={key}>{source}{destination}{dist}{dragHandle}</tr>);
   }
 
   render() {
     let table = this.createTable();
 
     return (
-        <div id="itinerary">
-          <table className="table table-responsive table-bordered">
+        <div className="table-responsive" id="itinerary">
+          <table className="table">
             <thead>
             <tr className="table-info">
               <th className="align-middle"
@@ -97,7 +80,15 @@ class Itinerary extends Component {
               <th className="align-middle" style={{
                 color: "#FFF",
                 backgroundColor: "#3E4551"
-              }}>{table.units}</th>
+              }}>
+                {table.units}
+              </th>
+              <th className="align-right" style={{
+                color: "#FFF",
+                backgroundColor: "#3E4551"
+              }}>
+                Options
+              </th>
             </tr>
             </thead>
             <tbody>
