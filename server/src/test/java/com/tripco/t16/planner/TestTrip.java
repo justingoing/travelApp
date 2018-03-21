@@ -79,7 +79,7 @@ public class TestTrip {
 
     //invalid
     assertFalse(trip.validateLatLong("HELLO"));
-    assertFalse(ttrip.validateLatLong("104 5 5"));
+    assertFalse(trip.validateLatLong("104 5 5"));
 
   }
 
