@@ -32,8 +32,6 @@ class Application extends Component {
       map: "<svg width=\"1920\" height=\"20\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><g></g></svg>"
     };
 
-    console.log("t: ", t);
-
     return t;
   }
 
@@ -57,8 +55,6 @@ class Application extends Component {
   }
 
   updateTrip(tffi) {
-    console.log("Updating... starts as", tffi);
-    console.log(this.state.trip.options.optimization);
     let copyTFFI = Object.assign(this.getDefaultTrip(), this.state.trip);
     Object.assign(copyTFFI, tffi);
 
