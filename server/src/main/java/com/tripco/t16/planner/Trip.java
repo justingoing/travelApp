@@ -33,8 +33,8 @@ public class Trip {
   public void plan() {
     for (int i = this.places.size() - 1; i >= 0; --i) {
       try {
-        if (!this.validateLatitude(this.places.get(i).latitude) ||
-            !this.validateLongitude(this.places.get(i).longitude)) {
+        if (!this.validateLatLong(this.places.get(i).latitude) ||
+            !this.validateLatLong(this.places.get(i).longitude)) {
           this.places.remove(i);
         }
       } catch (NullPointerException e) {
@@ -223,20 +223,24 @@ public class Trip {
     }
   }
 
-  public boolean validateLatitude(String latIN) {
+  /**
+   * Is the lat/long string valid?
+   *
+   * @param latIN longitude/latitude to be validated
+   * @return boolean true = valid
+   */
+  public boolean validateLatLong(String latIN) {
     //System.out.println("Latitude: " + latIN);
-    if (latIN.matches(
-        "\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+\\.?\\d*[\"|″]?\\s*[N|S]\\s*")) //DMS
+    if (latIN.matches("\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+\\.?\\d*[\"|″]?\\s*[N|S|E|W]\\s*")) //DMS
     {
       return true; //System.out.println("Matches #1");
-    } else if (latIN
-        .matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[N|S]\\s*")) //degrees decimal minutes
+    } else if (latIN.matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[N|S|E|W]\\s*")) //degrees decimal minutes
     {
       return true; //System.out.println("Matches #2");
-    } else if (latIN.matches("\\s*-?\\d+\\.?\\d*[°|º]\\s*[N|S]\\s*")) //decimal degrees
+    } else if (latIN.matches("\\s*-?\\d+\\.?\\d*[°|º]\\s*[N|S|E|W]\\s*")) //decimal degrees
     {
       return true; //System.out.println("Matches #3");
-    } else if (latIN.matches("\\s*-?\\d+\\.?\\d*\\s*[N|S]\\s*")) //floating point
+    } else if (latIN.matches("\\s*-?\\d+\\.?\\d*\\s*[N|S|E|W]\\s*")) //floating point
     {
       return true; //System.out.println("Matches #4");
     } else if (latIN.matches("\\s*-?\\d+\\.?\\d*\\s*")) {
@@ -248,33 +252,13 @@ public class Trip {
       //ERROR OUT??
     }
   }
-
-  public boolean validateLongitude(String longIN) {
-    //System.out.println("Longitude: " + longIN);
-    if (longIN.matches(
-        "\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+(\\.\\d*)?[\"|″]?\\s*[E|W]\\s*")) //DMS
-    {
-      return true; //System.out.println("Matches #1");
-    } else if (longIN
-        .matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[E|W]\\s*")) //degrees decimal minutes
-    {
-      return true; //System.out.println("Matches #2");
-    } else if (longIN.matches("\\s*-?\\d+\\.?\\d*[°|º]\\s*[E|W]\\s*")) //decimal degrees
-    {
-      return true; //System.out.println("Matches #3");
-    } else if (longIN.matches("\\s*-?\\d+\\.?\\d*\\s*[E|W]\\s*")) //floating point
-    {
-      return true; //System.out.println("Matches #4");
-    } else if (longIN.matches("\\s*-?\\d+\\.?\\d*\\s*")) {
-      return true; //System.out.println("Matches #5");
-    } else {
-      System.out.println("Longitude: " + longIN);
-      System.out.println("No match!");
-      return false;
-      //ERROR OUT?
-    }
-  }
-
+ 
+/**
+   * Conver the lat/long string to a decimal value for distance calculating
+   *
+   * @param conv string to be changed
+   * @return double (value that has been converted)
+   */
   public static double convertToDecimal(String conv) {
 
     double seconds = 0;
