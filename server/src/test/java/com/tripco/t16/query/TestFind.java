@@ -18,7 +18,7 @@ public class TestFind {
   @Before
   public void initialize() {
     if (System.getenv("TRAVIS") != null) {
-      find = new Find("com.mysql.jdbc.Driver", "localhost/testDB", "travis", "");
+      find = new Find("org.mariadb.jdbc.Driver", "localhost/testDB", "travis", "");
     } else {
       find = new Find();
     }
