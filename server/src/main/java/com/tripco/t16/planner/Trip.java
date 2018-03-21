@@ -223,6 +223,12 @@ public class Trip {
     }
   }
 
+  /**
+   * Is the lat/long string valid?
+   *
+   * @param latIN longitude/latitude to be validated
+   * @return boolean true = valid
+   */
   public boolean validateLatLong(String latIN) {
     //System.out.println("Latitude: " + latIN);
     if (latIN.matches(
@@ -248,7 +254,13 @@ public class Trip {
       //ERROR OUT??
     }
   }
-
+ 
+/**
+   * Conver the lat/long string to a decimal value for distance calculating
+   *
+   * @param conv string to be changed
+   * @return double (value that has been converted)
+   */
   public static double convertToDecimal(String conv) {
 
     double seconds = 0;
