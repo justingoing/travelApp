@@ -77,6 +77,32 @@ public class TestOptimization {
         output);
   }
 
+  @Test
+  public void testCrossCase() {
+    ArrayList<Place> places = new ArrayList<>();
+    places.add(makeFrom(DistanceCalculator.COLORADO_TOP, DistanceCalculator.COLORADO_LEFT));
+    places.get(0).name = "TOP LEFT";
+    places.add(makeFrom(DistanceCalculator.COLORADO_BOTTOM, DistanceCalculator.COLORADO_RIGHT));
+    places.get(1).name = "BOTTOM RIGHT";
+    places.add(makeFrom(DistanceCalculator.COLORADO_TOP, DistanceCalculator.COLORADO_RIGHT));
+    places.get(2).name = "TOP RIGHT";
+    places.add(makeFrom(DistanceCalculator.COLORADO_BOTTOM, DistanceCalculator.COLORADO_LEFT));
+    places.get(3).name = "BOTTOM LEFT";
+
+
+    System.out.println(places);
+    ArrayList<Place> results = Optimization.twoOpt(places, DistanceCalculator.EARTH_RADIUS_MI);
+    for(Place place : results)
+      System.out.println(place.name);
+
+    // check that 2 opt returns an uncrossed version of the trip
+    assertEquals("TOP LEFT", results.get(0).name);
+    assertEquals("BOTTOM LEFT", results.get(1).name);
+    assertEquals("BOTTOM RIGHT", results.get(2).name);
+    assertEquals("TOP RIGHT", results.get(3).name);
+
+  }
+
   private Place makeFrom(double lat, double lon) {
     Place p = new Place();
     int random = rand.nextInt();

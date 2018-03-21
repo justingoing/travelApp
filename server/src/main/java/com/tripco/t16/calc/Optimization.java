@@ -5,6 +5,7 @@ import com.tripco.t16.planner.Place;
 import com.tripco.t16.planner.Trip;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Code to optimize trips, based on graph algorithms, like nearest-neighbor, two-opt, and
@@ -131,6 +132,110 @@ public class Optimization {
     }
 
     return distanceMatrix;
+  }
+
+  /**
+   * Runs 2 opt on a nearest neighbor TSP.
+   * @param places List of places
+   * @param radius Distance unit to use for calculations
+   * @return A 2opted version of the trip
+   */
+  public static ArrayList<Place> twoOpt(final ArrayList<Place> places, double radius) {
+    // Get a starting nearest neighbor that we can further optimize
+    ArrayList<Place> trip = nearestNeighbor(places, radius);
+
+    //O(N) - Creates a place record array based on the nearest neighbor trip
+    PlaceRecord[] placesArray = new PlaceRecord[trip.size()];
+    for (int i = 0; i < trip.size(); i++) {
+      placesArray[i] = new PlaceRecord(trip.get(i));
+    }
+    // Calulate distances between all nodes one time. Matrix should be in order of trip
+    int[][] distanceMatrix = calculateDistanceMatrix(placesArray, radius);
+
+    // Keep track of the order of each node in the trip so we don't have to re-calculate distances
+    int[] tripOrder = new int[trip.size()];
+    for (int i = 0; i < tripOrder.length; ++i) {
+      tripOrder[i] = i;
+    }
+
+    // Keep track of our current trip
+    ArrayList<Place> curRoute = trip;
+
+    boolean improved = true;
+
+    while (improved) {
+      int bestDistance = Optimization
+          .getTripDistance(curRoute, distanceMatrix, tripOrder);
+      improved = false;
+
+      for (int i = 0; i < trip.size() - 1; ++i) {
+        for (int k = i + 1; k < trip.size() - 1; ++k) {
+          Place[] curArr = new Place[curRoute.size()];
+          curArr = curRoute.toArray(curArr);
+          int[] tempOrder = Arrays.copyOf(tripOrder, tripOrder.length);
+          ArrayList<Place> newRoute = new ArrayList<>(
+              Arrays.asList(Optimization.twoOptSwap(curArr, i, k, tempOrder)));
+          int newDistance = Optimization
+              .getTripDistance(newRoute, distanceMatrix, tempOrder);
+
+          if (newDistance < bestDistance) {
+            curRoute = newRoute;
+            tripOrder = tempOrder;
+            improved = true;
+          }
+        }
+      }
+    }
+
+    return curRoute;
+  }
+
+  /**
+   * Reverse the middle segment of a trip.
+   *
+   * @param route The route we want to swap
+   * @param ith Start of middle segment
+   * @param kth End of middle segment
+   */
+  private static Place[] twoOptSwap(Place[] route, int ith, int kth, int[] tempOrder) {
+    Place[] newRoute = new Place[route.length];
+
+    int[] tempTrip = Arrays.copyOf(tempOrder, tempOrder.length);
+
+    for (int start = 0; start <= ith - 1; ++start) {
+      newRoute[start] = route[start];
+      //don't modify trip order since these first elements stay in place
+    }
+
+    for (int mid = ith; mid <= kth; ++mid) {
+      newRoute[kth - (mid - ith)] = route[mid];
+      tempOrder[kth - (mid - ith)] = tempTrip[mid]; //reverse order of these middle elements
+    }
+
+    for (int last = kth + 1; last < route.length; ++last) {
+      newRoute[last] = route[last];
+      //don't modify trip order since these last elements stay in place
+    }
+
+    return newRoute;
+  }
+
+  /**
+   * Sums a trip distance using a pre-existing distance matrix.
+   *
+   * @param distanceMatrix Pre-existing matrix of distances between each node
+   * @param tripOrder Array of indexes into the distance matrix (place's order in the trip)
+   * @return The summed distance
+   */
+  private static int getTripDistance(ArrayList<Place> places, int[][] distanceMatrix,
+      int[] tripOrder) {
+    int dist = 0;
+
+    for (int i = 0; i < tripOrder.length; ++i) {
+      dist += distanceMatrix[tripOrder[i]][tripOrder[(i + 1) % tripOrder.length]];
+    }
+
+    return dist;
   }
 
 
