@@ -134,7 +134,13 @@ public class Optimization {
     return distanceMatrix;
   }
 
-  public static ArrayList<Place> TwoOpt(final ArrayList<Place> places, double radius) {
+  /**
+   * Runs 2 opt on a nearest neighbor TSP.
+   * @param places List of places
+   * @param radius Distance unit to use for calculations
+   * @return A 2opted version of the trip
+   */
+  public static ArrayList<Place> twoOpt(final ArrayList<Place> places, double radius) {
     // Get a starting nearest neighbor that we can further optimize
     ArrayList<Place> trip = nearestNeighbor(places, radius);
 
@@ -153,27 +159,27 @@ public class Optimization {
     }
 
     // Keep track of our current trip
-    ArrayList<Place> cur_route = trip;
+    ArrayList<Place> curRoute = trip;
 
     boolean improved = true;
 
     while (improved) {
-      int best_distance = Optimization
-          .getTripDistance(cur_route, distanceMatrix, tripOrder);
+      int bestDistance = Optimization
+          .getTripDistance(curRoute, distanceMatrix, tripOrder);
       improved = false;
 
       for (int i = 0; i < trip.size() - 1; ++i) {
         for (int k = i + 1; k < trip.size() - 1; ++k) {
-          Place[] cur_arr = new Place[cur_route.size()];
-          cur_arr = cur_route.toArray(cur_arr);
+          Place[] curArr = new Place[curRoute.size()];
+          curArr = curRoute.toArray(curArr);
           int[] tempOrder = Arrays.copyOf(tripOrder, tripOrder.length);
-          ArrayList<Place> new_route = new ArrayList<>(
-              Arrays.asList(Optimization.TwoOptSwap(cur_arr, i, k, tempOrder)));
-          int new_distance = Optimization
-              .getTripDistance(new_route, distanceMatrix, tempOrder);
+          ArrayList<Place> newRoute = new ArrayList<>(
+              Arrays.asList(Optimization.twoOptSwap(curArr, i, k, tempOrder)));
+          int newDistance = Optimization
+              .getTripDistance(newRoute, distanceMatrix, tempOrder);
 
-          if (new_distance < best_distance) {
-            cur_route = new_route;
+          if (newDistance < bestDistance) {
+            curRoute = newRoute;
             tripOrder = tempOrder;
             improved = true;
           }
@@ -181,41 +187,41 @@ public class Optimization {
       }
     }
 
-    return cur_route;
+    return curRoute;
   }
 
   /**
-   * Reverse the middle segment of a trip
+   * Reverse the middle segment of a trip.
    *
    * @param route The route we want to swap
-   * @param i Start of middle segment
-   * @param k End of middle segment
+   * @param ith Start of middle segment
+   * @param kth End of middle segment
    */
-  private static Place[] TwoOptSwap(Place[] route, int i, int k, int[] tempOrder) {
-    Place[] new_route = new Place[route.length];
+  private static Place[] twoOptSwap(Place[] route, int ith, int kth, int[] tempOrder) {
+    Place[] newRoute = new Place[route.length];
 
     int[] tempTrip = Arrays.copyOf(tempOrder, tempOrder.length);
 
-    for (int start = 0; start <= i - 1; ++start) {
-      new_route[start] = route[start];
+    for (int start = 0; start <= ith - 1; ++start) {
+      newRoute[start] = route[start];
       //don't modify trip order since these first elements stay in place
     }
 
-    for (int mid = i; mid <= k; ++mid) {
-      new_route[k - (mid - i)] = route[mid];
-      tempOrder[k - (mid - i)] = tempTrip[mid]; //reverse order of these middle elements
+    for (int mid = ith; mid <= kth; ++mid) {
+      newRoute[kth - (mid - ith)] = route[mid];
+      tempOrder[kth - (mid - ith)] = tempTrip[mid]; //reverse order of these middle elements
     }
 
-    for (int last = k + 1; last < route.length; ++last) {
-      new_route[last] = route[last];
+    for (int last = kth + 1; last < route.length; ++last) {
+      newRoute[last] = route[last];
       //don't modify trip order since these last elements stay in place
     }
 
-    return new_route;
+    return newRoute;
   }
 
   /**
-   * Sums a trip distance using a pre-existing distance matrix
+   * Sums a trip distance using a pre-existing distance matrix.
    *
    * @param distanceMatrix Pre-existing matrix of distances between each node
    * @param tripOrder Array of indexes into the distance matrix (place's order in the trip)
@@ -225,8 +231,9 @@ public class Optimization {
       int[] tripOrder) {
     int dist = 0;
 
-    for (int i = 0; i < tripOrder.length; ++i)
+    for (int i = 0; i < tripOrder.length; ++i) {
       dist += distanceMatrix[tripOrder[i]][tripOrder[(i + 1) % tripOrder.length]];
+    }
 
     return dist;
   }

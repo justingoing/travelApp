@@ -91,7 +91,7 @@ public class TestOptimization {
 
 
     System.out.println(places);
-    ArrayList<Place> results = Optimization.TwoOpt(places, DistanceCalculator.EARTH_RADIUS_MI);
+    ArrayList<Place> results = Optimization.twoOpt(places, DistanceCalculator.EARTH_RADIUS_MI);
     for(Place place : results)
       System.out.println(place.name);
 

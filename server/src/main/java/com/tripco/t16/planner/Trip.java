@@ -43,7 +43,7 @@ public class Trip {
     }
 
     if (options.getOptimizationLevel() >= 0.66) {
-      this.places = Optimization.TwoOpt(places, options.getRadius());
+      this.places = Optimization.twoOpt(places, options.getRadius());
     } else if (options.getOptimizationLevel() >= .33) {
       this.places = Optimization.nearestNeighbor(places, options.getRadius());
     }
