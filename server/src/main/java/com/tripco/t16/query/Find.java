@@ -23,7 +23,7 @@ public class Find {
   //SQL requirements
   private String driver = "com.mysql.jdbc.Driver";
   private String url = "jdbc:mysql://faure.cs.colostate.edu/cs314";
-  private String dbID = "ikegentz";
+  private String dbId = "ikegentz";
   private String dbPass = "831204074";
 
   private final static String lookup = "SELECT * FROM airports WHERE ";
@@ -45,13 +45,13 @@ public class Find {
    *
    * @param driver - Database driver.
    * @param url - URL of the database.
-   * @param dbID - Username to login to the database.
+   * @param dbId - Username to login to the database.
    * @param dbPass - Password to login to the database.
    */
-  public Find(String driver, String url, String dbID, String dbPass) {
+  public Find(String driver, String url, String dbId, String dbPass) {
     this.driver = driver;
     this.url = url;
-    this.dbID = dbID;
+    this.dbId = dbId;
     this.dbPass = dbPass;
   }
 
@@ -174,6 +174,6 @@ public class Find {
       return;
     }
 
-    this.queryDB(this.query, dbID, dbPass, shouldPrint);
+    this.queryDB(this.query, dbId, dbPass, shouldPrint);
   }
 }
