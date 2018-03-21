@@ -11,6 +11,7 @@ class Destinations extends Component {
   constructor(props) {
     super(props);
     this.loadTFFI = this.loadTFFI.bind(this);
+    this.sendSearch = this.sendSearch.bind(this);
   }
 
     loadTFFI(event) {
@@ -20,8 +21,27 @@ class Destinations extends Component {
             var object = JSON.parse(reader.result);
             props.updateTrip(object);
         };
-
         reader.readAsText(event.target.files[0]);
+    }
+
+    searchResponse(){
+      //POST request
+      return fetch(process.env.SERVICE_URL + '/query', {
+          method: "POST",
+          body: JSON.stringify(this.props.query)
+      });
+    }
+
+    async sendSearch(){
+        //get the search value, put it in query field, and send it
+        this.props.updateQuery(document.getElementById("mySearch").value);
+        try{
+            let searchResponse = await this.searchResponse();
+            let searchTFFI = await searchResponse.json();
+            this.props.query.places = searchTFFI.places;
+        }catch(err){
+            console.error(err)
+        }
     }
 
   render() {
@@ -33,12 +53,10 @@ class Destinations extends Component {
           </div>
           <div className="card-body">
               <p>Search destinations to add</p>
-              <div className="wrap">
-                  <div className="search">
-                      <input type="text" className="searchTerm" placeholder="What are you looking for?"/>
-                      <button type="submit">Search!</button>
+                  <div className="input-group" role="group">
+                          <input type="text" className="form-control" id="mySearch" placeholder="Search for a place..."/>
+                           <button className="btn btn-primary " style={{border: "#3E4551", backgroundColor: "#3E4551"}} onClick={this.sendSearch} type="button">Search</button>
                   </div>
-              </div>
           <br/>
             <p>Or load destinations from a file.</p>
             <div className="form-group" role="group">
