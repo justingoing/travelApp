@@ -89,7 +89,6 @@ public class TestFind {
     assertTrue(baos.toString().contains(Find.injectionMessage));
 
   }
-
 }
 
 
