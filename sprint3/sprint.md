@@ -86,7 +86,7 @@ Date | Tasks done  | Tasks in progress | Impediments
 
 Topic | Teamwork | Process | Tools
 :--- | :--- | :--- | :---
-What we will change this time |  |  |
-What we did well |  |  |
-What we need to work on |  |  |
-What we will change next time |  |  |
+What we will change this time | Hold each other accoutable for testing | Double check our deplloyment and releases |Github release and checkin server
+What we did well | we got a great jump on this sprint,  were good at communicating and meeting up | continually meetup for scrum | pretty good at cleaning up code climate
+What we need to work on | were pretty good at teamwork | more commits, more zenhub coordination |learn more about travis
+What we will change next time | continue to meetup regularly, get better at splitting up tasks | continue to start tasks early | more testing. learning about JS testing next sprint.
