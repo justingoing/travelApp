@@ -107,7 +107,7 @@ class Trip extends Component {
               <span className="input-group-btn">
               <button className="btn btn-primary " style={{border: "#3E4551", backgroundColor: "#3E4551"}} onClick={this.plan} type="button">Plan</button>
             </span>
-              <input type="text" className="form-control" placeholder="Trip title..."/>
+              <input type="text" className="form-control" placeholder=""/>
               <span className="input-group-btn">
               <button className="btn btn-primary " style={{border: "#3E4551", backgroundColor: "#3E4551"}} onClick={this.saveTFFI} type="button">Save</button>
             </span>
