@@ -21,10 +21,10 @@ public class Find {
   public ArrayList<Place> places;
 
   //SQL requirements
-  private final static String driver = "com.mysql.jdbc.Driver";
-  private final static String url = "jdbc:mysql://faure.cs.colostate.edu/cs314";
-  private final static String dbID = "ikegentz";
-  private final static String dbPass = "831204074";
+  private String driver = "com.mysql.jdbc.Driver";
+  private String url = "jdbc:mysql://faure.cs.colostate.edu/cs314";
+  private String dbId = "ikegentz";
+  private String dbPass = "831204074";
 
   private final static String lookup = "SELECT * FROM airports WHERE ";
 
@@ -34,6 +34,27 @@ public class Find {
   private static boolean isInputGood(String sanitize) {
     return sanitize.matches("[a-zA-Z0-9]+");
   }
+
+  /**
+   * Creates a Find object with default database.
+   */
+  public Find() {}
+
+  /**
+   * Creates a new Find object with the given setup.
+   *
+   * @param driver - Database driver.
+   * @param url - URL of the database.
+   * @param dbId - Username to login to the database.
+   * @param dbPass - Password to login to the database.
+   */
+  public Find(String driver, String url, String dbId, String dbPass) {
+    this.driver = driver;
+    this.url = url;
+    this.dbId = dbId;
+    this.dbPass = dbPass;
+  }
+
 
   /**
    * Queries the database with the given parameter and returns a json string representation of the
@@ -146,13 +167,13 @@ public class Find {
    * Populate our object with information from the query so that we can convert back to json.
    */
   public void performQuery(boolean shouldPrint) {
-    if(!Find.isInputGood(this.query))
+    if(!Find.isInputGood(query))
     {
       this.places = new ArrayList<>();
       System.out.println(Find.injectionMessage);
       return;
     }
 
-    this.queryDB(this.query, Find.dbID, Find.dbPass, shouldPrint);
+    this.queryDB(query, dbId, dbPass, shouldPrint);
   }
 }
