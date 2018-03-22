@@ -69,11 +69,15 @@ Date | Tasks done  | Tasks in progress | Impediments
 
 ## ReviewUI
 #### Completed epics in Sprint Backlog
-* *none*
-
-#### Incomplete epics in Sprint Backlog
 * *#145 Build a trip from existing information*
 * *#67 Give the user an option to view a shorter trip*
+* *#146 Design a trip from scratch / manually*
+* *#68 Let the user reverse the order of the trip*
+* *#69 Let the user choose a new starting location*
+* *#147 Shorter trips #2*
+
+#### Incomplete epics in Sprint Backlog
+* *#66 give the user the option to choose what information to display in itinerary*
 
 #### What went well
 * *Teamwork and communication - we continue to keep an open stream of coordination and communication*
