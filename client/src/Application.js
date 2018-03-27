@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Options from './Options';
+import Instructions from './Instructions';
 import Destinations from './Destinations';
 import Trip from './Trip';
 
@@ -167,6 +168,7 @@ class Application extends Component {
     return (
         <div id="application" className="container">
             <div className="col-12">
+              <Instructions number={this.props.number} name={this.props.name}/>
               <Destinations trip={this.state.trip}
                             updateTrip={this.updateTrip}
                             query={this.state.query} updateQuery={this.updateQuery}  checkSQL={this.checkSQL} addToTrip={this.addToTrip}/>
