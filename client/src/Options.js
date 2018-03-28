@@ -36,6 +36,9 @@ class Options extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.calcStyles(nextProps.options.distance.name === "kilometers");
+
+    var input = document.getElementById("typeinp");
+    input.value = nextProps.options.optimization;
   }
 
   onInput() {
@@ -70,7 +73,7 @@ class Options extends Component {
               </label>
             </div>
             <br></br><br></br>
-            <p>Zero Optimization <input id="typeinp" type="range" min="0" max="1" step=".01" defaultValue="0"
+            <p>Zero Optimization <input id="typeinp" type="range" min="0" max="1" step=".01" defaultValue={this.props.options.optimization}
                 onChange={this.onInput.bind(this)}/> Full Optimization</p>
           </div>
         </div>

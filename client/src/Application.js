@@ -156,9 +156,10 @@ class Application extends Component {
       name: name.props.children[1],
       latitude: lat.props.children[1],
       longitude: long.props.children[1]
-    }
+    };
 
     this.state.trip.places.push(newPlace);
+    this.setState({trip: this.state.trip});
 
     console.log("trip added");
     console.log(this.state.trip);
