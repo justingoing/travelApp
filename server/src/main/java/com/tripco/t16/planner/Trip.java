@@ -84,35 +84,42 @@ public class Trip {
    * @return A String SVG of trip 'legs' to be sent to the server
    */
   public String getLegsAsSVG() {
-    // Hardcoded for testing
+    StringBuilder svg = new StringBuilder("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1066.6073\" height=\"783.0824\">");
 
-    String svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1066.6073\" height=\"783.0824\">";
+    if (this.coords.size() > 0) {
+      Coords start = this.getMappedCoords(this.coords.get(0).x, this.coords.get(0).y);
+      Coords end = this.getMappedCoords(this.coords.get(this.coords.size() - 1).x,
+          this.coords.get(this.coords.size() - 1).y);
 
-    Coords start = this.getMappedCoords(this.coords.get(0).x, this.coords.get(0).y);
-    Coords end = this.getMappedCoords(this.coords.get(this.coords.size() - 1).x,
-        this.coords.get(this.coords.size() - 1).y);
+      addSvgLeg(svg, start, end);
 
-    svg += "<line stroke=\"#1E4D2B\" y2=\"" + end.y + "\" x2=\"" + end.x
-        + "\" y1=\"" + start.y + "\" x1=\"" + start.x + "\" stroke-width=\"5\" fill=\"none\"/>";
+      for (int i = 0; i < coords.size() - 1; ++i) {
+        Coords cur = this.getMappedCoords(this.coords.get(i).x, this.coords.get(i).y);
+        Coords nex = this.getMappedCoords(this.coords.get(i + 1).x, this.coords.get(i + 1).y);
 
-    for (int i = 0; i < coords.size() - 1; ++i) {
-      Coords cur = this.getMappedCoords(this.coords.get(i).x, this.coords.get(i).y);
-      Coords nex = this.getMappedCoords(this.coords.get(i + 1).x, this.coords.get(i + 1).y);
-
-      svg += "<line stroke=\"#1E4D2B\" y2=\"" + nex.y + "\" x2=\"" + nex.x
-          + "\" y1=\"" + cur.y + "\" x1=\"" + cur.x + "\" stroke-width=\"5\" fill=\"none\"/>";
-
-      svg += "<circle cx=\"" + cur.x + "\" cy=\" " + cur.y + " \" r=\"" + Trip.DEST_RADIUS
-          + "\" stroke=\"#1E4D2B\" stroke-width=\"3\" fill=\"#C8C372\" />";
-
-      if (i == this.coords.size() - 2) {
-        svg += "<circle cx=\"" + nex.x + "\" cy=\" " + nex.y + " \" r=\"" + Trip.DEST_RADIUS
-            + "\" stroke=\"#1E4D2B\" stroke-width=\"3\" fill=\"#C8C372\" />";
+        addSvgLeg(svg, cur, nex);
+        addSvgCircle(svg, cur);
+        if (i == this.coords.size() - 2) {
+          addSvgCircle(svg, nex);
+        }
       }
     }
-    svg += "</svg>";
-    return svg;
+    svg.append("</svg>");
+    return svg.toString();
   }
+
+  private void addSvgLeg(StringBuilder svg, Coords start, Coords end) {
+    svg.append("<line stroke=\"#1E4D2B\" y2=\"").append(end.y).append("\" x2=\"").append(end.x)
+        .append("\" y1=\"").append(start.y).append("\" x1=\"").append(start.x)
+        .append("\" stroke-width=\"5\" fill=\"none\"/>");
+  }
+
+  private void addSvgCircle(StringBuilder svg, Coords pos) {
+    svg.append("<circle cx=\"").append(pos.x).append("\" cy=\" ").append(pos.y).append(" \" r=\"")
+        .append(Trip.DEST_RADIUS)
+        .append("\" stroke=\"#1E4D2B\" stroke-width=\"3\" fill=\"#C8C372\" />");
+  }
+
 
   /**
    * Get a lat/long pair as coordinates mapped to our svg (within the Colorado border)
@@ -236,7 +243,8 @@ public class Trip {
     if (latIN.matches("\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+\\.?\\d*[\"|″]?\\s*[N|S|E|W]\\s*")) //DMS
     {
       return true; //System.out.println("Matches #1");
-    } else if (latIN.matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[N|S|E|W]\\s*")) //degrees decimal minutes
+    } else if (latIN
+        .matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[N|S|E|W]\\s*")) //degrees decimal minutes
     {
       return true; //System.out.println("Matches #2");
     } else if (latIN.matches("\\s*-?\\d+\\.?\\d*[°|º]\\s*[N|S|E|W]\\s*")) //decimal degrees
@@ -254,8 +262,8 @@ public class Trip {
       //ERROR OUT??
     }
   }
- 
-/**
+
+  /**
    * Conver the lat/long string to a decimal value for distance calculating
    *
    * @param conv string to be changed
