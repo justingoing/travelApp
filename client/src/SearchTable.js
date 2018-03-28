@@ -46,11 +46,11 @@ class SearchTable extends Component {
   render(){
     let table = this.createTable();
     return(
-      <div id="SearchTable">
-            <table className="table table-responsive">
+      <div className="table-responsive" id="searchTable">
+            <table className="table">
                   <thead>
                    <tr className="table-info">
-                    <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Id</th>
+                    <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>ID</th>
                     <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Name</th>
                     <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Latitude</th>
                     <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Longitude</th>
