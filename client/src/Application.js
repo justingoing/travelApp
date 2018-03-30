@@ -20,6 +20,7 @@ class Application extends Component {
     this.updateQuery = this.updateQuery.bind(this);
     this.checkSQL = this.checkSQL.bind(this);
     this.addToTrip = this.addToTrip.bind(this);
+    this.isInTrip = this.isInTrip.bind(this);
   }
 
   //populate with search
@@ -148,18 +149,17 @@ class Application extends Component {
     }
   }
 
-  addToTrip(place){
-    // make sure the place isn't already in our itinerary
-    let canAdd = true;
+  isInTrip(place){
     for(let i = 0; i < this.state.trip.places.length; ++i)
     {
       if(this.state.trip.places[i].id == place.id) {
-        canAdd = false;
-        break;
+        return true;
       }
     }
+  }
 
-    if(canAdd)
+  addToTrip(place){
+    if(!this.isInTrip(place))
       this.state.trip.places.push(place);
     this.setState({trip: this.state.trip})
   }
@@ -171,7 +171,12 @@ class Application extends Component {
               <Instructions number={this.props.number} name={this.props.name}/>
               <Destinations trip={this.state.trip}
                             updateTrip={this.updateTrip}
-                            query={this.state.query} updateQuery={this.updateQuery}  checkSQL={this.checkSQL} addToTrip={this.addToTrip}/>
+                            query={this.state.query}
+                            updateQuery={this.updateQuery}
+                            checkSQL={this.checkSQL}
+                            addToTrip={this.addToTrip}
+                            isInTrip={this.isInTrip}
+              />
               <Options options={this.state.trip.options} updateOptions={this.updateOptions}/>
             </div>
             <div className="col-12">

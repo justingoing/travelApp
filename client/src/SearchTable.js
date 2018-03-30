@@ -17,14 +17,14 @@ class SearchTable extends Component {
     let tableData = [];
 
     for(let i = 0; i < ids.length; i++){
-      tableData.push(this.renderRow(i, ids[i], dests[i], lats[i], long[i]), false);
+      if(!this.props.isInTrip(this.props.destinations.places[i]))
+        tableData.push(this.renderRow(i, ids[i], dests[i], lats[i], long[i]), false);
     }
 
     return {ids, dests, lats, long, tableData};
   }
 
   addToTrip(key){
-    this.props.destinations.places.splice(key, 1);
     this.props.addToTrip(this.props.destinations.places[key]);
   }
 
