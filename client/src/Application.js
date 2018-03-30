@@ -145,12 +145,14 @@ class Application extends Component {
     }
     if(options >= 0 && options <= 1) {
       this.state.trip.options.optimization = options;
-      console.log("optimization = ", this.state.trip.options.optimization);
     }
   }
 
-  addToTrip(key, id, name, lat, long){
-
+  addToTrip(place){
+    this.state.trip.places.push(place);
+    this.setState({trip: this.state.trip})
+    //destinations.places[key]);
+/*
     let newPlace = {
       id: id.props.children[1],
       name: name.props.children[1],
@@ -159,10 +161,7 @@ class Application extends Component {
     };
 
     this.state.trip.places.push(newPlace);
-    this.setState({trip: this.state.trip});
-
-    console.log("trip added");
-    console.log(this.state.trip);
+    this.setState({trip: this.state.trip});*/
   }
 
   render() {

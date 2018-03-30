@@ -65,7 +65,7 @@ class Destinations extends Component {
                   </div>
                   <br/>
                   <p>Search Results</p>
-                  <SearchTable destinations = {this.props.query} addToTrip={this.props.addToTrip}/>
+                  <SearchTable destinations={this.props.query} addToTrip={this.props.addToTrip}/>
           <br/>
             <p>Or load destinations from a file.</p>
             <div className="form-group" role="group">

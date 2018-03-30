@@ -8,14 +8,10 @@ class SearchTable extends Component {
   }
 
   createTable() {
-    console.log("Search Table Props");
-    console.log(this.props);
-
     let ids = this.props.destinations.places.map((item, index) => <td key={"id" + index}> {item.id} </td>);
     let dests = this.props.destinations.places.map((item, index) => <td key={"dest" + index}> {item.name} </td>);
     let lats = this.props.destinations.places.map((item, index) => <td key={"lat" + index}> {item.latitude} </td>);
     let long = this.props.destinations.places.map((item, index) => <td key={"long" + index}> {item.longitude} </td>);
-
     let tableData = [];
 
     for(let i = 0; i < ids.length; i++){
@@ -26,11 +22,10 @@ class SearchTable extends Component {
   }
 
   renderRow(key, ids, dests, lat, long, selected) {
-
-      let addition = (
+     let addition = (
               <td className="align-right"><span>
                 <button style={{color: "#FFF", backgroundColor: "#3E4551"}}
-                        onClick={(e) => this.props.addToTrip(key, ids, dests, lat, long)}
+                        onClick={(e) => this.props.addToTrip(this.props.destinations.places[key])}
                         className="pull-right btn btn-default">
                   Add to Trip
                 </button>
