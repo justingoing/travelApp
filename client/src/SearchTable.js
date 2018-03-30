@@ -24,9 +24,6 @@ class SearchTable extends Component {
   }
 
   addToTrip(key){
-    console.log(this.props.destinations.places.length);
-    this.props.destinations.places.splice(key, 1);
-    console.log(this.props.destinations.places.length);
     this.props.addToTrip(this.props.destinations.places[key]);
   }
 
