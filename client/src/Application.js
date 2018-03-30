@@ -149,19 +149,19 @@ class Application extends Component {
   }
 
   addToTrip(place){
-    this.state.trip.places.push(place);
-    this.setState({trip: this.state.trip})
-    //destinations.places[key]);
-/*
-    let newPlace = {
-      id: id.props.children[1],
-      name: name.props.children[1],
-      latitude: lat.props.children[1],
-      longitude: long.props.children[1]
-    };
+    // make sure the place isn't already in our itinerary
+    let canAdd = true;
+    for(let i = 0; i < this.state.trip.places.length; ++i)
+    {
+      if(this.state.trip.places[i].id == place.id) {
+        canAdd = false;
+        break;
+      }
+    }
 
-    this.state.trip.places.push(newPlace);
-    this.setState({trip: this.state.trip});*/
+    if(canAdd)
+      this.state.trip.places.push(place);
+    this.setState({trip: this.state.trip})
   }
 
   render() {

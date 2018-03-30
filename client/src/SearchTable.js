@@ -4,6 +4,7 @@ class SearchTable extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.table = {};
     this.createTable = this.createTable.bind(this);
   }
 
@@ -12,6 +13,7 @@ class SearchTable extends Component {
     let dests = this.props.destinations.places.map((item, index) => <td key={"dest" + index}> {item.name} </td>);
     let lats = this.props.destinations.places.map((item, index) => <td key={"lat" + index}> {item.latitude} </td>);
     let long = this.props.destinations.places.map((item, index) => <td key={"long" + index}> {item.longitude} </td>);
+
     let tableData = [];
 
     for(let i = 0; i < ids.length; i++){
@@ -21,11 +23,18 @@ class SearchTable extends Component {
     return {ids, dests, lats, long, tableData};
   }
 
+  addToTrip(key){
+    console.log(this.props.destinations.places.length);
+    this.props.destinations.places.splice(key, 1);
+    console.log(this.props.destinations.places.length);
+    this.props.addToTrip(this.props.destinations.places[key]);
+  }
+
   renderRow(key, ids, dests, lat, long, selected) {
      let addition = (
               <td className="align-right"><span>
                 <button style={{color: "#FFF", backgroundColor: "#3E4551"}}
-                        onClick={(e) => this.props.addToTrip(this.props.destinations.places[key])}
+                        onClick={(e) => this.addToTrip(key)}
                         className="pull-right btn btn-default">
                   Add to Trip
                 </button>
@@ -39,7 +48,7 @@ class SearchTable extends Component {
 
 
   render(){
-    let table = this.createTable();
+    this.table = this.createTable();
     return(
       <div id="SearchTable">
             <table className="table table-responsive">
@@ -53,7 +62,7 @@ class SearchTable extends Component {
                    </tr>
                   </thead>
                   <tbody>
-                   {table.tableData}
+                   {this.table.tableData}
                   </tbody>
                 </table>
           </div>
