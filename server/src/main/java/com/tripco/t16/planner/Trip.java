@@ -154,8 +154,9 @@ public class Trip {
    */
   public double normalizeLat(double lat) {
     // Note these are inverted so that we can get SVG coords going top-down instead of bottom-up
-    return (lat - DistanceCalculator.COLORADO_TOP) / (DistanceCalculator.COLORADO_BOTTOM
-        - DistanceCalculator.COLORADO_TOP);
+    /*return (lat - DistanceCalculator.COLORADO_TOP) / (DistanceCalculator.COLORADO_BOTTOM
+        - DistanceCalculator.COLORADO_TOP);*/
+    return (lat- DistanceCalculator.WORLD_TOP) / (DistanceCalculator.WORLD_BOTTOM - DistanceCalculator.WORLD_TOP);
   }
 
   /**
@@ -165,8 +166,9 @@ public class Trip {
    * @return Normalized longitude
    */
   public double normalizeLong(double lon) {
-    return (lon - DistanceCalculator.COLORADO_LEFT) / (DistanceCalculator.COLORADO_RIGHT
-        - DistanceCalculator.COLORADO_LEFT);
+    /*return (lon - DistanceCalculator.COLORADO_LEFT) / (DistanceCalculator.COLORADO_RIGHT
+        - DistanceCalculator.COLORADO_LEFT); */
+    return (lon - DistanceCalculator.WORLD_LEFT) / (DistanceCalculator.WORLD_RIGHT - DistanceCalculator.WORLD_LEFT);
   }
 
   /**
@@ -174,11 +176,12 @@ public class Trip {
    */
   private String svg() {
     String colorado = this.getSVGFromFile("/colorado.svg");
+    String world = this.getSVGFromFile("/World4.svg");
 
     String finalSVG =
         "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
-            "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1066.6073\" height=\"783.0824\">\n" +
-            colorado + this.getLegsAsSVG() +
+            "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1024\" height=\"512\">\n" +
+            world + this.getLegsAsSVG() +
             "</svg>";
 
     return finalSVG;

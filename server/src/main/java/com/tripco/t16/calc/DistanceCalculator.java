@@ -7,10 +7,15 @@ package com.tripco.t16.calc;
  */
 public class DistanceCalculator {
 
-  public static final double COLORADO_RIGHT = -102.05;
+  /*public static final double COLORADO_RIGHT = -102.05;
   public static final double COLORADO_LEFT = -109.05;
   public static final double COLORADO_TOP = 41.0;
-  public static final double COLORADO_BOTTOM = 37.0;
+  public static final double COLORADO_BOTTOM = 37.0; */
+  public static final double WORLD_RIGHT = 0;
+  public static final double WORLD_LEFT = 0;
+  public static final double WORLD_TOP = 0;
+  public static final double WORLD_BOTTOM = 0;
+
 
   //Values for radius
   public static final double EARTH_RADIUS_MI = 3958.7613;
@@ -23,10 +28,10 @@ public class DistanceCalculator {
    * @param longitude - The latitude to check
    * @return - True if the position is in Colorado, false otherwise.
    */
-  public static boolean isInColorado(double latitude, double longitude) {
+  /*public static boolean isInColorado(double latitude, double longitude) {
     return (latitude <= COLORADO_TOP && latitude >= COLORADO_BOTTOM
         && longitude <= COLORADO_RIGHT && longitude >= COLORADO_LEFT);
-  }
+  }*/
 
   /**
    * Takes two lat-lon pairs, and returns the great circle distance between the two, using the chord
