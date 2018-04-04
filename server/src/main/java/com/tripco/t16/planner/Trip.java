@@ -50,6 +50,7 @@ public class Trip {
 
     this.coords = placesToCoords();
     this.distances = legDistances();
+    if (options.)
     this.map = svg();
   }
 

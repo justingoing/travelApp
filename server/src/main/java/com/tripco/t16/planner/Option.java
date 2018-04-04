@@ -7,8 +7,19 @@ import com.tripco.t16.calc.DistanceCalculator;
  */
 public class Option {
 
-  public Distance distance;
-  public Float optimization;
+  public String distance;
+  public String userUnit;
+  public String userRadius;
+  public String optimization;
+  public String map;
+
+  /**
+   * Returns the name of the unit.
+   * @return
+   */
+  public String getUnitName() {
+    return getUnit().name;
+  }
 
   /**
    * Gets the radius of the earth in whatever units of measurement we are using. Currently only
@@ -16,11 +27,28 @@ public class Option {
    *
    * @return - The radius of the earth in some unit of measurement.
    */
-  public double getRadius() {
-    return
-        (distance != null && distance.name != null && distance.name.equalsIgnoreCase("kilometers"))
-            ?
-            DistanceCalculator.EARTH_RADIUS_KM : DistanceCalculator.EARTH_RADIUS_MI;
+  public double getUnitRadius() {
+    return getUnit().radius;
+  }
+
+  private Unit getUnit() {
+    if (distance == null) {
+      return Unit.miles;
+    }
+
+    //Handle user defined case
+    if (distance.equals("user defined") && userUnit != null
+        && userRadius != null) {
+      return new Unit(userUnit, Float.valueOf(userRadius));
+    } else if (distance != null) {
+        for (Unit unit : Unit.defaultUnits) {
+          if (distance.equals(unit.name)) {
+            return unit;
+          }
+        }
+    }
+
+    return Unit.miles;
   }
 
   /**
@@ -35,6 +63,6 @@ public class Option {
       return 0;
     }
 
-    return optimization;
+    return Float.valueOf(optimization);
   }
 }
