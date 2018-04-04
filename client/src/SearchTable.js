@@ -4,13 +4,11 @@ class SearchTable extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.table = {};
     this.createTable = this.createTable.bind(this);
   }
 
   createTable() {
-    console.log("Search Table Props");
-    console.log(this.props);
-
     let ids = this.props.destinations.places.map((item, index) => <td key={"id" + index}> {item.id} </td>);
     let dests = this.props.destinations.places.map((item, index) => <td key={"dest" + index}> {item.name} </td>);
     let lats = this.props.destinations.places.map((item, index) => <td key={"lat" + index}> {item.latitude} </td>);
@@ -19,20 +17,33 @@ class SearchTable extends Component {
     let tableData = [];
 
     for(let i = 0; i < ids.length; i++){
-      tableData.push(this.renderRow(i, ids[i], dests[i], lats[i], long[i]), false);
+      console.log("Making new table");
+      let temp = this.props.destinations.places[i];
+      if(!this.props.isInTrip(temp.id)) {
+        tableData.push(this.renderRow(i, ids[i], dests[i], lats[i], long[i]), false);
+        // store what's in the query vs. what's in the trip
+        this.props.queryPlaces[temp.id] = this.props.destinations.places[i];
+      }
     }
+    console.log(this.props.queryPlaces);
 
     return {ids, dests, lats, long, tableData};
   }
 
-  renderRow(key, ids, dests, lat, long, selected) {
+  addToTrip(key){
+    console.log(this.props.destinations.places[key]);
+    this.props.addToTrip(this.props.destinations.places[key]);
+  }
 
-      let addition = (
+  renderRow(key, ids, dests, lat, long, selected) {
+     let addition = (
               <td className="align-right"><span>
-                <button style={{color: "#FFF", backgroundColor: "#3E4551"}}
-                        onClick={(e) => this.props.addToTrip(key, ids, dests, lat, long)}
-                        className="pull-right btn btn-default">
-                  Add to Trip
+                <button style={{color: "#FFF", backgroundColor: "#0086ff"}}
+                        onClick={(e) => this.addToTrip(key)}
+                        className="pull-right btn btn-default"
+                        title="Add to your trip">
+
+                  +
                 </button>
               </span></td>
           );
@@ -44,10 +55,11 @@ class SearchTable extends Component {
 
 
   render(){
-    let table = this.createTable();
+    this.table = this.createTable();
     return(
       <div id="SearchTable">
-            <table className="table table-responsive">
+        <button className="btn btn-primary " title="Add all search results to the trip" style={{border: "#0086ff", backgroundColor: "#0086ff"}} onClick={(e) => this.props.addAllToTrip()}>+ All</button>
+        <table className="table table-responsive">
                   <thead>
                    <tr className="table-info">
                     <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Id</th>
@@ -58,7 +70,7 @@ class SearchTable extends Component {
                    </tr>
                   </thead>
                   <tbody>
-                   {table.tableData}
+                   {this.table.tableData}
                   </tbody>
                 </table>
           </div>

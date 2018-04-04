@@ -20,6 +20,9 @@ class Application extends Component {
     this.updateQuery = this.updateQuery.bind(this);
     this.checkSQL = this.checkSQL.bind(this);
     this.addToTrip = this.addToTrip.bind(this);
+    this.isInTrip = this.isInTrip.bind(this);
+    this.addAllToTrip = this.addAllToTrip.bind(this);
+    this.queryPlaces = {};
   }
 
   //populate with search
@@ -145,25 +148,34 @@ class Application extends Component {
     }
     if(options >= 0 && options <= 1) {
       this.state.trip.options.optimization = options;
-      console.log("optimization = ", this.state.trip.options.optimization);
     }
   }
 
-  addToTrip(key, id, name, lat, long){
-
-    let newPlace = {
-      id: id.props.children[1],
-      name: name.props.children[1],
-      latitude: lat.props.children[1],
-      longitude: long.props.children[1]
-    };
-
-    this.state.trip.places.push(newPlace);
-    this.setState({trip: this.state.trip});
-
-    console.log("trip added");
-    console.log(this.state.trip);
+  isInTrip(id){
+    for(let i = 0; i < this.state.trip.places.length; ++i)
+    {
+      if(this.state.trip.places[i].id == id) {
+        return true;
+      }
+    }
   }
+
+  addAllToTrip(){
+    for(var place in this.queryPlaces){
+      this.state.trip.places.push(this.queryPlaces[place]);
+    }
+    this.queryPlaces = {};
+    this.setState({trip: this.state.trip})
+  }
+
+  addToTrip(place){
+    if(!this.isInTrip(place.id)) {
+      this.state.trip.places.push(place);
+      delete this.queryPlaces[place.id];
+    }
+    this.setState({trip: this.state.trip})
+  }
+
 
   render() {
     return (
@@ -172,7 +184,14 @@ class Application extends Component {
               <Instructions number={this.props.number} name={this.props.name}/>
               <Destinations trip={this.state.trip}
                             updateTrip={this.updateTrip}
-                            query={this.state.query} updateQuery={this.updateQuery}  checkSQL={this.checkSQL} addToTrip={this.addToTrip}/>
+                            query={this.state.query}
+                            updateQuery={this.updateQuery}
+                            checkSQL={this.checkSQL}
+                            addToTrip={this.addToTrip}
+                            isInTrip={this.isInTrip}
+                            addAllToTrip={this.addAllToTrip}
+                            queryPlaces={this.queryPlaces}
+              />
               <Options options={this.state.trip.options} updateOptions={this.updateOptions}/>
             </div>
             <div className="col-12">
