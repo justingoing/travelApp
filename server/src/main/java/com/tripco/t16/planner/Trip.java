@@ -129,10 +129,10 @@ public class Trip {
    * @return Mapped coordinates as a pair
    */
   public Coords getMappedCoords(double lat, double lon) {
-    double scaleX = 994;
-    double scaleY = 749;
-    double transX = 38;
-    double transY = 35;
+    double scaleX = 1024;
+    double scaleY = 512;
+    double transX = 0;
+    double transY = 0;
 
     double normalLat = this.normalizeLat(lat);
     double normalLon = this.normalizeLong(lon);
@@ -156,7 +156,7 @@ public class Trip {
     // Note these are inverted so that we can get SVG coords going top-down instead of bottom-up
     /*return (lat - DistanceCalculator.COLORADO_TOP) / (DistanceCalculator.COLORADO_BOTTOM
         - DistanceCalculator.COLORADO_TOP);*/
-    return (lat- DistanceCalculator.WORLD_TOP) / (DistanceCalculator.WORLD_BOTTOM - DistanceCalculator.WORLD_TOP);
+    return (lat - DistanceCalculator.WORLD_TOP) / (DistanceCalculator.WORLD_BOTTOM - DistanceCalculator.WORLD_TOP);
   }
 
   /**
