@@ -15,16 +15,15 @@ import java.util.ArrayList;
  * @author Isaac Gentz
  */
 public class Find {
-
   public String type;
   public String query;
   public ArrayList<Place> places;
 
   //SQL requirements
-  private String driver = "com.mysql.jdbc.Driver";
-  private String url = "jdbc:mysql://faure.cs.colostate.edu/cs314";
-  private String dbId = "ikegentz";
-  private String dbPass = "831204074";
+  private transient String driver = "com.mysql.jdbc.Driver";
+  private transient String url = "jdbc:mysql://faure.cs.colostate.edu/cs314";
+  private transient String dbId = "ikegentz";
+  private transient String dbPass = "831204074";
 
   private final static String lookup = "SELECT * FROM airports WHERE ";
 

@@ -1,5 +1,6 @@
 package com.tripco.t16.server;
 
+import com.tripco.t16.planner.Config;
 import com.tripco.t16.planner.Plan;
 
 import com.tripco.t16.query.Query;
@@ -20,8 +21,8 @@ public class MicroServer {
 
   /** Creates a micro-server to load static files and provide REST APIs.
    *
-   * @param port
-   * @param name
+   * @param port - The port for the server to run on.
+   * @param name - Name of the server.
    */
   MicroServer(int port, String name) {
     this.port = port;
@@ -39,18 +40,20 @@ public class MicroServer {
     get("/echo", this::echo);
     get("/hello/:name", this::hello);
     get("/team", this::team);
+    get("/config", this::config);
     // client is sending data, so a HTTP POST is used instead of a GET
     post("/plan", this::plan);
     post("/query", this::query);
+
 
     System.out.println("\n\nServer running on port: " + this.port + "\n\n");
   }
 
   /** A REST API that describes the server.
    *
-   * @param request
-   * @param response
-   * @return
+   * @param request - Request object
+   * @param response - Response object
+   * @return - A string containing the response body.
    */
   private String about(Request request, Response response) {
 
@@ -61,9 +64,9 @@ public class MicroServer {
 
   /** A REST API that echos the client request.
    *
-   * @param request
-   * @param response
-   * @return
+   * @param request - Request object
+   * @param response - Response object
+   * @return - A string containing the response body.
    */
   private String echo(Request request, Response response) {
 
@@ -74,9 +77,9 @@ public class MicroServer {
 
   /** A REST API demonstrating the use of a parameter.
    *
-   * @param request
-   * @param response
-   * @return
+   * @param request - Request object
+   * @param response - Response object
+   * @return - A string containing the response body.
    */
   private String hello(Request request, Response response) {
 
@@ -88,12 +91,11 @@ public class MicroServer {
 
   /** A REST API to support trip planning.
    *
-   * @param request
-   * @param response
-   * @return
+   * @param request - Request object
+   * @param response - Response object
+   * @return - A string containing the response body.
    */
   private String plan(Request request, Response response) {
-
     response.type("application/json");
 
     return (new Plan(request)).getTrip();
@@ -101,9 +103,9 @@ public class MicroServer {
 
   /** A REST API to support querying the database of places.
    *
-   * @param  request
-   * @param response
-   * @return
+   * @param  request - Request object
+   * @param response - Response object
+   * @return - A string containing the response body.
    */
   private String query(Request request, Response response) {
     response.type("application/json");
@@ -113,14 +115,25 @@ public class MicroServer {
 
   /** A REST API that returns the team information associated with the server.
    *
-   * @param request
-   * @param response
-   * @return
+   * @param request - Request object
+   * @param response - Response object
+   * @return - A string containing the response body.
    */
   private String team(Request request, Response response) {
-
     response.type("text/plain");
 
     return name;
+  }
+
+  /** A REST API that returns the team information associated with the server.
+   *
+   * @param request - Request object
+   * @param response - Response object
+   * @return - A string containing the response body.
+   */
+  private String config(Request request, Response response) {
+    response.type("application/json");
+
+    return Config.getConfig();
   }
 }
