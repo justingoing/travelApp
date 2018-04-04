@@ -15,7 +15,7 @@ public class Unit {
   public static final Unit user_defined = new Unit("user defined", -1f);
 
   //Contains all units that have a valid radius (not user defined).
-  public final static ArrayList<Unit> defaultUnits = new ArrayList<>();
+  public static final ArrayList<Unit> defaultUnits = new ArrayList<>();
 
   public String name;
   public float radius;
