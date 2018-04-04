@@ -107,10 +107,27 @@ public class Find {
 
     while (query.next()) {
       Place pl = new Place();
+      //Add essential place information for planning
       pl.id = query.getString("id");
       pl.name = query.getString("name");
       pl.latitude = query.getString("latitude");
       pl.longitude = query.getString("longitude");
+
+      //Add additional place information
+      pl.extraAttrs.put("type", query.getString("type"));
+      pl.extraAttrs.put("elevation", query.getString("elevation"));
+      pl.extraAttrs.put("continent", query.getString("continent"));
+      pl.extraAttrs.put("iso_country", query.getString("iso_country"));
+      pl.extraAttrs.put("iso_region", query.getString("iso_region"));
+      pl.extraAttrs.put("municipality", query.getString("municipality"));
+      pl.extraAttrs.put("scheduled_service", query.getString("scheduled_service"));
+      pl.extraAttrs.put("gps_code", query.getString("gps_code"));
+      pl.extraAttrs.put("iata_code", query.getString("iata_code"));
+      pl.extraAttrs.put("local_code", query.getString("local_code"));
+      pl.extraAttrs.put("home_link", query.getString("home_link"));
+      pl.extraAttrs.put("wikipedia_link", query.getString("wikipedia_link"));
+      pl.extraAttrs.put("keywords", query.getString("keywords"));
+
 
       this.places.add(pl);
     }
