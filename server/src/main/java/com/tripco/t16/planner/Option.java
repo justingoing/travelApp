@@ -1,6 +1,5 @@
 package com.tripco.t16.planner;
 
-import com.tripco.t16.calc.DistanceCalculator;
 
 /**
  * Describes the options to apply when planning a trip in TFFI format.
@@ -15,7 +14,6 @@ public class Option {
 
   /**
    * Returns the name of the unit.
-   * @return
    */
   public String getUnitName() {
     return getUnit().name;
@@ -31,6 +29,12 @@ public class Option {
     return getUnit().radius;
   }
 
+  /**
+   * Gets the unit of measurement that we are using, based on the information currently in this
+   * Option object.
+   *
+   * @return - Current unit of measurement.
+   */
   private Unit getUnit() {
     if (distance == null) {
       return Unit.miles;
@@ -40,14 +44,15 @@ public class Option {
     if (distance.equals("user defined") && userUnit != null
         && userRadius != null) {
       return new Unit(userUnit, Float.valueOf(userRadius));
-    } else if (distance != null) {
-        for (Unit unit : Unit.defaultUnits) {
-          if (distance.equals(unit.name)) {
-            return unit;
-          }
+    } else { //See if we have that unit pre-defined
+      for (Unit unit : Unit.defaultUnits) {
+        if (distance.equals(unit.name)) {
+          return unit;
         }
+      }
     }
 
+    //Otherwise, just return miles.
     return Unit.miles;
   }
 
