@@ -15,15 +15,11 @@ import java.util.ArrayList;
  * @author Isaac Gentz
  */
 public class Find {
-  public String type;
-  public String query;
-  public ArrayList<Place> places;
-
   //SQL requirements
-  private transient String driver = "com.mysql.jdbc.Driver";
-  private transient String url = "jdbc:mysql://faure.cs.colostate.edu/cs314";
-  private transient String dbId = "ikegentz";
-  private transient String dbPass = "831204074";
+  private String driver = "com.mysql.jdbc.Driver";
+  private String url = "jdbc:mysql://faure.cs.colostate.edu/cs314";
+  private String dbId = "ikegentz";
+  private String dbPass = "831204074";
 
   private final static String lookup = "SELECT * FROM airports WHERE ";
 
@@ -37,7 +33,8 @@ public class Find {
   /**
    * Creates a Find object with default database.
    */
-  public Find() {}
+  public Find() {
+  }
 
   /**
    * Creates a new Find object with the given setup.
@@ -61,15 +58,15 @@ public class Find {
    *
    * @param query What we are searching for
    */
-  private void queryDB(String query, String user, String password, boolean shouldPrint) {
+  private void queryDB(Query query, String user, String password, boolean shouldPrint) {
     try {
       Class.forName(driver);
 
-      query = "\'%" + query + "%\'";
-      String searchLookup = lookup + "id LIKE " + query
-          + " OR name LIKE " + query
-          + " OR municipality LIKE " + query
-          + " OR keywords LIKE " + query + ";";
+      String queryString = query.query = "\'%" + query.query + "%\'";
+      String searchLookup = lookup + "id LIKE " + query.query
+          + " OR name LIKE " + query.query
+          + " OR municipality LIKE " + query.query
+          + " OR keywords LIKE " + query.query  + ";";
 
       System.out.println(searchLookup);
 
@@ -81,7 +78,7 @@ public class Find {
       ) {
         try {
           if (!shouldPrint) {
-            addPlaces(rsQuery);
+            addPlaces(rsQuery, query);
           } else {
             printJSON(rsCount, rsQuery);
           }
@@ -101,8 +98,8 @@ public class Find {
    * @param query The results themselves
    * @throws SQLException If something goes wrong when talking to the database
    */
-  private void addPlaces(ResultSet query) throws SQLException {
-    this.places = new ArrayList<>();
+  private void addPlaces(ResultSet query, Query tffiQuery) throws SQLException {
+    tffiQuery.places = new ArrayList<>();
 
     while (query.next()) {
       Place pl = new Place();
@@ -127,8 +124,7 @@ public class Find {
       pl.extraAttrs.put("wikipedia_link", query.getString("wikipedia_link"));
       pl.extraAttrs.put("keywords", query.getString("keywords"));
 
-
-      this.places.add(pl);
+      tffiQuery.places.add(pl);
     }
   }
 
@@ -182,10 +178,9 @@ public class Find {
   /**
    * Populate our object with information from the query so that we can convert back to json.
    */
-  public void performQuery(boolean shouldPrint) {
-    if(!Find.isInputGood(query))
-    {
-      this.places = new ArrayList<>();
+  public void performQuery(Query query, boolean shouldPrint) {
+    if (!Find.isInputGood(query.query)) {
+      query.places = new ArrayList<>();
       System.out.println(Find.injectionMessage);
       return;
     }

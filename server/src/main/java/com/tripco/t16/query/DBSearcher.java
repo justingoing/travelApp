@@ -16,7 +16,7 @@ import spark.Request;
  * @author Isaac Gentz
  */
 public class DBSearcher {
-    private Find find;
+    private Query query;
 
     /**
      * Construct a Query object to handle TFFI transfer.
@@ -32,10 +32,10 @@ public class DBSearcher {
 
         // convert the body of the request to a Java class.
         Gson gson = new Gson();
-        find = gson.fromJson(requestBody, Find.class);
+        query = gson.fromJson(requestBody, Query.class);
 
         // do the query
-        find.performQuery(false);
+        new Find().performQuery(query, false);
 
         // log something.
         //System.out.println(find.some_info_here());
@@ -47,6 +47,6 @@ public class DBSearcher {
      */
     public String getFind() {
         Gson gson = new Gson();
-        return gson.toJson(find);
+        return gson.toJson(query);
     }
 }
