@@ -1,6 +1,6 @@
 package com.tripco.t16.server;
 
-import com.tripco.t16.planner.Config;
+import com.tripco.t16.tffi.Config;
 import com.tripco.t16.planner.Plan;
 
 import com.tripco.t16.query.DBSearcher;
