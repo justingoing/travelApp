@@ -17,24 +17,33 @@ class SearchTable extends Component {
     let tableData = [];
 
     for(let i = 0; i < ids.length; i++){
-      if(!this.props.isInTrip(this.props.destinations.places[i]))
+      console.log("Making new table");
+      let temp = this.props.destinations.places[i];
+      if(!this.props.isInTrip(temp.id)) {
         tableData.push(this.renderRow(i, ids[i], dests[i], lats[i], long[i]), false);
+        // store what's in the query vs. what's in the trip
+        this.props.queryPlaces[temp.id] = this.props.destinations.places[i];
+      }
     }
+    console.log(this.props.queryPlaces);
 
     return {ids, dests, lats, long, tableData};
   }
 
   addToTrip(key){
+    console.log(this.props.destinations.places[key]);
     this.props.addToTrip(this.props.destinations.places[key]);
   }
 
   renderRow(key, ids, dests, lat, long, selected) {
      let addition = (
               <td className="align-right"><span>
-                <button style={{color: "#FFF", backgroundColor: "#3E4551"}}
+                <button style={{color: "#FFF", backgroundColor: "#0086ff"}}
                         onClick={(e) => this.addToTrip(key)}
-                        className="pull-right btn btn-default">
-                  Add to Trip
+                        className="pull-right btn btn-default"
+                        title="Add to your trip">
+
+                  +
                 </button>
               </span></td>
           );
@@ -49,7 +58,8 @@ class SearchTable extends Component {
     this.table = this.createTable();
     return(
       <div id="SearchTable">
-            <table className="table table-responsive">
+        <button className="btn btn-primary " title="Add all search results to the trip" style={{border: "#0086ff", backgroundColor: "#0086ff"}} onClick={(e) => this.props.addAllToTrip()}>+ All</button>
+        <table className="table table-responsive">
                   <thead>
                    <tr className="table-info">
                     <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Id</th>

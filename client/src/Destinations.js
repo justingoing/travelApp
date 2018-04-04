@@ -64,8 +64,7 @@ class Destinations extends Component {
               <button className="btn btn-primary " style={{border: "#3E4551", backgroundColor: "#3E4551"}} onClick={this.sendSearch} type="button">Search</button>
             </div>
             <br/>
-            <button className="btn btn-primary " title="Add all search results to the trip" style={{border: "#0086ff", backgroundColor: "#0086ff"}}>+ All</button>
-            <SearchTable destinations={this.props.query} addToTrip={this.props.addToTrip} isInTrip={this.props.isInTrip}/>
+            <SearchTable destinations={this.props.query} addToTrip={this.props.addToTrip} isInTrip={this.props.isInTrip} queryPlaces={this.props.queryPlaces} addAllToTrip={this.props.addAllToTrip}/>
           <br/>
             <p>Or load destinations from a file.</p>
             <div className="form-group" role="group">

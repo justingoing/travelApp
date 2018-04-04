@@ -21,6 +21,8 @@ class Application extends Component {
     this.checkSQL = this.checkSQL.bind(this);
     this.addToTrip = this.addToTrip.bind(this);
     this.isInTrip = this.isInTrip.bind(this);
+    this.addAllToTrip = this.addAllToTrip.bind(this);
+    this.queryPlaces = {};
   }
 
   //populate with search
@@ -149,20 +151,31 @@ class Application extends Component {
     }
   }
 
-  isInTrip(place){
+  isInTrip(id){
     for(let i = 0; i < this.state.trip.places.length; ++i)
     {
-      if(this.state.trip.places[i].id == place.id) {
+      if(this.state.trip.places[i].id == id) {
         return true;
       }
     }
   }
 
-  addToTrip(place){
-    if(!this.isInTrip(place))
-      this.state.trip.places.push(place);
+  addAllToTrip(){
+    for(var place in this.queryPlaces){
+      this.state.trip.places.push(this.queryPlaces[place]);
+    }
+    this.queryPlaces = {};
     this.setState({trip: this.state.trip})
   }
+
+  addToTrip(place){
+    if(!this.isInTrip(place.id)) {
+      this.state.trip.places.push(place);
+      delete this.queryPlaces[place.id];
+    }
+    this.setState({trip: this.state.trip})
+  }
+
 
   render() {
     return (
@@ -176,6 +189,8 @@ class Application extends Component {
                             checkSQL={this.checkSQL}
                             addToTrip={this.addToTrip}
                             isInTrip={this.isInTrip}
+                            addAllToTrip={this.addAllToTrip}
+                            queryPlaces={this.queryPlaces}
               />
               <Options options={this.state.trip.options} updateOptions={this.updateOptions}/>
             </div>
