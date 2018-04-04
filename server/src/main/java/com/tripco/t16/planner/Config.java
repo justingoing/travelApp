@@ -2,6 +2,7 @@ package com.tripco.t16.planner;
 
 import com.google.gson.Gson;
 import com.tripco.t16.calc.Optimization;
+import com.tripco.t16.tffi.Filter;
 import java.util.ArrayList;
 
 public class Config {

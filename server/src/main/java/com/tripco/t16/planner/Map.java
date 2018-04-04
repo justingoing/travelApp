@@ -8,5 +8,4 @@ public class Map {
     mapsList.add("svg");
     return mapsList;
   }
-
 }
