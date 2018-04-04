@@ -3,7 +3,7 @@ package com.tripco.t16.server;
 import com.tripco.t16.planner.Config;
 import com.tripco.t16.planner.Plan;
 
-import com.tripco.t16.query.Query;
+import com.tripco.t16.query.DBSearcher;
 import spark.Request;
 import spark.Response;
 import spark.Spark;
@@ -110,7 +110,7 @@ public class MicroServer {
   private String query(Request request, Response response) {
     response.type("application/json");
 
-    return (new Query(request)).getFind();
+    return (new DBSearcher(request)).getFind();
   }
 
   /** A REST API that returns the team information associated with the server.
