@@ -8,14 +8,34 @@ import java.util.ArrayList;
  */
 public class Unit {
 
+  //Defined units
+  public static final Unit kilometers = new Unit("kilometers", 6371.0088F);
+  public static final Unit miles = new Unit("miles", 3958.7613F);
+  public static final Unit nautical_miles = new Unit("nautical miles", 3440.0695F);
+  public static final Unit user_defined = new Unit("user defined", -1f);
+
+  //Contains all units that have a valid radius (not user defined).
+  public final static ArrayList<Unit> defaultUnits = new ArrayList<>();
+
   public String name;
   public float radius;
 
+  /**
+   * Creates a new unit with the given name and radius.
+   *
+   * @param name - Name of the unit.
+   * @param radius - Radius of the earth in this unit.
+   */
   public Unit(String name, float radius) {
     this.name = name;
     this.radius = radius;
   }
 
+  /**
+   * Returns a list of units that the server supports.
+   *
+   * @return - Arraylist containing the names of units that we support.
+   */
   public static ArrayList<String> getUnits() {
     ArrayList<String> units = new ArrayList<>();
 
@@ -28,14 +48,6 @@ public class Unit {
     units.add(user_defined.name);
     return units;
   }
-
-  public static final Unit kilometers = new Unit("kilometers", 6371.0088F);
-  public static final Unit miles = new Unit("miles", 3958.7613F);
-  public static final Unit nautical_miles = new Unit("nautical miles", 3440.0695F);
-  public static final Unit user_defined = new Unit("user defined", -1f);
-
-  //Contains all units that have a valid radius (not user defined).
-  public final static ArrayList<Unit> defaultUnits = new ArrayList<>();
 
   static {
     defaultUnits.add(kilometers);

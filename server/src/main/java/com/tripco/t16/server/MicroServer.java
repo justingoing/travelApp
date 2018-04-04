@@ -7,19 +7,21 @@ import com.tripco.t16.query.DBSearcher;
 import spark.Request;
 import spark.Response;
 import spark.Spark;
+
 import static spark.Spark.*;
 
 
-/** A simple micro-server for the web.  Just what we need, nothing more.
- *
+/**
+ * A simple micro-server for the web.  Just what we need, nothing more.
  */
 public class MicroServer {
 
-  private int    port;
+  private int port;
   private String name;
   private String path = "/public";
 
-  /** Creates a micro-server to load static files and provide REST APIs.
+  /**
+   * Creates a micro-server to load static files and provide REST APIs.
    *
    * @param port - The port for the server to run on.
    * @param name - Name of the server.
@@ -32,7 +34,10 @@ public class MicroServer {
 
     // serve the static files: index.html and bundle.js
     Spark.staticFileLocation(this.path);
-    get("/", (req, res) -> {res.redirect("index.html"); return null;});
+    get("/", (req, res) -> {
+      res.redirect("index.html");
+      return null;
+    });
 
     // register all micro-services and the function that services them.
     // start with HTTP GET
@@ -45,11 +50,11 @@ public class MicroServer {
     post("/plan", this::plan);
     post("/query", this::query);
 
-
     System.out.println("\n\nServer running on port: " + this.port + "\n\n");
   }
 
-  /** A REST API that describes the server.
+  /**
+   * A REST API that describes the server.
    *
    * @param request - Request object
    * @param response - Response object
@@ -59,10 +64,12 @@ public class MicroServer {
 
     response.type("text/html");
 
-    return "<html><head></head><body><h1>"+name+" Micro-server on port "+port+"</h1></body></html>";
+    return "<html><head></head><body><h1>" + name + " Micro-server on port " + port
+        + "</h1></body></html>";
   }
 
-  /** A REST API that echos the client request.
+  /**
+   * A REST API that echos the client request.
    *
    * @param request - Request object
    * @param response - Response object
@@ -75,7 +82,8 @@ public class MicroServer {
     return HTTP.echoRequest(request);
   }
 
-  /** A REST API demonstrating the use of a parameter.
+  /**
+   * A REST API demonstrating the use of a parameter.
    *
    * @param request - Request object
    * @param response - Response object
@@ -89,7 +97,8 @@ public class MicroServer {
   }
 
 
-  /** A REST API to support trip planning.
+  /**
+   * A REST API to support trip planning.
    *
    * @param request - Request object
    * @param response - Response object
@@ -101,9 +110,10 @@ public class MicroServer {
     return (new Plan(request)).getTrip();
   }
 
-  /** A REST API to support querying the database of places.
+  /**
+   * A REST API to support querying the database of places.
    *
-   * @param  request - Request object
+   * @param request - Request object
    * @param response - Response object
    * @return - A string containing the response body.
    */
@@ -113,7 +123,8 @@ public class MicroServer {
     return (new DBSearcher(request)).getFind();
   }
 
-  /** A REST API that returns the team information associated with the server.
+  /**
+   * A REST API that returns the team information associated with the server.
    *
    * @param request - Request object
    * @param response - Response object
@@ -125,7 +136,8 @@ public class MicroServer {
     return name;
   }
 
-  /** A REST API that returns the team information associated with the server.
+  /**
+   * A REST API that returns the team information associated with the server.
    *
    * @param request - Request object
    * @param response - Response object

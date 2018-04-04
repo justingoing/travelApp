@@ -1,7 +1,6 @@
 package com.tripco.t16.calc;
 
 
-import com.google.gson.Gson;
 import com.tripco.t16.planner.Place;
 import com.tripco.t16.planner.Trip;
 
@@ -15,20 +14,22 @@ import java.util.Arrays;
  * @author Samuel Kaessner
  */
 public class Optimization {
+
   public static Optimization NEAREST_NEIGHBOR = new Optimization("nearest-neighbor",
       "Nearest neighbor optimizes the path by choosing the nearest city when deciding which city"
           + " to go to next.");
   public static Optimization TWO_OPT = new Optimization("2-opt",
       "Two-opt improves upon nearest-neighbor by swapping each pair of edges, and seeing "
-          + "if the swap makes the trip shorter.");;
+          + "if the swap makes the trip shorter.");
 
   public String label;
   public String description;
 
   /**
+   * Creates an optimization level.
    *
-   * @param label
-   * @param description
+   * @param label - Name of the optimization level.
+   * @param description - Description of how the optimization works.
    */
   private Optimization(String label, String description) {
     this.label = label;
@@ -156,6 +157,7 @@ public class Optimization {
 
   /**
    * Runs 2 opt on a nearest neighbor TSP.
+   *
    * @param places List of places
    * @param radius Distance unit to use for calculations
    * @return A 2opted version of the trip
