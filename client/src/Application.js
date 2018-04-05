@@ -41,6 +41,7 @@ class Application extends Component {
     .then((data) => {
       this.state.trip = this.getDefaultTrip(data);
       this.state.query = this.getDefaultQuery(data);
+      this.state.config = data;
       this.tffiVersion = data.version;
 
       // now that we have server info, set state accordingly and exit loading
