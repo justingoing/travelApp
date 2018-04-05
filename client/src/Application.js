@@ -10,12 +10,7 @@ import Trip from './Trip';
 class Application extends Component {
   constructor(props) {
     super(props);
-    let serverConfig = this.requestConfig();
-    this.state = {
-      trip: this.configureTrip(serverConfig),
-      query: this.configureQuery(serverConfig),
-      config: serverConfig
-    };
+
     this.updateTrip = this.updateTrip.bind(this);
     this.updateOptions = this.updateOptions.bind(this);
     this.updateQuery = this.updateQuery.bind(this);
@@ -23,10 +18,42 @@ class Application extends Component {
     this.addToTrip = this.addToTrip.bind(this);
     this.isInTrip = this.isInTrip.bind(this);
     this.addAllToTrip = this.addAllToTrip.bind(this);
+
+    this.state = {
+      loading: false,
+      trip: {},
+      query: {},
+      config: {}
+    };
+
     this.queryPlaces = {};
+    this.tffiVersion = 1;
+
   }
 
-  //populate with search
+  // DONT TOUCH OR YOU DIE
+  componentWillMount() {
+    // Put app into loading state
+    this.setState({ loading: true });
+
+    // load until server gives us it's configuration
+    this.requestConfig()
+    .then((data) => {
+      this.state.trip = this.getDefaultTrip(data);
+      this.state.query = this.getDefaultQuery(data);
+      this.tffiVersion = data.version;
+
+      // now that we have server info, set state accordingly and exit loading
+      this.setState({
+       loading: false,
+        trip: this.state.trip,
+        query: this.state.query,
+        config: this.state.config
+      });
+    });
+  }
+
+    //populate with search
   updateQuery(searchTFFI) {
     let copyTFFI = Object.assign({}, this.state.query);
 
@@ -49,45 +76,30 @@ class Application extends Component {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
-  configureTrip(serverConfig) {
-    let trip = this.getDefaultTrip();
-
-    // Version 1 and 2 match default version 3, So just change the version number
-    if (serverConfig.version == 1 || serverConfig.version == 2) {
-      trip.version = serverConfig.version;
-    }
-
-    return trip;
-  }
-
-  getDefaultTrip() {
+  getDefaultTrip(serverConfig) {
     let t = {
-      version: 3,
+      version: serverConfig.version,
       type: "trip",
       title: "",
       options: {
         distance: this.miles(),
-        optimization: 0
+        userUnit: "",
+        userRadius: "",
+        optimization: "0",
+        map: "kml" ? serverConfig.maps.includes("kml") : "svg"
       },
       places: [],
       distances: [],
-      map: "<svg width=\"1920\" height=\"20\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><g></g></svg>"
+      map: ""
+      //"<svg width=\"1920\" height=\"20\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><g></g></svg>
     };
 
     return t;
   }
 
-  configureQuery(serverConfig) {
-    let query = this.getDefaultQuery();
-
-    if(serverConfig.version == 1 || serverConfig.version == 2)
-      query.version = serverConfig.version;
-
-  }
-
-  getDefaultQuery() {
+  getDefaultQuery(serverConfig) {
     let t = {
-      version: 3,
+      version: serverConfig.version,
       type: "query",
       query: "",
       filters: [],
@@ -143,8 +155,7 @@ class Application extends Component {
       title: copyTFFI.title,
       options: {
         distance: {
-          name: copyTFFI.options.distance.name,
-          radius: copyTFFI.options.distance.radius
+          name: copyTFFI.options.distance
         },
         optimization: copyTFFI.options.optimization
       },
@@ -160,7 +171,7 @@ class Application extends Component {
 
   checkOptionsV1(nextTFFI, incomingTFFI) {
 
-    if (!nextTFFI.options.distance.name || !nextTFFI.options.distance.radius) {
+    if (!nextTFFI.options.distance) {
       //Check if incoming tffi is v1
       if (incomingTFFI.options.name === "kilometers") {
         nextTFFI.options.distance = this.kilometers();
@@ -223,6 +234,11 @@ class Application extends Component {
   }
 
   render() {
+    if(this.state.loading == true)
+    {
+      return <h2>LOADING...</h2>;
+    }
+
     return (
         <div id="application" className="container">
           <div className="col-12">
