@@ -28,10 +28,10 @@ public class DistanceCalculator {
    * @param longitude - The latitude to check
    * @return - True if the position is in Colorado, false otherwise.
    */
-  /*public static boolean isInColorado(double latitude, double longitude) {
+  public static boolean isInColorado(double latitude, double longitude) {
     return (latitude <= COLORADO_TOP && latitude >= COLORADO_BOTTOM
         && longitude <= COLORADO_RIGHT && longitude >= COLORADO_LEFT);
-  }*/
+  }
 
   /**
    * Takes two lat-lon pairs, and returns the great circle distance between the two, using the chord
