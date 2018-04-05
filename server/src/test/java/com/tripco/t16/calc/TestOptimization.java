@@ -3,6 +3,7 @@ package com.tripco.t16.calc;
 import static org.junit.Assert.*;
 
 import com.tripco.t16.planner.Place;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -135,5 +136,13 @@ public class TestOptimization {
     p.name = "Random" + random;
 
     return p;
+  }
+
+  @Test
+  public void testGetOptimizations() {
+    ArrayList<Optimization> opts = new ArrayList<>();
+    opts.add(Optimization.TWO_OPT);
+    opts.add(Optimization.NEAREST_NEIGHBOR);
+    assertEquals(opts, Optimization.getOptimizations());
   }
 }

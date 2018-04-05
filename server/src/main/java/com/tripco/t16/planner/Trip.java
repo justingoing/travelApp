@@ -43,9 +43,9 @@ public class Trip {
     }
 
     if (options.getOptimizationLevel() >= 0.66) {
-      this.places = Optimization.twoOpt(places, options.getRadius());
+      this.places = Optimization.twoOpt(places, options.getUnitRadius());
     } else if (options.getOptimizationLevel() >= .33) {
-      this.places = Optimization.nearestNeighbor(places, options.getRadius());
+      this.places = Optimization.nearestNeighbor(places, options.getUnitRadius());
     }
 
     this.coords = placesToCoords();
@@ -202,7 +202,7 @@ public class Trip {
       Coords p2 = this.coords.get(i % coords.size());
 
       dist.add(DistanceCalculator
-          .calculateGreatCircleDistance(p1.x, p1.y, p2.x, p2.y, options.getRadius()));
+          .calculateGreatCircleDistance(p1.x, p1.y, p2.x, p2.y, options.getUnitRadius()));
     }
 
     return dist;

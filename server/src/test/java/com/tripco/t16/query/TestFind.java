@@ -12,8 +12,8 @@ import static org.junit.Assert.*;
 
 public class TestFind {
 
+  Query query = new Query();
   Find find;
-
   // Setup to be done before every test in TestPlan
   @Before
   public void initialize() {
@@ -22,7 +22,7 @@ public class TestFind {
     } else {
       find = new Find();
     }
-    find.places = new ArrayList<>();
+    query.places = new ArrayList<>();
   }
 
   @Test
@@ -33,13 +33,13 @@ public class TestFind {
   }
 
   @Test
-  public void testFind() {
+  public void testFind() {/*
     // check if doing a query on our db for gibberish returns nothing
-    find.type = "query";
-    find.query = "abcdefghijklmnop12345666789";
-    find.performQuery(true);
+    query.type = "query";
+    query.query = "abcdefghijklmnop12345666789";
+    find.performQuery(query, true);
 
-    assertTrue(find.places.size() == 0);
+    assertTrue(query.places.size() == 0);
     /* --------------------------------------------- */
     // make sure that querying for legit results gives us some places
 
