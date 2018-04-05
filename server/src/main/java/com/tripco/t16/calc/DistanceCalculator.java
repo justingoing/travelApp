@@ -11,6 +11,11 @@ public class DistanceCalculator {
   public static final double COLORADO_LEFT = -109.05;
   public static final double COLORADO_TOP = 41.0;
   public static final double COLORADO_BOTTOM = 37.0;
+  public static final double WORLD_RIGHT = 180;
+  public static final double WORLD_LEFT = -180;
+  public static final double WORLD_TOP = 90;
+  public static final double WORLD_BOTTOM = -90;
+
 
   //Values for radius
   public static final double EARTH_RADIUS_MI = 3958.7613;

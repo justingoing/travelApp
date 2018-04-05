@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import com.tripco.t16.planner.Place;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,8 +55,7 @@ public class TestOptimization {
     places.add(p3);
     places.add(p4);
 
-    assertEquals(Optimization.nearestNeighbor(places, DistanceCalculator.EARTH_RADIUS_MI),
-        output);
+    assertEquals(Optimization.nearestNeighbor(places, DistanceCalculator.EARTH_RADIUS_MI), output);
   }
 
   @Test
@@ -74,8 +74,8 @@ public class TestOptimization {
     places.add(p);
     places.add(p2);
     places.add(p3);
-    assertEquals(Optimization.nearestNeighbor(places, DistanceCalculator.EARTH_RADIUS_MI),
-        output);
+
+    assertEquals(Optimization.nearestNeighbor(places, DistanceCalculator.EARTH_RADIUS_MI), output);
   }
 
   @Test
