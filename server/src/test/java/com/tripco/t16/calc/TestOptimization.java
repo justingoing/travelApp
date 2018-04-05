@@ -98,9 +98,9 @@ public class TestOptimization {
 
     // check that 2 opt returns an uncrossed version of the trip
     assertEquals("TOP LEFT", results.get(0).name);
-    assertEquals("TOP RIGHT", results.get(1).name);
+    assertEquals("BOTTOM LEFT", results.get(1).name);
     assertEquals("BOTTOM RIGHT", results.get(2).name);
-    assertEquals("BOTTOM LEFT", results.get(3).name);
+    assertEquals("TOP RIGHT", results.get(3).name);
 
   }
 
