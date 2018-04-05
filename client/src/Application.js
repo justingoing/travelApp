@@ -79,9 +79,17 @@ class Application extends Component {
 
   getDefaultConfig() {
     let t = {
-      version: 2,
       type: "config",
-      optimization: 1
+      version: 3,
+      filters: [
+      ],
+      maps: ["svg"],
+      optimization: 0,
+      optimizations: [
+      ],
+      units: [
+          "miles"
+      ]
     };
     return t;
   }
