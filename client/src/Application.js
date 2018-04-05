@@ -12,8 +12,8 @@ class Application extends Component {
     super(props);
     let serverConfig = this.requestConfig();
     this.state = {
-      trip: this.getDefaultTrip(),
-      query: this.getDefaultQuery(),
+      trip: this.configureTrip(serverConfig),
+      query: this.configureQuery(serverConfig),
       config: serverConfig
     };
     this.updateTrip = this.updateTrip.bind(this);
@@ -27,29 +27,38 @@ class Application extends Component {
   }
 
   //populate with search
-  updateQuery(searchTFFI){
-      let copyTFFI = Object.assign({}, this.state.query);
+  updateQuery(searchTFFI) {
+    let copyTFFI = Object.assign({}, this.state.query);
 
-      Object.assign(copyTFFI, searchTFFI);
-      let nextTFFI = {
-        version: copyTFFI.version,
-        type: copyTFFI.type,
-        query: copyTFFI.query,
-        places: copyTFFI.places
-      };
+    Object.assign(copyTFFI, searchTFFI);
+    let nextTFFI = {
+      version: copyTFFI.version,
+      type: copyTFFI.type,
+      query: copyTFFI.query,
+      places: copyTFFI.places
+    };
 
-      this.setState({query: nextTFFI});
+    this.setState({query: nextTFFI});
   }
 
-  checkSQL(query){
-        this.state.query.query = this.escapeRegExp(query);
+  checkSQL(query) {
+    this.state.query.query = this.escapeRegExp(query);
+  }
+
+  escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  configureTrip(serverConfig) {
+    let trip = this.getDefaultTrip();
+
+    // Version 1 and 2 match default version 3, So just change the version number
+    if (serverConfig.version == 1 || serverConfig.version == 2) {
+      trip.version = serverConfig.version;
     }
 
-
-  escapeRegExp(string){
-      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return trip;
   }
-
 
   getDefaultTrip() {
     let t = {
@@ -68,14 +77,21 @@ class Application extends Component {
     return t;
   }
 
+  configureQuery(serverConfig) {
+    let query = this.getDefaultQuery();
+
+    if(serverConfig.version == 1)
+    {
+
+    }
+  }
+
   getDefaultQuery() {
     let t = {
       version: 3,
       type: "query",
       query: "",
-      filters: [
-
-      ],
+      filters: [],
       places: []
     };
     return t;
@@ -85,32 +101,32 @@ class Application extends Component {
     let t = {
       type: "config",
       version: 3,
-      filters: [
-      ],
+      filters: [],
       maps: ["svg"],
       optimization: 0,
-      optimizations: [
-      ],
+      optimizations: [],
       units: [
-          "miles"
+        "miles"
       ]
     };
     return t;
   }
 
-  async requestConfig(){
+  async requestConfig() {
     let configRequest = {};
 
     //try to get configuration from server
-    try{
+    try {
       configRequest = await fetch(process.env.SERVICE_URL + '/config', {
         method: "GET"
       });
-    }catch(err){
+    } catch (err) {
       console.log("No configuration response from server, assuming sever version 1.0");
       console.error(err);
+      configRequest = this.getDefaultConfig();
+      configRequest.version = 1;
 
-      return this.getDefaultConfig();
+      return configRequest;
     }
 
     let ret = await configRequest.json();
@@ -178,57 +194,56 @@ class Application extends Component {
     } else if (options === "miles") {
       this.state.trip.options.distance = this.miles();
     }
-    if(options >= 0 && options <= 1) {
+    if (options >= 0 && options <= 1) {
       this.state.trip.options.optimization = options;
     }
   }
 
-  isInTrip(id){
-    for(let i = 0; i < this.state.trip.places.length; ++i)
-    {
-      if(this.state.trip.places[i].id == id) {
+  isInTrip(id) {
+    for (let i = 0; i < this.state.trip.places.length; ++i) {
+      if (this.state.trip.places[i].id == id) {
         return true;
       }
     }
   }
 
-  addAllToTrip(){
-    for(var place in this.queryPlaces){
+  addAllToTrip() {
+    for (var place in this.queryPlaces) {
       this.state.trip.places.push(this.queryPlaces[place]);
     }
     this.queryPlaces = {};
     this.setState({trip: this.state.trip})
   }
 
-  addToTrip(place){
-    if(!this.isInTrip(place.id)) {
+  addToTrip(place) {
+    if (!this.isInTrip(place.id)) {
       this.state.trip.places.push(place);
       delete this.queryPlaces[place.id];
     }
     this.setState({trip: this.state.trip})
   }
 
-
   render() {
     return (
         <div id="application" className="container">
-            <div className="col-12">
-              <Instructions number={this.props.number} name={this.props.name}/>
-              <Destinations trip={this.state.trip}
-                            updateTrip={this.updateTrip}
-                            query={this.state.query}
-                            updateQuery={this.updateQuery}
-                            checkSQL={this.checkSQL}
-                            addToTrip={this.addToTrip}
-                            isInTrip={this.isInTrip}
-                            addAllToTrip={this.addAllToTrip}
-                            queryPlaces={this.queryPlaces}
-              />
-              <Options options={this.state.trip.options} updateOptions={this.updateOptions}/>
-            </div>
-            <div className="col-12">
-              <Trip trip={this.state.trip} updateTrip={this.updateTrip}/>
-            </div>
+          <div className="col-12">
+            <Instructions number={this.props.number} name={this.props.name}/>
+            <Destinations trip={this.state.trip}
+                          updateTrip={this.updateTrip}
+                          query={this.state.query}
+                          updateQuery={this.updateQuery}
+                          checkSQL={this.checkSQL}
+                          addToTrip={this.addToTrip}
+                          isInTrip={this.isInTrip}
+                          addAllToTrip={this.addAllToTrip}
+                          queryPlaces={this.queryPlaces}
+            />
+            <Options options={this.state.trip.options}
+                     updateOptions={this.updateOptions}/>
+          </div>
+          <div className="col-12">
+            <Trip trip={this.state.trip} updateTrip={this.updateTrip}/>
+          </div>
 
         </div>
     )
