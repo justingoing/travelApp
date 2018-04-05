@@ -154,8 +154,7 @@ public class Trip {
    */
   public double normalizeLat(double lat) {
     // Note these are inverted so that we can get SVG coords going top-down instead of bottom-up
-    /*return (lat - DistanceCalculator.COLORADO_TOP) / (DistanceCalculator.COLORADO_BOTTOM
-        - DistanceCalculator.COLORADO_TOP);*/
+    /*return (lat - DistanceCalculator.COLORADO_TOP) / (DistanceCalculator.COLORADO_BOTTOM - DistanceCalculator.COLORADO_TOP);*/
     return (lat - DistanceCalculator.WORLD_TOP) / (DistanceCalculator.WORLD_BOTTOM - DistanceCalculator.WORLD_TOP);
   }
 
@@ -166,8 +165,7 @@ public class Trip {
    * @return Normalized longitude
    */
   public double normalizeLong(double lon) {
-    /*return (lon - DistanceCalculator.COLORADO_LEFT) / (DistanceCalculator.COLORADO_RIGHT
-        - DistanceCalculator.COLORADO_LEFT); */
+    /*return (lon - DistanceCalculator.COLORADO_LEFT) / (DistanceCalculator.COLORADO_RIGHT - DistanceCalculator.COLORADO_LEFT); */
     return (lon - DistanceCalculator.WORLD_LEFT) / (DistanceCalculator.WORLD_RIGHT - DistanceCalculator.WORLD_LEFT);
   }
 

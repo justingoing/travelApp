@@ -28,7 +28,7 @@ public class TestDistanceCalculator {
         assertEquals(DistanceCalculator.calculateGreatCircleDistance(10, 50, 50, 10, DistanceCalculator.EARTH_RADIUS_MI), 3581);
     }
 
-    /*@Test
+    @Test
     public void testInColorado() {
         assertTrue(DistanceCalculator.isInColorado(39.5, -107));
         assertFalse(DistanceCalculator.isInColorado(-39.5, 107));
@@ -36,6 +36,6 @@ public class TestDistanceCalculator {
         assertTrue(DistanceCalculator.isInColorado(DistanceCalculator.COLORADO_BOTTOM, DistanceCalculator.COLORADO_LEFT));
         assertFalse(DistanceCalculator.isInColorado(-39.5, -107));
         assertFalse(DistanceCalculator.isInColorado(39.5, 107));
-    }*/
+    }
     //No longer in Colorado only!
 }
