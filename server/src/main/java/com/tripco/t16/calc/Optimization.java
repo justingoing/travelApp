@@ -15,6 +15,27 @@ import java.util.Arrays;
  */
 public class Optimization {
 
+  public static Optimization NEAREST_NEIGHBOR = new Optimization("nearest-neighbor",
+      "Nearest neighbor optimizes the path by choosing the nearest city when deciding which city"
+          + " to go to next.");
+  public static Optimization TWO_OPT = new Optimization("2-opt",
+      "Two-opt improves upon nearest-neighbor by swapping each pair of edges, and seeing "
+          + "if the swap makes the trip shorter.");
+
+  public String label;
+  public String description;
+
+  /**
+   * Creates an optimization level.
+   *
+   * @param label - Name of the optimization level.
+   * @param description - Description of how the optimization works.
+   */
+  private Optimization(String label, String description) {
+    this.label = label;
+    this.description = description;
+  }
+
   /**
    * Implements the nearest-neighbor graph algorithm.
    */
@@ -136,6 +157,7 @@ public class Optimization {
 
   /**
    * Runs 2 opt on a nearest neighbor TSP.
+   *
    * @param places List of places
    * @param radius Distance unit to use for calculations
    * @return A 2opted version of the trip
@@ -236,6 +258,19 @@ public class Optimization {
     }
 
     return dist;
+  }
+
+  /**
+   * Returns a list of the optimizations the server supports.
+   *
+   * @return - ArrayList of supported optimizations.
+   */
+  public static ArrayList<Optimization> getOptimizations() {
+    ArrayList<Optimization> opts = new ArrayList<>();
+    opts.add(TWO_OPT);
+    opts.add(NEAREST_NEIGHBOR);
+
+    return opts;
   }
 
 
