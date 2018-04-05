@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Map {
 
   private static final String SVG_TAG = "svg";
+  private static final String KML_TAG = "kml";
 
   /**
    * Returns a list of map formats the server supports. Used for the configuration object.
@@ -17,6 +18,7 @@ public class Map {
   public static ArrayList<String> getMaps() {
     ArrayList<String> mapsList = new ArrayList<>();
     mapsList.add(SVG_TAG);
+    mapsList.add(KML_TAG);
     return mapsList;
   }
 }
