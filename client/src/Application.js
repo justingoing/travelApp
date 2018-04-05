@@ -13,7 +13,7 @@ class Application extends Component {
     this.state = {
       trip: this.getDefaultTrip(),
       query: this.getDefaultQuery(),
-      config: this.getDefaultConfig()
+      config: this.requestConfig()
     };
     this.updateTrip = this.updateTrip.bind(this);
     this.updateOptions = this.updateOptions.bind(this);
@@ -84,6 +84,26 @@ class Application extends Component {
       optimization: 1
     };
     return t;
+  }
+
+  async requestConfig(){
+    let configRequest = {};
+
+    //try to get configuration from server
+    try{
+      configRequest = await fetch(process.env.SERVICE_URL + '/config', {
+        method: "GET"
+      });
+    }catch(err){
+      console.log("No configuration response from server, assuming sever version 1.0");
+      console.error(err);
+
+      return this.getDefaultConfig();
+    }
+
+    let ret = await configRequest.json();
+    console.log("Server version " + ret.version);
+    return ret;
   }
 
   updateTrip(tffi) {
