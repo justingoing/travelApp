@@ -56,7 +56,6 @@ public class TestOptimization {
     places.add(p4);
 
     assertEquals(Optimization.nearestNeighbor(places, DistanceCalculator.EARTH_RADIUS_MI), output);
-    //assertEquals(places, places); //Nearest Neighbor is returning a correct version I'm sure... however it is not the order of output
   }
 
   @Test
