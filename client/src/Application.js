@@ -10,10 +10,11 @@ import Trip from './Trip';
 class Application extends Component {
   constructor(props) {
     super(props);
+    let serverConfig = this.requestConfig();
     this.state = {
       trip: this.getDefaultTrip(),
       query: this.getDefaultQuery(),
-      config: this.requestConfig()
+      config: serverConfig
     };
     this.updateTrip = this.updateTrip.bind(this);
     this.updateOptions = this.updateOptions.bind(this);
@@ -52,7 +53,7 @@ class Application extends Component {
 
   getDefaultTrip() {
     let t = {
-      version: 2,
+      version: 3,
       type: "trip",
       title: "",
       options: {
@@ -69,9 +70,12 @@ class Application extends Component {
 
   getDefaultQuery() {
     let t = {
-      version: 2,
+      version: 3,
       type: "query",
       query: "",
+      filters: [
+
+      ],
       places: []
     };
     return t;
