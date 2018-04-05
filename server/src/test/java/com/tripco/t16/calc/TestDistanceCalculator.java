@@ -37,4 +37,5 @@ public class TestDistanceCalculator {
         assertFalse(DistanceCalculator.isInColorado(-39.5, -107));
         assertFalse(DistanceCalculator.isInColorado(39.5, 107));
     }
+    //No longer in Colorado only!
 }

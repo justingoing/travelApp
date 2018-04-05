@@ -6,6 +6,7 @@ import com.tripco.t16.planner.Place;
 import com.tripco.t16.planner.Unit;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,6 +78,7 @@ public class TestOptimization {
     places.add(p3);
     assertEquals(Optimization.optimize(places, DistanceCalculator.EARTH_RADIUS_MI, false),
         output);
+
   }
 
   @Test
