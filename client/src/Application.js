@@ -41,6 +41,7 @@ class Application extends Component {
     .then((data) => {
       this.state.trip = this.getDefaultTrip(data);
       this.state.query = this.getDefaultQuery(data);
+      this.state.config = data;
       this.tffiVersion = data.version;
 
       // now that we have server info, set state accordingly and exit loading
@@ -55,14 +56,15 @@ class Application extends Component {
 
     //populate with search
   updateQuery(searchTFFI) {
-    let copyTFFI = Object.assign({}, this.state.query);
+    let copyTFFI = Object.assign(this.getDefaultQuery(this.state.config), this.state.query);
 
     Object.assign(copyTFFI, searchTFFI);
     let nextTFFI = {
       version: copyTFFI.version,
       type: copyTFFI.type,
       query: copyTFFI.query,
-      places: copyTFFI.places
+      places: copyTFFI.places,
+      filters: copyTFFI.filters
     };
 
     this.setState({query: nextTFFI});
@@ -146,7 +148,7 @@ class Application extends Component {
   }
 
   updateTrip(tffi) {
-    let copyTFFI = Object.assign(this.getDefaultTrip(), this.state.trip);
+    let copyTFFI = Object.assign(this.getDefaultTrip(this.state.config), this.state.trip);
     Object.assign(copyTFFI, tffi);
 
     let nextTFFI = {
@@ -154,10 +156,11 @@ class Application extends Component {
       type: copyTFFI.type,
       title: copyTFFI.title,
       options: {
-        distance: {
-          name: copyTFFI.options.distance
-        },
-        optimization: copyTFFI.options.optimization
+        distance: copyTFFI.options.distance,
+        userUnit: copyTFFI.options.userUnit,
+        userRadius: copyTFFI.options.userRadius,
+        optimization: copyTFFI.options.optimization,
+        map: copyTFFI.options.map
       },
       places: copyTFFI.places,
       distances: copyTFFI.distances,
@@ -168,6 +171,8 @@ class Application extends Component {
 
     this.setState({trip: nextTFFI});
   }
+
+
 
   checkOptionsV1(nextTFFI, incomingTFFI) {
 
