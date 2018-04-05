@@ -80,10 +80,9 @@ class Application extends Component {
   configureQuery(serverConfig) {
     let query = this.getDefaultQuery();
 
-    if(serverConfig.version == 1)
-    {
+    if(serverConfig.version == 1 || serverConfig.version == 2)
+      query.version = serverConfig.version;
 
-    }
   }
 
   getDefaultQuery() {
@@ -181,11 +180,11 @@ class Application extends Component {
   }
 
   miles() {
-    return {name: "miles", radius: "3958.7613"};
+    return "miles";
   }
 
   kilometers() {
-    return {name: "kilometers", radius: "6371.0088"};
+    return "kilometers";
   }
 
   updateOptions(options) {
