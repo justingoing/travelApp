@@ -88,7 +88,7 @@ class Application extends Component {
         userUnit: "",
         userRadius: "",
         optimization: "0",
-        map: "kml" ? serverConfig.maps.includes("kml") : "svg"
+        map: serverConfig.maps.includes("kml") ? "kml" : "svg"
       },
       places: [],
       distances: [],
