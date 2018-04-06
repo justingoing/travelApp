@@ -39,7 +39,7 @@ public class Optimization {
   /**
    * Implements the nearest-neighbor graph algorithm.
    */
-  public static ArrayList<Place> nearestNeighbor(final ArrayList<Place> places, double radius) {
+  public static ArrayList<Place> optimize(final ArrayList<Place> places, double radius, boolean twoopt) {
     //Quick sanity check
     if (places == null || places.size() == 0) {
       return places;
@@ -102,6 +102,13 @@ public class Optimization {
       distance += getDistanceBetween(tmpPlaces.get(0),
           tmpPlaces.get(tmpPlaces.size() - 1), radius);
 
+      //If we are two-opting, then run two-opt on this nearest neighbor.
+      if (twoopt) {
+        int[] twoOptDist = new int[1];
+        tmpPlaces = twoOpt(tmpPlaces, radius, twoOptDist);
+        distance = twoOptDist[0];
+      }
+
       // Check if the *entire trip* is shorter than our
       // best found trip, and if so, update.
       if (distance < bestDistance) {
@@ -162,26 +169,33 @@ public class Optimization {
    * @param radius Distance unit to use for calculations
    * @return A 2opted version of the trip
    */
-  public static ArrayList<Place> twoOpt(final ArrayList<Place> places, double radius) {
-    // Get a starting nearest neighbor that we can further optimize
-    ArrayList<Place> trip = nearestNeighbor(places, radius);
+  private static ArrayList<Place> twoOpt(ArrayList<Place> places, double radius, int[] retDist) {
+    if (places.size() <= 0) {
+      return places;
+    }
+
+    Place dupeStart = new Place(places.get(0));
+
+    places.add(dupeStart);
 
     //O(N) - Creates a place record array based on the nearest neighbor trip
-    PlaceRecord[] placesArray = new PlaceRecord[trip.size()];
-    for (int i = 0; i < trip.size(); i++) {
-      placesArray[i] = new PlaceRecord(trip.get(i));
+    PlaceRecord[] placesArray = new PlaceRecord[places.size()];
+    for (int i = 0; i < places.size(); i++) {
+      placesArray[i] = new PlaceRecord(places.get(i));
     }
     // Calulate distances between all nodes one time. Matrix should be in order of trip
     int[][] distanceMatrix = calculateDistanceMatrix(placesArray, radius);
 
     // Keep track of the order of each node in the trip so we don't have to re-calculate distances
-    int[] tripOrder = new int[trip.size()];
+    int[] tripOrder = new int[places.size()];
     for (int i = 0; i < tripOrder.length; ++i) {
       tripOrder[i] = i;
     }
 
     // Keep track of our current trip
-    ArrayList<Place> curRoute = trip;
+    ArrayList<Place> curRoute = places;
+
+
 
     boolean improved = true;
 
@@ -190,8 +204,8 @@ public class Optimization {
           .getTripDistance(curRoute, distanceMatrix, tripOrder);
       improved = false;
 
-      for (int i = 0; i < trip.size() - 1; ++i) {
-        for (int k = i + 1; k < trip.size() - 1; ++k) {
+      for (int i = 0; i < places.size() - 1; ++i) {
+        for (int k = i + 1; k < places.size() - 1; ++k) {
           Place[] curArr = new Place[curRoute.size()];
           curArr = curRoute.toArray(curArr);
           int[] tempOrder = Arrays.copyOf(tripOrder, tripOrder.length);
@@ -207,7 +221,12 @@ public class Optimization {
           }
         }
       }
+
+      retDist[0] = bestDistance;
     }
+
+    places.remove(dupeStart);
+    curRoute.remove(dupeStart);
 
     return curRoute;
   }

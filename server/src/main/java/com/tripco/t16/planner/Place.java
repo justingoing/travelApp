@@ -21,5 +21,14 @@ public class Place {
     this.extraAttrs = new HashMap<String, String>();
   }
 
+  public Place(Place other) {
+    this.id = other.id;
+    this.name = other.name;
+    this.latitude = other.latitude;
+    this.longitude = other.longitude;
+
+    this.extraAttrs = other.extraAttrs;
+  }
+
 
 }

@@ -27,8 +27,6 @@ class Destinations extends Component {
 
     searchResponse(){
       //POST request
-      console.log("the query");
-      console.log(this.props.query);
       return fetch(process.env.SERVICE_URL + '/query', {
           method: "POST",
           body: JSON.stringify(this.props.query)

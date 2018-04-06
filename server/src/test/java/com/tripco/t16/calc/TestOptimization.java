@@ -3,6 +3,7 @@ package com.tripco.t16.calc;
 import static org.junit.Assert.*;
 
 import com.tripco.t16.planner.Place;
+import com.tripco.t16.planner.Unit;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +21,7 @@ public class TestOptimization {
   public void testZero() {
     ArrayList<Place> places = new ArrayList<>();
     ArrayList<Place> output = new ArrayList<>();
-    assertEquals(Optimization.nearestNeighbor(places, DistanceCalculator.EARTH_RADIUS_MI),
+    assertEquals(Optimization.optimize(places, Unit.miles.radius, false),
         output);
   }
 
@@ -31,7 +32,7 @@ public class TestOptimization {
     Place p = makeRandomPlace();
     output.add(p);
     places.add(p);
-    assertEquals(Optimization.nearestNeighbor(places, DistanceCalculator.EARTH_RADIUS_MI),
+    assertEquals(Optimization.optimize(places, Unit.miles.radius, false),
         output);
   }
 
@@ -55,7 +56,8 @@ public class TestOptimization {
     places.add(p3);
     places.add(p4);
 
-    assertEquals(Optimization.nearestNeighbor(places, DistanceCalculator.EARTH_RADIUS_MI), output);
+    assertEquals(Optimization.optimize(places, Unit.miles.radius, false),
+        output);
   }
 
   @Test
@@ -74,8 +76,9 @@ public class TestOptimization {
     places.add(p);
     places.add(p2);
     places.add(p3);
+    assertEquals(Optimization.optimize(places, DistanceCalculator.EARTH_RADIUS_MI, false),
+        output);
 
-    assertEquals(Optimization.nearestNeighbor(places, DistanceCalculator.EARTH_RADIUS_MI), output);
   }
 
   @Test
@@ -92,7 +95,7 @@ public class TestOptimization {
 
 
     System.out.println(places);
-    ArrayList<Place> results = Optimization.twoOpt(places, DistanceCalculator.EARTH_RADIUS_MI);
+    ArrayList<Place> results = Optimization.optimize(places, Unit.miles.radius, true);
     for(Place place : results)
       System.out.println(place.name);
 

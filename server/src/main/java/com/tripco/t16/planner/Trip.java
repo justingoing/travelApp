@@ -43,9 +43,9 @@ public class Trip {
     }
 
     if (options.getOptimizationLevel() >= 0.66) {
-      this.places = Optimization.twoOpt(places, options.getUnitRadius());
+      this.places = Optimization.optimize(places, options.getUnitRadius(), true);
     } else if (options.getOptimizationLevel() >= .33) {
-      this.places = Optimization.nearestNeighbor(places, options.getUnitRadius());
+      this.places = Optimization.optimize(places, options.getUnitRadius(), false);
     }
 
     this.coords = placesToCoords();
