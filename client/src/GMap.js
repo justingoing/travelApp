@@ -10,8 +10,6 @@ class GMap extends Component {
 
   // Create our path from the places array
   makePath(places) {
-    console.log("places ", places);
-
     let path = places.map(
         x => ({lat: Number(x.latitude), lng: Number(x.longitude)})
     );
@@ -60,6 +58,3 @@ const TripMap = compose(
 )(GMap);
 
 export default TripMap;
-
-
-
