@@ -22,9 +22,7 @@ class Trip extends Component {
    * state for this object.
    */
   fetchResponse(){
-    console.log(process.env.SERVICE_URL);
-    console.log("POSTing: " + this.props.trip);
-    return fetch(process.env.SERVICE_URL + '/plan', {
+    return fetch('http://' + location.host + '/plan', {
       method:"POST",
       body: JSON.stringify(this.props.trip)
     });
