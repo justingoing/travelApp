@@ -11,7 +11,7 @@ class Map extends Component {
 
   render() {
 
-    if (this.props.trip.options.map === "kml") {
+    if (this.props.trip.options.map === "kml" || !this.props.trip.options.map) {
       const places = this.props.trip.places;
       return (
           <GoogleMap trip={this.props.trip} />

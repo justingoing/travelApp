@@ -23,7 +23,6 @@ class GMap extends Component {
 
   // Create our markers
   makeMarkers(places) {
-    console.log("places ", places);
     let markers = places.map(
         x => <Marker position={{lat: Number(x.latitude), lng: Number(x.longitude)}}/>
     );

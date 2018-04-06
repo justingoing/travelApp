@@ -92,8 +92,7 @@ class Application extends Component {
       },
       places: [],
       distances: [],
-      map: ""
-      //"<svg width=\"1920\" height=\"20\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><g></g></svg>
+      map: "<svg width=\"1920\" height=\"20\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><g></g></svg>"
     };
 
     return t;
@@ -148,8 +147,14 @@ class Application extends Component {
   }
 
   updateTrip(tffi) {
+    console.log("hey", this.state.config);
+    console.log("defaulttrip, ", this.getDefaultTrip(this.state.config));
+
+
     let copyTFFI = Object.assign(this.getDefaultTrip(this.state.config), this.state.trip);
     Object.assign(copyTFFI, tffi);
+    console.log("copyTFFI, ", copyTFFI);
+
 
     let nextTFFI = {
       version: copyTFFI.version,
@@ -166,6 +171,8 @@ class Application extends Component {
       distances: copyTFFI.distances,
       map: copyTFFI.map
     };
+
+    console.log("nextTFFI, ", nextTFFI);
 
     nextTFFI = this.checkOptionsV1(nextTFFI, tffi);
 
