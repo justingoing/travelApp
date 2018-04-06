@@ -104,7 +104,9 @@ public class Optimization {
 
       //If we are two-opting, then run two-opt on this nearest neighbor.
       if (twoopt) {
-        tmpPlaces = twoOpt(tmpPlaces, radius);
+        int[] twoOptDist = new int[1];
+        tmpPlaces = twoOpt(tmpPlaces, radius, twoOptDist);
+        distance = twoOptDist[0];
       }
 
       // Check if the *entire trip* is shorter than our
@@ -167,7 +169,15 @@ public class Optimization {
    * @param radius Distance unit to use for calculations
    * @return A 2opted version of the trip
    */
-  private static ArrayList<Place> twoOpt(final ArrayList<Place> places, double radius) {
+  private static ArrayList<Place> twoOpt(ArrayList<Place> places, double radius, int[] retDist) {
+    if (places.size() <= 0) {
+      return places;
+    }
+
+    Place dupeStart = new Place(places.get(0));
+
+    places.add(dupeStart);
+
     //O(N) - Creates a place record array based on the nearest neighbor trip
     PlaceRecord[] placesArray = new PlaceRecord[places.size()];
     for (int i = 0; i < places.size(); i++) {
@@ -184,6 +194,8 @@ public class Optimization {
 
     // Keep track of our current trip
     ArrayList<Place> curRoute = places;
+
+
 
     boolean improved = true;
 
@@ -209,7 +221,12 @@ public class Optimization {
           }
         }
       }
+
+      retDist[0] = bestDistance;
     }
+
+    places.remove(dupeStart);
+    curRoute.remove(dupeStart);
 
     return curRoute;
   }
