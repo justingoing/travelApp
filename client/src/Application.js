@@ -129,7 +129,7 @@ class Application extends Component {
 
     //try to get configuration from server
     try {
-      configRequest = await fetch(process.env.SERVICE_URL + '/config', {
+      configRequest = await fetch('http://' + location.host + '/config', {
         method: "GET"
       });
     } catch (err) {
