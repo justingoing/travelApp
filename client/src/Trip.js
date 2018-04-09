@@ -98,9 +98,7 @@ class Trip extends Component {
   render(){
     return(
         <div id="trip" className="card">
-          <div className="card-header bg-dark text-white">
-            Trip
-          </div>
+          <div className="card-header bg-dark text-white">Trip</div>
           <div className="card-body">
             <p>Places currently in your trip</p>
             <br/>
