@@ -114,19 +114,19 @@ public class Find {
       pl.longitude = query.getString("airports.longitude");
 
       //Add additional place information
-      pl.extraAttrs.put("type", query.getString("type"));
-      pl.extraAttrs.put("elevation", query.getString("elevation"));
-      pl.extraAttrs.put("continent", query.getString("continent"));
-      pl.extraAttrs.put("iso_country", query.getString("iso_country"));
-      pl.extraAttrs.put("iso_region", query.getString("iso_region"));
-      pl.extraAttrs.put("municipality", query.getString("municipality"));
-      pl.extraAttrs.put("scheduled_service", query.getString("scheduled_service"));
-      pl.extraAttrs.put("gps_code", query.getString("gps_code"));
-      pl.extraAttrs.put("iata_code", query.getString("iata_code"));
-      pl.extraAttrs.put("local_code", query.getString("local_code"));
-      pl.extraAttrs.put("home_link", query.getString("home_link"));
-      pl.extraAttrs.put("wikipedia_link", query.getString("wikipedia_link"));
-      pl.extraAttrs.put("keywords", query.getString("keywords"));
+      pl.extraAttrs.put("type", query.getString("airports.type"));
+      pl.extraAttrs.put("elevation", query.getString("airports.elevation"));
+      pl.extraAttrs.put("continent", query.getString("continents.name"));
+      pl.extraAttrs.put("iso_country", query.getString("country.name"));
+      pl.extraAttrs.put("iso_region", query.getString("region.name"));
+      pl.extraAttrs.put("municipality", query.getString("airports.municipality"));
+      pl.extraAttrs.put("scheduled_service", query.getString("airports.scheduled_service"));
+      pl.extraAttrs.put("gps_code", query.getString("airports.gps_code"));
+      pl.extraAttrs.put("iata_code", query.getString("airports.iata_code"));
+      pl.extraAttrs.put("local_code", query.getString("airports.local_code"));
+      pl.extraAttrs.put("home_link", query.getString("airports.home_link"));
+      pl.extraAttrs.put("wikipedia_link", query.getString("airports.wikipedia_link"));
+      pl.extraAttrs.put("keywords", query.getString("airports.keywords"));
 
       tffiQuery.places.add(pl);
     }
