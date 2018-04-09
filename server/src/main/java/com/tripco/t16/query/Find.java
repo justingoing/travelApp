@@ -70,7 +70,8 @@ public class Find {
           + " OR airports.municipality LIKE " + query.query
           + " OR airports.keywords LIKE " + query.query
           + " OR country.name LIKE " + query.query
-          + " OR region.name LIKE " + query.query   + ";";
+          + " OR region.name LIKE " + query.query
+          + " AND airports.type = large_airport"   + ";"; //does nothing unless all the or clauses are in parentheses
 
       System.out.println(searchLookup);
 
@@ -151,23 +152,23 @@ public class Find {
     // print out the json representation of the query
     while (query.next()) {
       System.out.printf("\t{");
-      System.out.printf(" \"%s\",", query.getString("id"));
-      System.out.printf(" \"%s\",", query.getString("type"));
-      System.out.printf(" \"%s\",", query.getString("name"));
-      System.out.printf(" \"%s\",", query.getString("latitude"));
-      System.out.printf(" \"%s\",", query.getString("longitude"));
-      System.out.printf(" \"%s\",", query.getString("elevation"));
-      System.out.printf(" \"%s\",", query.getString("continent"));
-      System.out.printf(" \"%s\",", query.getString("iso_country"));
-      System.out.printf(" \"%s\",", query.getString("iso_region"));
-      System.out.printf(" \"%s\",", query.getString("municipality"));
-      System.out.printf(" \"%s\",", query.getString("scheduled_service"));
-      System.out.printf(" \"%s\",", query.getString("gps_code"));
-      System.out.printf(" \"%s\",", query.getString("iata_code"));
-      System.out.printf(" \"%s\",", query.getString("local_code"));
-      System.out.printf(" \"%s\",", query.getString("home_link"));
-      System.out.printf(" \"%s\",", query.getString("wikipedia_link"));
-      System.out.printf(" \"%s\"", query.getString("keywords"));
+      System.out.printf(" \"%s\",", query.getString("airports.id"));
+      System.out.printf(" \"%s\",", query.getString("airports.type"));
+      System.out.printf(" \"%s\",", query.getString("airports.name"));
+      System.out.printf(" \"%s\",", query.getString("airports.latitude"));
+      System.out.printf(" \"%s\",", query.getString("airports.longitude"));
+      System.out.printf(" \"%s\",", query.getString("airports.elevation"));
+      System.out.printf(" \"%s\",", query.getString("continents.name"));
+      System.out.printf(" \"%s\",", query.getString("country.name"));
+      System.out.printf(" \"%s\",", query.getString("region.name"));
+      System.out.printf(" \"%s\",", query.getString("airports.municipality"));
+      System.out.printf(" \"%s\",", query.getString("airports.scheduled_service"));
+      System.out.printf(" \"%s\",", query.getString("airports.gps_code"));
+      System.out.printf(" \"%s\",", query.getString("airports.iata_code"));
+      System.out.printf(" \"%s\",", query.getString("airports.local_code"));
+      System.out.printf(" \"%s\",", query.getString("airports.home_link"));
+      System.out.printf(" \"%s\",", query.getString("airports.wikipedia_link"));
+      System.out.printf(" \"%s\"", query.getString("airports.keywords"));
       System.out.printf("}");
 
       if (--results == 0) {
