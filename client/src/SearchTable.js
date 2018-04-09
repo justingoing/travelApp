@@ -38,13 +38,9 @@ class SearchTable extends Component {
   renderRow(key, ids, dests, lat, long, selected) {
      let addition = (
               <td className="align-right"><span>
-                <button style={{color: "#FFF", backgroundColor: "#0086ff"}}
+                <button className="btn btn-primary " style={{border: "#3E4551", backgroundColor: "#3E4551"}}
                         onClick={(e) => this.addToTrip(key)}
-                        className="pull-right btn btn-default"
-                        title="Add to your trip">
-
-                  +
-                </button>
+                        title="Add to your trip">+</button>
               </span></td>
           );
 
@@ -58,7 +54,9 @@ class SearchTable extends Component {
     this.table = this.createTable();
     return(
       <div id="SearchTable">
-        <button className="btn btn-primary " title="Add all search results to the trip" style={{border: "#0086ff", backgroundColor: "#0086ff"}} onClick={(e) => this.props.addAllToTrip()}>+ All</button>
+        <p>Click to add all search results to the trip</p>
+        <button className="btn btn-primary " title="Add all search results to the trip" style={{border: "#3E4551", backgroundColor: "#3E4551"}} onClick={(e) => this.props.addAllToTrip()}>+ All</button>
+      <br/>
         <table className="table table-responsive">
                   <thead>
                    <tr className="table-info">
