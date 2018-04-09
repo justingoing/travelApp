@@ -21,7 +21,9 @@ public class Find {
   private String dbId = "ikegentz";
   private String dbPass = "831204074";
 
-  private final static String lookup = "SELECT * FROM airports WHERE ";
+  private final static String lookup = "SELECT * "
+      + "FROM continents  INNER JOIN country ON continents.id = country.continent "
+      + " INNER JOIN region ON country.id = region.iso_country  INNER JOIN airports ON region.id = airports.iso_region  WHERE ";
 
   public final static String emptyQuery = "NO RESULTS FOR THIS QUERY";
   public final static String injectionMessage = "WARNING: POTENTIAL SQL INJECTION ATTACK!";
@@ -63,10 +65,12 @@ public class Find {
       Class.forName(driver);
 
       String queryString = query.query = "\'%" + query.query + "%\'";
-      String searchLookup = lookup + "id LIKE " + query.query
-          + " OR name LIKE " + query.query
-          + " OR municipality LIKE " + query.query
-          + " OR keywords LIKE " + query.query  + ";";
+      String searchLookup = lookup + "airports.id LIKE " + query.query
+          + " OR airports.name LIKE " + query.query
+          + " OR airports.municipality LIKE " + query.query
+          + " OR airports.keywords LIKE " + query.query
+          + " OR country.name LIKE " + query.query
+          + " OR region.name LIKE " + query.query   + ";";
 
       System.out.println(searchLookup);
 
@@ -104,10 +108,10 @@ public class Find {
     while (query.next()) {
       Place pl = new Place();
       //Add essential place information for planning
-      pl.id = query.getString("id");
-      pl.name = query.getString("name");
-      pl.latitude = query.getString("latitude");
-      pl.longitude = query.getString("longitude");
+      pl.id = query.getString("airports.id");
+      pl.name = query.getString("airports.name");
+      pl.latitude = query.getString("airports.latitude");
+      pl.longitude = query.getString("airports.longitude");
 
       //Add additional place information
       pl.extraAttrs.put("type", query.getString("type"));
