@@ -185,7 +185,7 @@ public class Find {
       //query.places = new ArrayList<>();
       System.out.println(Find.injectionMessage);
       err.code = "400";
-      err.message = "Use only Letters and numbers in search bar.";
+      err.message = "Unsuccessful search. Use only Letters and numbers in search bar.";
       err.debug = "Possible SQL injection. in performQuery.";
       return err;
     }else{

@@ -46,10 +46,8 @@ public class DBSearcher {
     public String getFind() {
         Gson gson = new Gson();
         if(this.err.code == "400"){
-            System.out.println("printing error");
             return gson.toJson(err);
         }else{
-            System.out.println("printing query");
             return gson.toJson(query);
         }
     }
