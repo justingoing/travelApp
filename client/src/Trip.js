@@ -98,10 +98,11 @@ class Trip extends Component {
   render(){
     return(
         <div id="trip" className="card">
-          <div className="card-header bg-dark text-white">
-            Trip
-          </div>
+          <div className="card-header bg-dark text-white">Trip</div>
           <div className="card-body">
+            <p>Places currently in your trip</p>
+            <br/>
+            <Itinerary trip={this.props.trip} setNewStart={this.setNewStart}/>
             <p>Give your trip a title before planning or saving.</p>
             <div className="input-group" role="group">
               <span className="input-group-btn">
@@ -115,8 +116,7 @@ class Trip extends Component {
             <div>
               <button className="btn btn-primary " style={{border: "#3E4551", backgroundColor: "#3E4551"}} onClick={this.reverseTrip} type="button">Reverse Trip</button>
             </div>
-              <Map trip={this.props.trip} />
-            <Itinerary trip={this.props.trip} setNewStart={this.setNewStart}/>
+            <Map trip={this.props.trip} />
           </div>
         </div>
     )
