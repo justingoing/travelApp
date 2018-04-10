@@ -58,6 +58,8 @@ Date | Tasks done  | Tasks in progress | Impediments
 03/27 | 2 | #217, #218 | none
 03/28 | 4 | #219, #216 | none
 04/04 | 13 | #237, #245, #114 | none
+04/08 | 21 | #246, #241, #261, #160, #114 | none
+
 
 
 ## Review

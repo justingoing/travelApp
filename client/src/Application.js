@@ -252,26 +252,30 @@ class Application extends Component {
     }
 
     return (
-        <div id="application" className="container">
+        <div id="application">
           <div className="col-12">
             <Instructions number={this.props.number} name={this.props.name}/>
-            <Destinations trip={this.state.trip}
-                          updateTrip={this.updateTrip}
-                          query={this.state.query}
-                          updateQuery={this.updateQuery}
-                          checkSQL={this.checkSQL}
-                          addToTrip={this.addToTrip}
-                          isInTrip={this.isInTrip}
-                          addAllToTrip={this.addAllToTrip}
-                          queryPlaces={this.queryPlaces}
-            />
             <Options options={this.state.trip.options}
                      updateOptions={this.updateOptions}/>
-          </div>
-          <div className="col-12">
-            <Trip trip={this.state.trip} updateTrip={this.updateTrip}/>
-          </div>
 
+          </div>
+          <div className="row">
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <Destinations trip={this.state.trip}
+                            updateTrip={this.updateTrip}
+                            query={this.state.query}
+                            updateQuery={this.updateQuery}
+                            checkSQL={this.checkSQL}
+                            addToTrip={this.addToTrip}
+                            isInTrip={this.isInTrip}
+                            addAllToTrip={this.addAllToTrip}
+                            queryPlaces={this.queryPlaces}
+              />
+            </div>
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <Trip trip={this.state.trip} updateTrip={this.updateTrip}/>
+            </div>
+          </div>
         </div>
     )
   }
