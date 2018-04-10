@@ -1,7 +1,7 @@
 package com.tripco.t16.planner;
 
-import java.io.*;
 import com.tripco.t16.tffi.Error;
+import java.io.*;
 import java.util.ArrayList;
 import com.tripco.t16.calc.DistanceCalculator;
 import com.tripco.t16.calc.Optimization;
