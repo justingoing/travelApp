@@ -65,13 +65,15 @@ public class Find {
       Class.forName(driver);
 
       String queryString = query.query = "\'%" + query.query + "%\'";
-      String searchLookup = lookup + "airports.id LIKE " + query.query
+      String searchLookup = lookup + "(airports.id LIKE " + query.query
           + " OR airports.name LIKE " + query.query
           + " OR airports.municipality LIKE " + query.query
           + " OR airports.keywords LIKE " + query.query
           + " OR country.name LIKE " + query.query
           + " OR region.name LIKE " + query.query
-          + " AND airports.type = large_airport"   + ";"; //does nothing unless all the or clauses are in parentheses
+              //loop through array list of filters... adding to the string with attribute = values... is json converted to arraylist??
+              //config tffi should pull the available filters to the client...
+          + ") " + ";";  //AND airports.type = 'large_airport'"  //does nothing unless all the or clauses are in parentheses
 
       System.out.println(searchLookup);
 
