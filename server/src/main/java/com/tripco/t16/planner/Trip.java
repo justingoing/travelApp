@@ -1,11 +1,11 @@
 package com.tripco.t16.planner;
 
 import java.io.*;
+import com.tripco.t16.tffi.Error;
 import java.util.ArrayList;
-
 import com.tripco.t16.calc.DistanceCalculator;
 import com.tripco.t16.calc.Optimization;
-import com.tripco.t16.tffi.Error;
+
 
 /**
  * The Trip class supports TFFI so it can easily be converted to/from Json by Gson.

@@ -19,6 +19,7 @@ import spark.Request;
 public class DBSearcher {
     private Query query;
     private Error err;
+
     /**
      * Construct a Query object to handle TFFI transfer.
      * @param request The HTTP request specifying what we should do
