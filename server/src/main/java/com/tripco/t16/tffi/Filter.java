@@ -18,6 +18,17 @@ public class Filter {
    */
   public static ArrayList<Filter> getFilters() {
     ArrayList<Filter> filters = new ArrayList<>();
+
+    //testing Find.java...
+    ArrayList<String> vals = new ArrayList<>();
+    vals.add("large_airport");
+    vals.add("heliport");
+    String att = "airports.type";
+    Filter f = new Filter();
+    f.attribute = att;
+    f.values = vals;
+    filters.add(f);
+
     return filters;
   }
 }

@@ -1,6 +1,8 @@
 package com.tripco.t16.query;
 
 import com.tripco.t16.planner.Place;
+import com.tripco.t16.tffi.Filter;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -64,6 +66,9 @@ public class Find {
     try {
       Class.forName(driver);
 
+      //hardcoded example... but this works!
+      query.filters = Filter.getFilters();
+
       String queryString = query.query = "\'%" + query.query + "%\'";
       String searchLookup = lookup + "(airports.id LIKE " + query.query
           + " OR airports.name LIKE " + query.query
@@ -71,9 +76,18 @@ public class Find {
           + " OR airports.keywords LIKE " + query.query
           + " OR country.name LIKE " + query.query
           + " OR region.name LIKE " + query.query
+          + ") ";
               //loop through array list of filters... adding to the string with attribute = values... is json converted to arraylist??
               //config tffi should pull the available filters to the client...
-          + ") " + ";";  //AND airports.type = 'large_airport'"  //does nothing unless all the or clauses are in parentheses
+          System.out.println("Filters size is " + query.filters.size());
+          for(int i = 0; i < query.filters.size(); i++) {
+              searchLookup += "AND (" + query.filters.get(i).attribute + " = '" + query.filters.get(i).values.get(0) + "'";
+              for(int j = 1; j < query.filters.get(i).values.size(); j++) {
+                  searchLookup += " OR " + query.filters.get(i).attribute + " = '" + query.filters.get(i).values.get(j) + "'";
+              }
+              searchLookup += ")";
+          }
+          //+ ";";  //AND airports.type = 'large_airport'"  //does nothing unless all the or clauses are in parentheses
 
       System.out.println(searchLookup);
 
