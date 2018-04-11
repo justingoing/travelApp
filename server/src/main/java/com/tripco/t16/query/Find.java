@@ -31,6 +31,7 @@ public class Find {
   public final static String injectionMessage = "WARNING: POTENTIAL SQL INJECTION ATTACK!";
 
   private static boolean isInputGood(String sanitize) {
+    System.out.println("String sanatize is " + sanitize);
     return sanitize.matches("[a-zA-Z0-9]+");
   }
 
@@ -66,9 +67,6 @@ public class Find {
     try {
       Class.forName(driver);
 
-      //hardcoded example... but this works!
-      query.filters = Filter.getFilters();
-
       String queryString = query.query = "\'%" + query.query + "%\'";
       String searchLookup = lookup + "(airports.id LIKE " + query.query
           + " OR airports.name LIKE " + query.query
@@ -81,9 +79,11 @@ public class Find {
               //config tffi should pull the available filters to the client...
           System.out.println("Filters size is " + query.filters.size());
           for(int i = 0; i < query.filters.size(); i++) {
-              searchLookup += "AND (" + query.filters.get(i).attribute + " = '" + query.filters.get(i).values.get(0) + "'";
+              searchLookup += "AND (" + query.filters.get(i).attribute + " = '"
+                  + query.filters.get(i).values.get(0) + "'";
               for(int j = 1; j < query.filters.get(i).values.size(); j++) {
-                  searchLookup += " OR " + query.filters.get(i).attribute + " = '" + query.filters.get(i).values.get(j) + "'";
+                  searchLookup += " OR " + query.filters.get(i).attribute + " = '"
+                      + query.filters.get(i).values.get(j) + "'";
               }
               searchLookup += ")";
           }

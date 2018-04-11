@@ -11,24 +11,33 @@ public class Filter {
   public String attribute;
   public ArrayList<String> values;
 
+  public Filter(String attribute, ArrayList<String> values) {
+    this.attribute = attribute;
+    this.values = values;
+  }
+
   /**
    * Returns a list of filters that we support.
    *
    * @return - ArrayList of filters we support.
    */
   public static ArrayList<Filter> getFilters() {
-    ArrayList<Filter> filters = new ArrayList<>();
+    return filters;
+  }
+
+  public static final ArrayList<Filter> filters;
+
+  static {
+    ArrayList<Filter> tmp = new ArrayList<>();
 
     //testing Find.java...
     ArrayList<String> vals = new ArrayList<>();
     vals.add("large_airport");
+    vals.add("medium_airport");
     vals.add("heliport");
     String att = "airports.type";
-    Filter f = new Filter();
-    f.attribute = att;
-    f.values = vals;
-    filters.add(f);
+    tmp.add(new Filter(att, vals));
 
-    return filters;
+    filters = new ArrayList<>();
   }
 }
