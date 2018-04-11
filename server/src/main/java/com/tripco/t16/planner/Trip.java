@@ -105,8 +105,6 @@ public class Trip {
         Coords cur = this.getMappedCoords(this.coords.get(i).x, this.coords.get(i).y);
         Coords nex = this.getMappedCoords(this.coords.get(i + 1).x, this.coords.get(i + 1).y);
 
-        System.out.println(cur + ", " + nex);
-
         // wrap around 'edge' of the earth
         if (Math.abs(nex.x - cur.x) > (Trip.SVG_MAPPED_X / 2)) {
           if (nex.x > cur.x) {
