@@ -25,7 +25,8 @@ public class Find {
 
   private final static String lookup = "SELECT * "
       + "FROM continents  INNER JOIN country ON continents.id = country.continent "
-      + " INNER JOIN region ON country.id = region.iso_country  INNER JOIN airports ON region.id = airports.iso_region  WHERE ";
+      + " INNER JOIN region ON country.id = region.iso_country"
+      + "  INNER JOIN airports ON region.id = airports.iso_region  WHERE ";
 
   public final static String emptyQuery = "NO RESULTS FOR THIS QUERY";
   public final static String injectionMessage = "WARNING: POTENTIAL SQL INJECTION ATTACK!";
@@ -75,8 +76,7 @@ public class Find {
           + " OR country.name LIKE " + query.query
           + " OR region.name LIKE " + query.query
           + ") ";
-              //loop through array list of filters... adding to the string with attribute = values... is json converted to arraylist??
-              //config tffi should pull the available filters to the client...
+              //loop through array list of filters
           System.out.println("Filters size is " + query.filters.size());
           for(int i = 0; i < query.filters.size(); i++) {
               searchLookup += "AND (" + query.filters.get(i).attribute + " = '"
@@ -87,7 +87,6 @@ public class Find {
               }
               searchLookup += ")";
           }
-          //+ ";";  //AND airports.type = 'large_airport'"  //does nothing unless all the or clauses are in parentheses
 
       System.out.println(searchLookup);
 

@@ -28,14 +28,19 @@ public class Filter {
   public static final ArrayList<Filter> filters;
 
   static {
-    ArrayList<Filter> tmp = new ArrayList<>();
-
     //testing Find.java...
     ArrayList<String> vals = new ArrayList<>();
-    vals.add("large_airport");
-    vals.add("medium_airport");
     vals.add("heliport");
+    vals.add("small_airport");
+    vals.add("seaplane_base");
+    vals.add("closed");
+    vals.add("balloonport");
+    vals.add("medium_airport");
+    vals.add("large_airport");
+
     String att = "airports.type";
+
+    ArrayList<Filter> tmp = new ArrayList<>();
     tmp.add(new Filter(att, vals));
 
     filters = new ArrayList<>();
