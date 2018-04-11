@@ -110,15 +110,13 @@ public class Trip {
         // wrap around 'edge' of the earth
         if (Math.abs(nex.x - cur.x) > (Trip.SVG_MAPPED_X / 2)) {
           if (nex.x > cur.x) {
-            Coords curEnd = this.getMappedCoords(this.coords.get(i + 1).x - Trip.SVG_MAPPED_X,
-                this.coords.get(i + 1).y);
-            Coords nexEnd = this
-                .getMappedCoords(this.coords.get(i).x + Trip.SVG_MAPPED_X, this.coords.get(i).y);
+            Coords curEnd = new Coords(nex.x - Trip.SVG_MAPPED_X, nex.y);
+            Coords nexEnd = new Coords(cur.x + Trip.SVG_MAPPED_X, cur.y);
             addSvgLeg(svg, cur, curEnd, nex, nexEnd);
           }
           else {
-            Coords curEnd = this.getMappedCoords(this.coords.get(i + 1).x + Trip.SVG_MAPPED_X, this.coords.get(i + 1).y);
-            Coords nexEnd = this.getMappedCoords(this.coords.get(i).x - Trip.SVG_MAPPED_X, this.coords.get(i).y);
+            Coords curEnd = new Coords(nex.x + Trip.SVG_MAPPED_X, nex.y);
+            Coords nexEnd = new Coords(cur.x - Trip.SVG_MAPPED_X, cur.y);
             addSvgLeg(svg, cur, curEnd, nex, nexEnd);
           }
         }
@@ -160,14 +158,13 @@ public class Trip {
    * @param end2 The 'end ' of the end coord (for wrapping off edge)
    */
   private void addSvgLeg(StringBuilder svg, Coords start1, Coords start2, Coords end1, Coords end2) {
-    svg.append("<line stroke=\"#1E4D2B\" y2=\"").append(end2.y).append("\" x2=\"").append(end2.x)
-        .append("\" y1=\"").append(end1.y).append("\" x1=\"").append(end1.x)
+    svg.append("<line stroke=\"#1E4D2B\" y2=\"").append(start1.y).append("\" x2=\"").append(start1.x)
+        .append("\" y1=\"").append(start2.y).append("\" x1=\"").append(start2.x)
         .append("\" stroke-width=\"5\" fill=\"none\"/>");
 
-    svg.append("<line stroke=\"#1E4D2B\" y2=\"").append(start2.y).append("\" x2=\"").append(start2.x)
-        .append("\" y1=\"").append(start1.y).append("\" x1=\"").append(start1.x)
+    svg.append("<line stroke=\"#1E4D2B\" y2=\"").append(end1.y).append("\" x2=\"").append(end1.x)
+        .append("\" y1=\"").append(end2.y).append("\" x1=\"").append(end2.x)
         .append("\" stroke-width=\"5\" fill=\"none\"/>");
-
   }
 
   private void addSvgCircle(StringBuilder svg, Coords pos) {
