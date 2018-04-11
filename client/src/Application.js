@@ -13,6 +13,7 @@ class Application extends Component {
 
     this.updateTrip = this.updateTrip.bind(this);
     this.updateOptions = this.updateOptions.bind(this);
+    this.updateMapType = this.updateMapType.bind(this);
     this.updateQuery = this.updateQuery.bind(this);
     this.checkSQL = this.checkSQL.bind(this);
     this.addToTrip = this.addToTrip.bind(this);
@@ -221,6 +222,13 @@ class Application extends Component {
     }
   }
 
+  updateMapType(mapType) {
+    if(mapType == "kml" && this.state.config.maps.includes("kml"))
+      this.state.trip.options.map = "kml";
+    else
+      this.state.trip.options.map = "svg";
+  }
+
   isInTrip(id) {
     for (let i = 0; i < this.state.trip.places.length; ++i) {
       if (this.state.trip.places[i].id == id) {
@@ -259,7 +267,9 @@ class Application extends Component {
             </div>
             <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
               <Options options={this.state.trip.options}
-                       updateOptions={this.updateOptions}/>
+                       updateOptions={this.updateOptions}
+                       updateMapType={this.updateMapType}
+              />
             </div>
           </div>
           <div className="row">
@@ -270,7 +280,7 @@ class Application extends Component {
                             updateQuery={this.updateQuery}
                             checkSQL={this.checkSQL}
                             addToTrip={this.addToTrip}
-                            isInTrip={this.isInTrip}
+                            isInTrip={this.isInTrip}calcStyles
                             addAllToTrip={this.addAllToTrip}
                             queryPlaces={this.queryPlaces}
               />
