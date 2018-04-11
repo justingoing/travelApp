@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import SearchTable from './SearchTable';
+//import Checkbox from './Checkbox';
 
 /* Destinations reside in the parent object so they may be shared
  * with the Trip object.
@@ -8,6 +9,7 @@ import SearchTable from './SearchTable';
  * Finds destinations in a database.
  * Displays the current number of destinations
  */
+
 class Destinations extends Component {
   constructor(props) {
     super(props);
@@ -33,6 +35,13 @@ class Destinations extends Component {
       });
     }
 
+    makeChecks(){
+      var f = this.props.config.filters;
+      var vals = f["0"].values;
+      for( i in vals.length)
+        console.log(vals[i]);
+    }
+
     async sendSearch(){
         //get the search value, put it in query field, and send it
         //this.props.updateQuery(document.getElementById("mySearch").value);
@@ -50,6 +59,12 @@ class Destinations extends Component {
 
   render() {
     const count = this.props.trip.places.length;
+    var f = this.props.config.filters;
+    console.log("FILTERS");
+    console.log(f);
+    console.log(f["0"].values);
+    var vals = f["0"].values;
+    console.log(vals[0]);
     return (
         <div id="destinations" className="card">
           <div className="card-header text-white" style={{backgroundColor:"#1E4D2B"}}>
@@ -57,6 +72,11 @@ class Destinations extends Component {
           </div>
           <div className="card-body">
             <p>Search destinations to add</p>
+            <div className="filters">
+              Airport Type:
+              <br/>
+                {vals[0]} {vals[1]}
+            </div>
             <div className="input-group" role="group">
               <input type="text" className="form-control" id="mySearch" placeholder="Search for a place..."/>
               <button className="btn btn-primary " style={{border: "#1E4D2B", backgroundColor: "#1E4D2B"}} onClick={this.sendSearch} type="button">Search</button>

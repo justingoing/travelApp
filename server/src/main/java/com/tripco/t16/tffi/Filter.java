@@ -16,15 +16,6 @@ public class Filter {
     this.values = values;
   }
 
-  /**
-   * Returns a list of filters that we support.
-   *
-   * @return - ArrayList of filters we support.
-   */
-  public static ArrayList<Filter> getFilters() {
-    return filters;
-  }
-
   public static final ArrayList<Filter> filters;
 
   static {
@@ -43,6 +34,18 @@ public class Filter {
     ArrayList<Filter> tmp = new ArrayList<>();
     tmp.add(new Filter(att, vals));
 
-    filters = new ArrayList<>();
+    filters = tmp;
+
   }
+
+  /**
+   * Returns a list of filters that we support.
+   *
+   * @return - ArrayList of filters we support.
+   */
+  public static ArrayList<Filter> getFilters() {
+    return filters;
+  }
+
+
 }
