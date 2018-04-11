@@ -33,7 +33,7 @@ public class TestTrip {
 
   @Test
   public void testTrue() {
-    // assertTrue checks if a statement is true
+    trip.plan();
     assertTrue(true == true);
   }
 
