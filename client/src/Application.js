@@ -253,11 +253,14 @@ class Application extends Component {
 
     return (
         <div id="application">
-          <div className="col-12">
-            <Instructions number={this.props.number} name={this.props.name}/>
-            <Options options={this.state.trip.options}
-                     updateOptions={this.updateOptions}/>
-
+          <div className="row">
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <Instructions number={this.props.number} name={this.props.name}/>
+            </div>
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <Options options={this.state.trip.options}
+                       updateOptions={this.updateOptions}/>
+            </div>
           </div>
           <div className="row">
             <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">

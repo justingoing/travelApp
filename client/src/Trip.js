@@ -101,24 +101,25 @@ class Trip extends Component {
   render(){
     return(
         <div id="trip" className="card">
-          <div className="card-header bg-dark text-white">Trip</div>
+          <div className="card-header text-white"style={{border: "#1E4D2B", backgroundColor: "#1E4D2B"}}>Trip</div>
           <div className="card-body">
+            <div className="input-group" role="group">
+              <span className="input-group-btn">
+              <button className="btn btn-primary " style={{border: "#1E4D2B", backgroundColor: "#1E4D2B"}} onClick={this.plan} type="button">Plan</button>
+            </span>
+              <input type="text" className="form-control" placeholder=""/>
+              <span className="input-group-btn">
+              <button className="btn btn-primary " style={{border: "#1E4D2B", backgroundColor: "#1E4D2B"}} onClick={this.saveTFFI} type="button">Save</button>
+            </span>
+            </div>
+            <div>
+              <button className="btn btn-primary " style={{border: "#1E4D2B", backgroundColor: "#1E4D2B"}} onClick={this.reverseTrip} type="button">Reverse Trip</button>
+            </div>
+          <br/>
             <p>Places currently in your trip</p>
             <br/>
             <Itinerary trip={this.props.trip} setNewStart={this.setNewStart}/>
             <p>Give your trip a title before planning or saving.</p>
-            <div className="input-group" role="group">
-              <span className="input-group-btn">
-              <button className="btn btn-primary " style={{border: "#3E4551", backgroundColor: "#3E4551"}} onClick={this.plan} type="button">Plan</button>
-            </span>
-              <input type="text" className="form-control" placeholder=""/>
-              <span className="input-group-btn">
-              <button className="btn btn-primary " style={{border: "#3E4551", backgroundColor: "#3E4551"}} onClick={this.saveTFFI} type="button">Save</button>
-            </span>
-            </div>
-            <div>
-              <button className="btn btn-primary " style={{border: "#3E4551", backgroundColor: "#3E4551"}} onClick={this.reverseTrip} type="button">Reverse Trip</button>
-            </div>
             <Map trip={this.props.trip} />
           </div>
         </div>

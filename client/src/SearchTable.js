@@ -55,23 +55,23 @@ class SearchTable extends Component {
     return(
       <div id="SearchTable">
         <p>Click to add all search results to the trip</p>
-        <button className="btn btn-primary " title="Add all search results to the trip" style={{border: "#3E4551", backgroundColor: "#3E4551"}} onClick={(e) => this.props.addAllToTrip()}>+ All</button>
+        <button className="btn btn-primary " title="Add all search results to the trip" style={{border: "#1E4D2B", backgroundColor: "#1E4D2B"}} onClick={(e) => this.props.addAllToTrip()}>+ All</button>
       <br/>
-        <table className="table table-responsive">
-                  <thead>
-                   <tr className="table-info">
-                    <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Id</th>
-                    <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Name</th>
-                    <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Latitude</th>
-                    <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Longitude</th>
-                    <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Options</th>
-                   </tr>
-                  </thead>
-                  <tbody>
-                   {this.table.tableData}
-                  </tbody>
-                </table>
-          </div>
+        <table responsive hover size="sm" style={{height: "50%", overflow: "scroll", display: "inline-block"}} className="table table-responsive">
+          <thead>
+          <tr className="table-info">
+            <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Id</th>
+            <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Name</th>
+            <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Latitude</th>
+            <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Longitude</th>
+            <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Options</th>
+          </tr>
+          </thead>
+          <tbody>
+          {this.table.tableData}
+          </tbody>
+        </table>
+      </div>
     )
   }
 }

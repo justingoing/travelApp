@@ -13,7 +13,7 @@ class Instructions extends Component {
   render() {
     return (
       <div id="Instructions" className="card">
-        <div className="card-header bg-dark text-white">
+        <div className="card-header text-white" style={{backgroundColor:"#1E4D2B"}}>
           Instructions
         </div>
         <div className="card-body">

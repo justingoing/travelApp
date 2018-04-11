@@ -54,14 +54,14 @@ class Destinations extends Component {
     const count = this.props.trip.places.length;
     return (
         <div id="destinations" className="card">
-          <div className="card-header bg-dark text-white">
+          <div className="card-header text-white" style={{backgroundColor:"#1E4D2B"}}>
             Destinations
           </div>
           <div className="card-body">
             <p>Search destinations to add</p>
             <div className="input-group" role="group">
               <input type="text" className="form-control" id="mySearch" placeholder="Search for a place..."/>
-              <button className="btn btn-primary " style={{border: "#3E4551", backgroundColor: "#3E4551"}} onClick={this.sendSearch} type="button">Search</button>
+              <button className="btn btn-primary " style={{border: "#1E4D2B", backgroundColor: "#1E4D2B"}} onClick={this.sendSearch} type="button">Search</button>
             </div>
             <br/>
             <SearchTable destinations={this.props.query} addToTrip={this.props.addToTrip} isInTrip={this.props.isInTrip} queryPlaces={this.props.queryPlaces} addAllToTrip={this.props.addAllToTrip}/>
