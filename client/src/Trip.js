@@ -34,10 +34,7 @@ class Trip extends Component {
     try {
       let serverResponse = await this.fetchResponse();
       let tffi = await serverResponse.json();
-      console.log(tffi);
-
       if(tffi.code == "500"){
-        console.log(tffi);
         alert(tffi.message);
       }else{
         this.props.updateTrip(tffi);

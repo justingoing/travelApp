@@ -41,7 +41,6 @@ class Destinations extends Component {
             let searchResponse = await this.searchResponse();
             let searchTFFI = await searchResponse.json();
             if(searchTFFI.code == "400"){
-              console.log(searchTFFI);
               alert(searchTFFI.message);
             }else{
               this.props.updateQuery(searchTFFI);
