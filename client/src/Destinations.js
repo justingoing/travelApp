@@ -35,11 +35,10 @@ class Destinations extends Component {
       });
     }
 
-    makeChecks(){
-      var f = this.props.config.filters;
-      var vals = f["0"].values;
-      for( i in vals.length)
-        console.log(vals[i]);
+    check(){
+      //var vals = this.props.config.filters["0"].values;
+      //console.log(vals[num] + " checked");
+      console.log("check clicked")
     }
 
     async sendSearch(){
@@ -65,6 +64,8 @@ class Destinations extends Component {
     console.log(f["0"].values);
     var vals = f["0"].values;
     console.log(vals[0]);
+    console.log("Query filters " + this.props.query.filters.length);
+
     return (
         <div id="destinations" className="card">
           <div className="card-header text-white" style={{backgroundColor:"#1E4D2B"}}>
@@ -75,7 +76,26 @@ class Destinations extends Component {
             <div className="filters">
               Airport Type:
               <br/>
-                {vals[0]} {vals[1]}
+                <input type="checkbox" id="0" onClick={this.check}/>
+                 {vals[0]}
+                &emsp;
+                <input type="checkbox" id="1" onClick={this.check}/>
+                 {vals[1]}
+                &emsp;
+                <input type="checkbox" id="2" onClick={this.check}/>
+                 {vals[2]}
+                &emsp;
+                <input type="checkbox" id="3" onClick={this.check}/>
+                 {vals[3]}
+                &emsp;
+                <input type="checkbox" id="4" onClick={this.check}/>
+                 {vals[4]}
+                &emsp;
+                <input type="checkbox" id="5" onClick={this.check}/>
+                 {vals[5]}
+                &emsp;
+                <input type="checkbox" id="6" onClick={this.check}/>
+                 {vals[6]}
             </div>
             <div className="input-group" role="group">
               <input type="text" className="form-control" id="mySearch" placeholder="Search for a place..."/>
