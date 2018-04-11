@@ -1,10 +1,11 @@
 package com.tripco.t16.planner;
 
+import com.tripco.t16.tffi.Error;
 import java.io.*;
 import java.util.ArrayList;
-
 import com.tripco.t16.calc.DistanceCalculator;
 import com.tripco.t16.calc.Optimization;
+
 
 /**
  * The Trip class supports TFFI so it can easily be converted to/from Json by Gson.
@@ -30,12 +31,18 @@ public class Trip {
    * The top level method that does planning. At this point it just adds the map and distances for
    * the places in order. It might need to reorder the places in the future.
    */
-  public void plan() {
+  public Error plan() {
+    Error err = new Error();
     for (int i = this.places.size() - 1; i >= 0; --i) {
       try {
         if (!this.validateLatLong(this.places.get(i).latitude) ||
             !this.validateLatLong(this.places.get(i).longitude)) {
           this.places.remove(i);
+        }else{
+          err.code = "500";
+          err.message = "Server failed to validate LatLong";
+          err.debug = "Trip.java-plan-validateLatLong.";
+          return err;
         }
       } catch (NullPointerException e) {
         this.places.remove(i);
@@ -51,6 +58,7 @@ public class Trip {
     this.coords = placesToCoords();
     this.distances = legDistances();
     this.map = svg();
+    return err;
   }
 
   /**
