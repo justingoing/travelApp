@@ -13,6 +13,7 @@ class Application extends Component {
 
     this.updateTrip = this.updateTrip.bind(this);
     this.updateOptions = this.updateOptions.bind(this);
+    this.updateMapType = this.updateMapType.bind(this);
     this.updateQuery = this.updateQuery.bind(this);
     this.checkSQL = this.checkSQL.bind(this);
     this.addToTrip = this.addToTrip.bind(this);
@@ -133,7 +134,7 @@ class Application extends Component {
         method: "GET"
       });
     } catch (err) {
-      console.log("No configuration response from server, assuming sever version 1.0");
+      console.log("No configuration response from server, assuming server version 1.0");
       console.error(err);
       configRequest = this.getDefaultConfig();
       configRequest.version = 1;
@@ -143,6 +144,7 @@ class Application extends Component {
 
     let ret = await configRequest.json();
     console.log("Server version " + ret.version);
+    console.log("Filters " + ret.filters.length);
     return ret;
   }
 
@@ -221,6 +223,13 @@ class Application extends Component {
     }
   }
 
+  updateMapType(mapType) {
+    if(mapType == "kml" && this.state.config.maps.includes("kml"))
+      this.state.trip.options.map = "kml";
+    else
+      this.state.trip.options.map = "svg";
+  }
+
   isInTrip(id) {
     for (let i = 0; i < this.state.trip.places.length; ++i) {
       if (this.state.trip.places[i].id == id) {
@@ -252,26 +261,36 @@ class Application extends Component {
     }
 
     return (
-        <div id="application" className="container">
-          <div className="col-12">
-            <Instructions number={this.props.number} name={this.props.name}/>
-            <Destinations trip={this.state.trip}
-                          updateTrip={this.updateTrip}
-                          query={this.state.query}
-                          updateQuery={this.updateQuery}
-                          checkSQL={this.checkSQL}
-                          addToTrip={this.addToTrip}
-                          isInTrip={this.isInTrip}
-                          addAllToTrip={this.addAllToTrip}
-                          queryPlaces={this.queryPlaces}
-            />
-            <Options options={this.state.trip.options}
-                     updateOptions={this.updateOptions}/>
+        <div id="application">
+          <div className="row">
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <Instructions number={this.props.number} name={this.props.name}/>
+            </div>
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <Options options={this.state.trip.options}
+                       updateOptions={this.updateOptions}
+                       updateMapType={this.updateMapType}
+              />
+            </div>
           </div>
-          <div className="col-12">
-            <Trip trip={this.state.trip} updateTrip={this.updateTrip}/>
+          <div className="row">
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <Destinations trip={this.state.trip}
+                            updateTrip={this.updateTrip}
+                            query={this.state.query}
+                            config={this.state.config}
+                            updateQuery={this.updateQuery}
+                            checkSQL={this.checkSQL}
+                            addToTrip={this.addToTrip}
+                            isInTrip={this.isInTrip}calcStyles
+                            addAllToTrip={this.addAllToTrip}
+                            queryPlaces={this.queryPlaces}
+              />
+            </div>
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <Trip trip={this.state.trip} updateTrip={this.updateTrip}/>
+            </div>
           </div>
-
         </div>
     )
   }

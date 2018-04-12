@@ -38,13 +38,9 @@ class SearchTable extends Component {
   renderRow(key, ids, dests, lat, long, selected) {
      let addition = (
               <td className="align-right"><span>
-                <button style={{color: "#FFF", backgroundColor: "#0086ff"}}
+                <button className="btn btn-primary " style={{border: "#3E4551", backgroundColor: "#3E4551"}}
                         onClick={(e) => this.addToTrip(key)}
-                        className="pull-right btn btn-default"
-                        title="Add to your trip">
-
-                  +
-                </button>
+                        title="Add to your trip">+</button>
               </span></td>
           );
 
@@ -58,22 +54,24 @@ class SearchTable extends Component {
     this.table = this.createTable();
     return(
       <div id="SearchTable">
-        <button className="btn btn-primary " title="Add all search results to the trip" style={{border: "#0086ff", backgroundColor: "#0086ff"}} onClick={(e) => this.props.addAllToTrip()}>+ All</button>
-        <table className="table table-responsive">
-                  <thead>
-                   <tr className="table-info">
-                    <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Id</th>
-                    <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Name</th>
-                    <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Latitude</th>
-                    <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Longitude</th>
-                    <th className="align-middle" style={{color: "#FFF", backgroundColor: "#3E4551"}}>Options</th>
-                   </tr>
-                  </thead>
-                  <tbody>
-                   {this.table.tableData}
-                  </tbody>
-                </table>
-          </div>
+        <p>Click to add all search results to the trip</p>
+        <button className="btn btn-primary " title="Add all search results to the trip" style={{border: "#1E4D2B", backgroundColor: "#1E4D2B"}} onClick={(e) => this.props.addAllToTrip()}>+ All</button>
+      <br/>
+        <table responsive hover size="sm" style={{height: "50%", overflow: "scroll", display: "inline-block"}} className="table table-responsive">
+          <thead>
+          <tr className="table-info">
+            <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>ID</th>
+            <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Name</th>
+            <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Latitude</th>
+            <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Longitude</th>
+            <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Options</th>
+          </tr>
+          </thead>
+          <tbody>
+          {this.table.tableData}
+          </tbody>
+        </table>
+      </div>
     )
   }
 }

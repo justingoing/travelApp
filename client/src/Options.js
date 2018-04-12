@@ -9,10 +9,14 @@ class Options extends Component {
   constructor(props) {
     super(props);
     this.changeOption = this.changeOption.bind(this);
+    this.changeMaps = this.changeMaps.bind(this);
+
 
     this.state = {
       buttonKMStyle: "btn btn-outline-dark ",
-      buttonMIStyle: "btn btn-outline-dark active"
+      buttonMIStyle: "btn btn-outline-dark active",
+      buttonSVGStyle: "btn btn-outline-dark ",
+      buttonKMLStyle: "btn btn-outline-dark active"
     }
   }
 
@@ -20,6 +24,12 @@ class Options extends Component {
     e.preventDefault();
     this.props.updateOptions(useKM ? "kilometers" : "miles");
     this.calcStyles(useKM);
+  }
+
+  changeMaps(e, useKML) {
+    e.preventDefault();
+    this.props.updateMapType(useKML ? "kml" : "svg");
+    this.calcMaps(useKML);
   }
 
   calcStyles(useKilometers) {
@@ -31,6 +41,18 @@ class Options extends Component {
     } else {
       this.setState({buttonMIStyle: defaultStyle + "active"});
       this.setState({buttonKMStyle: defaultStyle});
+    }
+  }
+
+  calcMaps(useKML) {
+    let defaultStyle = "btn btn-outline-dark ";
+
+    if (useKML) {
+      this.setState({buttonKMLStyle: defaultStyle + "active"});
+      this.setState({buttonSVGStyle: defaultStyle});
+    } else {
+      this.setState({buttonSVGStyle: defaultStyle + "active"});
+      this.setState({buttonKMLStyle: defaultStyle});
     }
   }
 
@@ -49,32 +71,45 @@ class Options extends Component {
     this.setState({
       value: currentVal
     })
-
   }
 
   render() {
     return (
         <div id="options" className="card">
-          <div className="card-header bg-dark text-white">
+          <div className="card-header text-white" style={{backgroundColor:"#1E4D2B"}}>
             Options
           </div>
           <div className="card-body">
             <p>Highlight the options you wish to use.</p>
-            <div className="btn-group btn-group-toggle" data-toggle="buttons">
-              <label className={this.state.buttonMIStyle}>
+            <span className="btn-group btn-group-toggle" data-toggle="buttons">
+              <label className={this.state.buttonMIStyle} style={{backgroundColor:"#1E4D2B"}}>
                 <input type="radio" id="miles" name="distance" autcomplete="off"
                        onClick={(e) => this.changeOption(e, false)}
                        defaultChecked/> Miles
               </label>
-              <label className={this.state.buttonKMStyle}>
+              <label className={this.state.buttonKMStyle} style={{backgroundColor:"#1E4D2B"}}>
                 <input type="radio" id="kilometers" name="distance"
                        autcomplete="off"
                        onClick={(e) => this.changeOption(e, true)}/> Kilometers
               </label>
-            </div>
-            <br></br><br></br>
+            </span>
+            --
+            <span className="btn-group btn-group-toggle" data-toggle="buttons" align="right">
+              <label className={this.state.buttonSVGStyle} style={{backgroundColor:"#1E4D2B"}}>
+                <input type="radio" id="miles" name="distance" autcomplete="off"
+                       onClick={(e) => this.changeMaps(e, false)}
+                       defaultChecked/> SVG
+              </label>
+              <label className={this.state.buttonKMLStyle} style={{backgroundColor:"#1E4D2B"}}>
+                <input type="radio" id="kilometers" name="distance"
+                       autcomplete="off"
+                       onClick={(e) => this.changeMaps(e, true)}/> KML
+              </label>
+            </span>
+            <br></br>
             <p>Zero Optimization <input id="typeinp" type="range" min="0" max="1" step=".01" defaultValue={Number(this.props.options.optimization)}
-                onChange={this.onInput.bind(this)}/> Full Optimization</p>
+                                        onChange={this.onInput.bind(this)}/> Full Optimization</p>
+            <p>Map Type</p>
           </div>
         </div>
     )

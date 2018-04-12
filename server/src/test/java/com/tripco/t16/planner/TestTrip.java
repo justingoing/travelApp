@@ -33,7 +33,7 @@ public class TestTrip {
 
   @Test
   public void testTrue() {
-    // assertTrue checks if a statement is true
+    trip.plan();
     assertTrue(true == true);
   }
 
@@ -76,6 +76,8 @@ public class TestTrip {
     assertTrue(trip.validateLatLong("40° 35.568' N")); //decimal degrees w/ decimal on minutes
     assertTrue(trip.validateLatLong("105° 35.56' W"));
     assertTrue(trip.validateLatLong("40º 35′ 6.9288″ W")); //tests prime symbols and ordinal indicator
+    assertTrue(trip.validateLatLong("25.2527999878"));
+    assertTrue(trip.validateLatLong("55.3643989563"));
 
     //invalid
     assertFalse(trip.validateLatLong("HELLO"));

@@ -19,14 +19,6 @@ class GMap extends Component {
     return path;
   }
 
-  // Create our markers
-  makeMarkers(places) {
-    let markers = places.map(
-        x => <Marker position={{lat: Number(x.latitude), lng: Number(x.longitude)}}/>
-    );
-    return markers;
-  }
-
   render() {
     const places = this.props.trip.places;
     return (
@@ -35,9 +27,8 @@ class GMap extends Component {
             defaultZoom={1}
         >
           <Polyline path={this.makePath(places)}
-                    options={{strokeColor: 'DeepSkyBlue'}}
+                    options={{strokeColor: '#BD4269'}}
           />
-          {this.makeMarkers(places)}
         </GoogleMap>
     );
   }
