@@ -1,6 +1,7 @@
 package com.tripco.t16.query;
 
 import com.tripco.t16.planner.Place;
+import com.tripco.t16.tffi.Error;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -21,12 +22,16 @@ public class Find {
   private String dbId = "ikegentz";
   private String dbPass = "831204074";
 
-  private final static String lookup = "SELECT * FROM airports WHERE ";
+  private final static String lookup = "SELECT * "
+      + "FROM continents  INNER JOIN country ON continents.id = country.continent "
+      + " INNER JOIN region ON country.id = region.iso_country"
+      + "  INNER JOIN airports ON region.id = airports.iso_region  WHERE ";
 
   public final static String emptyQuery = "NO RESULTS FOR THIS QUERY";
   public final static String injectionMessage = "WARNING: POTENTIAL SQL INJECTION ATTACK!";
 
   private static boolean isInputGood(String sanitize) {
+    System.out.println("String sanatize is " + sanitize);
     return sanitize.matches("[a-zA-Z0-9]+");
   }
 
@@ -63,10 +68,24 @@ public class Find {
       Class.forName(driver);
 
       String queryString = query.query = "\'%" + query.query + "%\'";
-      String searchLookup = lookup + "id LIKE " + query.query
-          + " OR name LIKE " + query.query
-          + " OR municipality LIKE " + query.query
-          + " OR keywords LIKE " + query.query  + ";";
+      String searchLookup = lookup + "(airports.id LIKE " + query.query
+          + " OR airports.name LIKE " + query.query
+          + " OR airports.municipality LIKE " + query.query
+          + " OR airports.keywords LIKE " + query.query
+          + " OR country.name LIKE " + query.query
+          + " OR region.name LIKE " + query.query
+          + ") ";
+              //loop through array list of filters
+          System.out.println("Filters size is " + query.filters.size());
+          for(int i = 0; i < query.filters.size(); i++) {
+              searchLookup += "AND (" + query.filters.get(i).attribute + " = '"
+                  + query.filters.get(i).values.get(0) + "'";
+              for(int j = 1; j < query.filters.get(i).values.size(); j++) {
+                  searchLookup += " OR " + query.filters.get(i).attribute + " = '"
+                      + query.filters.get(i).values.get(j) + "'";
+              }
+              searchLookup += ")";
+          }
 
       System.out.println(searchLookup);
 
@@ -104,25 +123,25 @@ public class Find {
     while (query.next()) {
       Place pl = new Place();
       //Add essential place information for planning
-      pl.id = query.getString("id");
-      pl.name = query.getString("name");
-      pl.latitude = query.getString("latitude");
-      pl.longitude = query.getString("longitude");
+      pl.id = query.getString("airports.id");
+      pl.name = query.getString("airports.name");
+      pl.latitude = query.getString("airports.latitude");
+      pl.longitude = query.getString("airports.longitude");
 
       //Add additional place information
-      pl.extraAttrs.put("type", query.getString("type"));
-      pl.extraAttrs.put("elevation", query.getString("elevation"));
-      pl.extraAttrs.put("continent", query.getString("continent"));
-      pl.extraAttrs.put("iso_country", query.getString("iso_country"));
-      pl.extraAttrs.put("iso_region", query.getString("iso_region"));
-      pl.extraAttrs.put("municipality", query.getString("municipality"));
-      pl.extraAttrs.put("scheduled_service", query.getString("scheduled_service"));
-      pl.extraAttrs.put("gps_code", query.getString("gps_code"));
-      pl.extraAttrs.put("iata_code", query.getString("iata_code"));
-      pl.extraAttrs.put("local_code", query.getString("local_code"));
-      pl.extraAttrs.put("home_link", query.getString("home_link"));
-      pl.extraAttrs.put("wikipedia_link", query.getString("wikipedia_link"));
-      pl.extraAttrs.put("keywords", query.getString("keywords"));
+      pl.extraAttrs.put("type", query.getString("airports.type"));
+      pl.extraAttrs.put("elevation", query.getString("airports.elevation"));
+      pl.extraAttrs.put("continent", query.getString("continents.name"));
+      pl.extraAttrs.put("iso_country", query.getString("country.name"));
+      pl.extraAttrs.put("iso_region", query.getString("region.name"));
+      pl.extraAttrs.put("municipality", query.getString("airports.municipality"));
+      pl.extraAttrs.put("scheduled_service", query.getString("airports.scheduled_service"));
+      pl.extraAttrs.put("gps_code", query.getString("airports.gps_code"));
+      pl.extraAttrs.put("iata_code", query.getString("airports.iata_code"));
+      pl.extraAttrs.put("local_code", query.getString("airports.local_code"));
+      pl.extraAttrs.put("home_link", query.getString("airports.home_link"));
+      pl.extraAttrs.put("wikipedia_link", query.getString("airports.wikipedia_link"));
+      pl.extraAttrs.put("keywords", query.getString("airports.keywords"));
 
       tffiQuery.places.add(pl);
     }
@@ -147,23 +166,23 @@ public class Find {
     // print out the json representation of the query
     while (query.next()) {
       System.out.printf("\t{");
-      System.out.printf(" \"%s\",", query.getString("id"));
-      System.out.printf(" \"%s\",", query.getString("type"));
-      System.out.printf(" \"%s\",", query.getString("name"));
-      System.out.printf(" \"%s\",", query.getString("latitude"));
-      System.out.printf(" \"%s\",", query.getString("longitude"));
-      System.out.printf(" \"%s\",", query.getString("elevation"));
-      System.out.printf(" \"%s\",", query.getString("continent"));
-      System.out.printf(" \"%s\",", query.getString("iso_country"));
-      System.out.printf(" \"%s\",", query.getString("iso_region"));
-      System.out.printf(" \"%s\",", query.getString("municipality"));
-      System.out.printf(" \"%s\",", query.getString("scheduled_service"));
-      System.out.printf(" \"%s\",", query.getString("gps_code"));
-      System.out.printf(" \"%s\",", query.getString("iata_code"));
-      System.out.printf(" \"%s\",", query.getString("local_code"));
-      System.out.printf(" \"%s\",", query.getString("home_link"));
-      System.out.printf(" \"%s\",", query.getString("wikipedia_link"));
-      System.out.printf(" \"%s\"", query.getString("keywords"));
+      System.out.printf(" \"%s\",", query.getString("airports.id"));
+      System.out.printf(" \"%s\",", query.getString("airports.type"));
+      System.out.printf(" \"%s\",", query.getString("airports.name"));
+      System.out.printf(" \"%s\",", query.getString("airports.latitude"));
+      System.out.printf(" \"%s\",", query.getString("airports.longitude"));
+      System.out.printf(" \"%s\",", query.getString("airports.elevation"));
+      System.out.printf(" \"%s\",", query.getString("continents.name"));
+      System.out.printf(" \"%s\",", query.getString("country.name"));
+      System.out.printf(" \"%s\",", query.getString("region.name"));
+      System.out.printf(" \"%s\",", query.getString("airports.municipality"));
+      System.out.printf(" \"%s\",", query.getString("airports.scheduled_service"));
+      System.out.printf(" \"%s\",", query.getString("airports.gps_code"));
+      System.out.printf(" \"%s\",", query.getString("airports.iata_code"));
+      System.out.printf(" \"%s\",", query.getString("airports.local_code"));
+      System.out.printf(" \"%s\",", query.getString("airports.home_link"));
+      System.out.printf(" \"%s\",", query.getString("airports.wikipedia_link"));
+      System.out.printf(" \"%s\"", query.getString("airports.keywords"));
       System.out.printf("}");
 
       if (--results == 0) {
@@ -178,13 +197,19 @@ public class Find {
   /**
    * Populate our object with information from the query so that we can convert back to json.
    */
-  public void performQuery(Query query, boolean shouldPrint) {
+  public Error performQuery(Query query, boolean shouldPrint) {
+    Error err = new Error();
     if (!Find.isInputGood(query.query)) {
-      query.places = new ArrayList<>();
+      //query.places = new ArrayList<>();
       System.out.println(Find.injectionMessage);
-      return;
+      err.code = "400";
+      err.message = "Unsuccessful search. Use only Letters and numbers in search bar.";
+      err.debug = "Possible SQL injection. in performQuery.";
+      return err;
+    }else{
+      this.queryDB(query, dbId, dbPass, shouldPrint);
+      return err;
     }
 
-    this.queryDB(query, dbId, dbPass, shouldPrint);
   }
 }

@@ -60,7 +60,7 @@ class SearchTable extends Component {
         <table responsive hover size="sm" style={{height: "50%", overflow: "scroll", display: "inline-block"}} className="table table-responsive">
           <thead>
           <tr className="table-info">
-            <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Id</th>
+            <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>ID</th>
             <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Name</th>
             <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Latitude</th>
             <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Longitude</th>
