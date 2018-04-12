@@ -92,6 +92,9 @@ class Destinations extends Component {
                     removeQuery.filters.pop(); //if only one value then empty filters entirely
                     return;
                 }
+                else if(j == this.props.query.filters["0"].values.length -1 ) {
+                    removeQuery.filters["0"].values.pop();
+                }
                 removeQuery.filters["0"].values.splice(j, 1);
                 this.props.updateQuery(removeQuery);
 
