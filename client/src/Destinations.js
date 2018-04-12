@@ -35,11 +35,7 @@ class Destinations extends Component {
       });
     }
 
-    check(){
-      //var vals = this.props.config.filters["0"].values;
-      //console.log(vals[num] + " checked");
-      console.log("check clicked")
-    }
+
 
     async sendSearch(){
         //get the search value, put it in query field, and send it
@@ -48,23 +44,53 @@ class Destinations extends Component {
         try{
             let searchResponse = await this.searchResponse();
             let searchTFFI = await searchResponse.json();
-            this.props.updateQuery(searchTFFI);
-            console.log("the result");
-            console.log(this.props.query);
+            if(searchTFFI.code == "400"){
+              alert(searchTFFI.message);
+            }else{
+              this.props.updateQuery(searchTFFI);
+            }
         }catch(err){
             console.error(err)
+        }
+    }
+
+    makeChecks(){
+        var addition = [];
+        var f = this.props.config.filters;
+        var vals = f["0"].values;
+        for(let i = 0; i < vals.length; i++) {
+            addition.push(<label><input type="checkbox"  onClick={(e) => this.check(vals[i])}/>{vals[i]}&emsp;</label>);
+        }
+
+        return addition;
+    }
+    check(name) {
+        console.log("CHECK " + name);
+        if(this.props.query.filters.length == 0) {
+            console.log("no filters yet");
+            /*let newQuery = this.props.query;
+            newQuery.filters = {
+                "attribute" : "airports.type",
+                "values"    : [ name ]
+            }*/
+            this.props.query.filters = {
+                "attribute" : "airports.type",
+                "values"    : [ name ]
+            }
+            //this.props.updateQuery(newQuery);
+            var q = this.props.query.filters;
+            console.log("QUERY LENGTH AFTER " + q);
+        }
+
+        for(let j = 0; j < this.props.query.filters.length; j++) {
+            console.log(this.props.query.filters[j] + "vs" + name);
         }
     }
 
   render() {
     const count = this.props.trip.places.length;
     var f = this.props.config.filters;
-    console.log("FILTERS");
-    console.log(f);
-    console.log(f["0"].values);
     var vals = f["0"].values;
-    console.log(vals[0]);
-    console.log("Query filters " + this.props.query.filters.length);
 
     return (
         <div id="destinations" className="card">
@@ -76,26 +102,7 @@ class Destinations extends Component {
             <div className="filters">
               Airport Type:
               <br/>
-                <input type="checkbox" id="0" onClick={this.check}/>
-                 {vals[0]}
-                &emsp;
-                <input type="checkbox" id="1" onClick={this.check}/>
-                 {vals[1]}
-                &emsp;
-                <input type="checkbox" id="2" onClick={this.check}/>
-                 {vals[2]}
-                &emsp;
-                <input type="checkbox" id="3" onClick={this.check}/>
-                 {vals[3]}
-                &emsp;
-                <input type="checkbox" id="4" onClick={this.check}/>
-                 {vals[4]}
-                &emsp;
-                <input type="checkbox" id="5" onClick={this.check}/>
-                 {vals[5]}
-                &emsp;
-                <input type="checkbox" id="6" onClick={this.check}/>
-                 {vals[6]}
+                <div>{this.makeChecks()}</div>
             </div>
             <div className="input-group" role="group">
               <input type="text" className="form-control" id="mySearch" placeholder="Search for a place..."/>

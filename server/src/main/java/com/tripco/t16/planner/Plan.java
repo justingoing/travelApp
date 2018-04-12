@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.tripco.t16.server.HTTP;
+import com.tripco.t16.tffi.Error;
 import spark.Request;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 public class Plan {
 
   private Trip trip;
+  private Error err;
 
   /** Handles trip planning request, creating a new trip object from the trip request.
    * Does the conversion from Json to a Java class before planning the trip.
@@ -36,7 +38,7 @@ public class Plan {
     trip = gson.fromJson(requestBody, Trip.class);
 
     // plan the trip.
-    trip.plan();
+    err = trip.plan();
 
     // log something.
     System.out.println(trip.title);
@@ -47,6 +49,10 @@ public class Plan {
    */
   public String getTrip () {
     Gson gson = new Gson();
-    return gson.toJson(trip);
+    if(this.err.code == "500"){
+      return gson.toJson(err);
+    }else{
+      return gson.toJson(trip);
+    }
   }
 }

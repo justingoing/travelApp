@@ -1,8 +1,7 @@
 package com.tripco.t16.query;
 
 import com.tripco.t16.planner.Place;
-import com.tripco.t16.tffi.Filter;
-
+import com.tripco.t16.tffi.Error;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -198,13 +197,19 @@ public class Find {
   /**
    * Populate our object with information from the query so that we can convert back to json.
    */
-  public void performQuery(Query query, boolean shouldPrint) {
+  public Error performQuery(Query query, boolean shouldPrint) {
+    Error err = new Error();
     if (!Find.isInputGood(query.query)) {
-      query.places = new ArrayList<>();
+      //query.places = new ArrayList<>();
       System.out.println(Find.injectionMessage);
-      return;
+      err.code = "400";
+      err.message = "Unsuccessful search. Use only Letters and numbers in search bar.";
+      err.debug = "Possible SQL injection. in performQuery.";
+      return err;
+    }else{
+      this.queryDB(query, dbId, dbPass, shouldPrint);
+      return err;
     }
 
-    this.queryDB(query, dbId, dbPass, shouldPrint);
   }
 }
