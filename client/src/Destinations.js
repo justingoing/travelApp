@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import SearchTable from './SearchTable';
+//import Checkbox from './Checkbox';
 
 /* Destinations reside in the parent object so they may be shared
  * with the Trip object.
@@ -8,6 +9,7 @@ import SearchTable from './SearchTable';
  * Finds destinations in a database.
  * Displays the current number of destinations
  */
+
 class Destinations extends Component {
   constructor(props) {
     super(props);
@@ -33,6 +35,8 @@ class Destinations extends Component {
       });
     }
 
+
+
     async sendSearch(){
         //get the search value, put it in query field, and send it
         //this.props.updateQuery(document.getElementById("mySearch").value);
@@ -50,8 +54,44 @@ class Destinations extends Component {
         }
     }
 
+    makeChecks(){
+        var addition = [];
+        var f = this.props.config.filters;
+        var vals = f["0"].values;
+        for(let i = 0; i < vals.length; i++) {
+            addition.push(<label><input type="checkbox"  onClick={(e) => this.check(vals[i])}/>{vals[i]}&emsp;</label>);
+        }
+
+        return addition;
+    }
+    check(name) {
+        console.log("CHECK " + name);
+        if(this.props.query.filters.length == 0) {
+            console.log("no filters yet");
+            /*let newQuery = this.props.query;
+            newQuery.filters = {
+                "attribute" : "airports.type",
+                "values"    : [ name ]
+            }*/
+            this.props.query.filters = {
+                "attribute" : "airports.type",
+                "values"    : [ name ]
+            }
+            //this.props.updateQuery(newQuery);
+            var q = this.props.query.filters;
+            console.log("QUERY LENGTH AFTER " + q);
+        }
+
+        for(let j = 0; j < this.props.query.filters.length; j++) {
+            console.log(this.props.query.filters[j] + "vs" + name);
+        }
+    }
+
   render() {
     const count = this.props.trip.places.length;
+    var f = this.props.config.filters;
+    var vals = f["0"].values;
+
     return (
         <div id="destinations" className="card">
           <div className="card-header text-white" style={{backgroundColor:"#1E4D2B"}}>
@@ -59,6 +99,11 @@ class Destinations extends Component {
           </div>
           <div className="card-body">
             <p>Search destinations to add</p>
+            <div className="filters">
+              Airport Type:
+              <br/>
+                <div>{this.makeChecks()}</div>
+            </div>
             <div className="input-group" role="group">
               <input type="text" className="form-control" id="mySearch" placeholder="Search for a place..."/>
               <button className="btn btn-primary " style={{border: "#1E4D2B", backgroundColor: "#1E4D2B"}} onClick={this.sendSearch} type="button">Search</button>

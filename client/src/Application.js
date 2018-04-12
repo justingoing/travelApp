@@ -133,7 +133,7 @@ class Application extends Component {
         method: "GET"
       });
     } catch (err) {
-      console.log("No configuration response from server, assuming sever version 1.0");
+      console.log("No configuration response from server, assuming server version 1.0");
       console.error(err);
       configRequest = this.getDefaultConfig();
       configRequest.version = 1;
@@ -143,6 +143,7 @@ class Application extends Component {
 
     let ret = await configRequest.json();
     console.log("Server version " + ret.version);
+    console.log("Filters " + ret.filters.length);
     return ret;
   }
 
@@ -267,6 +268,7 @@ class Application extends Component {
               <Destinations trip={this.state.trip}
                             updateTrip={this.updateTrip}
                             query={this.state.query}
+                            config={this.state.config}
                             updateQuery={this.updateQuery}
                             checkSQL={this.checkSQL}
                             addToTrip={this.addToTrip}
