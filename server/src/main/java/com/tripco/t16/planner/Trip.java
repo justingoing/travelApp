@@ -45,7 +45,7 @@ public class Trip {
         if (!this.validateLatLong(this.places.get(i).latitude) ||
             !this.validateLatLong(this.places.get(i).longitude)) {
           this.places.remove(i);
-        }else{
+        //}else{
           err.code = "500";
           err.message = "Server failed to validate LatLong";
           err.debug = "Trip.java-plan-validateLatLong.";
@@ -313,18 +313,23 @@ public class Trip {
     //System.out.println("Latitude: " + latIN);
     if (latIN.matches("\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+\\.?\\d*[\"|″]?\\s*[N|S|E|W]\\s*")) //DMS
     {
+      System.out.println("Case 1");
       return true; //System.out.println("Matches #1");
     } else if (latIN
         .matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[N|S|E|W]\\s*")) //degrees decimal minutes
     {
+      System.out.println("Case 2");
       return true; //System.out.println("Matches #2");
     } else if (latIN.matches("\\s*-?\\d+\\.?\\d*[°|º]\\s*[N|S|E|W]\\s*")) //decimal degrees
     {
+      System.out.println("Case 3");
       return true; //System.out.println("Matches #3");
     } else if (latIN.matches("\\s*-?\\d+\\.?\\d*\\s*[N|S|E|W]\\s*")) //floating point
     {
+      System.out.println("Case 4");
       return true; //System.out.println("Matches #4");
     } else if (latIN.matches("\\s*-?\\d+\\.?\\d*\\s*")) {
+      System.out.println("Case 5");
       return true; //System.out.println("Matches #5");
     } else {
       System.out.println("Latitude: " + latIN);

@@ -68,22 +68,47 @@ class Destinations extends Component {
         console.log("CHECK " + name);
         if(this.props.query.filters.length == 0) {
             console.log("no filters yet");
-            /*let newQuery = this.props.query;
-            newQuery.filters = {
+            let newQuery = this.props.query;
+            //console.log(this.props.query);
+            newQuery.filters = [{
+                "attribute": "airports.type",
+                "values": [name]
+            }
+            ];
+            /*this.props.query.filters = {
                 "attribute" : "airports.type",
                 "values"    : [ name ]
             }*/
-            this.props.query.filters = {
-                "attribute" : "airports.type",
-                "values"    : [ name ]
-            }
-            //this.props.updateQuery(newQuery);
-            var q = this.props.query.filters;
-            console.log("QUERY LENGTH AFTER " + q);
+            this.props.updateQuery(newQuery);
+            return;
         }
 
-        for(let j = 0; j < this.props.query.filters.length; j++) {
-            console.log(this.props.query.filters[j] + "vs" + name);
+        for(let j = 0; j < this.props.query.filters["0"].values.length; j++) {
+            //console.log(this.props.query.filters[j] + " vs " + name);
+            if(this.props.query.filters["0"].values[j] == name) {
+                console.log(name + " is already inside filters, should remove");
+                let removeQuery = this.props.query;
+                if(1 == this.props.query.filters["0"].values.length) {
+                    removeQuery.filters.pop(); //if only one value then empty filters entirely
+                    return;
+                }
+                else if(j == this.props.query.filters["0"].values.length -1 ) {
+                    removeQuery.filters["0"].values.pop();
+                }
+                removeQuery.filters["0"].values.splice(j, 1);
+                this.props.updateQuery(removeQuery);
+
+                console.log("REMOVED " + this.props.query);
+                return;
+            }
+            else {
+                console.log(name + " not in filters, should add");
+                let addQuery = this.props.query;
+                addQuery.filters["0"].values.push(name);
+                this.props.updateQuery(addQuery);
+                console.log("ADDED " + this.props.query);
+                return;
+            }
         }
     }
 
