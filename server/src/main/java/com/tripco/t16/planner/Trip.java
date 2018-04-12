@@ -278,7 +278,12 @@ public class Trip {
   private ArrayList<Coords> placesToCoords() {
     ArrayList<Coords> coords = new ArrayList<>();
     for (Place p : places) {
-      coords.add(new Coords(convertToDecimal(p.latitude), convertToDecimal(p.longitude)));
+      double latTemp = convertToDecimal(p.latitude);
+      double longTemp = convertToDecimal(p.longitude);
+
+      p.latitude = Double.toString(latTemp);
+      p.longitude = Double.toString(longTemp);
+      coords.add(new Coords(latTemp, longTemp));
     }
 
     return coords;
