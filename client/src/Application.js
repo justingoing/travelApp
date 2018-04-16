@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Sidebar from './Sidebar';
-import Map from './Map';
-import Itinerary from './Itinerary';
+import Footer from './Footer';
 import Display from "./Display";
 import Header from './Header';
 
@@ -262,11 +261,12 @@ class Application extends Component {
 
     return (
         <div id="application">
-            <Header />
+          <Header/>
           <div className="row">
             <Sidebar trip={this.state.trip}/>
             <Display trip={this.state.trip}/>
           </div>
+          <Footer number={this.props.number} name={this.props.name}/>
         </div>
     );
   }

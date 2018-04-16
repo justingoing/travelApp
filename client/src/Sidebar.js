@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Options from "./Options";
 
 /*
  * Renders the sidebar that contains all the tools needed to edit and manipulate
@@ -52,6 +53,10 @@ class Sidebar extends Component {
                       onClick={this.reverseTrip} type="button">Reverse Trip
               </button>
             </div>
+            <Options options={this.props.trip.options}
+                     updateOptions={this.updateOptions}
+                     updateMapType={this.updateMapType}
+            />
           </div>
         </div>
     )

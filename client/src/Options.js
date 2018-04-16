@@ -59,15 +59,14 @@ class Options extends Component {
   componentWillReceiveProps(nextProps) {
     this.calcStyles(nextProps.options.distance === "kilometers");
 
-    var input = document.getElementById("typeinp");
+    let input = document.getElementById("typeinp");
     input.value = nextProps.options.optimization;
   }
 
   onInput() {
-    var input = document.getElementById("typeinp");
-    var currentVal = input.value;
+    let input = document.getElementById("typeinp");
+    let currentVal = input.value;
     this.props.updateOptions(currentVal);
-    //console.log("value is ", currentVal); //here's how to see value of slider or input.value or document.getElementById("typeinp")
     this.setState({
       value: currentVal
     })
