@@ -264,7 +264,7 @@ class Application extends Component {
           <Header/>
           <div className="row">
             <Sidebar trip={this.state.trip}/>
-            <Display trip={this.state.trip}/>
+            <Display trip={this.state.trip} setNewStart={this.props.setNewStart}/>
           </div>
           <Footer number={this.props.number} name={this.props.name}/>
         </div>
