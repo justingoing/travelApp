@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import Options from './Options';
 import Instructions from './Instructions';
 import Destinations from './Destinations';
-import Trip from './Trip';
+import Map from './Map';
+import Itinerary from './Itinerary';
 
 /* Renders the application.
  * Holds the destinations and options state shared with the trip.
@@ -35,7 +36,7 @@ class Application extends Component {
   // DONT TOUCH OR YOU DIE
   componentWillMount() {
     // Put app into loading state
-    this.setState({ loading: true });
+    this.setState({loading: true});
 
     // load until server gives us it's configuration
     this.requestConfig()
@@ -47,7 +48,7 @@ class Application extends Component {
 
       // now that we have server info, set state accordingly and exit loading
       this.setState({
-       loading: false,
+        loading: false,
         trip: this.state.trip,
         query: this.state.query,
         config: this.state.config
@@ -55,9 +56,10 @@ class Application extends Component {
     });
   }
 
-    //populate with search
+  //populate with search
   updateQuery(searchTFFI) {
-    let copyTFFI = Object.assign(this.getDefaultQuery(this.state.config), this.state.query);
+    let copyTFFI = Object.assign(this.getDefaultQuery(this.state.config),
+        this.state.query);
 
     Object.assign(copyTFFI, searchTFFI);
     let nextTFFI = {
@@ -134,7 +136,8 @@ class Application extends Component {
         method: "GET"
       });
     } catch (err) {
-      console.log("No configuration response from server, assuming server version 1.0");
+      console.log(
+          "No configuration response from server, assuming server version 1.0");
       console.error(err);
       configRequest = this.getDefaultConfig();
       configRequest.version = 1;
@@ -152,11 +155,10 @@ class Application extends Component {
     console.log("hey", this.state.config);
     console.log("defaulttrip, ", this.getDefaultTrip(this.state.config));
 
-
-    let copyTFFI = Object.assign(this.getDefaultTrip(this.state.config), this.state.trip);
+    let copyTFFI = Object.assign(this.getDefaultTrip(this.state.config),
+        this.state.trip);
     Object.assign(copyTFFI, tffi);
     console.log("copyTFFI, ", copyTFFI);
-
 
     let nextTFFI = {
       version: copyTFFI.version,
@@ -180,8 +182,6 @@ class Application extends Component {
 
     this.setState({trip: nextTFFI});
   }
-
-
 
   checkOptionsV1(nextTFFI, incomingTFFI) {
 
@@ -224,10 +224,11 @@ class Application extends Component {
   }
 
   updateMapType(mapType) {
-    if(mapType == "kml" && this.state.config.maps.includes("kml"))
+    if (mapType == "kml" && this.state.config.maps.includes("kml")) {
       this.state.trip.options.map = "kml";
-    else
+    } else {
       this.state.trip.options.map = "svg";
+    }
   }
 
   isInTrip(id) {
@@ -255,11 +256,51 @@ class Application extends Component {
   }
 
   render() {
-    if(this.state.loading == true)
-    {
+    if (this.state.loading == true) {
       return <h2>LOADING...</h2>;
     }
 
+    return (
+        <div id="application">
+          <div className="row">
+            <nav className="navbar navbar-light"
+                 style={{backgroundColor: "#1E4D28"}}>
+              <div
+                  className="col-8 col-sm-7 col-md-6 col-lg-5 col-xl-4 align-self-left">
+                <img className="img-fluid"
+                     src="http://www.cs.colostate.edu/~davematt/logos/CS_unit_identifiers/CompSci-NS-CSU-1-Hrev.png"/>
+              </div>
+            </nav>
+            <div className="row">
+              <div
+                  className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-left">
+                <Options options={this.state.trip.options}
+                         updateOptions={this.updateOptions}
+                         updateMapType={this.updateMapType}
+                />
+                <Destinations trip={this.state.trip}
+                              updateTrip={this.updateTrip}
+                              query={this.state.query}
+                              config={this.state.config}
+                              updateQuery={this.updateQuery}
+                              checkSQL={this.checkSQL}
+                              addToTrip={this.addToTrip}
+                              isInTrip={this.isInTrip} calcStyles
+                              addAllToTrip={this.addAllToTrip}
+                              queryPlaces={this.queryPlaces}
+                />
+              </div>
+              <div className="col-xl-9 col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                <Map trip={this.state.trip}/>
+                <Itinerary trip={this.state.trip}
+                           setNewStart={this.setNewStart}/>
+              </div>
+            </div>
+          </div>
+        </div>
+    );
+
+    /*
     return (
         <div id="application">
           <div className="row">
@@ -292,7 +333,7 @@ class Application extends Component {
             </div>
           </div>
         </div>
-    )
+    )*/
   }
 }
 
