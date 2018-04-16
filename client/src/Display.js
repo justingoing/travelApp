@@ -12,7 +12,9 @@ class Display extends Component {
 
   render() {
     return (
-        <div id="display" className="col-xl-9 col-lg-8 col-md-8 col-sm-12 col-xs-12 align-self-right">
+        <div id="display"
+             className="col-xl-9 col-lg-8 col-md-8 col-sm-12 col-xs-12 align-self-right"
+             style={{maxHeight: "100%", "overflow-y": "scroll"}}>
           <Map trip={this.props.trip}/>
           <Itinerary trip={this.props.trip} setNewStart={this.props.setNewStart}
           />
