@@ -58,4 +58,61 @@ class Sidebar extends Component {
   }
 }
 
+
+
+/**
+ * <div
+ className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-left">
+ <Options options={this.state.trip.options}
+ updateOptions={this.updateOptions}
+ updateMapType={this.updateMapType}
+ />
+ <Destinations trip={this.state.trip}
+ updateTrip={this.updateTrip}
+ query={this.state.query}
+ config={this.state.config}
+ updateQuery={this.updateQuery}
+ checkSQL={this.checkSQL}
+ addToTrip={this.addToTrip}
+ isInTrip={this.isInTrip} calcStyles
+ addAllToTrip={this.addAllToTrip}
+ queryPlaces={this.queryPlaces}
+ />
+ </div>
+ */
+/*
+return (
+    <div id="application">
+      <div className="row">
+        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+          <Instructions number={this.props.number} name={this.props.name}/>
+        </div>
+        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+          <Options options={this.state.trip.options}
+                   updateOptions={this.updateOptions}
+                   updateMapType={this.updateMapType}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+          <Destinations trip={this.state.trip}
+                        updateTrip={this.updateTrip}
+                        query={this.state.query}
+                        config={this.state.config}
+                        updateQuery={this.updateQuery}
+                        checkSQL={this.checkSQL}
+                        addToTrip={this.addToTrip}
+                        isInTrip={this.isInTrip}calcStyles
+                        addAllToTrip={this.addAllToTrip}
+                        queryPlaces={this.queryPlaces}
+          />
+        </div>
+        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+          <Trip trip={this.state.trip} updateTrip={this.updateTrip}/>
+        </div>
+      </div>
+    </div>
+)*/
+
 export default Sidebar;
