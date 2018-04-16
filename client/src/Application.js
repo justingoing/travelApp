@@ -3,6 +3,7 @@ import Options from './Options';
 import Destinations from './Destinations';
 import Map from './Map';
 import Itinerary from './Itinerary';
+import Header from './Header';
 
 /* Renders the application.
  * Holds the destinations and options state shared with the trip.
@@ -261,15 +262,7 @@ class Application extends Component {
 
     return (
         <div id="application">
-
-            <nav className="navbar navbar-light"
-                 style={{backgroundColor: "#1E4D28"}}>
-              <div
-                  className="col-8 col-sm-7 col-md-6 col-lg-5 col-xl-4 align-self-left">
-                <img className="img-fluid"
-                     src="http://www.cs.colostate.edu/~davematt/logos/CS_unit_identifiers/CompSci-NS-CSU-1-Hrev.png"/>
-              </div>
-            </nav>
+            <Header number={this.state.number} name={this.state.name}/>
           <div className="row">
             <div
                 className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-left">
