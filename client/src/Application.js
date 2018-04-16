@@ -260,11 +260,24 @@ class Application extends Component {
     }
 
     return (
-        <div id="application">
+        <div id="application" style={{maxHeight: "100%"}}>
           <Header/>
-          <div className="row">
-            <Sidebar trip={this.state.trip}/>
-            <Display trip={this.state.trip} setNewStart={this.props.setNewStart}/>
+          <div className="row" style={{maxHeight: "100%"}}>
+            <Sidebar updateOptions={this.updateOptions}
+                     updateMapType={this.updateMapType}
+                     trip={this.state.trip}
+                     updateTrip={this.updateTrip}
+                     query={this.state.query}
+                     config={this.state.config}
+                     updateQuery={this.updateQuery}
+                     checkSQL={this.checkSQL}
+                     addToTrip={this.addToTrip}
+                     isInTrip={this.isInTrip}
+                     addAllToTrip={this.addAllToTrip}
+                     queryPlaces={this.queryPlaces}
+            />
+            <Display trip={this.state.trip}
+                     setNewStart={this.props.setNewStart}/>
           </div>
           <Footer number={this.props.number} name={this.props.name}/>
         </div>

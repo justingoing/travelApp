@@ -12,7 +12,7 @@ class Display extends Component {
 
   render() {
     return (
-        <div className="col-xl-9 col-lg-8 col-md-8 col-sm-12 col-xs-12">
+        <div id="display" className="col-xl-9 col-lg-8 col-md-8 col-sm-12 col-xs-12 align-self-right">
           <Map trip={this.props.trip}/>
           <Itinerary trip={this.props.trip} setNewStart={this.props.setNewStart}
           />
