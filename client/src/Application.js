@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Options from './Options';
-import Instructions from './Instructions';
 import Destinations from './Destinations';
 import Map from './Map';
 import Itinerary from './Itinerary';
@@ -271,30 +270,28 @@ class Application extends Component {
                      src="http://www.cs.colostate.edu/~davematt/logos/CS_unit_identifiers/CompSci-NS-CSU-1-Hrev.png"/>
               </div>
             </nav>
-            <div className="row">
-              <div
-                  className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-left">
-                <Options options={this.state.trip.options}
-                         updateOptions={this.updateOptions}
-                         updateMapType={this.updateMapType}
-                />
-                <Destinations trip={this.state.trip}
-                              updateTrip={this.updateTrip}
-                              query={this.state.query}
-                              config={this.state.config}
-                              updateQuery={this.updateQuery}
-                              checkSQL={this.checkSQL}
-                              addToTrip={this.addToTrip}
-                              isInTrip={this.isInTrip} calcStyles
-                              addAllToTrip={this.addAllToTrip}
-                              queryPlaces={this.queryPlaces}
-                />
-              </div>
-              <div className="col-xl-9 col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                <Map trip={this.state.trip}/>
-                <Itinerary trip={this.state.trip}
-                           setNewStart={this.setNewStart}/>
-              </div>
+            <div
+                className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-left">
+              <Options options={this.state.trip.options}
+                       updateOptions={this.updateOptions}
+                       updateMapType={this.updateMapType}
+              />
+              <Destinations trip={this.state.trip}
+                            updateTrip={this.updateTrip}
+                            query={this.state.query}
+                            config={this.state.config}
+                            updateQuery={this.updateQuery}
+                            checkSQL={this.checkSQL}
+                            addToTrip={this.addToTrip}
+                            isInTrip={this.isInTrip} calcStyles
+                            addAllToTrip={this.addAllToTrip}
+                            queryPlaces={this.queryPlaces}
+              />
+            </div>
+            <div className="col-xl-9 col-lg-8 col-md-8 col-sm-12 col-xs-12">
+              <Map trip={this.state.trip}/>
+              <Itinerary trip={this.state.trip}
+                         setNewStart={this.setNewStart}/>
             </div>
           </div>
         </div>
