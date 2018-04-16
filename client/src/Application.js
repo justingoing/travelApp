@@ -261,7 +261,7 @@ class Application extends Component {
 
     return (
         <div id="application">
-          <div className="row">
+
             <nav className="navbar navbar-light"
                  style={{backgroundColor: "#1E4D28"}}>
               <div
@@ -270,6 +270,7 @@ class Application extends Component {
                      src="http://www.cs.colostate.edu/~davematt/logos/CS_unit_identifiers/CompSci-NS-CSU-1-Hrev.png"/>
               </div>
             </nav>
+          <div className="row">
             <div
                 className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-left">
               <Options options={this.state.trip.options}
