@@ -39,6 +39,7 @@ Epics planned for this release.
 * Staff Page
 * System Testing
 * Speed up Computation on the Server
+* Save Options as Defaults for Future Use
 
 Our estimate was fairly accurate in Sprint 4 as we aimed for roughly 
 60 story points. We are aiming for around 50 this sprint as we still 
@@ -48,8 +49,8 @@ are underestimating tasks. We want to focus heavily on creating the best UI poss
 
 Statistic | Planned | Completed
 --- | ---: | ---:
-Tasks |  18   | 0 
-Story Points |  41  | 0 
+Tasks |  24   | 0 
+Story Points |  55  | 0 
 
 ## Daily Scrums
 
@@ -84,4 +85,4 @@ Topic | Teamwork | Process | Tools
 What we will change this time |  |  | 
 What we did well |  |  | 
 What we need to work on |  |  |
-What we will change next time |  |  | 
+What we will change next time | More regular meetings | Continue breaking down tasks into manageable sizes. | Continue using GitHub to communicate and do code reviews.
