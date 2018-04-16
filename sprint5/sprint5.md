@@ -40,16 +40,16 @@ Epics planned for this release.
 * System Testing
 * Speed up Computation on the Server
 
-Our estimate was quite accurate in Sprint 4 as we aimed for roughly 
-60 story points. We are aiming for around 60 again, maybe a little
-less as this sprint we want to focus heavily on creating the best UI possible.
+Our estimate was fairly accurate in Sprint 4 as we aimed for roughly 
+60 story points. We are aiming for around 50 this sprint as we still 
+are underestimating tasks. We want to focus heavily on creating the best UI possible.
 
 ## Metrics
 
 Statistic | Planned | Completed
 --- | ---: | ---:
-Tasks |  *value*   | *value* 
-Story Points |  *value*  | *value* 
+Tasks |  18   | 0 
+Story Points |  41  | 0 
 
 ## Daily Scrums
 
