@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Options from "./Options";
 import Destinations from "./Destinations";
+import { Collapse, Button, CardBody, Card, ListGroup, ListGroupItem } from 'reactstrap';
 
 /*
  * Renders the sidebar that contains all the tools needed to edit and manipulate
@@ -9,27 +10,92 @@ import Destinations from "./Destinations";
 class Sidebar extends Component {
   constructor(props) {
     super(props);
+    this.toggleSearch = this.toggleSearch.bind(this);
+    this.state = {collapseSearch : false}
+  }
+  
+  toggleSearch() {
+    this.setState({ collapseSearch: !this.state.collapseSearch });
   }
 
   render() {
     return (
         <div id="sidebar"
              className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-left"
-             style={{maxHeight: "100%", overflowY: "scroll"}}>
-          <div className="card-body">
-            <div className="input-group" role="group">
-              <span className="input-group-btn">
-              <button className="btn btn-primary "
-                      style={{border: "#1E4D2B", backgroundColor: "#1E4D2B"}}
-                      onClick={this.props.plan} type="button">Plan</button>
-              </span>
+             style={{height: "1000px", maxHeight: "100%", overflowY: "scroll"}}>
+            <div className="container">
+                <ListGroup>
+                    <ListGroupItem onClick={this.toggleSearch}>Search For Destinations
+                    </ListGroupItem>
+                    <Collapse isOpen={this.state.collapseSearch}>
+                    <Destinations trip={this.props.trip}
+                                    updateTrip={this.props.updateTrip}
+                                    query={this.props.query}
+                                    config={this.props.config}
+                                    updateQuery={this.props.updateQuery}
+                                    checkSQL={this.props.checkSQL}
+                                    addToTrip={this.props.addToTrip}
+                                    isInTrip={this.props.isInTrip}
+                                    addAllToTrip={this.props.addAllToTrip}
+                                    queryPlaces={this.props.queryPlaces}/>
+                </Collapse>
+                
+                
+                <ListGroupItem onClick={this.toggleSearch}>Options
+                    </ListGroupItem>
+                    <ListGroupItem onClick={this.toggleSearch}>Load File
+                    </ListGroupItem>
+                    
+                </ListGroup>
 
-              <input type="text" className="form-control" placeholder=""/>
-              <span className="input-group-btn">
-              <button className="btn btn-primary "
-                      style={{border: "#1E4D2B", backgroundColor: "#1E4D2B"}}
-                      onClick={this.props.saveTFFI} type="button">Save</button>
-              </span>
+            </div>
+        </div>
+    );
+  }
+}
+
+
+/**
+ * 
+        <Button color="primary" onClick={this.toggleSearch}> Toggle </Button>
+        <Collapse isOpen={this.state.collapseSearch}>
+        
+          <div className="container">
+            <div className="panel-group">
+                <div className="panel panel-default">
+                    <div className="panel-heading">
+                        <h4 className="panel-title">
+                        <a data-toggle="collapse" href="#collapse1">Options</a>
+                        </h4>
+                    </div>
+                <div id="collapse1" className="panel-collapse collapse">
+                    <div className="panel-body">
+                        <input type="text" className="asd" value="Label look like"/>
+                    </div>
+                </div>
+                <div id="collapse2" className="panel-collapse collapse">
+                    <div className="panel-body">Panel Body</div>
+                    <div className="panel-footer">Panel Footer</div>
+                </div>
+            </div>
+          
+            <div className="row">
+            
+                <div className="input-group" role="group">
+                    <span className="input-group-btn">
+                    <button className="btn btn-primary "
+                            style={{border: "#1E4D2B", backgroundColor: "#1E4D2B"}}
+                            onClick={this.props.plan} type="button">Plan</button>
+                    </span>
+
+                    <input type="text" className="form-control" text="Untitled Trip" style={{background: "rgba(0,0,0,0)", border:"none"}}/>
+                    
+                    <span className="input-group-btn">
+                    <button className="btn btn-primary "
+                            style={{border: "#1E4D2B", backgroundColor: "#1E4D2B"}}
+                            onClick={this.props.saveTFFI} type="button">Save</button>
+                    </span>
+                </div>
             </div>
             <div>
               <button className="btn btn-primary "
@@ -38,78 +104,37 @@ class Sidebar extends Component {
               </button>
             </div>
           </div>
-          <Options options={this.props.trip.options}
-                   updateOptions={this.props.updateOptions}
-                   updateMapType={this.props.updateMapType}
-          />
-          <Destinations trip={this.props.trip}
-                        updateTrip={this.props.updateTrip}
-                        query={this.props.query}
-                        config={this.props.config}
-                        updateQuery={this.props.updateQuery}
-                        checkSQL={this.props.checkSQL}
-                        addToTrip={this.props.addToTrip}
-                        isInTrip={this.props.isInTrip}
-                        addAllToTrip={this.props.addAllToTrip}
-                        queryPlaces={this.props.queryPlaces}/>
+          <div className="container">
+              <div className="panel-group">
+                <div className="panel-heading">
+                    <h4 className="panel-title">
+                        <a data-toggle="collapse" href="#options_collapse">Options</a>
+                    </h4>
+                </div>
+                <div id="options_collapse" className="panel-collapse collapse">
+                    <div className="panel-body">
+                        <Options options={this.props.trip.options}
+                        updateOptions={this.props.updateOptions}
+                        updateMapType={this.props.updateMapType} />
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div className="container">
+            <Destinations trip={this.props.trip}
+                            updateTrip={this.props.updateTrip}
+                            query={this.props.query}
+                            config={this.props.config}
+                            updateQuery={this.props.updateQuery}
+                            checkSQL={this.props.checkSQL}
+                            addToTrip={this.props.addToTrip}
+                            isInTrip={this.props.isInTrip}
+                            addAllToTrip={this.props.addAllToTrip}
+                            queryPlaces={this.props.queryPlaces}/>
+          </div>
         </div>
-    )
-  }
-}
+    </Collapse>
+    </div>*/
 
-/**
- * <div
- className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-left">
- <Options options={this.state.trip.options}
- updateOptions={this.updateOptions}
- updateMapType={this.updateMapType}
- />
- <Destinations trip={this.state.trip}
- updateTrip={this.updateTrip}
- query={this.state.query}
- config={this.state.config}
- updateQuery={this.updateQuery}
- checkSQL={this.checkSQL}
- addToTrip={this.addToTrip}
- isInTrip={this.isInTrip} calcStyles
- addAllToTrip={this.addAllToTrip}
- queryPlaces={this.queryPlaces}
- />
- </div>
- */
-/*
-return (
-    <div id="application">
-      <div className="row">
-        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-          <Instructions number={this.props.number} name={this.props.name}/>
-        </div>
-        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-          <Options options={this.state.trip.options}
-                   updateOptions={this.updateOptions}
-                   updateMapType={this.updateMapType}
-          />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-          <Destinations trip={this.state.trip}
-                        updateTrip={this.updateTrip}
-                        query={this.state.query}
-                        config={this.state.config}
-                        updateQuery={this.updateQuery}
-                        checkSQL={this.checkSQL}
-                        addToTrip={this.addToTrip}
-                        isInTrip={this.isInTrip}calcStyles
-                        addAllToTrip={this.addAllToTrip}
-                        queryPlaces={this.queryPlaces}
-          />
-        </div>
-        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-          <Trip trip={this.state.trip} updateTrip={this.updateTrip}/>
-        </div>
-      </div>
-    </div>
-)*/
 
 export default Sidebar;
