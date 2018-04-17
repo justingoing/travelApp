@@ -6,6 +6,8 @@ class DestCard extends Component {
   constructor(props) {
     super(props);
 
+    this.makeStart = this.makeStart.bind(this);
+
     this.state = {
       destination: this.props.destination,
       tripPosition: this.props.tripPosition
@@ -17,7 +19,11 @@ class DestCard extends Component {
     return airType.replace(/\w\S*/g, function(txt){
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
+  }
 
+  makeStart(e) {
+    e.preventDefault();
+    this.props.reorderItinerary(this.state.tripPosition);
   }
 
   render() {
@@ -31,7 +37,7 @@ class DestCard extends Component {
                   </div>
                   <div className="col-2">
                     <div className="row">
-                      <button type="button" className="btn btn-xs btn-primary">
+                      <button type="button" className="btn btn-xs btn-primary" onClick={this.makeStart}>
                         <FaMapMarker />
                       </button>
                     </div>

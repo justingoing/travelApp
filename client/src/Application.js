@@ -24,12 +24,18 @@ class Application extends Component {
     this.saveTFFI = this.saveTFFI.bind(this);
     this.reverseTrip = this.reverseTrip.bind(this);
     this.setNewStart = this.setNewStart.bind(this);
+    this.updateSize = this.updateSize.bind(this);
 
     this.state = {
       loading: false,
       trip: {},
       query: {},
-      config: {}
+      config: {},
+      size: {
+        header: 0,
+        content: 0,
+        footer: 0
+      }
     };
 
     this.queryPlaces = {};
@@ -58,6 +64,16 @@ class Application extends Component {
         config: this.state.config
       });
     });
+  }
+
+  updateSize(size) {
+    console.log("size", size);
+    let currentSize = Object.assign({}, this.state.size);
+    console.log("cur size", currentSize);
+
+    Object.assign(currentSize, size);
+    console.log("cur size 2", currentSize);
+    this.setState({size: currentSize});
   }
 
   //populate with search
@@ -316,6 +332,7 @@ class Application extends Component {
   }
 
   setNewStart(index) {
+
     let distancesCopy = Application.reorder(this.state.trip.distances, index);
     let placesCopy = Application.reorder(this.state.trip.places, index);
 
@@ -342,7 +359,7 @@ class Application extends Component {
 
     return (
         <div id="application" style={{maxHeight: "100%"}}>
-          <Header/>
+          <Header updateSize={this.updateSize}/>
           <div className="row" style={{maxHeight: "100%"}}>
             <Sidebar plan={this.plan}
                      saveTFFI={this.saveTFFI}
