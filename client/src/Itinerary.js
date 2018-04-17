@@ -66,6 +66,20 @@ class Itinerary extends Component {
 
     return (
         <div className="table-responsive" id="itinerary">
+          <table className="table">
+            <tr>
+              <th>Destinations</th>
+              <td>DEST 1</td>
+            </tr>
+            <tr>
+              <th>Mileage</th>
+              <td>Miles 1</td>
+            </tr>
+          </table>
+        </div>
+        /*
+
+        <div className="table-responsive" id="itinerary">
           <table responsive hover size="sm" style={{height: "50%", overflow: "scroll", display: "inline-block"}} className="table table-responsive">
             <thead>
               <tr className="table-info">
@@ -80,7 +94,7 @@ class Itinerary extends Component {
             </tbody>
           </table>
           <h4>Total distance of {table.distance} {table.units}. </h4>
-        </div>
+        </div>*/
     )
   }
 }
