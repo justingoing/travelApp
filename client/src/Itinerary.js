@@ -9,7 +9,6 @@ class Itinerary extends Component {
     this.state = {};
 
     this.createTable = this.createTable.bind(this);
-    this.reorderItinerary = this.reorderItinerary.bind(this);
   }
 
   //loop through distances, sum, and return the total
@@ -43,10 +42,6 @@ class Itinerary extends Component {
     return {distance, units, tableData};
   }
 
-  reorderItinerary(event, index) {
-    this.props.setNewStart(index);
-  }
-
   renderRow(key, source, destination, distance) {
     let dragHandle = (
         <td className="align-right"><span>
@@ -70,13 +65,9 @@ class Itinerary extends Component {
     for(let i = 0; i < this.props.trip.places.length; ++i)
     {
       let dest = this.props.trip.places[i];
-      if(i == 0) {
-        console.log("STARTING DESTINATION");
-        console.log(dest);
-      }
       destRows.push(
           <td>
-            <DestCard destination={dest} tripPosition={i}/>
+            <DestCard destination={dest} tripPosition={i} reorderItinerary={this.props.setNewStart}/>
           </td>
       );
     }

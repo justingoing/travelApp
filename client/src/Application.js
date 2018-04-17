@@ -316,8 +316,8 @@ class Application extends Component {
   }
 
   setNewStart(index) {
-    let distancesCopy = Trip.reorder(this.state.trip.distances, index);
-    let placesCopy = Trip.reorder(this.state.trip.places, index);
+    let distancesCopy = Application.reorder(this.state.trip.distances, index);
+    let placesCopy = Application.reorder(this.state.trip.places, index);
 
     let newState = {
       places: placesCopy,
@@ -362,7 +362,7 @@ class Application extends Component {
                      queryPlaces={this.queryPlaces}
             />
             <Display trip={this.state.trip}
-                     setNewStart={this.props.setNewStart}/>
+                     setNewStart={this.setNewStart}/>
           </div>
           <Footer number={this.props.number} name={this.props.name}/>
         </div>
