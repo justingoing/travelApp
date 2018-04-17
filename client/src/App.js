@@ -16,9 +16,7 @@ class App extends Component {
   render() {
     return(
         <div id="tripco">
-            <Header number={this.state.number} name={this.state.name}/>
             <Application number={this.state.number} name={this.state.name}/>
-            <Footer number={this.state.number} name={this.state.name}/>
         </div>
     );
   }

@@ -65,9 +65,9 @@ class Destinations extends Component {
         return addition;
     }
     check(name) {
-        console.log("CHECK " + name);
+        //console.log("CHECK " + name);
         if(this.props.query.filters.length == 0) {
-            console.log("no filters yet");
+            //console.log("no filters yet");
             let newQuery = this.props.query;
             //console.log(this.props.query);
             newQuery.filters = [{
@@ -86,7 +86,7 @@ class Destinations extends Component {
         for(let j = 0; j < this.props.query.filters["0"].values.length; j++) {
             //console.log(this.props.query.filters[j] + " vs " + name);
             if(this.props.query.filters["0"].values[j] == name) {
-                console.log(name + " is already inside filters, should remove");
+                //console.log(name + " is already inside filters, should remove");
                 let removeQuery = this.props.query;
                 if(1 == this.props.query.filters["0"].values.length) {
                     removeQuery.filters.pop(); //if only one value then empty filters entirely
@@ -98,15 +98,15 @@ class Destinations extends Component {
                 removeQuery.filters["0"].values.splice(j, 1);
                 this.props.updateQuery(removeQuery);
 
-                console.log("REMOVED " + this.props.query);
+                //console.log("REMOVED " + this.props.query);
                 return;
             }
             else {
-                console.log(name + " not in filters, should add");
+                //console.log(name + " not in filters, should add");
                 let addQuery = this.props.query;
                 addQuery.filters["0"].values.push(name);
                 this.props.updateQuery(addQuery);
-                console.log("ADDED " + this.props.query);
+                //console.log("ADDED " + this.props.query);
                 return;
             }
         }

@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import Options from './Options';
-import Instructions from './Instructions';
-import Destinations from './Destinations';
-import Trip from './Trip';
+import Sidebar from './Sidebar';
+import Footer from './Footer';
+import Display from "./Display";
+import Header from './Header';
+import Trip from "./Trip";
 
 /* Renders the application.
  * Holds the destinations and options state shared with the trip.
@@ -19,6 +20,10 @@ class Application extends Component {
     this.addToTrip = this.addToTrip.bind(this);
     this.isInTrip = this.isInTrip.bind(this);
     this.addAllToTrip = this.addAllToTrip.bind(this);
+    this.plan = this.plan.bind(this);
+    this.saveTFFI = this.saveTFFI.bind(this);
+    this.reverseTrip = this.reverseTrip.bind(this);
+    this.setNewStart = this.setNewStart.bind(this);
 
     this.state = {
       loading: false,
@@ -35,7 +40,7 @@ class Application extends Component {
   // DONT TOUCH OR YOU DIE
   componentWillMount() {
     // Put app into loading state
-    this.setState({ loading: true });
+    this.setState({loading: true});
 
     // load until server gives us it's configuration
     this.requestConfig()
@@ -47,7 +52,7 @@ class Application extends Component {
 
       // now that we have server info, set state accordingly and exit loading
       this.setState({
-       loading: false,
+        loading: false,
         trip: this.state.trip,
         query: this.state.query,
         config: this.state.config
@@ -55,9 +60,10 @@ class Application extends Component {
     });
   }
 
-    //populate with search
+  //populate with search
   updateQuery(searchTFFI) {
-    let copyTFFI = Object.assign(this.getDefaultQuery(this.state.config), this.state.query);
+    let copyTFFI = Object.assign(this.getDefaultQuery(this.state.config),
+        this.state.query);
 
     Object.assign(copyTFFI, searchTFFI);
     let nextTFFI = {
@@ -134,7 +140,8 @@ class Application extends Component {
         method: "GET"
       });
     } catch (err) {
-      console.log("No configuration response from server, assuming server version 1.0");
+      console.log(
+          "No configuration response from server, assuming server version 1.0");
       console.error(err);
       configRequest = this.getDefaultConfig();
       configRequest.version = 1;
@@ -152,11 +159,10 @@ class Application extends Component {
     console.log("hey", this.state.config);
     console.log("defaulttrip, ", this.getDefaultTrip(this.state.config));
 
-
-    let copyTFFI = Object.assign(this.getDefaultTrip(this.state.config), this.state.trip);
+    let copyTFFI = Object.assign(this.getDefaultTrip(this.state.config),
+        this.state.trip);
     Object.assign(copyTFFI, tffi);
     console.log("copyTFFI, ", copyTFFI);
-
 
     let nextTFFI = {
       version: copyTFFI.version,
@@ -180,8 +186,6 @@ class Application extends Component {
 
     this.setState({trip: nextTFFI});
   }
-
-
 
   checkOptionsV1(nextTFFI, incomingTFFI) {
 
@@ -224,10 +228,11 @@ class Application extends Component {
   }
 
   updateMapType(mapType) {
-    if(mapType == "kml" && this.state.config.maps.includes("kml"))
+    if (mapType == "kml" && this.state.config.maps.includes("kml")) {
       this.state.trip.options.map = "kml";
-    else
+    } else {
       this.state.trip.options.map = "svg";
+    }
   }
 
   isInTrip(id) {
@@ -254,45 +259,114 @@ class Application extends Component {
     this.setState({trip: this.state.trip})
   }
 
+  /* Sends a request to the server with the destinations and options.
+   * Receives a response containing the map and itinerary to update the
+   * state for this object.
+   */
+  fetchResponse(){
+    console.log(process.env.SERVICE_URL);
+    console.log("POSTing: " + this.state.trip);
+    return fetch(process.env.SERVICE_URL + '/plan', {
+      method:"POST",
+      body: JSON.stringify(this.state.trip)
+    });
+  }
+
+  async plan(){
+    try {
+      let serverResponse = await this.fetchResponse();
+      let tffi = await serverResponse.json();
+      if(tffi.code == "500"){
+        alert(tffi.message);
+      }else{
+        this.updateTrip(tffi);
+      }
+    } catch(err) {
+      console.error(err);
+    }
+  }
+
+  /* Saves the map and itinerary to the local file system.
+   */
+  saveTFFI(){
+    //Create saver object and contents
+    var Saver = require('file-saver');
+    var blob = new Blob([JSON.stringify(this.state.trip)], {type: "text/plain;charset=utf-8"});
+
+    //Create title
+    var title = this.state.trip.title;
+    if (title === "") {
+      title = "Trip.json"
+    } else {
+      title += ".json";
+    }
+
+    //Save file
+    Saver.saveAs(blob, title);
+  }
+
+  reverseTrip() {
+    let places = this.state.trip.places;
+    let distances = this.state.trip.distances;
+    let newState = {
+      places: places.reverse(),
+      distances: distances.reverse()
+    };
+    this.updateTrip(newState);
+  }
+
+  setNewStart(index) {
+    let distancesCopy = Trip.reorder(this.state.trip.distances, index);
+    let placesCopy = Trip.reorder(this.state.trip.places, index);
+
+    let newState = {
+      places: placesCopy,
+      distances: distancesCopy
+    };
+
+    this.updateTrip(newState);
+  }
+
+  static reorder(array, index) {
+    if (index < 0 || index >= array.length) {
+      return array;
+    }
+
+    return array.slice(index).concat(array.slice(0, index));
+  }
+
   render() {
-    if(this.state.loading == true)
-    {
+    if (this.state.loading == true) {
       return <h2>LOADING...</h2>;
     }
 
     return (
-        <div id="application">
-          <div className="row">
-            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-              <Instructions number={this.props.number} name={this.props.name}/>
-            </div>
-            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-              <Options options={this.state.trip.options}
-                       updateOptions={this.updateOptions}
-                       updateMapType={this.updateMapType}
-              />
-            </div>
+        <div id="application" style={{maxHeight: "100%"}}>
+          <Header/>
+          <div className="row" style={{maxHeight: "100%"}}>
+            <Sidebar plan={this.plan}
+                     saveTFFI={this.saveTFFI}
+                     reverseTrip={this.reverseTrip}
+                     setNewStart={this.setNewStart}
+                     updateOptions={this.updateOptions}
+                     updateMapType={this.updateMapType}
+                     trip={this.state.trip}
+                     updateTrip={this.updateTrip}
+                     query={this.state.query}
+                     config={this.state.config}
+                     updateQuery={this.updateQuery}
+                     checkSQL={this.checkSQL}
+                     addToTrip={this.addToTrip}
+                     isInTrip={this.isInTrip}
+                     addAllToTrip={this.addAllToTrip}
+                     queryPlaces={this.queryPlaces}
+            />
+            <Display trip={this.state.trip}
+                     setNewStart={this.props.setNewStart}/>
           </div>
-          <div className="row">
-            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-              <Destinations trip={this.state.trip}
-                            updateTrip={this.updateTrip}
-                            query={this.state.query}
-                            config={this.state.config}
-                            updateQuery={this.updateQuery}
-                            checkSQL={this.checkSQL}
-                            addToTrip={this.addToTrip}
-                            isInTrip={this.isInTrip}calcStyles
-                            addAllToTrip={this.addAllToTrip}
-                            queryPlaces={this.queryPlaces}
-              />
-            </div>
-            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-              <Trip trip={this.state.trip} updateTrip={this.updateTrip}/>
-            </div>
-          </div>
+          <Footer number={this.props.number} name={this.props.name}/>
         </div>
-    )
+    );
   }
 }
 
