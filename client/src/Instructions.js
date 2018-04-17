@@ -6,8 +6,6 @@ import React, {Component} from 'react';
 class Instructions extends Component {
   constructor(props) {
     super(props);
-    console.log("got this.props.name?");
-    console.log(this.props.name);
   }
 
   render() {
