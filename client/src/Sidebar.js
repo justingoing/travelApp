@@ -15,26 +15,26 @@ class Sidebar extends Component {
     return (
         <div id="sidebar"
              className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-left"
-             style={{maxHeight: "100%", "overflow-y": "scroll"}}>
+             style={{maxHeight: "100%", overflowY: "scroll"}}>
           <div className="card-body">
             <div className="input-group" role="group">
               <span className="input-group-btn">
               <button className="btn btn-primary "
                       style={{border: "#1E4D2B", backgroundColor: "#1E4D2B"}}
-                      onClick={this.plan} type="button">Plan</button>
+                      onClick={this.props.plan} type="button">Plan</button>
               </span>
 
               <input type="text" className="form-control" placeholder=""/>
               <span className="input-group-btn">
               <button className="btn btn-primary "
                       style={{border: "#1E4D2B", backgroundColor: "#1E4D2B"}}
-                      onClick={this.saveTFFI} type="button">Save</button>
+                      onClick={this.props.saveTFFI} type="button">Save</button>
               </span>
             </div>
             <div>
               <button className="btn btn-primary "
                       style={{border: "#1E4D2B", backgroundColor: "#1E4D2B"}}
-                      onClick={this.reverseTrip} type="button">Reverse Trip
+                      onClick={this.props.reverseTrip} type="button">Reverse Trip
               </button>
             </div>
           </div>

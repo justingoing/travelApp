@@ -3,6 +3,7 @@ import Sidebar from './Sidebar';
 import Footer from './Footer';
 import Display from "./Display";
 import Header from './Header';
+import Trip from "./Trip";
 
 /* Renders the application.
  * Holds the destinations and options state shared with the trip.
@@ -19,6 +20,10 @@ class Application extends Component {
     this.addToTrip = this.addToTrip.bind(this);
     this.isInTrip = this.isInTrip.bind(this);
     this.addAllToTrip = this.addAllToTrip.bind(this);
+    this.plan = this.plan.bind(this);
+    this.saveTFFI = this.saveTFFI.bind(this);
+    this.reverseTrip = this.reverseTrip.bind(this);
+    this.setNewStart = this.setNewStart.bind(this);
 
     this.state = {
       loading: false,
@@ -254,6 +259,82 @@ class Application extends Component {
     this.setState({trip: this.state.trip})
   }
 
+  /* Sends a request to the server with the destinations and options.
+   * Receives a response containing the map and itinerary to update the
+   * state for this object.
+   */
+  fetchResponse(){
+    console.log(process.env.SERVICE_URL);
+    console.log("POSTing: " + this.state.trip);
+    return fetch(process.env.SERVICE_URL + '/plan', {
+      method:"POST",
+      body: JSON.stringify(this.state.trip)
+    });
+  }
+
+  async plan(){
+    try {
+      let serverResponse = await this.fetchResponse();
+      let tffi = await serverResponse.json();
+      if(tffi.code == "500"){
+        alert(tffi.message);
+      }else{
+        this.updateTrip(tffi);
+      }
+    } catch(err) {
+      console.error(err);
+    }
+  }
+
+  /* Saves the map and itinerary to the local file system.
+   */
+  saveTFFI(){
+    //Create saver object and contents
+    var Saver = require('file-saver');
+    var blob = new Blob([JSON.stringify(this.state.trip)], {type: "text/plain;charset=utf-8"});
+
+    //Create title
+    var title = this.state.trip.title;
+    if (title === "") {
+      title = "Trip.json"
+    } else {
+      title += ".json";
+    }
+
+    //Save file
+    Saver.saveAs(blob, title);
+  }
+
+  reverseTrip() {
+    let places = this.state.trip.places;
+    let distances = this.state.trip.distances;
+    let newState = {
+      places: places.reverse(),
+      distances: distances.reverse()
+    };
+    this.updateTrip(newState);
+  }
+
+  setNewStart(index) {
+    let distancesCopy = Trip.reorder(this.state.trip.distances, index);
+    let placesCopy = Trip.reorder(this.state.trip.places, index);
+
+    let newState = {
+      places: placesCopy,
+      distances: distancesCopy
+    };
+
+    this.updateTrip(newState);
+  }
+
+  static reorder(array, index) {
+    if (index < 0 || index >= array.length) {
+      return array;
+    }
+
+    return array.slice(index).concat(array.slice(0, index));
+  }
+
   render() {
     if (this.state.loading == true) {
       return <h2>LOADING...</h2>;
@@ -263,7 +344,11 @@ class Application extends Component {
         <div id="application" style={{maxHeight: "100%"}}>
           <Header/>
           <div className="row" style={{maxHeight: "100%"}}>
-            <Sidebar updateOptions={this.updateOptions}
+            <Sidebar plan={this.plan}
+                     saveTFFI={this.saveTFFI}
+                     reverseTrip={this.reverseTrip}
+                     setNewStart={this.setNewStart}
+                     updateOptions={this.updateOptions}
                      updateMapType={this.updateMapType}
                      trip={this.state.trip}
                      updateTrip={this.updateTrip}
