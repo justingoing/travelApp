@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import DestCard from './DestCard';
+
 
 class Itinerary extends Component {
   constructor(props) {
@@ -65,11 +67,18 @@ class Itinerary extends Component {
     let table = this.createTable();
 
     var destRows = [];
-    var mileRows = [];
-    for(let i = 0; i < 50; ++i)
+    for(let i = 0; i < this.props.trip.places.length; ++i)
     {
-      destRows.push(<td>Test{i}</td>);
-      mileRows.push(<td>TestMiles{i}</td>);
+      let dest = this.props.trip.places[i];
+      if(i == 0) {
+        console.log("STARTING DESTINATION");
+        console.log(dest);
+      }
+      destRows.push(
+          <td>
+            <DestCard destination={dest}/>
+          </td>
+      );
     }
 
     return (
@@ -78,10 +87,6 @@ class Itinerary extends Component {
             <tr>
               <th scope="col">Destinations</th>
               {destRows}
-            </tr>
-            <tr>
-              <th scope="col">Mileage</th>
-              {mileRows}
             </tr>
           </table>
         </div>

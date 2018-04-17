@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
-import Display from "./Display";
+import Display from './Display';
 import Header from './Header';
-import Trip from "./Trip";
+import Trip from './Trip';
 
 /* Renders the application.
  * Holds the destinations and options state shared with the trip.
