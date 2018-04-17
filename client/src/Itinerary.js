@@ -76,7 +76,7 @@ class Itinerary extends Component {
       }
       destRows.push(
           <td>
-            <DestCard destination={dest}/>
+            <DestCard destination={dest} tripPosition={i}/>
           </td>
       );
     }
@@ -85,7 +85,7 @@ class Itinerary extends Component {
         <div className="table-responsive" id="itinerary">
           <table className="table">
             <tr>
-              <th scope="col">Destinations</th>
+              <th scope="col"></th>
               {destRows}
             </tr>
           </table>
