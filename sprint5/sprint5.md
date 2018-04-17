@@ -57,7 +57,7 @@ Story Points |  55  | 0
 Date | Tasks done  | Tasks in progress | Impediments 
 :--- | :--- | :--- | :--- 
 *date* | *@task only* | *@task only* | none
- | | | 
+ 04/17 | 2 | #298, #312, #302, #160, #114, #321 | none
  
 
 ## Review
