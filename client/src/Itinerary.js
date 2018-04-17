@@ -64,16 +64,24 @@ class Itinerary extends Component {
   render() {
     let table = this.createTable();
 
+    var destRows = [];
+    var mileRows = [];
+    for(let i = 0; i < 50; ++i)
+    {
+      destRows.push(<td>Test{i}</td>);
+      mileRows.push(<td>TestMiles{i}</td>);
+    }
+
     return (
         <div className="table-responsive" id="itinerary">
           <table className="table">
             <tr>
-              <th>Destinations</th>
-              <td>DEST 1</td>
+              <th scope="col">Destinations</th>
+              {destRows}
             </tr>
             <tr>
-              <th>Mileage</th>
-              <td>Miles 1</td>
+              <th scope="col">Mileage</th>
+              {mileRows}
             </tr>
           </table>
         </div>
