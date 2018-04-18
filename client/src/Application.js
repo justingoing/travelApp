@@ -265,6 +265,7 @@ class Application extends Component {
     }
     this.queryPlaces = {};
     this.setState({trip: this.state.trip})
+    this.plan();
   }
 
   addToTrip(place) {
