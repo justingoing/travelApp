@@ -101,7 +101,9 @@ class Destinations extends Component {
                 <div>{this.makeChecks()}</div>
             </div>
             <br/>
-            <SearchTable destinations={this.props.query} addToTrip={this.props.addToTrip} isInTrip={this.props.isInTrip} queryPlaces={this.props.queryPlaces} addAllToTrip={this.props.addAllToTrip}/>
+            <SearchTable destinations={this.props.query} addToTrip={this.props.addToTrip}
+            isInTrip={this.props.isInTrip} queryPlaces={this.props.queryPlaces}
+            plan={this.props.plan} addAllToTrip={this.props.addAllToTrip}/>
           </div>
         </div>
     );
