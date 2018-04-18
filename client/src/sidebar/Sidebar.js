@@ -57,7 +57,7 @@ class Sidebar extends Component {
                   </span>
               </div>
             </div>
-            <ListGroup>
+            <ListGroup >
               <ListGroupItem tag="button" href="#search"
                              onClick={this.toggleSearch}>
                 Search For Destinations

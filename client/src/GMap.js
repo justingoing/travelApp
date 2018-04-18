@@ -23,8 +23,8 @@ class GMap extends Component {
     const places = this.props.trip.places;
     return (
         <GoogleMap
-            defaultCenter={{lat: 38.5, lng: -96}}
-            defaultZoom={5}
+            defaultCenter={{lat: 0, lng: 0}}
+            defaultZoom={2}
         >
           <Polyline path={this.makePath(places)}
                     options={{strokeColor: '#BD4269'}}

@@ -90,7 +90,8 @@ class Destinations extends Component {
   render() {
     return (
         <div id="destinations" className="card">
-          <div className="card-body">
+          <div className="card-body"
+               style={{backgroundColor: "#59595B"}}>
             <div className="input-group" role="group">
               <input type="text" className="form-control" id="mySearch" placeholder="Search for a place..."/>
               <button className="btn btn-primary " style={{border: "#1E4D2B", backgroundColor: "#1E4D2B"}} onClick={this.sendSearch} type="button">Search</button>

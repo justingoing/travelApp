@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import {
   Button,
   Popover,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
+  ListGroupItem,
   ListGroup,
   Collapse
 } from 'reactstrap';
@@ -49,14 +47,16 @@ class Header extends Component {
     this.setState({pageShown: !this.state.pageShown});
   }
 
-  makeStaff(img, name) {
+  makeStaff(img, link, name) {
     return (<div className="container px-2 py-1">
-        <span>
-        <img className="rounded-circle"
+        <div className="row pl-2">
+          <img className="rounded-circle"
              src={img}
              style={{maxHeight: "75", border: "solid", borderWidth: "2px"}}/>
-          <div className=""> {name} </div>
-          </span>
+          <div className="ml-2" style={{margin: "auto"}}>
+            <a href={link} style={{textDecoration: "none", textAlign:"center", color:"black"}}>{name}</a>
+          </div>
+        </div>
       </div>);
   }
 
@@ -64,67 +64,82 @@ class Header extends Component {
     return (
         <div id="header" style={{backgroundColor: "#1E4D28"}}
              ref={(divElement) => this.divElement = divElement}>
-          <div
-              className="col-8 col-sm-7 col-md-6 col-lg-5 col-xl-4 align-self-left">
-            <img className="img-fluid"
-                 src="http://www.cs.colostate.edu/~davematt/logos/CS_unit_identifiers/CompSci-NS-CSU-1-Hrev.png"
-                 style={{maxHeight: "50"}}/>
-            <Button id="aboutpage" className="btn"
-                    onClick={this.toggleStaffPage}><FaCog/></Button>
+          <div className="row">
+
+            <div className="col-10">
+              <img className="img-fluid"
+                   src="http://www.cs.colostate.edu/~davematt/logos/CS_unit_identifiers/CompSci-NS-CSU-1-Hrev.png"
+                   style={{maxHeight: "50"}}/>
+            </div>
+
+            <div className="col-2" style={{margin: "auto"}}>
+              <Button className="btn float-right p-2"
+                      id="aboutpage"
+                      onClick={this.toggleStaffPage}
+                      style={{backgroundColor:"rgba(0,0,0,0)", border:"none"}}
+            ><FaCog/></Button>
+            </div>
+
             <Popover placement="bottom"
                      isOpen={this.state.pageShown}
                      target="aboutpage"
                      toggle={this.toggleStaffPage}
-                     style={{maxHeight: "600px", overflowY: "scroll", borderColor: "#59595B"}}>
-              <div className="container m-0 p-0"
-                   style={{border: "solid", borderColor: "#59595B"}}>
-                <PopoverHeader style={{backgroundColor: "#C8C372", border:"none"}}
-                               onClick={this.toggleStaff}>
-                  Staff Information
-                </PopoverHeader>
-                <Collapse isOpen={this.state.staffShown}>
-                  {this.makeStaff(
-                      "http://www.cs.colostate.edu/~pbarstad/face.jpg",
-                      "Paul Barstad")}
-                  {this.makeStaff(
-                      "http://www.cs.colostate.edu/~pbarstad/face.jpg",
-                      "Isaac Gentz")}
-                  {this.makeStaff(
-                      "http://www.cs.colostate.edu/~jgoing/jgoingStaff.jpg",
-                      "Justin Going")}
-                  {this.makeStaff(
-                      "http://www.cs.colostate.edu/~shaders/double.jpg",
-                      "Samuel Kaessner")}
-                </Collapse>
+                     style={{maxHeight: "600px",
+                       overflowY: "scroll"}}>
+                <ListGroup>
+                  <ListGroupItem className="px-2"
+                                 style={{backgroundColor: "#C8C372", width: "350px"}}
+                                 onClick={this.toggleStaff}>
+                    Staff Information
+                  </ListGroupItem>
+                  <Collapse className="px-2" isOpen={this.state.staffShown}>
+                    {this.makeStaff(
+                        "http://www.cs.colostate.edu/~pbarstad/face.jpg",
+                        "http://www.cs.colostate.edu/~pbarstad/",
+                        "Paul Barstad")}
+                    {this.makeStaff(
+                        "http://www.cs.colostate.edu/~ikegentz/pic.jpg",
+                        "http://www.cs.colostate.edu/~ikegentz/",
+                        "Isaac Gentz")}
+                    {this.makeStaff(
+                        "http://www.cs.colostate.edu/~jgoing/jgoingStaff.jpg",
+                        "http://www.cs.colostate.edu/~jgoing/",
+                        "Justin Going")}
+                    {this.makeStaff(
+                        "http://www.cs.colostate.edu/~shaders/double.jpg",
+                        "http://www.cs.colostate.edu/~shaders/",
+                        "Samuel Kaessner")}
+                  </Collapse>
 
-                <PopoverHeader style={{backgroundColor: "#C8C372", border:"none"}}
-                               onClick={this.toggleInstructions}>
-                  Instructions
-                </PopoverHeader>
-                <Collapse isOpen={this.state.instructionsShown}>
-                  <h3>TripCo <small>t16 Dave Matthews Band</small></h3>
-                  <br/>
-                  <p>"Want to travel far and wide?"</p>
-                  <ol>
-                    <li>
-                      Choose options for trip planning, information to display
-                      about locations,
-                      and how the trip map and itinerary should be saved.
-                    </li>
-                    <li>
-                      Choose your destinations by loading existing sets of
-                      destinations or
-                      find more in an extensive database of locations
-                      worldwide.
-                    </li>
-                    <li>
-                      Plan the trip with the options you selected.
-                      Review and revise the trip origin and order.
-                      Save the trip map and itinerary for future reference.
-                    </li>
-                  </ol>
-                </Collapse>
-              </div>
+                  <ListGroupItem className="px-2"
+                                 style={{backgroundColor: "#C8C372", width: "350px"}}
+                                 onClick={this.toggleInstructions}>
+                    Instructions
+                  </ListGroupItem>
+                  <Collapse className="p-2" isOpen={this.state.instructionsShown}>
+                    <p><strong> Team 16 - The Dave Matthews Band </strong></p>
+                    <br/>
+                    <p>"Want to travel far and wide?"</p>
+                    <ol>
+                      <li>
+                        Choose options for trip planning, information to display
+                        about locations,
+                        and how the trip map and itinerary should be saved.
+                      </li>
+                      <li>
+                        Choose your destinations by loading existing sets of
+                        destinations or
+                        find more in an extensive database of locations
+                        worldwide.
+                      </li>
+                      <li>
+                        Plan the trip with the options you selected.
+                        Review and revise the trip origin and order.
+                        Save the trip map and itinerary for future reference.
+                      </li>
+                    </ol>
+                  </Collapse>
+                </ListGroup>
             </Popover>
           </div>
         </div>
