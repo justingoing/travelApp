@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Options from "./Options";
 import Destinations from "./Destinations";
-import LoadFile from "./LoadFile";
+import LoadFile from "./sidebar/LoadFile";
 import {
   Collapse,
   Button,

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import Sidebar from './Sidebar';
-import Footer from './Footer';
+import Footer from './branding/Footer';
 import Display from './Display';
-import Header from './Header';
+import Header from './branding/Header';
 import Trip from './Trip';
 
 /* Renders the application.
