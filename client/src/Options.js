@@ -104,7 +104,7 @@ class Options extends Component {
             </span>
             <br></br>
             <p>Zero Optimization <input id="typeinp" type="range" min="0" max="1" step=".01" defaultValue={Number(this.props.options.optimization)}
-                                        onChange={this.onInput.bind(this)}/> Full Optimization</p>
+                                        onMouseUp={this.onInput.bind(this)}/> Full Optimization</p>
             <p>Map Type</p>
           </div>
         </div>

@@ -241,6 +241,7 @@ class Application extends Component {
     if (options >= 0 && options <= 1) {
       this.state.trip.options.optimization = options;
     }
+    this.plan();
   }
 
   updateMapType(mapType) {
@@ -249,6 +250,7 @@ class Application extends Component {
     } else {
       this.state.trip.options.map = "svg";
     }
+    this.plan();
   }
 
   isInTrip(id) {
