@@ -62,15 +62,6 @@ class Sidebar extends Component {
                           onClick={this.props.plan}
                           type="button">Plan</button>
                   </span>
-                <span className="input-group-btn">
-                  <button className="btn btn-primary "
-                          style={{
-                            border: "#1E4D2B",
-                            backgroundColor: "#1E4D2B"
-                          }}
-                          onClick={this.props.saveTFFI}
-                          type="button">Save</button>
-                </span>
               </div>
             </div>
             <ListGroup>
@@ -107,8 +98,10 @@ class Sidebar extends Component {
                 <LoadFile updateTrip={this.props.updateTrip}
                           trip={this.props.trip}/>
               </Collapse>
+              <ListGroupItem tag="button" href="#save"
+                             onClick={this.props.saveTFFI}>Save File
+              </ListGroupItem>
             </ListGroup>
-
           </div>
         </div>
     );
