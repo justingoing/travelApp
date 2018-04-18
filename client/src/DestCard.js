@@ -66,7 +66,7 @@ class DestCard extends Component {
               </div>
               <br/>
               <div className="row"
-                   style={{color: "black"}}>{this.state.destination.name}</div>
+                   style={{color: "black"}}>{this.props.destination.name}</div>
 
             </h6>
             {contents()}
