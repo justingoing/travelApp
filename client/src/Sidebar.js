@@ -54,13 +54,6 @@ class Sidebar extends Component {
 
               <div className="input-group" role="group">
                 <span className="input-group-btn">
-                  <button className="btn btn-primary "
-                          style={{
-                            border: "#1E4D2B",
-                            backgroundColor: "#1E4D2B"
-                          }}
-                          onClick={this.props.plan}
-                          type="button">Plan</button>
                   </span>
               </div>
             </div>
