@@ -66,7 +66,7 @@ class Itinerary extends Component {
 
     return (
         <div className="table-responsive" id="itinerary">
-          <table responsive hover size="sm" style={{height: "50%", overflow: "scroll", display: "inline-block"}} className="table table-responsive">
+          <table size="sm" style={{height: "50%", overflow: "scroll", display: "inline-block"}} className="table table-responsive">
             <thead>
               <tr className="table-info">
                 <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Start</th>

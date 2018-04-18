@@ -31,7 +31,8 @@ class Destinations extends Component {
       //POST request
       return fetch(process.env.SERVICE_URL + '/query', {
           method: "POST",
-          body: JSON.stringify(this.props.query)
+          body: JSON.stringify(this.props.query),
+          header: {'Access-Control-Allow-Origin':'*'}
       });
     }
 
