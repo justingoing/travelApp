@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import Options from "./Options";
-import Destinations from "./Destinations";
-import LoadFile from "./sidebar/LoadFile";
+import Options from "../Options";
+import Destinations from "../Destinations";
+import LoadFile from "./LoadFile";
 import {
   Collapse,
   Button,
@@ -10,7 +10,7 @@ import {
   ListGroup,
   ListGroupItem
 } from 'reactstrap';
-import TripTitle from "./sidebar/TripTitle";
+import TripTitle from "./TripTitle";
 
 /*
  * Renders the sidebar that contains all the tools needed to edit and manipulate
@@ -48,8 +48,8 @@ class Sidebar extends Component {
         <div id="sidebar"
              className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-left"
              style={{height: "1500px", maxHeight: "100%", overflowY: "scroll"}}>
-          <div className="container mx-2">
-            <div className="container my-2">
+          <div className="container px-2">
+            <div className="container py-2">
               <TripTitle updateTrip={this.props.updateTrip} trip={this.props.trip}/>
 
               <div className="input-group" role="group">
