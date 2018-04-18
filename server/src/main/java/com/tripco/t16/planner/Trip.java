@@ -1,10 +1,11 @@
 package com.tripco.t16.planner;
 
+import com.tripco.t16.tffi.Error;
 import java.io.*;
 import java.util.ArrayList;
-
 import com.tripco.t16.calc.DistanceCalculator;
 import com.tripco.t16.calc.Optimization;
+
 
 /**
  * The Trip class supports TFFI so it can easily be converted to/from Json by Gson.
@@ -22,7 +23,14 @@ public class Trip {
 
   public ArrayList<Coords> coords;
 
-  public final String defaultSVG = "<svg width=\"1920\" height=\"960\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><!-- Created with SVG-edit - http://svg-edit.googlecode.com/ --> <g> <g id=\"svg_4\"> <svg id=\"svg_1\" height=\"960\" width=\"1920\" xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\"> <g id=\"svg_2\"> <title>Layer 1</title> <rect fill=\"rgb(119, 204, 119)\" stroke=\"black\" x=\"0\" y=\"0\" width=\"1920\" height=\"960\" id=\"svg_3\"/> </g> </svg> </g> <g id=\"svg_9\"> <svg id=\"svg_5\" height=\"480\" width=\"960\" y=\"240\" x=\"480\" xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\"> <g id=\"svg_6\"> <title>Layer 2</title> <polygon points=\"0,0 960,0 960,480 0,480\" stroke-width=\"12\" stroke=\"brown\" fill=\"none\" id=\"svg_8\"/> <polyline points=\"0,0 960,480 480,0 0,480 960,0 480,480 0,0\" fill=\"none\" stroke-width=\"4\" stroke=\"blue\" id=\"svg_7\"/> </g> </svg> </g> </g> </svg>";
+  public static final int SVG_WIDTH = 1920;
+  public static final int SVG_HEIGHT = 960;
+  public static final int SVG_MAPPED_X = 1024;
+  public static final int SVG_MAPPED_Y = 512;
+  public final String defaultSVG =
+      "<svg width=\"" + Integer.toString(Trip.SVG_WIDTH) + "\" height=\"" + Integer
+          .toString(Trip.SVG_HEIGHT)
+          + "\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:svg=\"http://www.w3.org/2000/svg\"><!-- Created with SVG-edit - http://svg-edit.googlecode.com/ --> <g> <g id=\"svg_4\"> <svg id=\"svg_1\" height=\"960\" width=\"1920\" xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\"> <g id=\"svg_2\"> <title>Layer 1</title> <rect fill=\"rgb(119, 204, 119)\" stroke=\"black\" x=\"0\" y=\"0\" width=\"1920\" height=\"960\" id=\"svg_3\"/> </g> </svg> </g> <g id=\"svg_9\"> <svg id=\"svg_5\" height=\"480\" width=\"960\" y=\"240\" x=\"480\" xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\"> <g id=\"svg_6\"> <title>Layer 2</title> <polygon points=\"0,0 960,0 960,480 0,480\" stroke-width=\"12\" stroke=\"brown\" fill=\"none\" id=\"svg_8\"/> <polyline points=\"0,0 960,480 480,0 0,480 960,0 480,480 0,0\" fill=\"none\" stroke-width=\"4\" stroke=\"blue\" id=\"svg_7\"/> </g> </svg> </g> </g> </svg>";
 
   public static final String DEST_RADIUS = "10";
 
@@ -30,27 +38,34 @@ public class Trip {
    * The top level method that does planning. At this point it just adds the map and distances for
    * the places in order. It might need to reorder the places in the future.
    */
-  public void plan() {
+  public Error plan() {
+    Error err = new Error();
     for (int i = this.places.size() - 1; i >= 0; --i) {
       try {
         if (!this.validateLatLong(this.places.get(i).latitude) ||
             !this.validateLatLong(this.places.get(i).longitude)) {
           this.places.remove(i);
+        //}else{
+          err.code = "500";
+          err.message = "Server failed to validate LatLong";
+          err.debug = "Trip.java-plan-validateLatLong.";
+          return err;
         }
       } catch (NullPointerException e) {
         this.places.remove(i);
       }
     }
 
-    if (options.getOptimizationLevel() >= 0.66) {
-      this.places = Optimization.twoOpt(places, options.getRadius());
-    } else if (options.getOptimizationLevel() >= .33) {
-      this.places = Optimization.nearestNeighbor(places, options.getRadius());
+    if (options != null && options.getOptimizationLevel() >= 0.66) {
+      this.places = Optimization.optimize(places, options.getUnitRadius(), true);
+    } else if (options != null && options.getOptimizationLevel() >= .33) {
+      this.places = Optimization.optimize(places, options.getUnitRadius(), false);
     }
 
     this.coords = placesToCoords();
     this.distances = legDistances();
     this.map = svg();
+    return err;
   }
 
   /**
@@ -84,35 +99,86 @@ public class Trip {
    * @return A String SVG of trip 'legs' to be sent to the server
    */
   public String getLegsAsSVG() {
-    // Hardcoded for testing
+    StringBuilder svg = new StringBuilder(
+        "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1066.6073\" height=\"783.0824\">");
 
-    String svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1066.6073\" height=\"783.0824\">";
+    if (this.coords.size() > 0) {
+      Coords start = this.getMappedCoords(this.coords.get(0).x, this.coords.get(0).y);
+      Coords end = this.getMappedCoords(this.coords.get(this.coords.size() - 1).x,
+          this.coords.get(this.coords.size() - 1).y);
 
-    Coords start = this.getMappedCoords(this.coords.get(0).x, this.coords.get(0).y);
-    Coords end = this.getMappedCoords(this.coords.get(this.coords.size() - 1).x,
-        this.coords.get(this.coords.size() - 1).y);
+      addSvgLeg(svg, start, end);
 
-    svg += "<line stroke=\"#1E4D2B\" y2=\"" + end.y + "\" x2=\"" + end.x
-        + "\" y1=\"" + start.y + "\" x1=\"" + start.x + "\" stroke-width=\"5\" fill=\"none\"/>";
+      for (int i = 0; i < coords.size() - 1; ++i) {
+        Coords cur = this.getMappedCoords(this.coords.get(i).x, this.coords.get(i).y);
+        Coords nex = this.getMappedCoords(this.coords.get(i + 1).x, this.coords.get(i + 1).y);
 
-    for (int i = 0; i < coords.size() - 1; ++i) {
-      Coords cur = this.getMappedCoords(this.coords.get(i).x, this.coords.get(i).y);
-      Coords nex = this.getMappedCoords(this.coords.get(i + 1).x, this.coords.get(i + 1).y);
+        // wrap around 'edge' of the earth
+        if (Math.abs(nex.x - cur.x) > (Trip.SVG_MAPPED_X / 2)) {
+          if (nex.x > cur.x) {
+            Coords curEnd = new Coords(nex.x - Trip.SVG_MAPPED_X, nex.y);
+            Coords nexEnd = new Coords(cur.x + Trip.SVG_MAPPED_X, cur.y);
+            addSvgLeg(svg, cur, curEnd, nex, nexEnd);
+          }
+          else {
+            Coords curEnd = new Coords(nex.x + Trip.SVG_MAPPED_X, nex.y);
+            Coords nexEnd = new Coords(cur.x - Trip.SVG_MAPPED_X, cur.y);
+            addSvgLeg(svg, cur, curEnd, nex, nexEnd);
+          }
+        }
+        // close enough to not wrap around earth
+        else {
+          addSvgLeg(svg, cur, nex);
+        }
 
-      svg += "<line stroke=\"#1E4D2B\" y2=\"" + nex.y + "\" x2=\"" + nex.x
-          + "\" y1=\"" + cur.y + "\" x1=\"" + cur.x + "\" stroke-width=\"5\" fill=\"none\"/>";
-
-      svg += "<circle cx=\"" + cur.x + "\" cy=\" " + cur.y + " \" r=\"" + Trip.DEST_RADIUS
-          + "\" stroke=\"#1E4D2B\" stroke-width=\"3\" fill=\"#C8C372\" />";
-
-      if (i == this.coords.size() - 2) {
-        svg += "<circle cx=\"" + nex.x + "\" cy=\" " + nex.y + " \" r=\"" + Trip.DEST_RADIUS
-            + "\" stroke=\"#1E4D2B\" stroke-width=\"3\" fill=\"#C8C372\" />";
+        addSvgCircle(svg, cur);
+        if (i == this.coords.size() - 2) {
+          addSvgCircle(svg, nex);
+        }
       }
     }
-    svg += "</svg>";
-    return svg;
+    svg.append("</svg>");
+    return svg.toString();
   }
+
+  /**
+   * Build the actual string that draws the SVG line for a leg
+   *
+   * @param svg String builder for the leg that gets modified
+   * @param start The first point
+   * @param end The second point
+   */
+  private void addSvgLeg(StringBuilder svg, Coords start, Coords end) {
+    svg.append("<line stroke=\"#1E4D2B\" y2=\"").append(end.y).append("\" x2=\"").append(end.x)
+        .append("\" y1=\"").append(start.y).append("\" x1=\"").append(start.x)
+        .append("\" stroke-width=\"5\" fill=\"none\"/>");
+  }
+
+  /**
+   * Build a two-line leg, so that it wraps around the 'edge' of the Earth
+   *
+   * @param svg String builder that gets modified
+   * @param start1 The actual start coordinate
+   * @param start2 The 'end' of the start coord (for wrapping off edge)
+   * @param end1 The actual end coordinate
+   * @param end2 The 'end ' of the end coord (for wrapping off edge)
+   */
+  private void addSvgLeg(StringBuilder svg, Coords start1, Coords start2, Coords end1, Coords end2) {
+    svg.append("<line stroke=\"#1E4D2B\" y2=\"").append(start1.y).append("\" x2=\"").append(start1.x)
+        .append("\" y1=\"").append(start2.y).append("\" x1=\"").append(start2.x)
+        .append("\" stroke-width=\"5\" fill=\"none\"/>");
+
+    svg.append("<line stroke=\"#1E4D2B\" y2=\"").append(end1.y).append("\" x2=\"").append(end1.x)
+        .append("\" y1=\"").append(end2.y).append("\" x1=\"").append(end2.x)
+        .append("\" stroke-width=\"5\" fill=\"none\"/>");
+  }
+
+  private void addSvgCircle(StringBuilder svg, Coords pos) {
+    svg.append("<circle cx=\"").append(pos.x).append("\" cy=\" ").append(pos.y).append(" \" r=\"")
+        .append(Trip.DEST_RADIUS)
+        .append("\" stroke=\"#1E4D2B\" stroke-width=\"3\" fill=\"#C8C372\" />");
+  }
+
 
   /**
    * Get a lat/long pair as coordinates mapped to our svg (within the Colorado border)
@@ -122,10 +188,10 @@ public class Trip {
    * @return Mapped coordinates as a pair
    */
   public Coords getMappedCoords(double lat, double lon) {
-    double scaleX = 994;
-    double scaleY = 749;
-    double transX = 38;
-    double transY = 35;
+    double scaleX = Trip.SVG_MAPPED_X;
+    double scaleY = Trip.SVG_MAPPED_Y;
+    double transX = 0;
+    double transY = 0;
 
     double normalLat = this.normalizeLat(lat);
     double normalLon = this.normalizeLong(lon);
@@ -147,8 +213,10 @@ public class Trip {
    */
   public double normalizeLat(double lat) {
     // Note these are inverted so that we can get SVG coords going top-down instead of bottom-up
-    return (lat - DistanceCalculator.COLORADO_TOP) / (DistanceCalculator.COLORADO_BOTTOM
-        - DistanceCalculator.COLORADO_TOP);
+    /*return (lat - DistanceCalculator.COLORADO_TOP) / (DistanceCalculator.COLORADO_BOTTOM
+     - DistanceCalculator.COLORADO_TOP);*/
+    return (lat - DistanceCalculator.WORLD_TOP) / (DistanceCalculator.WORLD_BOTTOM
+        - DistanceCalculator.WORLD_TOP);
   }
 
   /**
@@ -158,8 +226,10 @@ public class Trip {
    * @return Normalized longitude
    */
   public double normalizeLong(double lon) {
-    return (lon - DistanceCalculator.COLORADO_LEFT) / (DistanceCalculator.COLORADO_RIGHT
-        - DistanceCalculator.COLORADO_LEFT);
+    /*return (lon - DistanceCalculator.COLORADO_LEFT) / (DistanceCalculator.COLORADO_RIGHT
+    - DistanceCalculator.COLORADO_LEFT); */
+    return (lon - DistanceCalculator.WORLD_LEFT) / (DistanceCalculator.WORLD_RIGHT
+        - DistanceCalculator.WORLD_LEFT);
   }
 
   /**
@@ -167,12 +237,14 @@ public class Trip {
    */
   private String svg() {
     String colorado = this.getSVGFromFile("/colorado.svg");
+    String world = this.getSVGFromFile("/World4.svg");
 
     String finalSVG =
-        "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
-            "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1066.6073\" height=\"783.0824\">\n" +
-            colorado + this.getLegsAsSVG() +
-            "</svg>";
+        "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>"
+            + "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1024\" height=\"512\">\n"
+            + world
+            + this.getLegsAsSVG()
+            + "</svg>";
 
     return finalSVG;
   }
@@ -192,7 +264,8 @@ public class Trip {
       Coords p2 = this.coords.get(i % coords.size());
 
       dist.add(DistanceCalculator
-          .calculateGreatCircleDistance(p1.x, p1.y, p2.x, p2.y, options.getRadius()));
+          .calculateGreatCircleDistance(p1.x, p1.y, p2.x, p2.y,
+              (options != null ? options.getUnitRadius() : Unit.miles.radius)));
     }
 
     return dist;
@@ -205,7 +278,12 @@ public class Trip {
   private ArrayList<Coords> placesToCoords() {
     ArrayList<Coords> coords = new ArrayList<>();
     for (Place p : places) {
-      coords.add(new Coords(convertToDecimal(p.latitude), convertToDecimal(p.longitude)));
+      double latTemp = convertToDecimal(p.latitude);
+      double longTemp = convertToDecimal(p.longitude);
+
+      p.latitude = Double.toString(latTemp);
+      p.longitude = Double.toString(longTemp);
+      coords.add(new Coords(latTemp, longTemp));
     }
 
     return coords;
@@ -223,6 +301,11 @@ public class Trip {
       this.x = x;
       this.y = y;
     }
+
+    public String toString() {
+      String ret = "(" + this.x + ", " + this.y + ")";
+      return ret;
+    }
   }
 
   /**
@@ -235,17 +318,23 @@ public class Trip {
     //System.out.println("Latitude: " + latIN);
     if (latIN.matches("\\s*\\d+[°|º]\\s*\\d+['|′]\\s*\\d+\\.?\\d*[\"|″]?\\s*[N|S|E|W]\\s*")) //DMS
     {
+      System.out.println("Case 1");
       return true; //System.out.println("Matches #1");
-    } else if (latIN.matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[N|S|E|W]\\s*")) //degrees decimal minutes
+    } else if (latIN
+        .matches("\\s*\\d+[°|º]\\s*\\d+\\.?\\d*['|′]\\s*[N|S|E|W]\\s*")) //degrees decimal minutes
     {
+      System.out.println("Case 2");
       return true; //System.out.println("Matches #2");
     } else if (latIN.matches("\\s*-?\\d+\\.?\\d*[°|º]\\s*[N|S|E|W]\\s*")) //decimal degrees
     {
+      System.out.println("Case 3");
       return true; //System.out.println("Matches #3");
     } else if (latIN.matches("\\s*-?\\d+\\.?\\d*\\s*[N|S|E|W]\\s*")) //floating point
     {
+      System.out.println("Case 4");
       return true; //System.out.println("Matches #4");
     } else if (latIN.matches("\\s*-?\\d+\\.?\\d*\\s*")) {
+      System.out.println("Case 5");
       return true; //System.out.println("Matches #5");
     } else {
       System.out.println("Latitude: " + latIN);
@@ -254,8 +343,8 @@ public class Trip {
       //ERROR OUT??
     }
   }
- 
-/**
+
+  /**
    * Conver the lat/long string to a decimal value for distance calculating
    *
    * @param conv string to be changed

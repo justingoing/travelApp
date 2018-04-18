@@ -6,14 +6,12 @@ import React, {Component} from 'react';
 class Instructions extends Component {
   constructor(props) {
     super(props);
-    console.log("got this.props.name?");
-    console.log(this.props.name);
   }
 
   render() {
     return (
       <div id="Instructions" className="card">
-        <div className="card-header bg-dark text-white">
+        <div className="card-header text-white" style={{backgroundColor:"#1E4D2B"}}>
           Instructions
         </div>
         <div className="card-body">

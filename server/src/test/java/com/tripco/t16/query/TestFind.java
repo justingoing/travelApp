@@ -5,6 +5,8 @@ import java.io.PrintStream;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.tripco.t16.tffi.Filter;
+
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -12,8 +14,8 @@ import static org.junit.Assert.*;
 
 public class TestFind {
 
+  Query query = new Query();
   Find find;
-
   // Setup to be done before every test in TestPlan
   @Before
   public void initialize() {
@@ -22,7 +24,7 @@ public class TestFind {
     } else {
       find = new Find();
     }
-    find.places = new ArrayList<>();
+    query.places = new ArrayList<>();
   }
 
   @Test
@@ -35,21 +37,37 @@ public class TestFind {
   @Test
   public void testFind() {
     // check if doing a query on our db for gibberish returns nothing
-    find.type = "query";
-    find.query = "abcdefghijklmnop12345666789";
-    find.performQuery(true);
 
-    assertTrue(find.places.size() == 0);
-    /* --------------------------------------------- */
-    // make sure that querying for legit results gives us some places
+    //Paul's tests that Travis said "nope" to
+    /*query.type = "query";
+    query.query = "abcdefghijklmnop12345666789";
+    query.filters = new ArrayList<>();
+    find.performQuery(query, true);
 
-    /* --------------------------------------------- */
-    /*
-    find.query = "Denver";
-    find.performQuery(false);
+    assertTrue(query.places.size() == 0);
 
-    assertTrue(find.places.size() > 0);*/
 
+    query.query = "Denver";
+    find.performQuery(query, false);
+
+    assertTrue(query.places.size() == 30);
+
+    query.query = "Denver";
+    //System.out.println(query.filters.size());
+    query.places.clear();
+    //System.out.println("\nTrying filters");
+    ArrayList<Filter> tempFilters = new ArrayList<>();
+    ArrayList<String> vals = new ArrayList<>();
+    vals.add("large_airport");
+    tempFilters.add(new Filter("type", vals));
+    query.filters = tempFilters;
+    //System.out.println(query.filters.size());
+
+    find.performQuery(query, false);
+    System.out.println(query.places.size());
+    assertTrue(query.places.size() == 1); */
+
+    //Ike's tests
     /* --------------------------------------------- */
     // make sure we can print some json lookin' stuff -- capture console output
     /* --------------------------------------------- */

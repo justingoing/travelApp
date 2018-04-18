@@ -3,7 +3,10 @@ package com.tripco.t16.calc;
 import static org.junit.Assert.*;
 
 import com.tripco.t16.planner.Place;
+import com.tripco.t16.planner.Unit;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +21,7 @@ public class TestOptimization {
   public void testZero() {
     ArrayList<Place> places = new ArrayList<>();
     ArrayList<Place> output = new ArrayList<>();
-    assertEquals(Optimization.nearestNeighbor(places, DistanceCalculator.EARTH_RADIUS_MI),
+    assertEquals(Optimization.optimize(places, Unit.miles.radius, false),
         output);
   }
 
@@ -29,7 +32,7 @@ public class TestOptimization {
     Place p = makeRandomPlace();
     output.add(p);
     places.add(p);
-    assertEquals(Optimization.nearestNeighbor(places, DistanceCalculator.EARTH_RADIUS_MI),
+    assertEquals(Optimization.optimize(places, Unit.miles.radius, false),
         output);
   }
 
@@ -53,7 +56,7 @@ public class TestOptimization {
     places.add(p3);
     places.add(p4);
 
-    assertEquals(Optimization.nearestNeighbor(places, DistanceCalculator.EARTH_RADIUS_MI),
+    assertEquals(Optimization.optimize(places, Unit.miles.radius, false),
         output);
   }
 
@@ -73,8 +76,9 @@ public class TestOptimization {
     places.add(p);
     places.add(p2);
     places.add(p3);
-    assertEquals(Optimization.nearestNeighbor(places, DistanceCalculator.EARTH_RADIUS_MI),
+    assertEquals(Optimization.optimize(places, DistanceCalculator.EARTH_RADIUS_MI, false),
         output);
+
   }
 
   @Test
@@ -91,7 +95,7 @@ public class TestOptimization {
 
 
     System.out.println(places);
-    ArrayList<Place> results = Optimization.twoOpt(places, DistanceCalculator.EARTH_RADIUS_MI);
+    ArrayList<Place> results = Optimization.optimize(places, Unit.miles.radius, true);
     for(Place place : results)
       System.out.println(place.name);
 
@@ -132,5 +136,13 @@ public class TestOptimization {
     p.name = "Random" + random;
 
     return p;
+  }
+
+  @Test
+  public void testGetOptimizations() {
+    ArrayList<Optimization> opts = new ArrayList<>();
+    opts.add(Optimization.TWO_OPT);
+    opts.add(Optimization.NEAREST_NEIGHBOR);
+    assertEquals(opts, Optimization.getOptimizations());
   }
 }

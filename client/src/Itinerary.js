@@ -21,7 +21,7 @@ class Itinerary extends Component {
 
   createTable() {
     let distance = this.calcDistance();  // need to sum this from real the trip
-    let units = this.props.trip.options.distance.name;
+    let units = this.props.trip.options.distance;
 
     let dests = this.props.trip.places.map(
         (item, index) => <td key={"de" + index}> {item.name} </td>);
@@ -66,33 +66,17 @@ class Itinerary extends Component {
 
     return (
         <div className="table-responsive" id="itinerary">
-          <table className="table">
+          <table responsive hover size="sm" style={{height: "50%", overflow: "scroll", display: "inline-block"}} className="table table-responsive">
             <thead>
-            <tr className="table-info">
-              <th className="align-middle"
-                  style={{color: "#FFF", backgroundColor: "#3E4551"}}>Start
-              </th>
-              <th className="align-middle" style={{
-                color: "#FFF",
-                backgroundColor: "#3E4551"
-              }}>Destination
-              </th>
-              <th className="align-middle" style={{
-                color: "#FFF",
-                backgroundColor: "#3E4551"
-              }}>
-                {table.units}
-              </th>
-              <th className="align-right" style={{
-                color: "#FFF",
-                backgroundColor: "#3E4551"
-              }}>
-                Options
-              </th>
+              <tr className="table-info">
+                <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Start</th>
+                <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Destination</th>
+                <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>{table.units}</th>
+                <th className="align-right" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Options</th>
             </tr>
             </thead>
             <tbody>
-            {table.tableData}
+              {table.tableData}
             </tbody>
           </table>
           <h4>Total distance of {table.distance} {table.units}. </h4>
