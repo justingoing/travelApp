@@ -27,6 +27,19 @@ class DestCard extends Component {
   }
 
   render() {
+    let currState = this.props;
+    let contents = function() {
+      if (currState.destination.extraAttrs) {
+        return (<p className="card-text" style={{fontSize: '75%'}}>
+          <br/>
+          <b>Type:</b> {DestCard.prettyPrintAirportType(currState.destination.extraAttrs.type)}<hr/>
+          <b>City:</b> {currState.destination.extraAttrs.municipality}<hr/>
+          <b>Region:</b> {currState.destination.extraAttrs.iso_region}<hr/>
+          <b>Country:</b> {currState.destination.extraAttrs.iso_country}
+        </p>);
+      }
+    };
+
     return (
           <div className="card" style={{width: '16rem'}}>
             <div className="card-body">
@@ -50,13 +63,7 @@ class DestCard extends Component {
                   </div>
                 </div>
               </h6>
-              <p className="card-text" style={{fontSize: '75%'}}>
-                <br/>
-                <b>Type:</b> {DestCard.prettyPrintAirportType(this.state.destination.extraAttrs.type)}<hr/>
-                <b>City:</b> {this.state.destination.extraAttrs.municipality}<hr/>
-                <b>Region:</b> {this.state.destination.extraAttrs.iso_region}<hr/>
-                <b>Country:</b> {this.state.destination.extraAttrs.iso_country}
-                </p>
+              {contents()}
             </div>
           </div>
     )

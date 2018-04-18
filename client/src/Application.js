@@ -105,7 +105,7 @@ class Application extends Component {
     let t = {
       version: serverConfig.version,
       type: "trip",
-      title: "",
+      title: "Untitled Trip",
       options: {
         distance: this.miles(),
         userUnit: "",
