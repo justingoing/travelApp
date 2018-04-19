@@ -154,7 +154,8 @@ class Application extends Component {
     //try to get configuration from server
     try {
       configRequest = await fetch('http://' + location.host + '/config', {
-        method: "GET"
+        method: "GET",
+        header: {'Access-Control-Allow-Origin':'*'}
       });
     } catch (err) {
       console.log(
@@ -288,7 +289,8 @@ class Application extends Component {
     console.log("POSTing: " + this.state.trip);
     return fetch('http://' + location.host + '/plan', {
       method:"POST",
-      body: JSON.stringify(this.state.trip)
+      body: JSON.stringify(this.state.trip),
+      header: {'Access-Control-Allow-Origin':'*'}
     });
   }
 
