@@ -34,8 +34,9 @@ class DestCard extends Component {
 
   render() {
     let currState = this.props;
-    let contents = function () {
-      if (currState.destination.extraAttrs) {
+
+    let contents = function() {
+      if (currState.destination.extraAttrs && currState.destination.extraAttrs.type) {
         return (<p className="card-text" style={{fontSize: '75%'}}>
           <br/>
           <b>Type:</b> {DestCard.prettyPrintAirportType(

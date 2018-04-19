@@ -24,7 +24,6 @@ class LoadFile extends Component {
 
     return (
         <div id="loadFile" className="card-body">
-          <p>Load destinations from a file.</p>
           <div className="form-group" role="group">
             <input type="file" className="form-control-file"
                    onChange={this.loadTFFI} id="tffifile"/>

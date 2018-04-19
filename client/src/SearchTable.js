@@ -26,13 +26,13 @@ class SearchTable extends Component {
       }
     }
     console.log(this.props.queryPlaces);
-
     return {ids, dests, lats, long, tableData};
   }
 
   addToTrip(key){
     console.log(this.props.destinations.places[key]);
     this.props.addToTrip(this.props.destinations.places[key]);
+    this.props.plan();
   }
 
   renderRow(key, ids, dests, lat, long, selected) {

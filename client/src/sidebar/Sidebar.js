@@ -10,7 +10,7 @@ import {
   ListGroup,
   ListGroupItem
 } from 'reactstrap';
-import TripTitle from "./TripTitle";
+import TripInfo from "./TripInfo";
 
 /*
  * Renders the sidebar that contains all the tools needed to edit and manipulate
@@ -49,30 +49,7 @@ class Sidebar extends Component {
              className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-left"
              style={{height: "1500px", maxHeight: "100%", overflowY: "scroll"}}>
           <div className="container px-2">
-            <div className="container py-2">
-              <TripTitle updateTrip={this.props.updateTrip} trip={this.props.trip}/>
-
-              <div className="input-group" role="group">
-                <span className="input-group-btn">
-                  <button className="btn btn-primary "
-                          style={{
-                            border: "#1E4D2B",
-                            backgroundColor: "#1E4D2B"
-                          }}
-                          onClick={this.props.plan}
-                          type="button">Plan</button>
-                  </span>
-                <span className="input-group-btn">
-                  <button className="btn btn-primary "
-                          style={{
-                            border: "#1E4D2B",
-                            backgroundColor: "#1E4D2B"
-                          }}
-                          onClick={this.props.saveTFFI}
-                          type="button">Save</button>
-                </span>
-              </div>
-            </div>
+            <TripInfo updateTrip={this.props.updateTrip} trip={this.props.trip}/>
             <ListGroup>
               <ListGroupItem tag="button" href="#search"
                              onClick={this.toggleSearch}>
@@ -89,7 +66,8 @@ class Sidebar extends Component {
                               addToTrip={this.props.addToTrip}
                               isInTrip={this.props.isInTrip}
                               addAllToTrip={this.props.addAllToTrip}
-                              queryPlaces={this.props.queryPlaces}/>
+                              queryPlaces={this.props.queryPlaces}
+                              plan={this.props.plan}/>
               </Collapse>
               <ListGroupItem tag="button" href="#options"
                              onClick={this.toggleOptions}>Options
@@ -107,8 +85,10 @@ class Sidebar extends Component {
                 <LoadFile updateTrip={this.props.updateTrip}
                           trip={this.props.trip}/>
               </Collapse>
+              <ListGroupItem tag="button" href="#save"
+                             onClick={this.props.saveTFFI}>Save File
+              </ListGroupItem>
             </ListGroup>
-
           </div>
         </div>
     );
