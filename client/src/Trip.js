@@ -18,7 +18,6 @@ class Trip extends Component {
   }
 
 
-
   /* Renders the buttons, map, and itinerary.
    * The title should be specified before the plan or save buttons are valid.
    */

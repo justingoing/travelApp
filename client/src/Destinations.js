@@ -17,7 +17,7 @@ class Destinations extends Component {
 
     searchResponse(){
       //POST request
-      return fetch(process.env.SERVICE_URL + '/query', {
+      return fetch('http://' + location.host + '/query', {
           method: "POST",
           body: JSON.stringify(this.props.query)
       });
@@ -92,6 +92,7 @@ class Destinations extends Component {
               <input type="text" className="form-control" id="mySearch" placeholder="Search for a place..."/>
               <button className="btn btn-primary " style={{border: "#1E4D2B", backgroundColor: "#1E4D2B"}} onClick={this.sendSearch} type="button">Search</button>
             </div>
+
             <div className="filters">
               Filter by Airport Type:
                 <br/>

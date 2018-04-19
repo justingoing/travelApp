@@ -8,6 +8,7 @@ class TripInfo extends Component {
     super(props);
 
     this.setTripTitle = this.setTripTitle.bind(this);
+    this.calcDistance = this.calcDistance.bind(this);
 
     this.state = {
       hover: false,
@@ -32,27 +33,44 @@ class TripInfo extends Component {
     this.setState({focus: focus});
   }
 
+  calcDistance() {
+    let tempDist = 0;
+    for (let i = 0; i < this.props.trip.distances.length; i++) {
+      tempDist += this.props.trip.distances[i];
+    }
+    return tempDist;
+  }
+
   render() {
     let makeBorder = this.state.hover || this.state.focus;
+
     let style = {
       background: "rgba(0,0,0,0)",
       border: (makeBorder ? "solid" : "none"),
-      borderWidth: "0.5px",
-      textAlign: "center"
+      borderWidth: "1px",
+      textAlign: "center",
+      fontWeight: "bold"
     };
 
-    return (<div className="container py-2">
-              <input id="triptitle" type="text" className="form-control"
-                   value={this.props.trip.title}
-                   onChange={this.setTripTitle}
-                   style={style}
-                   onMouseEnter={(e) => this.setHover(e, true)}
-                   onMouseLeave={(e) => this.setHover(e, false)}
-                   onFocus={(e) => this.setFocus(e, true)}
-                   onBlur={(e) => this.setFocus(e, false)}/>
-              <br/>
-              <hr style={{backgroundColor: "#C8C372"}}/>
-            </div>
+    let distance = this.calcDistance();
+    let units = this.props.trip.options.distance;
+
+    return (<div className="jumbotron my-2 py-3 px-0"
+                 style={{backgroundColor: "white"}}>
+          <input id="triptitle" type="text" className="form-control"
+                 value={this.props.trip.title}
+                 placeholder="Name your trip..."
+                 onChange={this.setTripTitle}
+                 style={style}
+                 onMouseEnter={(e) => this.setHover(e, true)}
+                 onMouseLeave={(e) => this.setHover(e, false)}
+                 onFocus={(e) => this.setFocus(e, true)}
+                 onBlur={(e) => this.setFocus(e, false)}/>
+          <hr style={{backgroundColor: "#C8C372", margin: "4px", height: "1px"}}/>
+          <p className="px-4 py-2 m-0">Destinations: {this.props.trip.places.length} </p>
+          <p className="px-4 py-2 m-0">Distance: {distance} {units} </p>
+          <hr style={{backgroundColor: "#C8C372", margin: "4px", height: "1px"}}/>
+        </div>
     );
   }
 }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Options from "../Options";
+import Options from "./Options";
 import Destinations from "../Destinations";
 import LoadFile from "./LoadFile";
 import {
@@ -48,7 +48,7 @@ class Sidebar extends Component {
         <div id="sidebar"
              className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-left"
              style={{height: "1500px", maxHeight: "100%", overflowY: "scroll"}}>
-          <div className="container px-2">
+          <div className="container px-4">
             <TripInfo updateTrip={this.props.updateTrip} trip={this.props.trip}/>
             <ListGroup>
               <ListGroupItem tag="button" href="#search"
@@ -82,8 +82,7 @@ class Sidebar extends Component {
                              onClick={this.toggleLoad}>Load File
               </ListGroupItem>
               <Collapse isOpen={this.state.collapseLoad}>
-                <LoadFile updateTrip={this.props.updateTrip}
-                          trip={this.props.trip}/>
+                <LoadFile updateTrip={this.props.updateTrip}/>
               </Collapse>
               <ListGroupItem tag="button" href="#save"
                              onClick={this.props.saveTFFI}>Save File
