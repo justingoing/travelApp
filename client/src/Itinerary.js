@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import DestCard from './DestCard';
+
 
 class Itinerary extends Component {
   constructor(props) {
@@ -7,7 +9,6 @@ class Itinerary extends Component {
     this.state = {};
 
     this.createTable = this.createTable.bind(this);
-    this.reorderItinerary = this.reorderItinerary.bind(this);
   }
 
   //loop through distances, sum, and return the total
@@ -41,10 +42,6 @@ class Itinerary extends Component {
     return {distance, units, tableData};
   }
 
-  reorderItinerary(event, index) {
-    this.props.setNewStart(index);
-  }
-
   renderRow(key, source, destination, distance) {
     let dragHandle = (
         <td className="align-right"><span>
@@ -64,22 +61,26 @@ class Itinerary extends Component {
   render() {
     let table = this.createTable();
 
+    var destRows = [];
+    for(let i = 0; i < this.props.trip.places.length; ++i)
+    {
+      let dest = this.props.trip.places[i];
+      destRows.push(
+          <td>
+            <DestCard destination={dest} tripPosition={i} reorderItinerary={this.props.setNewStart}
+                      removeDestFromTrip={this.props.removeDestFromTrip}/>
+          </td>
+      );
+    }
+
     return (
         <div className="table-responsive" id="itinerary">
-          <table size="sm" style={{height: "50%", overflow: "scroll", display: "inline-block"}} className="table table-responsive">
-            <thead>
-              <tr className="table-info">
-                <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Start</th>
-                <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Destination</th>
-                <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>{table.units}</th>
-                <th className="align-right" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Options</th>
+          <table className="table">
+            <tr>
+              <th scope="col"></th>
+              {destRows}
             </tr>
-            </thead>
-            <tbody>
-              {table.tableData}
-            </tbody>
           </table>
-          <h4>Total distance of {table.distance} {table.units}. </h4>
         </div>
     )
   }
