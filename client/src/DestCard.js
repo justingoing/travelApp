@@ -83,7 +83,7 @@ class DestCard extends Component {
         <div className="card" style={{width: '16rem'}}
              onMouseEnter={() => this.toggleCardButton(true)}
              onMouseLeave={() => this.toggleCardButton(false)}>
-          <div className="card-body">
+          <div className="card-body" id={this.state.destination.name + "Card"}>
             <h6 className="card-title h-100">
               <div className="row">
                 <div className="col-10">
@@ -99,17 +99,17 @@ class DestCard extends Component {
                             id={this.state.destination.name + "InfoButton"}>
                       <FaDots/>
                     </button>
-                    <Popover placement="bottom"
-                             isOpen={this.state.pageShown}
-                             target={this.state.destination.name + "InfoButton"}
-                             toggle={this.toggleCardInfo}
-                             style={{maxHeight: "600px",
-                               overflowY: "scroll", fontWeight: "bold", maxWidth: "250px"}}>
-                      TEST DATA
-                    </Popover>
                   </div>
                 </div>
               </div>
+              <Popover placement="left"
+                       isOpen={this.state.pageShown}
+                       target={this.state.destination.name + "Card"}
+                       toggle={this.toggleCardInfo}
+                       style={{maxHeight: "600px",
+                         overflowY: "scroll", fontWeight: "bold", maxWidth: "250px"}}>
+                TEST DATA
+              </Popover>
             </h6>
             {"Next Destination: " + this.props.distance + " miles"}
           </div>
