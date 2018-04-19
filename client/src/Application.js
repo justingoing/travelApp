@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import Sidebar from './Sidebar';
-import Footer from './Footer';
-import Display from "./Display";
-import Header from './Header';
-import Trip from "./Trip";
+import Sidebar from './sidebar/Sidebar';
+import Footer from './branding/Footer';
+import Display from './Display';
+import Header from './branding/Header';
+import Trip from './Trip';
 
 /* Renders the application.
  * Holds the destinations and options state shared with the trip.
@@ -24,12 +24,18 @@ class Application extends Component {
     this.saveTFFI = this.saveTFFI.bind(this);
     this.reverseTrip = this.reverseTrip.bind(this);
     this.setNewStart = this.setNewStart.bind(this);
+    this.updateSize = this.updateSize.bind(this);
 
     this.state = {
       loading: false,
       trip: {},
       query: {},
-      config: {}
+      config: {},
+      size: {
+        header: 0,
+        content: 0,
+        footer: 0
+      }
     };
 
     this.queryPlaces = {};
@@ -58,6 +64,16 @@ class Application extends Component {
         config: this.state.config
       });
     });
+  }
+
+  updateSize(size) {
+    console.log("size", size);
+    let currentSize = Object.assign({}, this.state.size);
+    console.log("cur size", currentSize);
+
+    Object.assign(currentSize, size);
+    console.log("cur size 2", currentSize);
+    this.setState({size: currentSize});
   }
 
   //populate with search
@@ -89,7 +105,7 @@ class Application extends Component {
     let t = {
       version: serverConfig.version,
       type: "trip",
-      title: "",
+      title: "Untitled Trip",
       options: {
         distance: this.miles(),
         userUnit: "",
@@ -225,6 +241,7 @@ class Application extends Component {
     if (options >= 0 && options <= 1) {
       this.state.trip.options.optimization = options;
     }
+    this.plan();
   }
 
   updateMapType(mapType) {
@@ -233,6 +250,7 @@ class Application extends Component {
     } else {
       this.state.trip.options.map = "svg";
     }
+    this.plan();
   }
 
   isInTrip(id) {
@@ -249,6 +267,7 @@ class Application extends Component {
     }
     this.queryPlaces = {};
     this.setState({trip: this.state.trip})
+    this.plan();
   }
 
   addToTrip(place) {
@@ -316,8 +335,9 @@ class Application extends Component {
   }
 
   setNewStart(index) {
-    let distancesCopy = Trip.reorder(this.state.trip.distances, index);
-    let placesCopy = Trip.reorder(this.state.trip.places, index);
+
+    let distancesCopy = Application.reorder(this.state.trip.distances, index);
+    let placesCopy = Application.reorder(this.state.trip.places, index);
 
     let newState = {
       places: placesCopy,
@@ -342,7 +362,7 @@ class Application extends Component {
 
     return (
         <div id="application" style={{maxHeight: "100%"}}>
-          <Header/>
+          <Header updateSize={this.updateSize}/>
           <div className="row" style={{maxHeight: "100%"}}>
             <Sidebar plan={this.plan}
                      saveTFFI={this.saveTFFI}
@@ -362,7 +382,7 @@ class Application extends Component {
                      queryPlaces={this.queryPlaces}
             />
             <Display trip={this.state.trip}
-                     setNewStart={this.props.setNewStart}/>
+                     setNewStart={this.setNewStart}/>
           </div>
           <Footer number={this.props.number} name={this.props.name}/>
         </div>
