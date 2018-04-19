@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import DestCard from './DestCard';
 
-
 class Itinerary extends Component {
   constructor(props) {
     super(props);
@@ -62,12 +61,13 @@ class Itinerary extends Component {
     let table = this.createTable();
 
     var destRows = [];
-    for(let i = 0; i < this.props.trip.places.length; ++i)
-    {
+    for (let i = 0; i < this.props.trip.places.length; ++i) {
       let dest = this.props.trip.places[i];
+      let dist = this.props.trip.distances[i];
       destRows.push(
           <td>
-            <DestCard destination={dest} tripPosition={i} reorderItinerary={this.props.setNewStart}
+            <DestCard destination={dest} distance={dist} tripPosition={i}
+                      reorderItinerary={this.props.setNewStart}
                       removeDestFromTrip={this.props.removeDestFromTrip}/>
           </td>
       );
