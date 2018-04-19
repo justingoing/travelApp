@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import SearchTable from './SearchTable';
-//import Checkbox from './Checkbox';
 
 /* Destinations reside in the parent object so they may be shared
  * with the Trip object.
@@ -23,8 +22,6 @@ class Destinations extends Component {
           body: JSON.stringify(this.props.query)
       });
     }
-
-
 
     async sendSearch(){
         //get the search value, put it in query field, and send it
@@ -90,8 +87,7 @@ class Destinations extends Component {
   render() {
     return (
         <div id="destinations" className="card">
-          <div className="card-body"
-               style={{backgroundColor: "#59595B"}}>
+          <div className="card-body">
             <div className="input-group" role="group">
               <input type="text" className="form-control" id="mySearch" placeholder="Search for a place..."/>
               <button className="btn btn-primary " style={{border: "#1E4D2B", backgroundColor: "#1E4D2B"}} onClick={this.sendSearch} type="button">Search</button>
