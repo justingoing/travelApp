@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {compose, withProps} from 'recompose';
 import {withScriptjs, withGoogleMap,
-  GoogleMap, Polyline, Marker} from 'react-google-maps';
+  GoogleMap, Polyline} from 'react-google-maps';
 
 class GMap extends Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class GMap extends Component {
     return (
         <GoogleMap
             defaultCenter={{lat: 0, lng: 0}}
-            defaultZoom={1}
+            defaultZoom={2}
         >
           <Polyline path={this.makePath(places)}
                     options={{strokeColor: '#BD4269'}}

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import Header from './Header';
+import Header from './branding/Header';
 import Instructions from './Instructions'
 import Application from './Application';
-import Footer from './Footer';
+import Footer from './branding/Footer';
 
 class App extends Component {
   constructor (props){

@@ -75,9 +75,6 @@ class Options extends Component {
   render() {
     return (
         <div id="options" className="card">
-          <div className="card-header text-white" style={{backgroundColor:"#1E4D2B"}}>
-            Options
-          </div>
           <div className="card-body">
             <p>Highlight the options you wish to use.</p>
             <span className="btn-group btn-group-toggle" data-toggle="buttons">
@@ -107,7 +104,7 @@ class Options extends Component {
             </span>
             <br></br>
             <p>Zero Optimization <input id="typeinp" type="range" min="0" max="1" step=".01" defaultValue={Number(this.props.options.optimization)}
-                                        onChange={this.onInput.bind(this)}/> Full Optimization</p>
+                                        onMouseUp={this.onInput.bind(this)}/> Full Optimization</p>
             <p>Map Type</p>
           </div>
         </div>

@@ -17,6 +17,7 @@ class Display extends Component {
              style={{maxHeight: "100%", overflowY: "scroll"}}>
           <Map trip={this.props.trip}/>
           <Itinerary trip={this.props.trip} setNewStart={this.props.setNewStart}
+                     removeDestFromTrip={this.props.removeDestFromTrip}
           />
         </div>
     );
