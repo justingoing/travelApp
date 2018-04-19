@@ -22,10 +22,8 @@ class LoadFile extends Component {
   render() {
     return (
         <div id="loadFile" className="card-body">
-          <div className="form-group" role="group">
             <input type="file" className="form-control-file"
                    onChange={this.loadTFFI} id="tffifile"/>
-          </div>
         </div>
     );
   }

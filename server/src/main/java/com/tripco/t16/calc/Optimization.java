@@ -40,7 +40,7 @@ public class Optimization {
   /**
    * Implements the nearest-neighbor graph algorithm.
    */
-  public static ArrayList<Place> optimize(final ArrayList<Place> places, double radius, boolean twoopt) {
+  public static ArrayList<Place> optimize(final ArrayList<Place> places, double radius, int option) {
     //Quick sanity check
     if (places == null || places.size() == 0) {
       return places;
@@ -106,8 +106,13 @@ public class Optimization {
         iterationCounter++;
       }
 
-      //If we are two-opting, then run two-opt on this nearest neighbor.
-      if (twoopt) {
+      if (option == 3) { //If we are two-opting, then run two-opt on this nearest neighbor.
+        System.out.println("3opt");
+        tmpPlaces = threeOptNotShit(tmpPlaces, distanceMatrix, lookupTable); //twoOpt(tmpPlaces, radius, twoOptDist, distanceMatrix, lookupTable);
+        distance = getTripDistance(distanceMatrix, lookupTable);
+        System.out.println("distance: " + distance);
+      } else if (option == 2) { //If we are two-opting, then run two-opt on this nearest neighbor.
+        System.out.println("2opt");
         tmpPlaces = twoOptNotShit(tmpPlaces, distanceMatrix, lookupTable); //twoOpt(tmpPlaces, radius, twoOptDist, distanceMatrix, lookupTable);
         distance = getTripDistance(distanceMatrix, lookupTable);
       } else {
@@ -210,6 +215,92 @@ public class Optimization {
 
     return tmpPlaces;
   }
+
+  public static Place[] threeOptNotShit(Place[] places, int[][] distanceMatrix, int[] lookupTable) {
+    return twoOptNotShit(places, distanceMatrix, lookupTable);
+    /*
+    if (places.length <= 4) {
+      return places;
+    }
+
+    Place[] tmpPlaces = Arrays.copyOf(places, places.length);
+
+    boolean improvement = true;
+
+    System.out.println("Places" + places.length);
+    System.out.println(distanceMatrix.length);
+
+    while (improvement) {
+      improvement = false;
+
+      for (int i = 0; i < places.length - 2; i++) {
+        for (int j = i + 1; j < places.length - 1; j++) {
+          for (int k = j + 1; k < places.length; k++) {
+            int currentDistance = distance0(distanceMatrix, lookupTable, i, j, k);
+            if (distance1(distanceMatrix, lookupTable, i, j, k) < currentDistance) {
+              exchange1(tmpPlaces, lookupTable, i, j, k);
+              improvement = true;
+              continue;
+            }
+
+            //TODO cont...
+          }
+        }
+      }
+    }
+
+    return tmpPlaces;*/
+  }
+
+  public static int distance0(int[][] distanceMatrix, int[] lookupTable, int i, int j, int k) {
+    int li = lookupTable[i % lookupTable.length];
+    int li1 = lookupTable[(i + 1) % lookupTable.length];
+    int lj = lookupTable[j % lookupTable.length];
+    int lj1 = lookupTable[(j + 1) % lookupTable.length];
+    int lk = lookupTable[k % lookupTable.length];
+    int lk1 = lookupTable[(k + 1) % lookupTable.length];
+
+    int dist0 = distanceMatrix[li][li1] +
+        distanceMatrix[lj][lj1] +
+        distanceMatrix[lk][lk1];
+
+    return dist0;
+  }
+
+  public static int distance1(int[][] distanceMatrix, int[] lookupTable, int i, int j, int k) {
+    int li = lookupTable[i % lookupTable.length];
+    int li1 = lookupTable[(i + 1) % lookupTable.length];
+    int lj = lookupTable[j % lookupTable.length];
+    int lj1 = lookupTable[(j + 1) % lookupTable.length];
+    int lk = lookupTable[k % lookupTable.length];
+    int lk1 = lookupTable[(k + 1) % lookupTable.length];
+
+    int dist0 = distanceMatrix[li][lk] +
+        distanceMatrix[lj1][lj] +
+        distanceMatrix[li1][lk1];
+
+    return dist0;
+  }
+
+  public static void exchange1(Place[] places, int[] lookupTable, int i, int j, int k) {
+    swap(places, lookupTable, k, j + 1);
+    swap(places, lookupTable, j, i + 1);
+  }
+
+  public static void swap(Place[] places, int[] lookupTable, int i, int j) {
+    Place tmp;
+    int tmpInt;
+
+    tmpInt = lookupTable[i % lookupTable.length];
+    tmp = places[i % places.length];
+
+    lookupTable[i] = lookupTable[j % lookupTable.length];
+    places[i] = places[j % places.length];
+
+    lookupTable[j % lookupTable.length] = tmpInt;
+    places[j % places.length] = tmp;
+  }
+
 
   /**
    * We don't know what this does.

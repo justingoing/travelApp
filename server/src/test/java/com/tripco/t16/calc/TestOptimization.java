@@ -21,7 +21,7 @@ public class TestOptimization {
   public void testZero() {
     ArrayList<Place> places = new ArrayList<>();
     ArrayList<Place> output = new ArrayList<>();
-    assertEquals(Optimization.optimize(places, Unit.miles.radius, false),
+    assertEquals(Optimization.optimize(places, Unit.miles.radius, 1),
         output);
   }
 
@@ -32,7 +32,7 @@ public class TestOptimization {
     Place p = makeRandomPlace();
     output.add(p);
     places.add(p);
-    assertEquals(Optimization.optimize(places, Unit.miles.radius, false),
+    assertEquals(Optimization.optimize(places, Unit.miles.radius, 1),
         output);
   }
 
@@ -56,7 +56,7 @@ public class TestOptimization {
     places.add(p3);
     places.add(p4);
 
-    assertEquals(Optimization.optimize(places, Unit.miles.radius, false),
+    assertEquals(Optimization.optimize(places, Unit.miles.radius, 1),
         output);
   }
 
@@ -76,7 +76,7 @@ public class TestOptimization {
     places.add(p);
     places.add(p2);
     places.add(p3);
-    assertEquals(Optimization.optimize(places, DistanceCalculator.EARTH_RADIUS_MI, false),
+    assertEquals(Optimization.optimize(places, DistanceCalculator.EARTH_RADIUS_MI, 1),
         output);
 
   }
@@ -95,7 +95,7 @@ public class TestOptimization {
 
 
     System.out.println(places);
-    ArrayList<Place> results = Optimization.optimize(places, Unit.miles.radius, true);
+    ArrayList<Place> results = Optimization.optimize(places, Unit.miles.radius, 2);
     for(Place place : results)
       System.out.println(place.name);
 

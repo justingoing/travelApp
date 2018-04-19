@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
-import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import {
+  ButtonDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from 'reactstrap';
 
 /* Options allows the user to change the parameters for planning
  * and rendering the trip map and itinerary.
@@ -36,7 +41,7 @@ class Options extends Component {
 
   toggleMapChooser(e, value) {
     e.preventDefault();
-    this.setState({mapTypeChooserOpen : !this.state.mapTypeChooserOpen});
+    this.setState({mapTypeChooserOpen: !this.state.mapTypeChooserOpen});
   }
 
   setMap(e, value) {
@@ -50,39 +55,69 @@ class Options extends Component {
 
   toggleUnitsChooser(e) {
     e.preventDefault();
-    this.setState({unitsChooserOpen : !this.state.unitsChooserOpen});
+    this.setState({unitsChooserOpen: !this.state.unitsChooserOpen});
   }
 
   render() {
     return (
         <div id="options" className="card">
           <div className="card-body">
-            <span>
-              <p>Units: </p>
-              <ButtonDropdown isOpen={this.state.unitsChooserOpen} toggle={(e) => this.toggleUnitsChooser(e)}>
-                <DropdownToggle caret>{this.props.options.distance === "kilometers" ? "Kilometers" : "Miles"}
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem onClick={(e) => this.setUnits(e, "miles")}>Miles</DropdownItem>
-                  <DropdownItem onClick={(e) => this.setUnits(e, "kilometers")}>Kilometers</DropdownItem>
-                </DropdownMenu>
-              </ButtonDropdown>
-            </span>
-            <span>
-              <p>MapType: </p>
-              <ButtonDropdown isOpen={this.state.mapTypeChooserOpen} toggle={(e) => this.toggleMapChooser(e)}>
-                <DropdownToggle caret>{this.props.options.map === "kml" ? "Google Maps" : "SVG"}
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem onClick={(e) => this.setMap(e, "kml")}>Google Maps</DropdownItem>
-                  <DropdownItem onClick={(e) => this.setMap(e, "svg")}>SVG</DropdownItem>
-                </DropdownMenu>
-              </ButtonDropdown>
-            </span>
+            <div class="row">
+              <div class="col-5">
+                <p>Units: </p>
+              </div>
+              <div class="col-7">
+                <div class="pull-right">
+                  <ButtonDropdown isOpen={this.state.unitsChooserOpen}
+                                  toggle={(e) => this.toggleUnitsChooser(e)}>
+                    <DropdownToggle style={{width: "135px"}} caret>
+                      {this.props.options.distance === "kilometers" ? "Kilometers" : "Miles"}
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem onClick={(e) => this.setUnits(e,
+                          "miles")}>Miles</DropdownItem>
+                      <DropdownItem onClick={(e) => this.setUnits(e,
+                          "kilometers")}>Kilometers</DropdownItem>
+                    </DropdownMenu>
+                  </ButtonDropdown>
+                </div>
+              </div>
+            </div>
 
-            <p>Zero Optimization <input id="typeinp" type="range" min="0" max="1" step=".01" defaultValue={Number(this.props.options.optimization)}
-                                        onMouseUp={this.onInput.bind(this)}/> Full Optimization</p>
-            <p>Map Type</p>
+            <div class="row">
+              <div class="col-5">
+
+                <p>MapType: </p>
+              </div>
+              <div class="col-7">
+                <div class="pull-right">
+                  <ButtonDropdown isOpen={this.state.mapTypeChooserOpen}
+                                  toggle={(e) => this.toggleMapChooser(e)}
+                            style={{width: "165px"}}>
+                    <DropdownToggle style={{width: "135px"}} caret>{this.props.options.map === "kml"
+                        ? "Google Maps" : "SVG"}
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem onClick={(e) => this.setMap(e, "kml")}>Google
+                        Maps</DropdownItem>
+                      <DropdownItem onClick={(e) => this.setMap(e,
+                          "svg")}>SVG</DropdownItem>
+                    </DropdownMenu>
+                  </ButtonDropdown>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-5">
+                <p>Optimization</p>
+              </div>
+              <div class="col-7">
+                <input id="typeinp" type="range" min="0" max="1" step=".01"
+                       defaultValue={Number(this.props.options.optimization)}
+                       onMouseUp={this.onInput.bind(this)}/>
+              </div>
+            </div>
           </div>
         </div>
     )

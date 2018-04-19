@@ -56,10 +56,12 @@ public class Trip {
       }
     }
 
-    if (options != null && options.getOptimizationLevel() >= 0.66) {
-      this.places = Optimization.optimize(places, options.getUnitRadius(), true);
-    } else if (options != null && options.getOptimizationLevel() >= .33) {
-      this.places = Optimization.optimize(places, options.getUnitRadius(), false);
+    if (options != null && options.getOptimizationLevel() >= .7) {
+      this.places = Optimization.optimize(places, options.getUnitRadius(), 3);
+    } else if (options != null && options.getOptimizationLevel() >= .5) {
+      this.places = Optimization.optimize(places, options.getUnitRadius(), 2);
+    } else if (options != null && options.getOptimizationLevel() >= .25) {
+      this.places = Optimization.optimize(places, options.getUnitRadius(), 1);
     }
 
     this.coords = placesToCoords();
