@@ -10,7 +10,7 @@ import {
   ListGroup,
   ListGroupItem
 } from 'reactstrap';
-import TripTitle from "./TripTitle";
+import TripInfo from "./TripInfo";
 
 /*
  * Renders the sidebar that contains all the tools needed to edit and manipulate
@@ -49,15 +49,8 @@ class Sidebar extends Component {
              className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-left"
              style={{height: "1500px", maxHeight: "100%", overflowY: "scroll"}}>
           <div className="container px-2">
-            <div className="container py-2">
-              <TripTitle updateTrip={this.props.updateTrip} trip={this.props.trip}/>
-
-              <div className="input-group" role="group">
-                <span className="input-group-btn">
-                  </span>
-              </div>
-            </div>
-            <ListGroup >
+            <TripInfo updateTrip={this.props.updateTrip} trip={this.props.trip}/>
+            <ListGroup>
               <ListGroupItem tag="button" href="#search"
                              onClick={this.toggleSearch}>
                 Search For Destinations

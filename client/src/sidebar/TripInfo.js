@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 /*
  * Renders the trip title input field, and updates state appropriately.
  */
-class TripTitle extends Component {
+class TripInfo extends Component {
   constructor(props) {
     super(props);
 
@@ -41,15 +41,20 @@ class TripTitle extends Component {
       textAlign: "center"
     };
 
-    return (<input id="triptitle" type="text" className="form-control"
+    return (<div className="container py-2">
+              <input id="triptitle" type="text" className="form-control"
                    value={this.props.trip.title}
                    onChange={this.setTripTitle}
                    style={style}
                    onMouseEnter={(e) => this.setHover(e, true)}
                    onMouseLeave={(e) => this.setHover(e, false)}
                    onFocus={(e) => this.setFocus(e, true)}
-                   onBlur={(e) => this.setFocus(e, false)}/>);
+                   onBlur={(e) => this.setFocus(e, false)}/>
+              <br/>
+              <hr style={{backgroundColor: "#C8C372"}}/>
+            </div>
+    );
   }
 }
 
-export default TripTitle;
+export default TripInfo;
