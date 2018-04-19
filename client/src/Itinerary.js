@@ -67,7 +67,8 @@ class Itinerary extends Component {
       let dest = this.props.trip.places[i];
       destRows.push(
           <td>
-            <DestCard destination={dest} tripPosition={i} reorderItinerary={this.props.setNewStart}/>
+            <DestCard destination={dest} tripPosition={i} reorderItinerary={this.props.setNewStart}
+                      removeDestFromTrip={this.props.removeDestFromTrip}/>
           </td>
       );
     }

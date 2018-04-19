@@ -7,6 +7,7 @@ class DestCard extends Component {
     super(props);
 
     this.makeStart = this.makeStart.bind(this);
+    this.removeFromTrip = this.removeFromTrip.bind(this);
 
     this.state = {
       destination: this.props.destination,
@@ -24,6 +25,11 @@ class DestCard extends Component {
   makeStart(e) {
     e.preventDefault();
     this.props.reorderItinerary(this.state.tripPosition);
+  }
+
+  removeFromTrip(e){
+    event.preventDefault();
+    this.props.removeDestFromTrip(this.state.tripPosition);
   }
 
   render() {
@@ -58,6 +64,7 @@ class DestCard extends Component {
                     <FaMapMarker/>
                   </button>
                   <button className="btn btn-danger"
+                          onClick={this.removeFromTrip}
                           data-toggle="tooltip" data-placement="right"
                           title="Remove this destination from the trip">
                     <FaMinus/>
@@ -67,7 +74,6 @@ class DestCard extends Component {
               <br/>
               <div className="row"
                    style={{color: "black"}}>{this.props.destination.name}</div>
-
             </h6>
             {contents()}
           </div>

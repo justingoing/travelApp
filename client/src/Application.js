@@ -25,6 +25,7 @@ class Application extends Component {
     this.reverseTrip = this.reverseTrip.bind(this);
     this.setNewStart = this.setNewStart.bind(this);
     this.updateSize = this.updateSize.bind(this);
+    this.removeDestFromTrip = this.removeDestFromTrip.bind(this);
 
     this.state = {
       loading: false,
@@ -344,6 +345,23 @@ class Application extends Component {
     this.updateTrip(newState);
   }
 
+  removeDestFromTrip(index) {
+
+    let distancesCopy = this.state.trip.distances;
+    let placesCopy = this.state.trip.places;
+    console.log("ORIGINAL\n" + distancesCopy);
+    distancesCopy.splice(index, 1);
+    console.log("SLICED\n" + distancesCopy);
+    placesCopy.splice(index, 1);
+
+    let newState = {
+      places: placesCopy,
+      distances: distancesCopy
+    };
+
+    this.updateTrip(newState);
+  }
+
   static reorder(array, index) {
     if (index < 0 || index >= array.length) {
       return array;
@@ -379,7 +397,8 @@ class Application extends Component {
                      queryPlaces={this.queryPlaces}
             />
             <Display trip={this.state.trip}
-                     setNewStart={this.setNewStart}/>
+                     setNewStart={this.setNewStart}
+                     removeDestFromTrip={this.removeDestFromTrip}/>
           </div>
           <Footer number={this.props.number} name={this.props.name}/>
         </div>
