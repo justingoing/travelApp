@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Sidebar from './sidebar/Sidebar';
 import Footer from './branding/Footer';
-import Display from './Display';
+import Display from './display/Display';
 import Header from './branding/Header';
 import Trip from './Trip';
 
@@ -153,7 +153,7 @@ class Application extends Component {
 
     //try to get configuration from server
     try {
-      configRequest = await fetch(process.env.SERVICE_URL + '/config', {
+      configRequest = await fetch('http://' + location.host + '/config', {
         method: "GET",
         header: {'Access-Control-Allow-Origin':'*'}
       });
@@ -287,7 +287,7 @@ class Application extends Component {
   fetchResponse(){
     console.log(process.env.SERVICE_URL);
     console.log("POSTing: " + this.state.trip);
-    return fetch(process.env.SERVICE_URL + '/plan', {
+    return fetch('http://' + location.host + '/plan', {
       method:"POST",
       body: JSON.stringify(this.state.trip),
       header: {'Access-Control-Allow-Origin':'*'}

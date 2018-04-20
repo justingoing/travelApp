@@ -10,7 +10,7 @@ class Footer extends Component {
 
   render() {
     return (
-        <div id="footer" style={{backgroundColor: "#1E4D28"}}>
+        <div className="row" id="footer" style={{backgroundColor: "#1E4D28"}}>
           <div className="col-12">
             <p className="text-white">
               <img className="img-fluid"

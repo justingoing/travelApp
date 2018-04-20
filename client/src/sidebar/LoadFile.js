@@ -20,15 +20,10 @@ class LoadFile extends Component {
   }
 
   render() {
-    const count = this.props.trip.places.length;
-
     return (
         <div id="loadFile" className="card-body">
-          <div className="form-group" role="group">
             <input type="file" className="form-control-file"
                    onChange={this.loadTFFI} id="tffifile"/>
-          </div>
-          <h5>There are {count} destinations. </h5>
         </div>
     );
   }
