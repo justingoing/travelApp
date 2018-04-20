@@ -19,11 +19,15 @@ class DestCard extends Component {
     this.toggleCardButton = this.toggleCardButton.bind(this);
     this.toggleCardInfo = this.toggleCardInfo.bind(this);
 
+    let domString = this.props.destination.name.replace(/\s/g, '').replace(/[0-9]/g, '').toLowerCase();
+    console.log("DOM STRING " + domString);
+
     this.state = {
       destination: this.props.destination,
       tripPosition: this.props.tripPosition,
       distance: this.props.distance,
-      showCardInfo: false
+      showCardInfo: false,
+      domString: domString
     };
   }
 
@@ -37,11 +41,13 @@ class DestCard extends Component {
   makeStart(e) {
     e.preventDefault();
     this.props.reorderItinerary(this.state.tripPosition);
+    this.toggleCardInfo();
   }
 
   removeFromTrip(e) {
     e.preventDefault();
     this.props.removeDestFromTrip(this.state.tripPosition);
+    this.toggleCardInfo();
   }
 
   toggleCardInfo(){
@@ -50,8 +56,8 @@ class DestCard extends Component {
 
   toggleCardButton(shouldDisplay) {
     event.preventDefault();
-    var info = document.getElementById(this.state.destination.name
-        + "InfoButton");
+    var info = document.getElementById(this.state.domString
+        + "infobutton");
     if (shouldDisplay) {
       info.style.display = "inline";
     } else {
@@ -65,7 +71,8 @@ class DestCard extends Component {
     let contents = function () {
       if (currState.destination.extraAttrs
           && currState.destination.extraAttrs.type) {
-        return (<p className="card-text" style={{fontSize: '75%'}}>
+        return (
+            <p style={{fontSize: '85%'}}>
           <br/>
           <b>Type:</b> {DestCard.prettyPrintAirportType(
             currState.destination.extraAttrs.type)}
@@ -77,13 +84,23 @@ class DestCard extends Component {
           <b>Country:</b> {currState.destination.extraAttrs.iso_country}
         </p>);
       }
+      else
+      {
+        return (
+            <p>
+              Unable to load more detailed information at this time
+              <br/>
+              Try connecting to a different server?
+            </p>
+        );
+      }
     };
 
     return (
         <div className="card" style={{width: '16rem'}}
              onMouseEnter={() => this.toggleCardButton(true)}
              onMouseLeave={() => this.toggleCardButton(false)}>
-          <div className="card-body" id={this.state.destination.name + "Card"}>
+          <div className="card-body" id={this.state.domString + "card"}>
             <h6 className="card-title h-100">
               <div className="row">
                 <div className="col-10">
@@ -92,23 +109,50 @@ class DestCard extends Component {
                 <div className="col-2">
                   <div className="btn-group btn-group-sm" role="group"
                        aria-label="Destination Popup">
-                    <button className="btn btn-light"
+                    <button className="btn btn-light float-right p-1"
                             style={{display: "none"}}
                             data-toggle="tooltip" data-placement="right"
                             title="More Information and Options"
-                            id={this.state.destination.name + "InfoButton"}>
+                            id={this.state.domString + "infobutton"}
+                            onClick={this.toggleCardInfo}>
                       <FaDots/>
                     </button>
                   </div>
                 </div>
               </div>
-              <Popover placement="left"
-                       isOpen={this.state.pageShown}
-                       target={this.state.destination.name + "Card"}
+              <Popover placement="right"
+                       isOpen={this.state.showCardInfo}
+                       target={this.state.domString
+                       + "infobutton"}
                        toggle={this.toggleCardInfo}
-                       style={{maxHeight: "600px",
-                         overflowY: "scroll", fontWeight: "bold", maxWidth: "250px"}}>
-                TEST DATA
+                       style={{maxHeight: "600px", fontWeight: "bold", maxWidth: "250px"}}>
+                <div className="card" style={{width: '18rem'}}>
+                  <div className="card-body" id={this.state.domString + "card"}>
+                    <h6 className="card-title h-100">
+                      More Info and Options
+                    </h6>
+                    <div className="card-text">
+                      {contents()}
+                      <div className="btn-group btn-group-sm" role="group"
+                           aria-label="Destination Popup">
+                        <button className="btn btn-primary"
+                                onClick={this.makeStart}
+                                data-toggle="tooltip" data-placement="left"
+                                title="Make this the starting destination"
+                                style={{backgroundColor: "#59595B"}}>
+                          <FaMapMarker/>
+                        </button>
+                        <button className="btn btn-danger"
+                                onClick={this.removeFromTrip}
+                                data-toggle="tooltip" data-placement="right"
+                                title="Remove this destination from the trip"
+                                style={{backgroundColor: "#D9782D"}}>
+                          <FaMinus/>
+                        </button>
+                      </div>
+                  </div>
+                  </div>
+                </div>
               </Popover>
             </h6>
             {"Next Destination: " + this.props.distance + " miles"}
@@ -119,21 +163,3 @@ class DestCard extends Component {
 }
 
 export default DestCard;
-/*
-THESE OUR THE BUTTONS THAT REMOVE/Make new start for the destination
-add these back in on the card pop up
- */
-/*
-                    <button className="btn btn-primary"
-                            onClick={this.makeStart}
-                            data-toggle="tooltip" data-placement="left"
-                            title="Make this the starting destination">
-                      <FaMapMarker/>
-                    </button>
-                    <button className="btn btn-danger"
-                            onClick={this.removeFromTrip}
-                            data-toggle="tooltip" data-placement="right"
-                            title="Remove this destination from the trip">
-                      <FaMinus/>
-                    </button>
- */
