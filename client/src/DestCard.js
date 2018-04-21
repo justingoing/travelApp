@@ -19,7 +19,8 @@ class DestCard extends Component {
     this.toggleCardButton = this.toggleCardButton.bind(this);
     this.toggleCardInfo = this.toggleCardInfo.bind(this);
 
-    let domString = this.props.destination.name.replace(/\s/g, '').replace(/[0-9]/g, '').toLowerCase();
+    let domString = this.props.destination.name.replace(/\s/g, '')
+    .replace(/[0-9]/g, '').replace(/[^a-z]/gi, '').toLowerCase();
     console.log("DOM STRING " + domString);
 
     this.state = {
@@ -50,7 +51,7 @@ class DestCard extends Component {
     this.toggleCardInfo();
   }
 
-  toggleCardInfo(){
+  toggleCardInfo() {
     this.setState({showCardInfo: !this.state.showCardInfo});
   }
 
@@ -73,19 +74,18 @@ class DestCard extends Component {
           && currState.destination.extraAttrs.type) {
         return (
             <p style={{fontSize: '85%'}}>
-          <br/>
-          <b>Type:</b> {DestCard.prettyPrintAirportType(
-            currState.destination.extraAttrs.type)}
-          <hr/>
-          <b>City:</b> {currState.destination.extraAttrs.municipality}
-          <hr/>
-          <b>Region:</b> {currState.destination.extraAttrs.iso_region}
-          <hr/>
-          <b>Country:</b> {currState.destination.extraAttrs.iso_country}
-        </p>);
+              <br/>
+              <b>Type:</b> {DestCard.prettyPrintAirportType(
+                currState.destination.extraAttrs.type)}
+              <hr/>
+              <b>City:</b> {currState.destination.extraAttrs.municipality}
+              <hr/>
+              <b>Region:</b> {currState.destination.extraAttrs.iso_region}
+              <hr/>
+              <b>Country:</b> {currState.destination.extraAttrs.iso_country}
+            </p>);
       }
-      else
-      {
+      else {
         return (
             <p>
               Unable to load more detailed information at this time
@@ -125,7 +125,11 @@ class DestCard extends Component {
                        target={this.state.domString
                        + "infobutton"}
                        toggle={this.toggleCardInfo}
-                       style={{maxHeight: "600px", fontWeight: "bold", maxWidth: "250px"}}>
+                       style={{
+                         maxHeight: "600px",
+                         fontWeight: "bold",
+                         maxWidth: "250px"
+                       }}>
                 <div className="card" style={{width: '18rem'}}>
                   <div className="card-body" id={this.state.domString + "card"}>
                     <h6 className="card-title h-100">
@@ -150,7 +154,7 @@ class DestCard extends Component {
                           <FaMinus/>
                         </button>
                       </div>
-                  </div>
+                    </div>
                   </div>
                 </div>
               </Popover>
