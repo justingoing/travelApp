@@ -406,8 +406,9 @@ class Application extends Component {
             <Display trip={this.state.trip}
                      setNewStart={this.setNewStart}
                      removeDestFromTrip={this.removeDestFromTrip}/>
+            <Footer number={this.props.number} name={this.props.name}/>
           </div>
-          <Footer number={this.props.number} name={this.props.name}/>
+
         </div>
     );
   }

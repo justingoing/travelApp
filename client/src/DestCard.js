@@ -117,7 +117,7 @@ class DestCard extends Component {
                   <div className="btn-group btn-group-sm" role="group"
                        aria-label="Destination Popup">
                     <button className="btn btn-light float-right p-1"
-                            style={{display: "none"}}
+                            style={{display: "none", border: "#FFF", backgroundColor: "#59595B", color:"white"}}
                             data-toggle="tooltip" data-placement="right"
                             title="More Information and Options"
                             id={this.state.domString + "infobutton"}

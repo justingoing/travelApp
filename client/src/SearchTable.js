@@ -53,11 +53,11 @@ class SearchTable extends Component {
   renderRow(key, ids, dests, selected) {
      let addition = (
               <td className="align-right"><span>
-                  <div className="btn-group btn-group-sm" role="group" style={{border: "#FFF", backgroundColor: "#3E4551"}}>
-                <button className="btn btn-primary " style={{border: "#FFF", backgroundColor: "#3E4551"}}
+                  <div className="btn-group btn-group-sm" role="group">
+                <button className="btn btn-primary " style={{border: "#FFF", backgroundColor: "#59595B"}}
                         onClick={(e) => this.addToTrip(key)}
                         title="Add to your trip">+</button>
-                <button className="btn btn-primary " style={{border: "#FFF", backgroundColor: "#3E4551"}}
+                <button className="btn btn-primary " style={{border: "#FFF", backgroundColor: "#59595B"}}
                         onClick={(e) => this.moreInfo(key)}
                         title="See more information">...</button>
                  </div>
@@ -74,10 +74,10 @@ class SearchTable extends Component {
     this.table = this.createTable();
     return(
       <div id="SearchTable">
-        <button className="btn btn-primary " style={{border: "#1E4D2B", backgroundColor: "#1E4D2B"}} onClick={(e) => this.props.addAllToTrip()}>+ All</button>
+        <button className="btn btn-primary " style={{border: "#FFF", backgroundColor: "#59595B"}} onClick={(e) => this.props.addAllToTrip()}>+ All</button>
         <br/>
         <div className="table-responsive">
-            <table className="table table-responsive" style={{maxHeight: "50%", overflow: "scroll", display: "inline-block"}}>
+            <table className="table table-responsive" style={{maxHeight: "30%", overflow: "scroll", display: "inline-block"}}>
             <thead>
             <tr className="table-info">
                 <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>ID</th>

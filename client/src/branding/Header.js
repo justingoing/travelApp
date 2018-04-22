@@ -69,7 +69,7 @@ class Header extends Component {
             <div className="col-10">
               <img className="img-fluid"
                    src="http://www.cs.colostate.edu/~davematt/logos/CS_unit_identifiers/CompSci-NS-CSU-1-Hrev.png"
-                   style={{maxHeight: "50"}}/>
+                   style={{maxHeight: "75"}}/>
             </div>
 
             <div className="col-1 align-self-right" style={{margin: "auto", marginRight: "15px"}}>
