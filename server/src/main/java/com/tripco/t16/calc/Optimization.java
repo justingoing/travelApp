@@ -240,10 +240,10 @@ public class Optimization {
     while (improvement) {
       improvement = false;
 
-      for (int i = 0; i < places.length - 2; i++) {
-        for (int j = i + 1; j < places.length - 1; j++) {
-          for (int k = j + 1; k < places.length; k++) {
-            System.out.println("i: " + i + "-- j: " + j + " -- k: " + k);
+      for (int i = 0; i < places.length - 3; i++) {
+        for (int j = i + 1; j < places.length - 2; j++) {
+          for (int k = j + 1; k < places.length -1; k++) {
+            //System.out.println("i: " + i + "-- j: " + j + " -- k: " + k);
             int currentDistance = distance0(distanceMatrix, lookupTable, i, j, k);
             if (distance1(distanceMatrix, lookupTable, i, j, k) < currentDistance) {
               exchange1(tmpPlaces, lookupTable, i, j, k);
@@ -266,13 +266,13 @@ public class Optimization {
     int lj = lookupTable[j];
     int lj1 = lookupTable[j + 1];
     int lk = lookupTable[k];
-    int lk1 = lookupTable[(k + 1) % lookupTable.length];
+    int lk1 = lookupTable[(k + 1)];
 
     int dist0 = distanceMatrix[li][li1] +
         distanceMatrix[lj][lj1] +
         distanceMatrix[lk][lk1];
 
-    System.out.println("Distance 0: " + dist0);
+    //System.out.println("Distance 0: " + dist0);
 
     return dist0;
   }
@@ -283,29 +283,26 @@ public class Optimization {
     int lj = lookupTable[j];
     int lj1 = lookupTable[j + 1];
     int lk = lookupTable[k];
-    int lk1 = lookupTable[(k + 1) % lookupTable.length];
+    int lk1 = lookupTable[(k + 1)];
 
     int dist1 = distanceMatrix[li][lk] +
         distanceMatrix[lj1][lj] +
         distanceMatrix[li1][lk1];
 
-    System.out.println("Distance 1: " + dist1);
+   // System.out.println("Distance 1: " + dist1);
 
     return dist1;
   }
 
   public static void exchange1(Place[] places, int[] lookupTable, int i, int j, int k) {
     twoOptReverse(places, lookupTable, i+1, k);
+    //swap(places, lookupTable, k, i);
   }
 
   public static void swap(Place[] places, int[] lookupTable, int i, int j) {
     Place tmp;
     int tmpInt;
 
-
-    if(i == j)
-      return;
-    // Fuck
     System.out.println("Swapping " + places[i].name + " and " + places[j].name);
     tmpInt = lookupTable[i];
     tmp = places[i];
