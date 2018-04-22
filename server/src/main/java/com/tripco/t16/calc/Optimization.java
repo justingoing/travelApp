@@ -52,8 +52,14 @@ public class Optimization {
       placesArray[i] = new PlaceRecord(places.get(i));
     }
 
+    Place[] distPlaces = new Place[places.size()];
+    for(int i = 0; i <places.size(); ++i)
+    {
+      distPlaces[i] = places.get(i);
+    }
+
     //Get the distances between each place.
-    int[][] distanceMatrix = calculateDistanceMatrix(placesArray, radius);
+    int[][] distanceMatrix = calculateDistanceMatrix(distPlaces, radius);
 
     Place[] bestPlaces = new Place[places.size()];
     int bestDistance = Integer.MAX_VALUE;
@@ -153,7 +159,7 @@ public class Optimization {
    *
    * @return - a matrix
    */
-  private static int[][] calculateDistanceMatrix(PlaceRecord[] records, double radius) {
+  public static int[][] calculateDistanceMatrix(Place[] records, double radius) {
     int[][] distanceMatrix = new int[records.length][records.length];
 
     //Calculate all the distances
@@ -167,7 +173,7 @@ public class Optimization {
         }
 
         // Calculate great circle distance.
-        int distance = getDistanceBetween(records[i].place, records[j].place, radius);
+        int distance = getDistanceBetween(records[i], records[j], radius);
         distanceMatrix[i][j] = distance;
         distanceMatrix[j][i] = distance;
       }
@@ -176,7 +182,7 @@ public class Optimization {
     return distanceMatrix;
   }
 
-  private static int[] createLookupTable(int length) {
+  public static int[] createLookupTable(int length) {
     // Keep track of the order of each node in the trip so we don't have to re-calculate distances
     int[] tripOrder = new int[length];
     for (int i = 0; i < length; ++i) {
@@ -217,8 +223,9 @@ public class Optimization {
   }
 
   public static Place[] threeOptNotShit(Place[] places, int[][] distanceMatrix, int[] lookupTable) {
-    return twoOptNotShit(places, distanceMatrix, lookupTable);
-    /*
+    //return twoOptNotShit(places, distanceMatrix, lookupTable);
+
+
     if (places.length <= 4) {
       return places;
     }
@@ -236,6 +243,7 @@ public class Optimization {
       for (int i = 0; i < places.length - 2; i++) {
         for (int j = i + 1; j < places.length - 1; j++) {
           for (int k = j + 1; k < places.length; k++) {
+            System.out.println("i: " + i + "-- j: " + j + " -- k: " + k);
             int currentDistance = distance0(distanceMatrix, lookupTable, i, j, k);
             if (distance1(distanceMatrix, lookupTable, i, j, k) < currentDistance) {
               exchange1(tmpPlaces, lookupTable, i, j, k);
@@ -249,56 +257,64 @@ public class Optimization {
       }
     }
 
-    return tmpPlaces;*/
+    return tmpPlaces;
   }
 
   public static int distance0(int[][] distanceMatrix, int[] lookupTable, int i, int j, int k) {
-    int li = lookupTable[i % lookupTable.length];
-    int li1 = lookupTable[(i + 1) % lookupTable.length];
-    int lj = lookupTable[j % lookupTable.length];
-    int lj1 = lookupTable[(j + 1) % lookupTable.length];
-    int lk = lookupTable[k % lookupTable.length];
+    int li = lookupTable[i];
+    int li1 = lookupTable[i + 1];
+    int lj = lookupTable[j];
+    int lj1 = lookupTable[j + 1];
+    int lk = lookupTable[k];
     int lk1 = lookupTable[(k + 1) % lookupTable.length];
 
     int dist0 = distanceMatrix[li][li1] +
         distanceMatrix[lj][lj1] +
         distanceMatrix[lk][lk1];
 
+    System.out.println("Distance 0: " + dist0);
+
     return dist0;
   }
 
   public static int distance1(int[][] distanceMatrix, int[] lookupTable, int i, int j, int k) {
-    int li = lookupTable[i % lookupTable.length];
-    int li1 = lookupTable[(i + 1) % lookupTable.length];
-    int lj = lookupTable[j % lookupTable.length];
-    int lj1 = lookupTable[(j + 1) % lookupTable.length];
-    int lk = lookupTable[k % lookupTable.length];
+    int li = lookupTable[i];
+    int li1 = lookupTable[i + 1];
+    int lj = lookupTable[j];
+    int lj1 = lookupTable[j + 1];
+    int lk = lookupTable[k];
     int lk1 = lookupTable[(k + 1) % lookupTable.length];
 
-    int dist0 = distanceMatrix[li][lk] +
+    int dist1 = distanceMatrix[li][lk] +
         distanceMatrix[lj1][lj] +
         distanceMatrix[li1][lk1];
 
-    return dist0;
+    System.out.println("Distance 1: " + dist1);
+
+    return dist1;
   }
 
   public static void exchange1(Place[] places, int[] lookupTable, int i, int j, int k) {
-    swap(places, lookupTable, k, j + 1);
-    swap(places, lookupTable, j, i + 1);
+    twoOptReverse(places, lookupTable, i+1, k);
   }
 
   public static void swap(Place[] places, int[] lookupTable, int i, int j) {
     Place tmp;
     int tmpInt;
 
-    tmpInt = lookupTable[i % lookupTable.length];
-    tmp = places[i % places.length];
 
-    lookupTable[i] = lookupTable[j % lookupTable.length];
-    places[i] = places[j % places.length];
+    if(i == j)
+      return;
+    // Fuck
+    System.out.println("Swapping " + places[i].name + " and " + places[j].name);
+    tmpInt = lookupTable[i];
+    tmp = places[i];
 
-    lookupTable[j % lookupTable.length] = tmpInt;
-    places[j % places.length] = tmp;
+    lookupTable[i] = lookupTable[j];
+    places[i] = places[j];
+
+    lookupTable[j] = tmpInt;
+    places[j] = tmp;
   }
 
 

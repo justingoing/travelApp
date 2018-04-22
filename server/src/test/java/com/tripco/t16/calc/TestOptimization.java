@@ -2,12 +2,14 @@ package com.tripco.t16.calc;
 
 import static org.junit.Assert.*;
 
+import com.tripco.t16.calc.Optimization;
 import com.tripco.t16.planner.Place;
 import com.tripco.t16.planner.Unit;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -17,6 +19,10 @@ public class TestOptimization {
 
   private Random rand = new Random();
 
+    ArrayList<Place> places;
+    Place A, B, C, D, E, F;
+    Place[] distPlaces;
+    ArrayList<Place> hex;
   @Test
   public void testZero() {
     ArrayList<Place> places = new ArrayList<>();
@@ -144,5 +150,70 @@ public class TestOptimization {
     opts.add(Optimization.TWO_OPT);
     opts.add(Optimization.NEAREST_NEIGHBOR);
     assertEquals(opts, Optimization.getOptimizations());
+  }
+
+  @Before public void setup()
+  {
+    places = new ArrayList<>();
+    A = makeFrom(36.452622, -111.563992);
+    A.name = "A";
+    B = makeFrom(36.427323, -104.783213);
+    B.name = "B";
+    C = makeFrom(39.357093, -102.344248);
+    C.name = "C";
+    D = makeFrom(42.357093, -104.783213);
+    D.name = "D";
+    E = makeFrom(42.357093, -111.563992);
+    E.name = "E";
+    F = makeFrom(39.357093, -113.563992);
+    F.name = "F";
+
+    hex = new ArrayList<>();
+    hex.add(A);
+    hex.add(B);
+    hex.add(C);
+    hex.add(D);
+    hex.add(E);
+    hex.add(F);
+
+  }
+  @Test
+  public void test3OptCase0() {
+    places.add(A);
+    places.add(B);
+    places.add(C);
+    places.add(D);
+    places.add(E);
+    places.add(F);
+    distPlaces = new Place[places.size()];
+    for(int i = 0; i <places.size(); ++i)
+    {
+      distPlaces[i] = places.get(i);
+    }
+
+    Place[] results = Optimization.threeOptNotShit(distPlaces, Optimization.calculateDistanceMatrix(distPlaces, Unit.miles.radius), Optimization.createLookupTable(places.size()));
+
+
+
+    assertEquals(hex, new ArrayList<Place>(Arrays.asList(results)));
+  }
+
+  @Test
+  public void test3OptCase1() {
+    places.add(A);
+    places.add(E);
+    places.add(D);
+    places.add(C);
+    places.add(B);
+    places.add(F);
+    distPlaces = new Place[places.size()];
+    for(int i = 0; i <places.size(); ++i)
+    {
+      distPlaces[i] = places.get(i);
+    }
+
+    Place[] results = Optimization.threeOptNotShit(distPlaces, Optimization.calculateDistanceMatrix(distPlaces, Unit.miles.radius), Optimization.createLookupTable(places.size()));
+
+    assertEquals(hex, new ArrayList<Place>(Arrays.asList(results)));
   }
 }
