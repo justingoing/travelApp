@@ -147,6 +147,7 @@ public class TestOptimization {
   @Test
   public void testGetOptimizations() {
     ArrayList<Optimization> opts = new ArrayList<>();
+    opts.add(Optimization.THREE_OPT);
     opts.add(Optimization.TWO_OPT);
     opts.add(Optimization.NEAREST_NEIGHBOR);
     assertEquals(opts, Optimization.getOptimizations());
@@ -262,6 +263,44 @@ public class TestOptimization {
     places.add(D);
     places.add(B);
     places.add(C);
+    places.add(F);
+    distPlaces = new Place[places.size()];
+    for(int i = 0; i <places.size(); ++i)
+    {
+      distPlaces[i] = places.get(i);
+    }
+
+    Place[] results = Optimization.threeOptNotShit(distPlaces, Optimization.calculateDistanceMatrix(distPlaces, Unit.miles.radius), Optimization.createLookupTable(places.size()));
+
+    assertEquals(hex, new ArrayList<Place>(Arrays.asList(results)));
+  }
+
+  @Test
+  public void test3OptCase5() {
+    places.add(A);
+    places.add(D);
+    places.add(E);
+    places.add(C);
+    places.add(B);
+    places.add(F);
+    distPlaces = new Place[places.size()];
+    for(int i = 0; i <places.size(); ++i)
+    {
+      distPlaces[i] = places.get(i);
+    }
+
+    Place[] results = Optimization.threeOptNotShit(distPlaces, Optimization.calculateDistanceMatrix(distPlaces, Unit.miles.radius), Optimization.createLookupTable(places.size()));
+
+    assertEquals(hex, new ArrayList<Place>(Arrays.asList(results)));
+  }
+
+  @Test
+  public void test3OptCase6() {
+    places.add(A);
+    places.add(C);
+    places.add(B);
+    places.add(E);
+    places.add(D);
     places.add(F);
     distPlaces = new Place[places.size()];
     for(int i = 0; i <places.size(); ++i)

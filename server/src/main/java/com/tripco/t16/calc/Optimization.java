@@ -22,6 +22,9 @@ public class Optimization {
   public static Optimization TWO_OPT = new Optimization("2-opt",
       "Two-opt improves upon nearest-neighbor by swapping each pair of edges, and seeing "
           + "if the swap makes the trip shorter.");
+  public static Optimization THREE_OPT = new Optimization("3-opt",
+      "Three-opt improves upon 2-opt by considering an additional pair (3 total) of edges, and"
+          + " seeing if any swaps of those edges make the trip shorter.");
 
   public String label;
   public String description;
@@ -245,34 +248,31 @@ public class Optimization {
           for (int k = j + 1; k < places.length -1; k++) {
             int currentDistance = distanceCase(distanceMatrix, lookupTable, i, j, k, 0);
 
-
-
-            if (distanceCase(distanceMatrix, lookupTable, i, j, k, 1) < currentDistance) {
-              exchange1(tmpPlaces, lookupTable, i, j, k);
+            /*if (distanceCase(distanceMatrix, lookupTable, i, j, k, 6) < currentDistance) {
+              exchange6(tmpPlaces, lookupTable, i, j, k);
               improvement = true;
-              continue;
-            }
-            else if(distanceCase(distanceMatrix, lookupTable, i, j, k, 2) < currentDistance) {
-              exchange2(tmpPlaces, lookupTable, i, j, k);
+            } else if (distanceCase(distanceMatrix, lookupTable, i, j, k, 5) < currentDistance) {
+              exchange5(tmpPlaces, lookupTable, i, j, k);
               improvement = true;
-              continue;
-            }
-            else if(distanceCase(distanceMatrix, lookupTable, i, j, k, 3) < currentDistance) {
-              exchange3(tmpPlaces, lookupTable, i, j, k);
-              improvement = true;
-              continue;
-            } else if(distanceCase(distanceMatrix, lookupTable, i, j, k, 4) < currentDistance) {
+            } else */if (distanceCase(distanceMatrix, lookupTable, i, j, k, 4) < currentDistance) {
               exchange4(tmpPlaces, lookupTable, i, j, k);
               improvement = true;
-              continue;
+            } else if (distanceCase(distanceMatrix, lookupTable, i, j, k, 3) < currentDistance) {
+              exchange3(tmpPlaces, lookupTable, i, j, k);
+              improvement = true;
+            } if (distanceCase(distanceMatrix, lookupTable, i, j, k, 2) < currentDistance) {
+              exchange2(tmpPlaces, lookupTable, i, j, k);
+              improvement = true;
+            } else if (distanceCase(distanceMatrix, lookupTable, i, j, k, 1) < currentDistance) {
+              exchange1(tmpPlaces, lookupTable, i, j, k);
+              improvement = true;
             }
-
-
-            //TODO cont...
           }
         }
       }
     }
+
+    System.out.println("Exiting the 3-opt land!");
 
     return tmpPlaces;
   }
@@ -314,17 +314,18 @@ public class Optimization {
       return distanceMatrix[li][lj] +
           distanceMatrix[li1][lk] +
           distanceMatrix[lj1][lk1];
-    } else if (caseNum == 5) {
+    } else if (caseNum == 5)
+    {
       return distanceMatrix[li][lk] +
           distanceMatrix[lj1][li1] +
           distanceMatrix[lj][lk1];
     } else if (caseNum == 6) {
-      return distanceMatrix[lj1][lk] +
-          distanceMatrix[lj1][li1] +
-          distanceMatrix[lj][lk1];
+      return distanceMatrix[li][lj1] +
+          distanceMatrix[lk][lj] +
+          distanceMatrix[li1][lk1];
     }else if (caseNum == 7) {
-      return distanceMatrix[lj1][lk] +
-          distanceMatrix[lj1][li1] +
+      return distanceMatrix[li][lj1] +
+          distanceMatrix[lk][li1] +
           distanceMatrix[lj][lk1];
     }
 
@@ -349,7 +350,12 @@ public class Optimization {
   }
 
   public static void exchange5(Place[] places, int[] lookupTable, int i, int j, int k) {
+    twoOptReverse(places, lookupTable, i+1, k);
     twoOptReverse(places, lookupTable, i+1, j);
+  }
+
+  public static void exchange6(Place[] places, int[] lookupTable, int i, int j, int k) {
+    twoOptReverse(places, lookupTable, i+1, k);
     twoOptReverse(places, lookupTable, j+1, k);
   }
 
@@ -422,6 +428,7 @@ public class Optimization {
    */
   public static ArrayList<Optimization> getOptimizations() {
     ArrayList<Optimization> opts = new ArrayList<>();
+    opts.add(THREE_OPT);
     opts.add(TWO_OPT);
     opts.add(NEAREST_NEIGHBOR);
 
