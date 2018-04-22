@@ -255,6 +255,11 @@ public class Optimization {
               improvement = true;
               continue;
             }
+            else if(distanceCase(distanceMatrix, lookupTable, i, j, k, 3) < currentDistance) {
+              exchange3(tmpPlaces, lookupTable, i, j, k);
+              improvement = true;
+              continue;
+            }
 
             //TODO cont...
           }
@@ -291,6 +296,12 @@ public class Optimization {
           distanceMatrix[li1][lj1] +
           distanceMatrix[lk][lk1];
     }
+    else if(caseNum == 3)
+    {
+      return distanceMatrix[li][li1] +
+          distanceMatrix[lj][lk] +
+          distanceMatrix[lj1][lk1];
+    }
 
     return -1;
   }
@@ -301,6 +312,10 @@ public class Optimization {
 
   public static void exchange2(Place[] places, int[] lookupTable, int i, int j, int k) {
     twoOptReverse(places, lookupTable, i+1, j);
+  }
+
+  public static void exchange3(Place[] places, int[] lookupTable, int i, int j, int k) {
+    twoOptReverse(places, lookupTable, j+1, k);
   }
 
   public static void swap(Place[] places, int[] lookupTable, int i, int j) {

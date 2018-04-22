@@ -235,4 +235,42 @@ public class TestOptimization {
 
     assertEquals(hex, new ArrayList<Place>(Arrays.asList(results)));
   }
+
+  @Test
+  public void test3OptCase3() {
+    places.add(A);
+    places.add(B);
+    places.add(C);
+    places.add(E);
+    places.add(D);
+    places.add(F);
+    distPlaces = new Place[places.size()];
+    for(int i = 0; i <places.size(); ++i)
+    {
+      distPlaces[i] = places.get(i);
+    }
+
+    Place[] results = Optimization.threeOptNotShit(distPlaces, Optimization.calculateDistanceMatrix(distPlaces, Unit.miles.radius), Optimization.createLookupTable(places.size()));
+
+    assertEquals(hex, new ArrayList<Place>(Arrays.asList(results)));
+  }
+
+  @Test
+  public void test3OptCase4() {
+    places.add(A);
+    places.add(E);
+    places.add(D);
+    places.add(B);
+    places.add(C);
+    places.add(F);
+    distPlaces = new Place[places.size()];
+    for(int i = 0; i <places.size(); ++i)
+    {
+      distPlaces[i] = places.get(i);
+    }
+
+    Place[] results = Optimization.threeOptNotShit(distPlaces, Optimization.calculateDistanceMatrix(distPlaces, Unit.miles.radius), Optimization.createLookupTable(places.size()));
+
+    assertEquals(hex, new ArrayList<Place>(Arrays.asList(results)));
+  }
 }
