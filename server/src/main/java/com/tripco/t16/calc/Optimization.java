@@ -244,12 +244,10 @@ public class Optimization {
         for (int j = i + 1; j < places.length - 2; j++) {
           for (int k = j + 1; k < places.length -1; k++) {
             int currentDistance = distanceCase(distanceMatrix, lookupTable, i, j, k, 0);
-            if(distanceCase(distanceMatrix, lookupTable, i, j, k, 4) < currentDistance) {
-              exchange4(tmpPlaces, lookupTable, i, j, k);
-              improvement = true;
-              continue;
-            }
-            else if (distanceCase(distanceMatrix, lookupTable, i, j, k, 1) < currentDistance) {
+
+
+
+            if (distanceCase(distanceMatrix, lookupTable, i, j, k, 1) < currentDistance) {
               exchange1(tmpPlaces, lookupTable, i, j, k);
               improvement = true;
               continue;
@@ -261,6 +259,10 @@ public class Optimization {
             }
             else if(distanceCase(distanceMatrix, lookupTable, i, j, k, 3) < currentDistance) {
               exchange3(tmpPlaces, lookupTable, i, j, k);
+              improvement = true;
+              continue;
+            } else if(distanceCase(distanceMatrix, lookupTable, i, j, k, 4) < currentDistance) {
+              exchange4(tmpPlaces, lookupTable, i, j, k);
               improvement = true;
               continue;
             }
@@ -312,6 +314,18 @@ public class Optimization {
       return distanceMatrix[li][lj] +
           distanceMatrix[li1][lk] +
           distanceMatrix[lj1][lk1];
+    } else if (caseNum == 5) {
+      return distanceMatrix[li][lk] +
+          distanceMatrix[lj1][li1] +
+          distanceMatrix[lj][lk1];
+    } else if (caseNum == 6) {
+      return distanceMatrix[lj1][lk] +
+          distanceMatrix[lj1][li1] +
+          distanceMatrix[lj][lk1];
+    }else if (caseNum == 7) {
+      return distanceMatrix[lj1][lk] +
+          distanceMatrix[lj1][li1] +
+          distanceMatrix[lj][lk1];
     }
 
     return -1;
@@ -330,10 +344,15 @@ public class Optimization {
   }
 
   public static void exchange4(Place[] places, int[] lookupTable, int i, int j, int k) {
-    twoOptReverse(places, lookupTable, k, j+1);
-    twoOptReverse(places, lookupTable, j, i+1);
-
+    twoOptReverse(places, lookupTable, i+1, j);
+    twoOptReverse(places, lookupTable, j+1, k);
   }
+
+  public static void exchange5(Place[] places, int[] lookupTable, int i, int j, int k) {
+    twoOptReverse(places, lookupTable, i+1, j);
+    twoOptReverse(places, lookupTable, j+1, k);
+  }
+
 
   public static void swap(Place[] places, int[] lookupTable, int i, int j) {
     Place tmp;
