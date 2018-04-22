@@ -75,6 +75,8 @@ class DestCard extends Component {
         return (
             <p style={{fontSize: '85%'}}>
               <br/>
+              <b>ID:</b> {currState.destination.id}
+              <hr/>
               <b>Type:</b> {DestCard.prettyPrintAirportType(
                 currState.destination.extraAttrs.type)}
               <hr/>
@@ -83,6 +85,11 @@ class DestCard extends Component {
               <b>Region:</b> {currState.destination.extraAttrs.iso_region}
               <hr/>
               <b>Country:</b> {currState.destination.extraAttrs.iso_country}
+              <hr/>
+              <b>Latitude:</b> {currState.destination.latitude}
+              <hr/>
+              <b>Longitude:</b> {currState.destination.longitude}
+
             </p>);
       }
       else {
