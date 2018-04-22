@@ -243,24 +243,26 @@ public class Optimization {
     while (improvement) {
       improvement = false;
 
+      int[] deltas = new int[6];
+
       for (int i = 0; i < places.length - 3; i++) {
         for (int j = i + 1; j < places.length - 2; j++) {
-          for (int k = j + 1; k < places.length -1; k++) {
+          for (int k = j + 1; k < places.length - 1; k++) {
             int currentDistance = distanceCase(distanceMatrix, lookupTable, i, j, k, 0);
-
             /*if (distanceCase(distanceMatrix, lookupTable, i, j, k, 6) < currentDistance) {
               exchange6(tmpPlaces, lookupTable, i, j, k);
               improvement = true;
-            } else if (distanceCase(distanceMatrix, lookupTable, i, j, k, 5) < currentDistance) {
+
+            } else*/ if (distanceCase(distanceMatrix, lookupTable, i, j, k, 5) < currentDistance) {
               exchange5(tmpPlaces, lookupTable, i, j, k);
               improvement = true;
-            } else */if (distanceCase(distanceMatrix, lookupTable, i, j, k, 4) < currentDistance) {
+            } else if (distanceCase(distanceMatrix, lookupTable, i, j, k, 4) < currentDistance) {
               exchange4(tmpPlaces, lookupTable, i, j, k);
               improvement = true;
             } else if (distanceCase(distanceMatrix, lookupTable, i, j, k, 3) < currentDistance) {
               exchange3(tmpPlaces, lookupTable, i, j, k);
               improvement = true;
-            } if (distanceCase(distanceMatrix, lookupTable, i, j, k, 2) < currentDistance) {
+            } else if (distanceCase(distanceMatrix, lookupTable, i, j, k, 2) < currentDistance) {
               exchange2(tmpPlaces, lookupTable, i, j, k);
               improvement = true;
             } else if (distanceCase(distanceMatrix, lookupTable, i, j, k, 1) < currentDistance) {
@@ -271,6 +273,51 @@ public class Optimization {
         }
       }
     }
+/*
+            int currentDistance = distanceCase(distanceMatrix, lookupTable, i, j, k, 0);
+            int bestDelta = 0;
+              deltas[0] = currentDistance - distanceCase(distanceMatrix, lookupTable, i, j, k, 1);
+              deltas[1] = currentDistance - distanceCase(distanceMatrix, lookupTable, i, j, k, 2);
+              deltas[2] = currentDistance - distanceCase(distanceMatrix, lookupTable, i, j, k, 3);
+              deltas[3] = currentDistance - distanceCase(distanceMatrix, lookupTable, i, j, k, 4);
+              deltas[4] = currentDistance - distanceCase(distanceMatrix, lookupTable, i, j, k, 5);
+              //deltas[5] = currentDistance - distanceCase(distanceMatrix, lookupTable, i, j, k, 6);
+
+            int exchangeIndex = 0;
+            for(int z = 0 ; z < deltas.length; ++z)
+            {
+              if(deltas[z] >bestDelta)
+              {
+                bestDelta = deltas[z];
+                exchangeIndex = z;
+              }
+            }
+
+            if(bestDelta > 0)
+            {
+              if(exchangeIndex == 0)
+              {
+                exchange1(tmpPlaces, lookupTable, i, j, k);
+              }
+              else if(exchangeIndex == 1)
+              {
+                exchange2(tmpPlaces, lookupTable, i, j, k);
+              }
+              else if(exchangeIndex == 2)
+              {
+                exchange3(tmpPlaces, lookupTable, i, j, k);
+              }
+              else if(exchangeIndex == 3)
+              {
+                exchange4(tmpPlaces, lookupTable, i, j, k);
+              }
+              else if(exchangeIndex == 4)
+              {
+                exchange5(tmpPlaces, lookupTable, i, j, k);
+              }
+              improvement = true;
+            }
+ */
 
     System.out.println("Exiting the 3-opt land!");
 
@@ -314,7 +361,8 @@ public class Optimization {
       return distanceMatrix[li][lj] +
           distanceMatrix[li1][lk] +
           distanceMatrix[lj1][lk1];
-    } else if (caseNum == 5)
+    }
+    else if (caseNum == 5)
     {
       return distanceMatrix[li][lk] +
           distanceMatrix[lj1][li1] +
@@ -351,7 +399,8 @@ public class Optimization {
 
   public static void exchange5(Place[] places, int[] lookupTable, int i, int j, int k) {
     twoOptReverse(places, lookupTable, i+1, k);
-    twoOptReverse(places, lookupTable, i+1, j);
+    twoOptReverse(places, lookupTable, i+1 + (k-j), k - i);
+
   }
 
   public static void exchange6(Place[] places, int[] lookupTable, int i, int j, int k) {
@@ -375,6 +424,44 @@ public class Optimization {
     places[j] = tmp;
   }
 
+  /**
+   * We don't know what this does.
+   *
+   * @param route
+   * @param i1
+   * @param k
+   */
+  public static void twoOptReverseBackwards(Place[] route, int[] lookupTable, int i1, int k) {
+
+    if(i1 > k)
+    {
+     // System.err.println("TwoOptReverse: Check the order of params to this function! Nothing is being swapped!");
+     // System.err.println("TwoOptReverse: i1: " + i1 + " -- k: " + k);
+      return;
+    }
+
+    Place tmp;
+    int tmpInt;
+
+    i1 += route.length;
+
+    while (i1 > k) {
+      int ifunc = i1 % lookupTable.length;
+      int kfunc = k % lookupTable.length;
+      tmpInt = lookupTable[ifunc];
+      tmp = route[ifunc];
+
+      lookupTable[ifunc] = lookupTable[kfunc];
+      route[ifunc] = route[kfunc];
+
+      lookupTable[kfunc] = tmpInt;
+      route[kfunc] = tmp;
+
+      i1--;
+      k++;
+    }
+  }
+
 
   /**
    * We don't know what this does.
@@ -384,8 +471,16 @@ public class Optimization {
    * @param k
    */
   private static void twoOptReverse(Place[] route, int[] lookupTable, int i1, int k) {
+    if(i1 > k)
+    {
+     // System.err.println("TwoOptReverse: Check the order of params to this function! Nothing is being swapped!");
+      //System.err.println("TwoOptReverse: i1: " + i1 + " -- k: " + k);
+      return;
+    }
+
     Place tmp;
     int tmpInt;
+
 
     while (i1 < k) {
       tmpInt = lookupTable[i1];
