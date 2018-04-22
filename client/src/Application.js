@@ -87,6 +87,7 @@ class Application extends Component {
       version: copyTFFI.version,
       type: copyTFFI.type,
       query: copyTFFI.query,
+      limit: copyTFFI.limit,
       places: copyTFFI.places,
       filters: copyTFFI.filters
     };
@@ -127,6 +128,7 @@ class Application extends Component {
       version: serverConfig.version,
       type: "query",
       query: "",
+      limit: 20,
       filters: [],
       places: []
     };
@@ -136,7 +138,7 @@ class Application extends Component {
   getDefaultConfig() {
     let t = {
       type: "config",
-      version: 3,
+      version: 4,
       filters: [],
       maps: ["svg"],
       optimization: 0,

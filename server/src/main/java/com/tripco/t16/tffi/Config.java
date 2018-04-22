@@ -12,7 +12,7 @@ public class Config {
   public int version;
   public ArrayList<Filter> filters;
   public ArrayList<String> maps;
-  public int optimization = 2;
+  public int optimization;
   public ArrayList<Optimization> optimizations;
   public ArrayList<String> units;
 
