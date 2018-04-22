@@ -216,4 +216,23 @@ public class TestOptimization {
 
     assertEquals(hex, new ArrayList<Place>(Arrays.asList(results)));
   }
+
+  @Test
+  public void test3OptCase2() {
+    places.add(A);
+    places.add(C);
+    places.add(B);
+    places.add(D);
+    places.add(E);
+    places.add(F);
+    distPlaces = new Place[places.size()];
+    for(int i = 0; i <places.size(); ++i)
+    {
+      distPlaces[i] = places.get(i);
+    }
+
+    Place[] results = Optimization.threeOptNotShit(distPlaces, Optimization.calculateDistanceMatrix(distPlaces, Unit.miles.radius), Optimization.createLookupTable(places.size()));
+
+    assertEquals(hex, new ArrayList<Place>(Arrays.asList(results)));
+  }
 }
