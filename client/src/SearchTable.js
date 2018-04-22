@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import DestCard from "./DestCard";
 
 class SearchTable extends Component {
   constructor(props) {
@@ -11,8 +12,6 @@ class SearchTable extends Component {
   createTable() {
     let ids = this.props.destinations.places.map((item, index) => <td key={"id" + index}> {item.id} </td>);
     let dests = this.props.destinations.places.map((item, index) => <td key={"dest" + index}> {item.name} </td>);
-    let lats = this.props.destinations.places.map((item, index) => <td key={"lat" + index}> {item.latitude} </td>);
-    let long = this.props.destinations.places.map((item, index) => <td key={"long" + index}> {item.longitude} </td>);
 
     let tableData = [];
 
@@ -20,13 +19,13 @@ class SearchTable extends Component {
       console.log("Making new table");
       let temp = this.props.destinations.places[i];
       if(!this.props.isInTrip(temp.id)) {
-        tableData.push(this.renderRow(i, ids[i], dests[i], lats[i], long[i]), false);
+        tableData.push(this.renderRow(i, ids[i], dests[i]), false);
         // store what's in the query vs. what's in the trip
         this.props.queryPlaces[temp.id] = this.props.destinations.places[i];
       }
     }
     console.log(this.props.queryPlaces);
-    return {ids, dests, lats, long, tableData};
+    return {ids, dests, tableData};
   }
 
   addToTrip(key){
@@ -35,18 +34,39 @@ class SearchTable extends Component {
     this.props.plan();
   }
 
-  renderRow(key, ids, dests, lat, long, selected) {
+  moreInfo(key){
+      alert("Name: " + this.props.destinations.places[key].name
+            + " ID: " + this.props.destinations.places[key].id
+            + "\nLatitude: " + this.props.destinations.places[key].latitude
+            + "\nLongitude: " + this.props.destinations.places[key].longitude
+            + "\nContinent: " + this.props.destinations.places[key].extraAttrs.continent
+            + "\nCountry: " + this.props.destinations.places[key].extraAttrs.iso_country
+            + "\nRegion: " + this.props.destinations.places[key].extraAttrs.iso_region
+            + "\nMunicipality: " + this.props.destinations.places[key].extraAttrs.municipality
+            + "\nType: " + this.props.destinations.places[key].extraAttrs.type
+            + "\nElevation: " + this.props.destinations.places[key].extraAttrs.elevation
+
+
+      );
+  }
+
+  renderRow(key, ids, dests, selected) {
      let addition = (
               <td className="align-right"><span>
-                <button className="btn btn-primary " style={{border: "#3E4551", backgroundColor: "#3E4551"}}
+                  <div className="btn-group btn-group-sm" role="group" style={{border: "#FFF", backgroundColor: "#3E4551"}}>
+                <button className="btn btn-primary " style={{border: "#FFF", backgroundColor: "#3E4551"}}
                         onClick={(e) => this.addToTrip(key)}
                         title="Add to your trip">+</button>
+                <button className="btn btn-primary " style={{border: "#FFF", backgroundColor: "#3E4551"}}
+                        onClick={(e) => this.moreInfo(key)}
+                        title="See more information">...</button>
+                 </div>
               </span></td>
           );
 
       let opacity = selected ? 0.3 : 1.0;
 
-      return (<tr key={key} style={{opacity: opacity}}>{ids}{dests}{lat}{long}{addition}</tr>);
+      return (<tr key={key} style={{opacity: opacity}}>{ids}{dests}{addition}</tr>);
   }
 
 
@@ -62,8 +82,6 @@ class SearchTable extends Component {
             <tr className="table-info">
                 <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>ID</th>
                 <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Name</th>
-                <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Latitude</th>
-                <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Longitude</th>
                 <th className="align-right" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Options</th>
             </tr>
             </thead>
