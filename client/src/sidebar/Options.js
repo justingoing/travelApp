@@ -69,8 +69,9 @@ class Options extends Component {
               <div class="col-7">
                 <div class="pull-right">
                   <ButtonDropdown isOpen={this.state.unitsChooserOpen}
-                                  toggle={(e) => this.toggleUnitsChooser(e)}>
-                    <DropdownToggle style={{width: "135px"}} caret>
+                                  toggle={(e) => this.toggleUnitsChooser(e)}
+                                  style={{width: "135px", border: "#FFF", backgroundColor: "#59595B"}}>
+                    <DropdownToggle style={{width: "135px", border: "#FFF", backgroundColor: "#59595B"}} caret>
                       {this.props.options.distance === "kilometers" ? "Kilometers" : "Miles"}
                     </DropdownToggle>
                     <DropdownMenu>
@@ -93,8 +94,8 @@ class Options extends Component {
                 <div class="pull-right">
                   <ButtonDropdown isOpen={this.state.mapTypeChooserOpen}
                                   toggle={(e) => this.toggleMapChooser(e)}
-                            style={{width: "165px"}}>
-                    <DropdownToggle style={{width: "135px"}} caret>{this.props.options.map === "kml"
+                                  style={{width: "135px", border: "#FFF", backgroundColor: "#59595B"}}>
+                    <DropdownToggle style={{width: "135px", border: "#FFF", backgroundColor: "#59595B"}} caret>{this.props.options.map === "kml"
                         ? "Google Maps" : "SVG"}
                     </DropdownToggle>
                     <DropdownMenu>
