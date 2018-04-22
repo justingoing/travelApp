@@ -9,6 +9,7 @@ public class Query {
   public int version;
   public String type;
   public String query;
+  public Integer limit;
   public ArrayList<Filter> filters;
   public ArrayList<Place> places;
 

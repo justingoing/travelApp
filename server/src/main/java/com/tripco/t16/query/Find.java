@@ -64,6 +64,8 @@ public class Find {
    * @param query What we are searching for
    */
   private void queryDB(Query query, String user, String password, boolean shouldPrint) {
+
+
     try {
       Class.forName(driver);
 
@@ -85,6 +87,12 @@ public class Find {
                       + query.filters.get(i).values.get(j) + "'";
               }
               searchLookup += ")";
+          }
+
+          if (query.limit == null) {
+            searchLookup +=  " LIMIT 50";
+          } else if (query.limit != 0) {
+            searchLookup +=  " LIMIT " + query.limit;
           }
 
       System.out.println(searchLookup);
