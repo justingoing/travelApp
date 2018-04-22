@@ -11,6 +11,6 @@ public class TestTFFI {
   @Test
   public void testTffi(){
     TFFI test = new TFFI();
-    assertEquals(test.VERSION, 3);
+    assertEquals(test.VERSION, 4);
   }
 }

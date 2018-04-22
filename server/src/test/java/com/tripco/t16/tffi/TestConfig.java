@@ -39,7 +39,7 @@ public class TestConfig {
 
   @Test
   public void testGetConfig(){
-    String test = "{\"type\":\"config\",\"version\":3,\"filters\":[{\"attribute\":\"airports.type\",\"values\":[\"heliport\",\"small_airport\",\"seaplane_base\",\"closed\",\"balloonport\",\"medium_airport\",\"large_airport\"]}],\"maps\":[\"svg\",\"kml\"],\"optimization\":0,\"optimizations\":[],\"units\":[\"kilometers\",\"miles\",\"nautical miles\",\"user defined\"]}";
+    String test = "{\"type\":\"config\",\"version\":4,\"filters\":[{\"attribute\":\"airports.type\",\"values\":[\"heliport\",\"small_airport\",\"seaplane_base\",\"closed\",\"balloonport\",\"medium_airport\",\"large_airport\"]}],\"maps\":[\"svg\",\"kml\"],\"optimization\":0,\"optimizations\":[],\"units\":[\"kilometers\",\"miles\",\"nautical miles\",\"user defined\"]}";
     Config test1 = new Config();
     String testJson = test1.getConfig();
     System.out.println(testJson);

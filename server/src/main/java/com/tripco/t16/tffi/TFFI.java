@@ -5,5 +5,5 @@ package com.tripco.t16.tffi;
  */
 public class TFFI {
 
-  public static final int VERSION = 3;
+  public static final int VERSION = 4;
 }
