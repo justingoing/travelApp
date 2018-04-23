@@ -399,8 +399,7 @@ public class Optimization {
 
   public static void exchange5(Place[] places, int[] lookupTable, int i, int j, int k) {
     twoOptReverse(places, lookupTable, i+1, k);
-    twoOptReverse(places, lookupTable, i+1 + (k-j), k - i);
-
+    twoOptReverse(places, lookupTable, (i + 1 + (k - j)), k);
   }
 
   public static void exchange6(Place[] places, int[] lookupTable, int i, int j, int k) {
@@ -473,8 +472,8 @@ public class Optimization {
   private static void twoOptReverse(Place[] route, int[] lookupTable, int i1, int k) {
     if(i1 > k)
     {
-     // System.err.println("TwoOptReverse: Check the order of params to this function! Nothing is being swapped!");
-      //System.err.println("TwoOptReverse: i1: " + i1 + " -- k: " + k);
+      System.err.println("TwoOptReverse: Check the order of params to this function! Nothing is being swapped!");
+      System.err.println("TwoOptReverse: i1: " + i1 + " -- k: " + k);
       return;
     }
 
