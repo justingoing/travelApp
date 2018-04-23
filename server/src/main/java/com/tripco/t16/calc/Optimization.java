@@ -22,6 +22,9 @@ public class Optimization {
   public static Optimization TWO_OPT = new Optimization("2-opt",
       "Two-opt improves upon nearest-neighbor by swapping each pair of edges, and seeing "
           + "if the swap makes the trip shorter.");
+  public static Optimization THREE_OPT = new Optimization("3-opt",
+      "Three-opt improves upon 2-opt by considering an additional pair (3 total) of edges, and"
+          + " seeing if any swaps of those edges make the trip shorter.");
 
   public String label;
   public String description;
@@ -40,7 +43,8 @@ public class Optimization {
   /**
    * Implements the nearest-neighbor graph algorithm.
    */
-  public static ArrayList<Place> optimize(final ArrayList<Place> places, double radius, int option) {
+  public static ArrayList<Place> optimize(final ArrayList<Place> places, double radius,
+      int option) {
     //Quick sanity check
     if (places == null || places.size() == 0) {
       return places;
@@ -52,8 +56,13 @@ public class Optimization {
       placesArray[i] = new PlaceRecord(places.get(i));
     }
 
+    Place[] distPlaces = new Place[places.size()];
+    for (int i = 0; i < places.size(); ++i) {
+      distPlaces[i] = places.get(i);
+    }
+
     //Get the distances between each place.
-    int[][] distanceMatrix = calculateDistanceMatrix(placesArray, radius);
+    int[][] distanceMatrix = calculateDistanceMatrix(distPlaces, radius);
 
     Place[] bestPlaces = new Place[places.size()];
     int bestDistance = Integer.MAX_VALUE;
@@ -107,13 +116,12 @@ public class Optimization {
       }
 
       if (option == 3) { //If we are two-opting, then run two-opt on this nearest neighbor.
-        System.out.println("3opt");
-        tmpPlaces = threeOptNotShit(tmpPlaces, distanceMatrix, lookupTable); //twoOpt(tmpPlaces, radius, twoOptDist, distanceMatrix, lookupTable);
+        tmpPlaces = threeOptNotShit(tmpPlaces, distanceMatrix,
+            lookupTable);
         distance = getTripDistance(distanceMatrix, lookupTable);
-        System.out.println("distance: " + distance);
       } else if (option == 2) { //If we are two-opting, then run two-opt on this nearest neighbor.
-        System.out.println("2opt");
-        tmpPlaces = twoOptNotShit(tmpPlaces, distanceMatrix, lookupTable); //twoOpt(tmpPlaces, radius, twoOptDist, distanceMatrix, lookupTable);
+        tmpPlaces = twoOptNotShit(tmpPlaces, distanceMatrix,
+            lookupTable);
         distance = getTripDistance(distanceMatrix, lookupTable);
       } else {
         distance = getTripDistance(distanceMatrix, lookupTable);
@@ -135,7 +143,6 @@ public class Optimization {
     ArrayList<Place> tmpPlaces = new ArrayList<>();
     Collections.addAll(tmpPlaces, bestPlaces);
 
-
     return tmpPlaces;
   }
 
@@ -153,7 +160,7 @@ public class Optimization {
    *
    * @return - a matrix
    */
-  private static int[][] calculateDistanceMatrix(PlaceRecord[] records, double radius) {
+  public static int[][] calculateDistanceMatrix(Place[] records, double radius) {
     int[][] distanceMatrix = new int[records.length][records.length];
 
     //Calculate all the distances
@@ -167,7 +174,7 @@ public class Optimization {
         }
 
         // Calculate great circle distance.
-        int distance = getDistanceBetween(records[i].place, records[j].place, radius);
+        int distance = getDistanceBetween(records[i], records[j], radius);
         distanceMatrix[i][j] = distance;
         distanceMatrix[j][i] = distance;
       }
@@ -176,7 +183,7 @@ public class Optimization {
     return distanceMatrix;
   }
 
-  private static int[] createLookupTable(int length) {
+  public static int[] createLookupTable(int length) {
     // Keep track of the order of each node in the trip so we don't have to re-calculate distances
     int[] tripOrder = new int[length];
     for (int i = 0; i < length; ++i) {
@@ -199,8 +206,8 @@ public class Optimization {
       improvement = false;
 
       for (int i = 0; i <= tmpPlaces.length - 3; i++) {
-        for (int k = i + 2;  k <= tmpPlaces.length - 2; k++) {
-          int delta = - distanceMatrix[lookupTable[i]][lookupTable[i + 1]]
+        for (int k = i + 2; k <= tmpPlaces.length - 2; k++) {
+          int delta = -distanceMatrix[lookupTable[i]][lookupTable[i + 1]]
               - distanceMatrix[lookupTable[k]][lookupTable[k + 1]]
               + distanceMatrix[lookupTable[i]][lookupTable[k]]
               + distanceMatrix[lookupTable[i + 1]][lookupTable[k + 1]];
@@ -217,8 +224,6 @@ public class Optimization {
   }
 
   public static Place[] threeOptNotShit(Place[] places, int[][] distanceMatrix, int[] lookupTable) {
-    return twoOptNotShit(places, distanceMatrix, lookupTable);
-    /*
     if (places.length <= 4) {
       return places;
     }
@@ -226,88 +231,116 @@ public class Optimization {
     Place[] tmpPlaces = Arrays.copyOf(places, places.length);
 
     boolean improvement = true;
-
-    System.out.println("Places" + places.length);
-    System.out.println(distanceMatrix.length);
-
     while (improvement) {
       improvement = false;
+      for (int i = 0; i < places.length - 3; i++) {
+        for (int j = i + 1; j < places.length - 2; j++) {
+          for (int k = j + 1; k < places.length - 1; k++) {
+            int currentDistance = distanceCase(distanceMatrix, lookupTable, i, j, k, 0);
+            int bestDelta = 0;
+            int caseNum = 0;
 
-      for (int i = 0; i < places.length - 2; i++) {
-        for (int j = i + 1; j < places.length - 1; j++) {
-          for (int k = j + 1; k < places.length; k++) {
-            int currentDistance = distance0(distanceMatrix, lookupTable, i, j, k);
-            if (distance1(distanceMatrix, lookupTable, i, j, k) < currentDistance) {
-              exchange1(tmpPlaces, lookupTable, i, j, k);
-              improvement = true;
-              continue;
+            for (int z = 1; z <= 7; z++) {
+              int delta = currentDistance - distanceCase(distanceMatrix, lookupTable, i, j, k, z);
+              if (delta > bestDelta) {
+                bestDelta = delta;
+                caseNum = z;
+              }
             }
 
-            //TODO cont...
+            if (caseNum != 0) {
+              exchange(tmpPlaces, lookupTable, i, j, k, caseNum);
+              improvement = true;
+            }
           }
         }
       }
     }
 
-    return tmpPlaces;*/
+    return tmpPlaces;
   }
 
-  public static int distance0(int[][] distanceMatrix, int[] lookupTable, int i, int j, int k) {
-    int li = lookupTable[i % lookupTable.length];
-    int li1 = lookupTable[(i + 1) % lookupTable.length];
-    int lj = lookupTable[j % lookupTable.length];
-    int lj1 = lookupTable[(j + 1) % lookupTable.length];
-    int lk = lookupTable[k % lookupTable.length];
-    int lk1 = lookupTable[(k + 1) % lookupTable.length];
+  public static int distanceCase(int[][] distanceMatrix, int[] lookupTable, int i, int j, int k,
+      int caseNum) {
+    int li = lookupTable[i];
+    int li1 = lookupTable[i + 1];
+    int lj = lookupTable[j];
+    int lj1 = lookupTable[j + 1];
+    int lk = lookupTable[k];
+    int lk1 = lookupTable[(k + 1)];
 
-    int dist0 = distanceMatrix[li][li1] +
-        distanceMatrix[lj][lj1] +
-        distanceMatrix[lk][lk1];
+    if (caseNum == 0) {
+      return distanceMatrix[li][li1] +
+          distanceMatrix[lj][lj1] +
+          distanceMatrix[lk][lk1];
+    } else if (caseNum == 1) {
+      return distanceMatrix[li][lk] +
+          distanceMatrix[lj1][lj] +
+          distanceMatrix[li1][lk1];
+    } else if (caseNum == 2) {
+      return distanceMatrix[li][lj] +
+          distanceMatrix[li1][lj1] +
+          distanceMatrix[lk][lk1];
+    } else if (caseNum == 3) {
+      return distanceMatrix[li][li1] +
+          distanceMatrix[lj][lk] +
+          distanceMatrix[lj1][lk1];
+    } else if (caseNum == 4) {
+      return distanceMatrix[li][lj] +
+          distanceMatrix[li1][lk] +
+          distanceMatrix[lj1][lk1];
+    } else if (caseNum == 5) {
+      return distanceMatrix[li][lk] +
+          distanceMatrix[lj1][li1] +
+          distanceMatrix[lj][lk1];
+    } else if (caseNum == 6) {
+      return distanceMatrix[li][lj1] +
+          distanceMatrix[lk][lj] +
+          distanceMatrix[li1][lk1];
+    } else if (caseNum == 7) {
+      return distanceMatrix[li][lj1] +
+          distanceMatrix[lk][li1] +
+          distanceMatrix[lj][lk1];
+    }
 
-    return dist0;
+    return -1;
   }
 
-  public static int distance1(int[][] distanceMatrix, int[] lookupTable, int i, int j, int k) {
-    int li = lookupTable[i % lookupTable.length];
-    int li1 = lookupTable[(i + 1) % lookupTable.length];
-    int lj = lookupTable[j % lookupTable.length];
-    int lj1 = lookupTable[(j + 1) % lookupTable.length];
-    int lk = lookupTable[k % lookupTable.length];
-    int lk1 = lookupTable[(k + 1) % lookupTable.length];
-
-    int dist0 = distanceMatrix[li][lk] +
-        distanceMatrix[lj1][lj] +
-        distanceMatrix[li1][lk1];
-
-    return dist0;
+  public static void exchange(Place[] places, int[] lookupTable, int i, int j, int k, int caseNum) {
+    switch (caseNum) {
+      case 1:
+        twoOptReverse(places, lookupTable, i + 1, k);
+        break;
+      case 2:
+        twoOptReverse(places, lookupTable, i + 1, j);
+        break;
+      case 3:
+        twoOptReverse(places, lookupTable, j + 1, k);
+        break;
+      case 4:
+        twoOptReverse(places, lookupTable, i + 1, j);
+        twoOptReverse(places, lookupTable, j + 1, k);
+        break;
+      case 5:
+        twoOptReverse(places, lookupTable, i + 1, k);
+        twoOptReverse(places, lookupTable, (i + 1 + (k - j)), k);
+        break;
+      case 6:
+        twoOptReverse(places, lookupTable, i + 1, k);
+        twoOptReverse(places, lookupTable, i + 1, i + (k - j));
+        break;
+      case 7:
+        twoOptReverse(places, lookupTable, i + 1, k);
+        twoOptReverse(places, lookupTable, (i + 1 + (k - j)), k);
+        twoOptReverse(places, lookupTable, i + 1, i + (k - j));
+        break;
+      default:
+        break;
+    }
   }
-
-  public static void exchange1(Place[] places, int[] lookupTable, int i, int j, int k) {
-    swap(places, lookupTable, k, j + 1);
-    swap(places, lookupTable, j, i + 1);
-  }
-
-  public static void swap(Place[] places, int[] lookupTable, int i, int j) {
-    Place tmp;
-    int tmpInt;
-
-    tmpInt = lookupTable[i % lookupTable.length];
-    tmp = places[i % places.length];
-
-    lookupTable[i] = lookupTable[j % lookupTable.length];
-    places[i] = places[j % places.length];
-
-    lookupTable[j % lookupTable.length] = tmpInt;
-    places[j % places.length] = tmp;
-  }
-
 
   /**
    * We don't know what this does.
-   *
-   * @param route
-   * @param i1
-   * @param k
    */
   private static void twoOptReverse(Place[] route, int[] lookupTable, int i1, int k) {
     Place tmp;
@@ -327,7 +360,6 @@ public class Optimization {
       k--;
     }
   }
-
 
 
   /**
@@ -354,6 +386,7 @@ public class Optimization {
    */
   public static ArrayList<Optimization> getOptimizations() {
     ArrayList<Optimization> opts = new ArrayList<>();
+    opts.add(THREE_OPT);
     opts.add(TWO_OPT);
     opts.add(NEAREST_NEIGHBOR);
 
