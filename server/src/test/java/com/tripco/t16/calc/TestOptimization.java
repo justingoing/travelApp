@@ -19,10 +19,12 @@ public class TestOptimization {
 
   private Random rand = new Random();
 
-    ArrayList<Place> places;
-    Place A, B, C, D, E, F;
-    Place[] distPlaces;
-    ArrayList<Place> hex;
+  private ArrayList<Place> places;
+  private ArrayList<Place> expectedPlaces;
+  private Place A, B, C, D, E, F, G, H, I;
+  private Place[] distPlaces;
+  private ArrayList<Place> hex;
+
   @Test
   public void testZero() {
     ArrayList<Place> places = new ArrayList<>();
@@ -99,11 +101,11 @@ public class TestOptimization {
     places.add(makeFrom(DistanceCalculator.COLORADO_BOTTOM, DistanceCalculator.COLORADO_LEFT));
     places.get(3).name = "BOTTOM LEFT";
 
-
     System.out.println(places);
     ArrayList<Place> results = Optimization.optimize(places, Unit.miles.radius, 2);
-    for(Place place : results)
+    for (Place place : results) {
       System.out.println(place.name);
+    }
 
     // check that 2 opt returns an uncrossed version of the trip
     assertEquals("TOP LEFT", results.get(0).name);
@@ -153,8 +155,8 @@ public class TestOptimization {
     assertEquals(opts, Optimization.getOptimizations());
   }
 
-  @Before public void setup()
-  {
+  @Before
+  public void setup() {
     places = new ArrayList<>();
     A = makeFrom(36.452622, -111.563992);
     A.name = "A";
@@ -168,6 +170,12 @@ public class TestOptimization {
     E.name = "E";
     F = makeFrom(39.357093, -113.563992);
     F.name = "F";
+    G = new Place();
+    G.name = "G";
+    H = new Place();
+    H.name = "H";
+    I = new Place();
+    I.name = "I";
 
     hex = new ArrayList<>();
     hex.add(A);
@@ -177,28 +185,23 @@ public class TestOptimization {
     hex.add(E);
     hex.add(F);
 
+    expectedPlaces = new ArrayList<>();
+
   }
+
   @Test
   public void test3OptCase0() {
-    places.add(A);
-    places.add(B);
-    places.add(C);
-    places.add(D);
-    places.add(E);
-    places.add(F);
-    distPlaces = new Place[places.size()];
-    for(int i = 0; i <places.size(); ++i)
-    {
-      distPlaces[i] = places.get(i);
-    }
+    makeHex();
+    makeDist(places);
 
-    Place[] results = Optimization.threeOptNotShit(distPlaces, Optimization.calculateDistanceMatrix(distPlaces, Unit.miles.radius), Optimization.createLookupTable(places.size()));
+    Place[] results = Optimization.threeOptNotShit(distPlaces,
+        Optimization.calculateDistanceMatrix(distPlaces, Unit.miles.radius),
+        Optimization.createLookupTable(places.size()));
 
-
-
-    assertEquals(hex, new ArrayList<Place>(Arrays.asList(results)));
+    assertEquals(hex, new ArrayList<>(Arrays.asList(results)));
   }
-/*
+
+
   @Test
   public void test3OptCase1() {
     places.add(A);
@@ -207,15 +210,7 @@ public class TestOptimization {
     places.add(C);
     places.add(B);
     places.add(F);
-    distPlaces = new Place[places.size()];
-    for(int i = 0; i <places.size(); ++i)
-    {
-      distPlaces[i] = places.get(i);
-    }
-
-    Place[] results = Optimization.threeOptNotShit(distPlaces, Optimization.calculateDistanceMatrix(distPlaces, Unit.miles.radius), Optimization.createLookupTable(places.size()));
-
-    assertEquals(hex, new ArrayList<Place>(Arrays.asList(results)));
+    assertHex();
   }
 
   @Test
@@ -226,15 +221,7 @@ public class TestOptimization {
     places.add(D);
     places.add(E);
     places.add(F);
-    distPlaces = new Place[places.size()];
-    for(int i = 0; i <places.size(); ++i)
-    {
-      distPlaces[i] = places.get(i);
-    }
-
-    Place[] results = Optimization.threeOptNotShit(distPlaces, Optimization.calculateDistanceMatrix(distPlaces, Unit.miles.radius), Optimization.createLookupTable(places.size()));
-
-    assertEquals(hex, new ArrayList<Place>(Arrays.asList(results)));
+    assertHex();
   }
 
   @Test
@@ -245,17 +232,19 @@ public class TestOptimization {
     places.add(E);
     places.add(D);
     places.add(F);
-    distPlaces = new Place[places.size()];
-    for(int i = 0; i <places.size(); ++i)
-    {
-      distPlaces[i] = places.get(i);
-    }
-
-    Place[] results = Optimization.threeOptNotShit(distPlaces, Optimization.calculateDistanceMatrix(distPlaces, Unit.miles.radius), Optimization.createLookupTable(places.size()));
-
-    assertEquals(hex, new ArrayList<Place>(Arrays.asList(results)));
+    assertHex();
   }
-/*
+
+  private void assertHex() {
+    makeDist(places);
+
+    Place[] results = Optimization.threeOptNotShit(distPlaces,
+        Optimization.calculateDistanceMatrix(distPlaces, Unit.miles.radius),
+        Optimization.createLookupTable(places.size()));
+
+    assertEquals(hex, new ArrayList<>(Arrays.asList(results)));
+  }
+
   @Test
   public void test3OptCase4() {
     places.add(A);
@@ -264,44 +253,10 @@ public class TestOptimization {
     places.add(B);
     places.add(C);
     places.add(F);
-    distPlaces = new Place[places.size()];
-    for(int i = 0; i <places.size(); ++i)
-    {
-      distPlaces[i] = places.get(i);
-    }
-
-    Place[] results = Optimization.threeOptNotShit(distPlaces, Optimization.calculateDistanceMatrix(distPlaces, Unit.miles.radius), Optimization.createLookupTable(places.size()));
-
-    assertEquals(hex, new ArrayList<Place>(Arrays.asList(results)));
+    assertHex();
   }
-*/
-/*
-  @Test
-  public void testBackwardReverse() {
-    places.add(A);
-    places.add(D);
-    places.add(E);
-    places.add(C);
-    places.add(B);
-    places.add(F);
-    distPlaces = new Place[places.size()];
-    for(int i = 0; i <places.size(); ++i)
-    {
-      distPlaces[i] = places.get(i);
-    }
 
-    int[] table = Optimization.createLookupTable(places.size());
 
-    Optimization.twoOptReverseBackwards(distPlaces, table, 1, 4);
-
-    ArrayList<Place> results2 = new ArrayList<Place>(Arrays.asList(distPlaces));
-    for(int i = 0; i < results2.size(); ++i)
-    {
-      System.out.println(results2.get(i).name);
-    }
-  }
-*/
-/*
   @Test
   public void test3OptCase5() {
     places.add(A);
@@ -310,21 +265,7 @@ public class TestOptimization {
     places.add(C);
     places.add(B);
     places.add(F);
-    distPlaces = new Place[places.size()];
-    for(int i = 0; i <places.size(); ++i)
-    {
-      distPlaces[i] = places.get(i);
-    }
-
-    Place[] results = Optimization.threeOptNotShit(distPlaces, Optimization.calculateDistanceMatrix(distPlaces, Unit.miles.radius), Optimization.createLookupTable(places.size()));
-
-    ArrayList<Place> results2 = new ArrayList<Place>(Arrays.asList(results));
-    for(int i = 0; i < results2.size(); ++i)
-    {
-      System.out.println(results2.get(i).name);
-    }
-
-    assertEquals(hex, new ArrayList<Place>(Arrays.asList(results)));
+    assertHex();
   }
 
 
@@ -335,49 +276,49 @@ public class TestOptimization {
   places.add(D);
   places.add(E);
   places.add(F);
-  distPlaces = new Place[places.size()];
-  for(int i = 0; i <places.size(); ++i)
-  {
-    distPlaces[i] = places.get(i);
-  }
-  Optimization.exchange5(distPlaces, Optimization.createLookupTable(places.size()), 0, 2, 4);
+  makeDist(places);
 
-  for(int i = 0; i < distPlaces.length; ++i)
-    System.out.println(distPlaces[i].name);
+  Optimization.exchange(distPlaces, Optimization.createLookupTable(places.size()), 0, 2, 4, 5);
 
+  expectedPlaces.add(A);
+  expectedPlaces.add(E);
+  expectedPlaces.add(D);
+  expectedPlaces.add(B);
+  expectedPlaces.add(C);
+  expectedPlaces.add(F);
+
+  assertEquals(expectedPlaces, new ArrayList<>(Arrays.asList(distPlaces)));
 }
 
   @Test
   public void testExchange5Big() {
-  System.out.println("TEST BIG");
     makeBig();
+    makeDist(places);
+    Optimization.exchange(distPlaces, Optimization.createLookupTable(places.size()), 2, 5, 7, 5);
 
-    distPlaces = new Place[places.size()];
-    for(int i = 0; i <places.size(); ++i)
-    {
-      distPlaces[i] = places.get(i);
-    }
-    Optimization.exchange5(distPlaces, Optimization.createLookupTable(places.size()), 2, 5, 7);
+    expectedPlaces.add(A);
+    expectedPlaces.add(B);
+    expectedPlaces.add(C);
+    expectedPlaces.add(H);
+    expectedPlaces.add(G);
+    expectedPlaces.add(D);
+    expectedPlaces.add(E);
+    expectedPlaces.add(F);
+    expectedPlaces.add(I);
 
-    for(int i = 0; i < distPlaces.length; ++i)
-      System.out.println(distPlaces[i].name);
+    assertEquals(expectedPlaces, new ArrayList<>(Arrays.asList(distPlaces)));
   }
 
-  */
-
-  public void makeBig() {
+  private void makeBig() {
     places.add(A);
     places.add(B);
     places.add(C);
     places.add(D);
     places.add(E);
     places.add(F);
-    places.add(new Place());
-    places.get(6).name = "G";
-    places.add(new Place());
-    places.get(7).name = "H";
-    places.add(new Place());
-    places.get(8).name = "I";
+    places.add(G);
+    places.add(H);
+    places.add(I);
   }
 
   private void makeHex() {
@@ -392,35 +333,77 @@ public class TestOptimization {
   @Test
   public void test3OptCase6() {
     makeHex();
+    makeDist(places);
+    Optimization.exchange(distPlaces, Optimization.createLookupTable(places.size()), 0, 2, 4, 6);
 
-    System.out.println("small");
-
-    distPlaces = new Place[places.size()];
-    for(int i = 0; i <places.size(); ++i)
-    {
-      distPlaces[i] = places.get(i);
-    }
-    Optimization.exchange6(distPlaces, Optimization.createLookupTable(places.size()), 0, 2, 4);
-
-    for(int i = 0; i < distPlaces.length; ++i)
-      System.out.println(distPlaces[i].name);
+    places.add(A);
+    places.add(B);
+    places.add(C);
+    places.add(E);
+    places.add(D);
+    places.add(F);
   }
 
   @Test
   public void test3OptCase6Big() {
-
-    System.out.println("TEST BIG");
     makeBig();
+    makeDist(places);
+    Optimization.exchange(distPlaces, Optimization.createLookupTable(places.size()), 2, 5, 7, 6);
 
+    expectedPlaces.add(A);
+    expectedPlaces.add(B);
+    expectedPlaces.add(C);
+    expectedPlaces.add(G);
+    expectedPlaces.add(H);
+    expectedPlaces.add(F);
+    expectedPlaces.add(E);
+    expectedPlaces.add(D);
+    expectedPlaces.add(I);
+    assertEquals(expectedPlaces, new ArrayList<>(Arrays.asList(distPlaces)));
+  }
+
+
+  private void makeDist(ArrayList<Place> places) {
     distPlaces = new Place[places.size()];
-    for(int i = 0; i <places.size(); ++i)
-    {
+    for (int i = 0; i < places.size(); ++i) {
       distPlaces[i] = places.get(i);
     }
-    Optimization.exchange6(distPlaces, Optimization.createLookupTable(places.size()), 2, 5, 7);
-
-    for(int i = 0; i < distPlaces.length; ++i)
-      System.out.println(distPlaces[i].name);
   }
+
+  @Test
+  public void test3OptCase7() {
+    makeHex();
+    makeDist(places);
+    Optimization.exchange(distPlaces, Optimization.createLookupTable(places.size()), 0, 2, 4, 7);
+
+    expectedPlaces.add(A);
+    expectedPlaces.add(D);
+    expectedPlaces.add(E);
+    expectedPlaces.add(B);
+    expectedPlaces.add(C);
+    expectedPlaces.add(F);
+
+    assertEquals(expectedPlaces, new ArrayList<>(Arrays.asList(distPlaces)));
+  }
+
+  @Test
+  public void test3OptCase7Big() {
+    makeBig();
+    makeDist(places);
+    Optimization.exchange(distPlaces, Optimization.createLookupTable(places.size()), 2, 5, 7, 7);
+
+    expectedPlaces.add(A);
+    expectedPlaces.add(B);
+    expectedPlaces.add(C);
+    expectedPlaces.add(G);
+    expectedPlaces.add(H);
+    expectedPlaces.add(D);
+    expectedPlaces.add(E);
+    expectedPlaces.add(F);
+    expectedPlaces.add(I);
+
+    assertEquals(expectedPlaces, new ArrayList<>(Arrays.asList(distPlaces)));
+  }
+
 
 }

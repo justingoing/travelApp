@@ -43,7 +43,8 @@ public class Optimization {
   /**
    * Implements the nearest-neighbor graph algorithm.
    */
-  public static ArrayList<Place> optimize(final ArrayList<Place> places, double radius, int option) {
+  public static ArrayList<Place> optimize(final ArrayList<Place> places, double radius,
+      int option) {
     //Quick sanity check
     if (places == null || places.size() == 0) {
       return places;
@@ -56,8 +57,7 @@ public class Optimization {
     }
 
     Place[] distPlaces = new Place[places.size()];
-    for(int i = 0; i <places.size(); ++i)
-    {
+    for (int i = 0; i < places.size(); ++i) {
       distPlaces[i] = places.get(i);
     }
 
@@ -116,13 +116,12 @@ public class Optimization {
       }
 
       if (option == 3) { //If we are two-opting, then run two-opt on this nearest neighbor.
-        System.out.println("3opt");
-        tmpPlaces = threeOptNotShit(tmpPlaces, distanceMatrix, lookupTable); //twoOpt(tmpPlaces, radius, twoOptDist, distanceMatrix, lookupTable);
+        tmpPlaces = threeOptNotShit(tmpPlaces, distanceMatrix,
+            lookupTable);
         distance = getTripDistance(distanceMatrix, lookupTable);
-        System.out.println("distance: " + distance);
       } else if (option == 2) { //If we are two-opting, then run two-opt on this nearest neighbor.
-        System.out.println("2opt");
-        tmpPlaces = twoOptNotShit(tmpPlaces, distanceMatrix, lookupTable); //twoOpt(tmpPlaces, radius, twoOptDist, distanceMatrix, lookupTable);
+        tmpPlaces = twoOptNotShit(tmpPlaces, distanceMatrix,
+            lookupTable);
         distance = getTripDistance(distanceMatrix, lookupTable);
       } else {
         distance = getTripDistance(distanceMatrix, lookupTable);
@@ -143,7 +142,6 @@ public class Optimization {
 
     ArrayList<Place> tmpPlaces = new ArrayList<>();
     Collections.addAll(tmpPlaces, bestPlaces);
-
 
     return tmpPlaces;
   }
@@ -208,8 +206,8 @@ public class Optimization {
       improvement = false;
 
       for (int i = 0; i <= tmpPlaces.length - 3; i++) {
-        for (int k = i + 2;  k <= tmpPlaces.length - 2; k++) {
-          int delta = - distanceMatrix[lookupTable[i]][lookupTable[i + 1]]
+        for (int k = i + 2; k <= tmpPlaces.length - 2; k++) {
+          int delta = -distanceMatrix[lookupTable[i]][lookupTable[i + 1]]
               - distanceMatrix[lookupTable[k]][lookupTable[k + 1]]
               + distanceMatrix[lookupTable[i]][lookupTable[k]]
               + distanceMatrix[lookupTable[i + 1]][lookupTable[k + 1]];
@@ -226,9 +224,6 @@ public class Optimization {
   }
 
   public static Place[] threeOptNotShit(Place[] places, int[][] distanceMatrix, int[] lookupTable) {
-    //return twoOptNotShit(places, distanceMatrix, lookupTable);
-
-
     if (places.length <= 4) {
       return places;
     }
@@ -236,93 +231,37 @@ public class Optimization {
     Place[] tmpPlaces = Arrays.copyOf(places, places.length);
 
     boolean improvement = true;
-
-    System.out.println("Places" + places.length);
-    System.out.println(distanceMatrix.length);
-
-
     while (improvement) {
       improvement = false;
-
       for (int i = 0; i < places.length - 3; i++) {
         for (int j = i + 1; j < places.length - 2; j++) {
           for (int k = j + 1; k < places.length - 1; k++) {
             int currentDistance = distanceCase(distanceMatrix, lookupTable, i, j, k, 0);
-            if (distanceCase(distanceMatrix, lookupTable, i, j, k, 6) < currentDistance) {
-              exchange6(tmpPlaces, lookupTable, i, j, k);
-              improvement = true;
-            } else if (distanceCase(distanceMatrix, lookupTable, i, j, k, 5) < currentDistance) {
-              exchange5(tmpPlaces, lookupTable, i, j, k);
-              improvement = true;
-            } else if (distanceCase(distanceMatrix, lookupTable, i, j, k, 4) < currentDistance) {
-              exchange4(tmpPlaces, lookupTable, i, j, k);
-              improvement = true;
-            } else if (distanceCase(distanceMatrix, lookupTable, i, j, k, 3) < currentDistance) {
-              exchange3(tmpPlaces, lookupTable, i, j, k);
-              improvement = true;
-            } else if (distanceCase(distanceMatrix, lookupTable, i, j, k, 2) < currentDistance) {
-              exchange2(tmpPlaces, lookupTable, i, j, k);
-              improvement = true;
-            } else if (distanceCase(distanceMatrix, lookupTable, i, j, k, 1) < currentDistance) {
-              exchange1(tmpPlaces, lookupTable, i, j, k);
+            int bestDelta = 0;
+            int caseNum = 0;
+
+            for (int z = 1; z <= 7; z++) {
+              int delta = currentDistance - distanceCase(distanceMatrix, lookupTable, i, j, k, z);
+              if (delta > bestDelta) {
+                bestDelta = delta;
+                caseNum = z;
+              }
+            }
+
+            if (caseNum != 0) {
+              exchange(tmpPlaces, lookupTable, i, j, k, caseNum);
               improvement = true;
             }
           }
         }
       }
     }
-/*
-            int currentDistance = distanceCase(distanceMatrix, lookupTable, i, j, k, 0);
-            int bestDelta = 0;
-              deltas[0] = currentDistance - distanceCase(distanceMatrix, lookupTable, i, j, k, 1);
-              deltas[1] = currentDistance - distanceCase(distanceMatrix, lookupTable, i, j, k, 2);
-              deltas[2] = currentDistance - distanceCase(distanceMatrix, lookupTable, i, j, k, 3);
-              deltas[3] = currentDistance - distanceCase(distanceMatrix, lookupTable, i, j, k, 4);
-              deltas[4] = currentDistance - distanceCase(distanceMatrix, lookupTable, i, j, k, 5);
-              //deltas[5] = currentDistance - distanceCase(distanceMatrix, lookupTable, i, j, k, 6);
-
-            int exchangeIndex = 0;
-            for(int z = 0 ; z < deltas.length; ++z)
-            {
-              if(deltas[z] >bestDelta)
-              {
-                bestDelta = deltas[z];
-                exchangeIndex = z;
-              }
-            }
-
-            if(bestDelta > 0)
-            {
-              if(exchangeIndex == 0)
-              {
-                exchange1(tmpPlaces, lookupTable, i, j, k);
-              }
-              else if(exchangeIndex == 1)
-              {
-                exchange2(tmpPlaces, lookupTable, i, j, k);
-              }
-              else if(exchangeIndex == 2)
-              {
-                exchange3(tmpPlaces, lookupTable, i, j, k);
-              }
-              else if(exchangeIndex == 3)
-              {
-                exchange4(tmpPlaces, lookupTable, i, j, k);
-              }
-              else if(exchangeIndex == 4)
-              {
-                exchange5(tmpPlaces, lookupTable, i, j, k);
-              }
-              improvement = true;
-            }
- */
-
-    System.out.println("Exiting the 3-opt land!");
 
     return tmpPlaces;
   }
 
-  public static int distanceCase(int[][] distanceMatrix, int[] lookupTable, int i, int j, int k, int caseNum) {
+  public static int distanceCase(int[][] distanceMatrix, int[] lookupTable, int i, int j, int k,
+      int caseNum) {
     int li = lookupTable[i];
     int li1 = lookupTable[i + 1];
     int lj = lookupTable[j];
@@ -330,38 +269,27 @@ public class Optimization {
     int lk = lookupTable[k];
     int lk1 = lookupTable[(k + 1)];
 
-    if(caseNum == 0)
-    {
+    if (caseNum == 0) {
       return distanceMatrix[li][li1] +
           distanceMatrix[lj][lj1] +
           distanceMatrix[lk][lk1];
-    }
-    else if(caseNum == 1)
-    {
+    } else if (caseNum == 1) {
       return distanceMatrix[li][lk] +
           distanceMatrix[lj1][lj] +
           distanceMatrix[li1][lk1];
-    }
-    else if(caseNum == 2)
-    {
+    } else if (caseNum == 2) {
       return distanceMatrix[li][lj] +
           distanceMatrix[li1][lj1] +
           distanceMatrix[lk][lk1];
-    }
-    else if(caseNum == 3)
-    {
+    } else if (caseNum == 3) {
       return distanceMatrix[li][li1] +
           distanceMatrix[lj][lk] +
           distanceMatrix[lj1][lk1];
-    }
-    else if(caseNum == 4)
-    {
+    } else if (caseNum == 4) {
       return distanceMatrix[li][lj] +
           distanceMatrix[li1][lk] +
           distanceMatrix[lj1][lk1];
-    }
-    else if (caseNum == 5)
-    {
+    } else if (caseNum == 5) {
       return distanceMatrix[li][lk] +
           distanceMatrix[lj1][li1] +
           distanceMatrix[lj][lk1];
@@ -369,7 +297,7 @@ public class Optimization {
       return distanceMatrix[li][lj1] +
           distanceMatrix[lk][lj] +
           distanceMatrix[li1][lk1];
-    }else if (caseNum == 7) {
+    } else if (caseNum == 7) {
       return distanceMatrix[li][lj1] +
           distanceMatrix[lk][li1] +
           distanceMatrix[lj][lk1];
@@ -378,106 +306,45 @@ public class Optimization {
     return -1;
   }
 
-  public static void exchange1(Place[] places, int[] lookupTable, int i, int j, int k) {
-    twoOptReverse(places, lookupTable, i+1, k);
-  }
-
-  public static void exchange2(Place[] places, int[] lookupTable, int i, int j, int k) {
-    twoOptReverse(places, lookupTable, i+1, j);
-  }
-
-  public static void exchange3(Place[] places, int[] lookupTable, int i, int j, int k) {
-    twoOptReverse(places, lookupTable, j+1, k);
-  }
-
-  public static void exchange4(Place[] places, int[] lookupTable, int i, int j, int k) {
-    twoOptReverse(places, lookupTable, i+1, j);
-    twoOptReverse(places, lookupTable, j+1, k);
-  }
-
-  public static void exchange5(Place[] places, int[] lookupTable, int i, int j, int k) {
-    twoOptReverse(places, lookupTable, i+1, k);
-    twoOptReverse(places, lookupTable, (i + 1 + (k - j)), k);
-  }
-
-  public static void exchange6(Place[] places, int[] lookupTable, int i, int j, int k) {
-    twoOptReverse(places, lookupTable, i+1, k);
-    twoOptReverse(places, lookupTable, i+1, i + (k - j));
-  }
-
-
-  public static void swap(Place[] places, int[] lookupTable, int i, int j) {
-    Place tmp;
-    int tmpInt;
-
-    System.out.println("Swapping " + places[i].name + " and " + places[j].name);
-    tmpInt = lookupTable[i];
-    tmp = places[i];
-
-    lookupTable[i] = lookupTable[j];
-    places[i] = places[j];
-
-    lookupTable[j] = tmpInt;
-    places[j] = tmp;
+  public static void exchange(Place[] places, int[] lookupTable, int i, int j, int k, int caseNum) {
+    switch (caseNum) {
+      case 1:
+        twoOptReverse(places, lookupTable, i + 1, k);
+        break;
+      case 2:
+        twoOptReverse(places, lookupTable, i + 1, j);
+        break;
+      case 3:
+        twoOptReverse(places, lookupTable, j + 1, k);
+        break;
+      case 4:
+        twoOptReverse(places, lookupTable, i + 1, j);
+        twoOptReverse(places, lookupTable, j + 1, k);
+        break;
+      case 5:
+        twoOptReverse(places, lookupTable, i + 1, k);
+        twoOptReverse(places, lookupTable, (i + 1 + (k - j)), k);
+        break;
+      case 6:
+        twoOptReverse(places, lookupTable, i + 1, k);
+        twoOptReverse(places, lookupTable, i + 1, i + (k - j));
+        break;
+      case 7:
+        twoOptReverse(places, lookupTable, i + 1, k);
+        twoOptReverse(places, lookupTable, (i + 1 + (k - j)), k);
+        twoOptReverse(places, lookupTable, i + 1, i + (k - j));
+        break;
+      default:
+        break;
+    }
   }
 
   /**
    * We don't know what this does.
-   *
-   * @param route
-   * @param i1
-   * @param k
-   */
-  public static void twoOptReverseBackwards(Place[] route, int[] lookupTable, int i1, int k) {
-
-    if(i1 > k)
-    {
-     // System.err.println("TwoOptReverse: Check the order of params to this function! Nothing is being swapped!");
-     // System.err.println("TwoOptReverse: i1: " + i1 + " -- k: " + k);
-      return;
-    }
-
-    Place tmp;
-    int tmpInt;
-
-    i1 += route.length;
-
-    while (i1 > k) {
-      int ifunc = i1 % lookupTable.length;
-      int kfunc = k % lookupTable.length;
-      tmpInt = lookupTable[ifunc];
-      tmp = route[ifunc];
-
-      lookupTable[ifunc] = lookupTable[kfunc];
-      route[ifunc] = route[kfunc];
-
-      lookupTable[kfunc] = tmpInt;
-      route[kfunc] = tmp;
-
-      i1--;
-      k++;
-    }
-  }
-
-
-  /**
-   * We don't know what this does.
-   *
-   * @param route
-   * @param i1
-   * @param k
    */
   private static void twoOptReverse(Place[] route, int[] lookupTable, int i1, int k) {
-    if(i1 > k)
-    {
-      System.err.println("TwoOptReverse: Check the order of params to this function! Nothing is being swapped!");
-      System.err.println("TwoOptReverse: i1: " + i1 + " -- k: " + k);
-      return;
-    }
-
     Place tmp;
     int tmpInt;
-
 
     while (i1 < k) {
       tmpInt = lookupTable[i1];
