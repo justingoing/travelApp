@@ -240,20 +240,18 @@ public class Optimization {
     System.out.println("Places" + places.length);
     System.out.println(distanceMatrix.length);
 
+
     while (improvement) {
       improvement = false;
-
-      int[] deltas = new int[6];
 
       for (int i = 0; i < places.length - 3; i++) {
         for (int j = i + 1; j < places.length - 2; j++) {
           for (int k = j + 1; k < places.length - 1; k++) {
             int currentDistance = distanceCase(distanceMatrix, lookupTable, i, j, k, 0);
-            /*if (distanceCase(distanceMatrix, lookupTable, i, j, k, 6) < currentDistance) {
+            if (distanceCase(distanceMatrix, lookupTable, i, j, k, 6) < currentDistance) {
               exchange6(tmpPlaces, lookupTable, i, j, k);
               improvement = true;
-
-            } else*/ if (distanceCase(distanceMatrix, lookupTable, i, j, k, 5) < currentDistance) {
+            } else if (distanceCase(distanceMatrix, lookupTable, i, j, k, 5) < currentDistance) {
               exchange5(tmpPlaces, lookupTable, i, j, k);
               improvement = true;
             } else if (distanceCase(distanceMatrix, lookupTable, i, j, k, 4) < currentDistance) {
@@ -404,7 +402,7 @@ public class Optimization {
 
   public static void exchange6(Place[] places, int[] lookupTable, int i, int j, int k) {
     twoOptReverse(places, lookupTable, i+1, k);
-    twoOptReverse(places, lookupTable, j+1, k);
+    twoOptReverse(places, lookupTable, i+1, i + (k - j));
   }
 
 
@@ -495,7 +493,6 @@ public class Optimization {
       k--;
     }
   }
-
 
 
   /**

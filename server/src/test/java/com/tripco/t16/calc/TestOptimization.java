@@ -327,7 +327,6 @@ public class TestOptimization {
     assertEquals(hex, new ArrayList<Place>(Arrays.asList(results)));
   }
 
-  */
 
 @Test public void testExchange5() {
   places.add(A);
@@ -348,8 +347,25 @@ public class TestOptimization {
 
 }
 
-  @Test public void testExchange5Big() {
+  @Test
+  public void testExchange5Big() {
   System.out.println("TEST BIG");
+    makeBig();
+
+    distPlaces = new Place[places.size()];
+    for(int i = 0; i <places.size(); ++i)
+    {
+      distPlaces[i] = places.get(i);
+    }
+    Optimization.exchange5(distPlaces, Optimization.createLookupTable(places.size()), 2, 5, 7);
+
+    for(int i = 0; i < distPlaces.length; ++i)
+      System.out.println(distPlaces[i].name);
+  }
+
+  */
+
+  public void makeBig() {
     places.add(A);
     places.add(B);
     places.add(C);
@@ -362,37 +378,49 @@ public class TestOptimization {
     places.get(7).name = "H";
     places.add(new Place());
     places.get(8).name = "I";
+  }
+
+  private void makeHex() {
+    places.add(A);
+    places.add(B);
+    places.add(C);
+    places.add(D);
+    places.add(E);
+    places.add(F);
+  }
+
+  @Test
+  public void test3OptCase6() {
+    makeHex();
+
+    System.out.println("small");
 
     distPlaces = new Place[places.size()];
     for(int i = 0; i <places.size(); ++i)
     {
       distPlaces[i] = places.get(i);
     }
-    Optimization.exchange5(distPlaces, Optimization.createLookupTable(places.size()), 2, 5, 7);
+    Optimization.exchange6(distPlaces, Optimization.createLookupTable(places.size()), 0, 2, 4);
 
     for(int i = 0; i < distPlaces.length; ++i)
       System.out.println(distPlaces[i].name);
-
   }
 
-/*
   @Test
-  public void test3OptCase6() {
-    places.add(A);
-    places.add(C);
-    places.add(B);
-    places.add(E);
-    places.add(D);
-    places.add(F);
+  public void test3OptCase6Big() {
+
+    System.out.println("TEST BIG");
+    makeBig();
+
     distPlaces = new Place[places.size()];
     for(int i = 0; i <places.size(); ++i)
     {
       distPlaces[i] = places.get(i);
     }
+    Optimization.exchange6(distPlaces, Optimization.createLookupTable(places.size()), 2, 5, 7);
 
-    Place[] results = Optimization.threeOptNotShit(distPlaces, Optimization.calculateDistanceMatrix(distPlaces, Unit.miles.radius), Optimization.createLookupTable(places.size()));
-
-    assertEquals(hex, new ArrayList<Place>(Arrays.asList(results)));
+    for(int i = 0; i < distPlaces.length; ++i)
+      System.out.println(distPlaces[i].name);
   }
-  */
+
 }
