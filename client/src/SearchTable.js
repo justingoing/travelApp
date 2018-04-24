@@ -66,7 +66,7 @@ class SearchTable extends Component {
 
       let opacity = selected ? 0.3 : 1.0;
 
-      return (<tr key={key} style={{opacity: opacity}}>{ids}{dests}{addition}</tr>);
+      return (<tr key={key} style={{opacity: opacity}}>{dests}{addition}</tr>);
   }
 
 
@@ -80,7 +80,6 @@ class SearchTable extends Component {
             <table className="table table-responsive" style={{maxHeight: "30%", overflow: "scroll", display: "inline-block"}}>
             <thead>
             <tr className="table-info">
-                <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>ID</th>
                 <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Name</th>
                 <th className="align-right" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Options</th>
             </tr>

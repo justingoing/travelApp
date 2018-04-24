@@ -46,7 +46,7 @@ class Sidebar extends Component {
 
     return (
         <div id="sidebar"
-             className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4 align-self-left"
+             className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-3 align-self-left"
              style={{ maxHeight: "657px", overflowY: "scroll"}}>
           <div className="container px-4">
             <TripInfo updateTrip={this.props.updateTrip} trip={this.props.trip}/>
