@@ -60,6 +60,7 @@ Date | Tasks done  | Tasks in progress | Impediments
  04/17 | 2 | #298, #312, #302, #160, #114, #321 | none
  04/18 | 2 | #298, #312, #302, #160, #114, #321 | none
  04/19 | 18  | #331, #328, #306, #290, #321 | none (several duplicate tasks)
+ 04/22 | 30 | #321, #328, #331 | none
 
 ## Review
 
