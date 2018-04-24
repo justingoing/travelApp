@@ -15,7 +15,7 @@ Justin | End User| 30 min
 Isaac | Moderator | 30 min
 
 ### Log
-file:line | defect | h/m/l | who found | github# 
+file| line | defect | h/m/l | who found | github# 
 --- | --- |:---:|:---:| ---
 Trip.java |N/A |Need separate SVG class | m |ikegentz | #343
 Trip.java |79,103,153,168,178,192,216,230 |move these functions to new SVG class | m |ikegentz/Justin |#345
