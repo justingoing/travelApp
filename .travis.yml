@@ -2,23 +2,30 @@ sudo: required
 language: java
 jdk:
   - oraclejdk8
-before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
-script:
-  - mvn prepare-package
-cache:
-  directories:
-  - $HOME/.m2
-after_script:
-  - mv target/site/jacoco/jacoco.xml ./
-  - sed -i 's_com/_server/src/main/java/com/_g' jacoco.xml
-  - ./cc-test-reporter --debug after-build --exit-code $TRAVIS_TEST_RESULT
-addons:
-  mariadb: '10.0'
+install:
+  - npm install --prefix client
 before_script:
   - mysql -u root -e 'CREATE DATABASE testDB;'
   - mysql -u root  testDB -e 'CREATE TABLE testDB.airports(id VARCHAR(255), name VARCHAR(255), municipality VARCHAR(255), keywords VARCHAR(255));'
   - mysql -u root -e "INSERT INTO testDB.airports(id, name, municipality, keywords) VALUES('DIA', 'Denver International Airport', 'DEN', 'Denver');"
   - mysql -u root -e "INSERT INTO testDB.airports(id, name, municipality, keywords) VALUES('SMA', 'Sterling Municial Airport', 'STE', 'Sterling');"
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+script:
+  - mvn prepare-package
+  - npm test --prefix client
+addons:
+  mariadb: '10.0'
+cache:
+  directories:
+  - $HOME/.m2
+  - client/node_modules
+after_script:
+  - mv target/site/jacoco/jacoco.xml ./
+  - sed -i 's_com/_server/src/main/java/com/_g' jacoco.xml
+  - ./cc-test-reporter format-coverage --output coverage/codeclimate.jacoco.json
+  - rm jacoco.xml
+  - mv client/coverage/lcov.info ./coverage
+  - ./cc-test-reporter format-coverage --output coverage/codeclimate.lcov.json
+  - ./cc-test-reporter sum-coverage coverage/codeclimate.*.json
+  - ./cc-test-reporter upload-coverage
