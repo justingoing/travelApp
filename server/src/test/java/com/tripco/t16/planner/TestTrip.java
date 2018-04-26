@@ -53,7 +53,7 @@ public class TestTrip {
    * Make sure that files in our resources folder load properly
    */
   public void testResources() {
-    assertNotEquals(trip.defaultSVG, trip.getSVGFromFile("/colorado.svg"));
+    assertNotEquals(Trip.defaultSVG, trip.getSVGFromFile("/colorado.svg"));
   }
 
   @Test
