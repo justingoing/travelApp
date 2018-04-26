@@ -6,6 +6,11 @@ import {
   DropdownItem
 } from 'reactstrap';
 
+import Cookies from 'universal-cookie';
+
+const cookieHelper = new Cookies();
+
+
 /* Options allows the user to change the parameters for planning
  * and rendering the trip map and itinerary.
  * The options reside in the parent object so they may be shared with the Trip object.
@@ -18,11 +23,22 @@ class Options extends Component {
     this.toggleUnitsChooser = this.toggleUnitsChooser.bind(this);
     this.setMap = this.setMap.bind(this);
     this.setUnits = this.setUnits.bind(this);
+    this.loadCookies = this.loadCookies.bind(this);
 
     this.state = {
       unitsChooserOpen: false,
-      mapTypeChooserOpen: false,
-    }
+      mapTypeChooserOpen: false
+    };
+
+    // cookie keys, avoid magic strings
+    this.cookiesKeys = {
+      distanceUnits: "distanceUnits",
+      mapType: "mapType",
+      optimizationLevel: "optLevel"
+    };
+
+    // Update components with cookies from last session
+    this.loadCookies();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -34,9 +50,26 @@ class Options extends Component {
     let input = document.getElementById("typeinp");
     let currentVal = input.value;
     this.props.updateOptions(currentVal);
+    cookieHelper.set(this.cookiesKeys.optimizationLevel, currentVal);
     this.setState({
       value: currentVal
     });
+  }
+
+  loadCookies() {
+    let distanceCookie = cookieHelper.get(this.cookiesKeys.distanceUnits);
+    if(distanceCookie)
+      this.props.updateOptions(distanceCookie);
+
+    let mapCookie = cookieHelper.get(this.cookiesKeys.mapType);
+    if(mapCookie)
+      this.props.updateMapType(mapCookie);
+
+    let optCookie = cookieHelper.get(this.cookiesKeys.optimizationLevel);
+    if(optCookie) {
+      optCookie = Number(optCookie);
+      this.props.updateOptions(optCookie);
+    }
   }
 
   toggleMapChooser(e, value) {
@@ -45,11 +78,14 @@ class Options extends Component {
   }
 
   setMap(e, value) {
-    this.props.updateMapType(value === "kml" ? "kml" : "svg");
+    let set = value === "kml" ? "kml" : "svg";
+    cookieHelper.set(this.cookiesKeys.mapType, set);
+    this.props.updateMapType(set);
   }
 
   setUnits(e, value) {
     let set = value === "kilometers" ? "kilometers" : "miles";
+    cookieHelper.set(this.cookiesKeys.distanceUnits, set);
     this.props.updateOptions(set);
   }
 
