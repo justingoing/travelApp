@@ -27,6 +27,7 @@ class Application extends Component {
     this.setNewStart = this.setNewStart.bind(this);
     this.updateSize = this.updateSize.bind(this);
     this.removeDestFromTrip = this.removeDestFromTrip.bind(this);
+    this.setServer = this.setServer.bind(this);
 
     this.state = {
       loading: false,
@@ -37,7 +38,8 @@ class Application extends Component {
         header: 0,
         content: 0,
         footer: 0
-      }
+      },
+      server: location.host
     };
 
     this.queryPlaces = {};
@@ -66,6 +68,10 @@ class Application extends Component {
         config: this.state.config
       });
     });
+  }
+
+  setServer(newServer) {
+    this.setState({server: newServer});
   }
 
   updateSize(size) {
@@ -156,7 +162,7 @@ class Application extends Component {
 
     //try to get configuration from server
     try {
-      configRequest = await fetch('http://' + location.host + '/config', {
+      configRequest = await fetch('http://' + this.state.server + '/config', {
         method: "GET",
         header: {'Access-Control-Allow-Origin':'*'}
       });
@@ -290,7 +296,7 @@ class Application extends Component {
   fetchResponse(){
     console.log(process.env.SERVICE_URL);
     console.log("POSTing: " + this.state.trip);
-    return fetch('http://' + location.host + '/plan', {
+    return fetch('http://' + this.state.server + '/plan', {
       method:"POST",
       body: JSON.stringify(this.state.trip),
       header: {'Access-Control-Allow-Origin':'*'}
@@ -408,7 +414,7 @@ class Application extends Component {
 
     return (
         <div id="application" style={{maxHeight: "100%"}}>
-          <Header updateSize={this.updateSize}/>
+          <Header updateSize={this.updateSize} setServer={this.setServer}/>
           <div className="row" style={{maxHeight: "100%"}}>
             <Sidebar plan={this.plan}
                      saveTFFI={this.saveTFFI}
@@ -427,6 +433,7 @@ class Application extends Component {
                      isInTrip={this.isInTrip}
                      addAllToTrip={this.addAllToTrip}
                      queryPlaces={this.queryPlaces}
+                     server={this.state.server}
             />
             <Display trip={this.state.trip}
                      setNewStart={this.setNewStart}
