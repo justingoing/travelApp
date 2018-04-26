@@ -43,18 +43,21 @@ class Destinations extends Component {
     makeChecks(){
         var addition = [];
         var f = this.props.config.filters;
-        var vals = f["0"].values;
-        for(let i = 0; i < vals.length; i++) {
-            addition.push(<label><input type="checkbox"  onClick={(e) => this.check(vals[i])}/>{vals[i]}&emsp;</label>);
+        for(let a = 0; a < f.length; a++) {
+            var test = a;
+            var vals = f[test].values;
+            addition.push(f[test].attribute + '\n');
+            for(let i = 0; i < vals.length; i++) {
+                addition.push(<label><input type="checkbox"  onClick={(e) => this.check(vals[i], a, f[a].attribute)}/>{vals[i]}&emsp;</label>);
+            }
         }
-
         return addition;
     }
-    check(name) {
+    check(name, spot, a) {
         if(this.props.query.filters.length == 0) {
             let newQuery = this.props.query;
             newQuery.filters = [{
-                "attribute": "airports.type",
+                "attribute": a,
                 "values": [name]
             }
             ];
@@ -62,27 +65,30 @@ class Destinations extends Component {
             return;
         }
 
-        for(let j = 0; j < this.props.query.filters["0"].values.length; j++) {
-            if(this.props.query.filters["0"].values[j] == name) {
-                let removeQuery = this.props.query;
-                if(1 == this.props.query.filters["0"].values.length) {
-                    removeQuery.filters.pop(); //if only one value then empty filters entirely
+        for(let s = 0; s < this.props.query.filters.length; s++) {
+            for(let j = 0; j < this.props.query.filters[s].values.length; j++) {
+                if(this.props.query.filters[s].values[j] == name) {
+                    let removeQuery = this.props.query;
+                    if(1 == this.props.query.filters[s].values.length) {
+                        removeQuery.filters.pop(); //if only one value then empty filters entirely
+                        return;
+                    }
+                    else if(j == this.props.query.filters[s].values.length -1 ) {
+                        removeQuery.filters[s].values.pop();
+                    }
+                    removeQuery.filters[s].values.splice(j, 1);
+                    this.props.updateQuery(removeQuery);
                     return;
                 }
-                else if(j == this.props.query.filters["0"].values.length -1 ) {
-                    removeQuery.filters["0"].values.pop();
+                else {
+                    let addQuery = this.props.query;
+                    addQuery.filters[s].values.push(name);
+                    this.props.updateQuery(addQuery);
+                    return;
                 }
-                removeQuery.filters["0"].values.splice(j, 1);
-                this.props.updateQuery(removeQuery);
-                return;
-            }
-            else {
-                let addQuery = this.props.query;
-                addQuery.filters["0"].values.push(name);
-                this.props.updateQuery(addQuery);
-                return;
             }
         }
+
     }
 
   render() {
@@ -95,7 +101,7 @@ class Destinations extends Component {
             </div>
 
             <div className="filters">
-              Filter by Airport Type:
+              Filter by:
                 <br/>
                 <div>{this.makeChecks()}</div>
             </div>
