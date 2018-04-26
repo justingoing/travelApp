@@ -25,7 +25,7 @@ public class Config {
     filters = Filter.getFilters();
     maps = Map.getMaps();
 
-    ArrayList<Optimization> optimizations = new ArrayList<>();
+    ArrayList<Optimization> optimizations = Optimization.getOptimizations();
     optimization = optimizations.size();
     this.optimizations = optimizations;
 

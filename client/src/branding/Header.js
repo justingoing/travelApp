@@ -18,21 +18,22 @@ class Header extends Component {
     this.toggleStaffPage = this.toggleStaffPage.bind(this);
     this.toggleStaff = this.toggleStaff.bind(this);
     this.toggleInstructions = this.toggleInstructions.bind(this);
+    this.toggleOptions = this.toggleOptions.bind(this);
+    this.setPort = this.setPort.bind(this);
 
     this.state = {
       pageShown: false,
       staffShown: false,
-      instructionsShown: false
+      instructionsShown: false,
+      optionsShown: false
     };
   }
 
   componentDidMount() {
     const height = this.divElement.clientHeight;
 
-    this.props.updateSize({header: height})
-    this.height = 0;
-
-    console.log(height);
+    this.props.updateSize({header: height});
+    this.height = height;
   }
 
   toggleStaff() {
@@ -45,6 +46,23 @@ class Header extends Component {
 
   toggleStaffPage() {
     this.setState({pageShown: !this.state.pageShown});
+  }
+
+  toggleOptions() {
+    this.setState({optionsShown: !this.state.optionsShown});
+  }
+
+  setPort() {
+    let portNum = document.getElementById("portSearch").value;
+    let index = location.host.indexOf(':');
+    let newhost = location.host.substring(0, index+1) + portNum;
+    console.info("Changing to new server: " + newhost);
+    window.alert("Changing to new server: " + newhost);
+    this.props.setServer(newhost);
+    /*
+      We DON'T want to set location.host because that will try downloading a 
+      new client, so we just set a variable to query a different server instead
+     */
   }
 
   makeStaff(img, link, name) {
@@ -138,6 +156,21 @@ class Header extends Component {
                         Save the trip map and itinerary for future reference.
                       </li>
                     </ol>
+                  </Collapse>
+
+                  <ListGroupItem className="px-2"
+                                 style={{backgroundColor: "#C8C372", width: "250px"}}
+                                 onClick={this.toggleOptions}>
+                    More Options...
+                  </ListGroupItem>
+                  <Collapse className="p-2" isOpen={this.state.optionsShown}>
+                    <br/>
+                    <p>Port Number:</p>
+                    <div className="input-group" role="group">
+                      <input type="text" className="form-control" id="portSearch" placeholder="31416"/>
+                      <button className="btn btn-primary " style={{border: "#FFF", backgroundColor: "#59595B"}}
+                              onClick={(e) => this.setPort()} type="button">Set Port</button>
+                    </div>
                   </Collapse>
                 </ListGroup>
             </Popover>

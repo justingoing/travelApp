@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Options from "./Options";
 import Destinations from "../Destinations";
 import LoadFile from "./LoadFile";
+import Save from "./Save";
 import {
   Collapse,
   Button,
@@ -19,13 +20,17 @@ import TripInfo from "./TripInfo";
 class Sidebar extends Component {
   constructor(props) {
     super(props);
+
     this.toggleSearch = this.toggleSearch.bind(this);
     this.toggleLoad = this.toggleLoad.bind(this);
     this.toggleOptions = this.toggleOptions.bind(this);
+    this.toggleSave = this.toggleSave.bind(this);
+
     this.state = {
       collapseSearch: false,
       collapseLoad: false,
-      collapseOptions: false
+      collapseOptions: false,
+      collapseSave: false
     };
   }
 
@@ -41,9 +46,11 @@ class Sidebar extends Component {
     this.setState({collapseLoad: !this.state.collapseLoad});
   }
 
+  toggleSave() {
+    this.setState({collapseSave: !this.state.collapseSave});
+  }
+
   render() {
-
-
     return (
         <div id="sidebar"
              className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-3 align-self-left"
@@ -54,7 +61,6 @@ class Sidebar extends Component {
               <ListGroupItem tag="button" href="#search"
                              onClick={this.toggleSearch}>
                 Search For Destinations
-
               </ListGroupItem>
               <Collapse isOpen={this.state.collapseSearch}>
                 <Destinations trip={this.props.trip}
@@ -67,7 +73,8 @@ class Sidebar extends Component {
                               isInTrip={this.props.isInTrip}
                               addAllToTrip={this.props.addAllToTrip}
                               queryPlaces={this.props.queryPlaces}
-                              plan={this.props.plan}/>
+                              plan={this.props.plan}
+                              server={this.props.server}/>
               </Collapse>
               <ListGroupItem tag="button" href="#options"
                              onClick={this.toggleOptions}>Options
@@ -79,14 +86,17 @@ class Sidebar extends Component {
               </Collapse>
 
               <ListGroupItem tag="button" href="#load"
-                             onClick={this.toggleLoad}>Load File
+                             onClick={this.toggleLoad}>Load Files
               </ListGroupItem>
               <Collapse isOpen={this.state.collapseLoad}>
                 <LoadFile updateTrip={this.props.updateTrip}/>
               </Collapse>
-              <ListGroupItem tag="button" href="#save"
-                             onClick={this.props.saveTFFI}>Save File
+              <ListGroupItem isOpen={this.state.collapseSave} tag="button" href="#save"
+                             onClick={this.toggleSave}>Save Files
               </ListGroupItem>
+              <Collapse isOpen={this.state.collapseSave}>
+                <Save saveTFFI={this.props.saveTFFI} saveKML={this.props.saveKML}/>
+              </Collapse>
             </ListGroup>
           </div>
         </div>
