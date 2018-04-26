@@ -33,7 +33,8 @@ class Options extends Component {
     // cookie keys, avoid magic strings
     this.cookiesKeys = {
       distanceUnits: "distanceUnits",
-      mapType: "mapType"
+      mapType: "mapType",
+      optimizationLevel: "optLevel"
     };
 
     // Update components with cookies from last session
@@ -49,16 +50,13 @@ class Options extends Component {
     let input = document.getElementById("typeinp");
     let currentVal = input.value;
     this.props.updateOptions(currentVal);
+    cookieHelper.set(this.cookiesKeys.optimizationLevel, currentVal);
     this.setState({
       value: currentVal
     });
   }
 
   loadCookies() {
-    console.log("COOKIES!!!!");
-    console.log(cookieHelper.get(this.cookiesKeys.distanceUnits));
-    console.log(cookieHelper.get(this.cookiesKeys.mapType));
-
     let distanceCookie = cookieHelper.get(this.cookiesKeys.distanceUnits);
     if(distanceCookie)
       this.props.updateOptions(distanceCookie);
@@ -66,6 +64,12 @@ class Options extends Component {
     let mapCookie = cookieHelper.get(this.cookiesKeys.mapType);
     if(mapCookie)
       this.props.updateMapType(mapCookie);
+
+    let optCookie = cookieHelper.get(this.cookiesKeys.optimizationLevel);
+    if(optCookie) {
+      optCookie = Number(optCookie);
+      this.props.updateOptions(optCookie);
+    }
   }
 
   toggleMapChooser(e, value) {
@@ -76,14 +80,12 @@ class Options extends Component {
   setMap(e, value) {
     let set = value === "kml" ? "kml" : "svg";
     cookieHelper.set(this.cookiesKeys.mapType, set);
-    //document.cookie = "mapType=" + set;
     this.props.updateMapType(set);
   }
 
   setUnits(e, value) {
     let set = value === "kilometers" ? "kilometers" : "miles";
     cookieHelper.set(this.cookiesKeys.distanceUnits, set);
-    //document.cookie = "distanceUnits=" + set;
     this.props.updateOptions(set);
   }
 
