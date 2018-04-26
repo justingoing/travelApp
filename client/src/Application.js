@@ -340,23 +340,24 @@ class Application extends Component {
    * Saves the KML file to the local file system.
    */
   saveKML(){
-    /*
+
     //Create saver object and contents
-    var Saver = require('file-saver');
-    var blob = new Blob([JSON.stringify(this.state.trip)], {type: "text/plain;charset=utf-8"});
+    let Saver = require('file-saver');
+    let string = this.state.trip.map;
+    string = string.replace(/([^\r])\n/g, "$1\r\n");
+
+    let blob = new Blob([string], {type: "text/plain; charset=utf-8"});
 
     //Create title
-    var title = this.state.trip.title;
+    let title = this.state.trip.title;
     if (title === "") {
-      title = "Trip.json"
+      title = "Trip.kml"
     } else {
-      title += ".json";
+      title += ".kml";
     }
 
     //Save file
-    Saver.saveAs(blob, title);*/
-
-    alert("This functionality is not supported yet! Coming soon...");
+    Saver.saveAs(blob, title);
   }
 
   reverseTrip() {

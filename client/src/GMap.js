@@ -24,8 +24,7 @@ class GMap extends Component {
     return (
         <GoogleMap
             defaultCenter={{lat: 0, lng: 0}}
-            defaultZoom={2}
-        >
+            defaultZoom={2}>
           <Polyline path={this.makePath(places)}
                     options={{strokeColor: '#BD4269'}}
           />

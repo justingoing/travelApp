@@ -1,5 +1,6 @@
 package com.tripco.t16.planner;
 
+import com.tripco.t16.planner.map.KML;
 import com.tripco.t16.planner.map.Point;
 import com.tripco.t16.planner.map.SVG;
 import com.tripco.t16.tffi.Error;
@@ -56,7 +57,11 @@ public class Trip {
 
     this.coords = placesToCoords();
     this.distances = legDistances();
-    this.map = SVG.getWorldSVG(this.coords);
+    if (options != null && options.map != null && options.map.equals("kml")) {
+      this.map = KML.getWorldKML(this.places, this.coords);
+    } else {
+      this.map = SVG.getWorldSVG(this.coords);
+    }
     return err;
   }
 

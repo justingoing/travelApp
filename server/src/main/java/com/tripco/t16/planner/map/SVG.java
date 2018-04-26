@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class SVG {
+
   private static final String DEST_RADIUS = "10";
 
   private static final int SVG_WIDTH = 1920;
@@ -27,7 +28,7 @@ public class SVG {
   public static String getWorldSVG(ArrayList<Point> points) {
     String world = getSVGFromFile("/World4.svg");
 
-    return  "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>"
+    return "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>"
         + "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1024\" height=\"512\">\n"
         + world
         + getLegsAsSVG(points)
@@ -68,43 +69,49 @@ public class SVG {
     StringBuilder svg = new StringBuilder(
         "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"1066.6073\" height=\"783.0824\">");
 
-    if (points.size() > 0) {
-      Point start = getMappedCoords(points.get(0).x, points.get(0).y);
-      Point end = getMappedCoords(points.get(points.size() - 1).x,
-          points.get(points.size() - 1).y);
+    if (points.size() <= 0) {
+      svg.append("</svg>");
+      return svg.toString();
+    }
 
-      addSvgLeg(svg, start, end);
+    Point start = getMappedCoords(points.get(0).x, points.get(0).y);
+    Point end = getMappedCoords(points.get(points.size() - 1).x,
+        points.get(points.size() - 1).y);
 
-      for (int i = 0; i < points.size() - 1; ++i) {
-        Point cur = getMappedCoords(points.get(i).x, points.get(i).y);
-        Point nex = getMappedCoords(points.get(i + 1).x, points.get(i + 1).y);
+    addSvgLeg(svg, start, end);
 
-        // wrap around 'edge' of the earth
-        if (Math.abs(nex.x - cur.x) > (SVG_MAPPED_X / 2)) {
-          if (nex.x > cur.x) {
-            Point curEnd = new Point(nex.x - SVG_MAPPED_X, nex.y);
-            Point nexEnd = new Point(cur.x + SVG_MAPPED_X, cur.y);
-            addSvgLeg(svg, cur, curEnd, nex, nexEnd);
-          }
-          else {
-            Point curEnd = new Point(nex.x + SVG_MAPPED_X, nex.y);
-            Point nexEnd = new Point(cur.x - SVG_MAPPED_X, cur.y);
-            addSvgLeg(svg, cur, curEnd, nex, nexEnd);
-          }
-        }
-        // close enough to not wrap around earth
-        else {
-          addSvgLeg(svg, cur, nex);
-        }
+    for (int i = 0; i < points.size() - 1; ++i) {
+      Point cur = getMappedCoords(points.get(i).x, points.get(i).y);
+      Point nex = getMappedCoords(points.get(i + 1).x, points.get(i + 1).y);
 
-        addSvgCircle(svg, cur);
-        if (i == points.size() - 2) {
-          addSvgCircle(svg, nex);
-        }
+      addTripLeg(svg, cur, nex);
+
+      addSvgCircle(svg, cur);
+      if (i == points.size() - 2) {
+        addSvgCircle(svg, nex);
       }
     }
     svg.append("</svg>");
     return svg.toString();
+  }
+
+  private static void addTripLeg(StringBuilder svg, Point cur, Point nex) {
+    // wrap around 'edge' of the earth
+    if (Math.abs(nex.x - cur.x) > (SVG_MAPPED_X / 2)) {
+      if (nex.x > cur.x) {
+        Point curEnd = new Point(nex.x - SVG_MAPPED_X, nex.y);
+        Point nexEnd = new Point(cur.x + SVG_MAPPED_X, cur.y);
+        addSvgLeg(svg, cur, curEnd, nex, nexEnd);
+      } else {
+        Point curEnd = new Point(nex.x + SVG_MAPPED_X, nex.y);
+        Point nexEnd = new Point(cur.x - SVG_MAPPED_X, cur.y);
+        addSvgLeg(svg, cur, curEnd, nex, nexEnd);
+      }
+    }
+    // close enough to not wrap around earth
+    else {
+      addSvgLeg(svg, cur, nex);
+    }
   }
 
   /**
@@ -129,14 +136,10 @@ public class SVG {
    * @param end1 The actual end coordinate
    * @param end2 The 'end ' of the end coord (for wrapping off edge)
    */
-  private static void addSvgLeg(StringBuilder svg, Point start1, Point start2, Point end1, Point end2) {
-    svg.append("<line stroke=\"#1E4D2B\" y2=\"").append(start1.y).append("\" x2=\"").append(start1.x)
-        .append("\" y1=\"").append(start2.y).append("\" x1=\"").append(start2.x)
-        .append("\" stroke-width=\"5\" fill=\"none\"/>");
-
-    svg.append("<line stroke=\"#1E4D2B\" y2=\"").append(end1.y).append("\" x2=\"").append(end1.x)
-        .append("\" y1=\"").append(end2.y).append("\" x1=\"").append(end2.x)
-        .append("\" stroke-width=\"5\" fill=\"none\"/>");
+  private static void addSvgLeg(StringBuilder svg, Point start1, Point start2, Point end1,
+      Point end2) {
+    addSvgLeg(svg, start1, start2);
+    addSvgLeg(svg, end1, end2);
   }
 
   private static void addSvgCircle(StringBuilder svg, Point pos) {
@@ -162,7 +165,4 @@ public class SVG {
 
     return new Point(finalX, finalY);
   }
-
-
-
 }
