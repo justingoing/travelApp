@@ -22,10 +22,12 @@ class Application extends Component {
     this.addAllToTrip = this.addAllToTrip.bind(this);
     this.plan = this.plan.bind(this);
     this.saveTFFI = this.saveTFFI.bind(this);
+    this.saveKML = this.saveKML.bind(this);
     this.reverseTrip = this.reverseTrip.bind(this);
     this.setNewStart = this.setNewStart.bind(this);
     this.updateSize = this.updateSize.bind(this);
     this.removeDestFromTrip = this.removeDestFromTrip.bind(this);
+    this.setServer = this.setServer.bind(this);
 
     this.state = {
       loading: false,
@@ -36,7 +38,8 @@ class Application extends Component {
         header: 0,
         content: 0,
         footer: 0
-      }
+      },
+      server: location.host
     };
 
     this.queryPlaces = {};
@@ -65,6 +68,10 @@ class Application extends Component {
         config: this.state.config
       });
     });
+  }
+
+  setServer(newServer) {
+    this.setState({server: newServer});
   }
 
   updateSize(size) {
@@ -155,7 +162,7 @@ class Application extends Component {
 
     //try to get configuration from server
     try {
-      configRequest = await fetch('http://' + location.host + '/config', {
+      configRequest = await fetch('http://' + this.state.server + '/config', {
         method: "GET",
         header: {'Access-Control-Allow-Origin':'*'}
       });
@@ -289,7 +296,7 @@ class Application extends Component {
   fetchResponse(){
     console.log(process.env.SERVICE_URL);
     console.log("POSTing: " + this.state.trip);
-    return fetch('http://' + location.host + '/plan', {
+    return fetch('http://' + this.state.server + '/plan', {
       method:"POST",
       body: JSON.stringify(this.state.trip),
       header: {'Access-Control-Allow-Origin':'*'}
@@ -314,6 +321,27 @@ class Application extends Component {
    */
   saveTFFI(){
     //Create saver object and contents
+    let Saver = require('file-saver');
+    let blob = new Blob([JSON.stringify(this.state.trip)], {type: "text/plain;charset=utf-8"});
+
+    //Create title
+    let title = this.state.trip.title;
+    if (title === "") {
+      title = "Trip.json"
+    } else {
+      title += ".json";
+    }
+
+    //Save file
+    Saver.saveAs(blob, title);
+  }
+
+  /*
+   * Saves the KML file to the local file system.
+   */
+  saveKML(){
+    /*
+    //Create saver object and contents
     var Saver = require('file-saver');
     var blob = new Blob([JSON.stringify(this.state.trip)], {type: "text/plain;charset=utf-8"});
 
@@ -326,7 +354,9 @@ class Application extends Component {
     }
 
     //Save file
-    Saver.saveAs(blob, title);
+    Saver.saveAs(blob, title);*/
+
+    alert("This functionality is not supported yet! Coming soon...");
   }
 
   reverseTrip() {
@@ -384,10 +414,11 @@ class Application extends Component {
 
     return (
         <div id="application" style={{maxHeight: "100%"}}>
-          <Header updateSize={this.updateSize}/>
+          <Header updateSize={this.updateSize} setServer={this.setServer}/>
           <div className="row" style={{maxHeight: "100%"}}>
             <Sidebar plan={this.plan}
                      saveTFFI={this.saveTFFI}
+                     saveKML={this.saveKML}
                      reverseTrip={this.reverseTrip}
                      setNewStart={this.setNewStart}
                      updateOptions={this.updateOptions}
@@ -402,6 +433,7 @@ class Application extends Component {
                      isInTrip={this.isInTrip}
                      addAllToTrip={this.addAllToTrip}
                      queryPlaces={this.queryPlaces}
+                     server={this.state.server}
             />
             <Display trip={this.state.trip}
                      setNewStart={this.setNewStart}

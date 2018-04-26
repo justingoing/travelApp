@@ -62,12 +62,12 @@ class Options extends Component {
     return (
         <div id="options" className="card">
           <div className="card-body">
-            <div class="row">
-              <div class="col-5">
+            <div className="row">
+              <div className="col-5">
                 <p>Units: </p>
               </div>
-              <div class="col-7">
-                <div class="pull-right">
+              <div className="col-7">
+                <div className="pull-right">
                   <ButtonDropdown isOpen={this.state.unitsChooserOpen}
                                   toggle={(e) => this.toggleUnitsChooser(e)}
                                   style={{width: "135px", border: "#FFF", backgroundColor: "#59595B"}}>
@@ -85,13 +85,13 @@ class Options extends Component {
               </div>
             </div>
 
-            <div class="row">
-              <div class="col-5">
+            <div className="row">
+              <div className="col-5">
 
                 <p>MapType: </p>
               </div>
-              <div class="col-7">
-                <div class="pull-right">
+              <div className="col-7">
+                <div className="pull-right">
                   <ButtonDropdown isOpen={this.state.mapTypeChooserOpen}
                                   toggle={(e) => this.toggleMapChooser(e)}
                                   style={{width: "135px", border: "#FFF", backgroundColor: "#59595B"}}>
@@ -109,11 +109,11 @@ class Options extends Component {
               </div>
             </div>
 
-            <div class="row">
-              <div class="col-5">
+            <div className="row">
+              <div className="col-5">
                 <p>Optimization</p>
               </div>
-              <div class="col-7">
+              <div className="col-7">
                 <input id="typeinp" type="range" min="0" max="1" step=".01"
                        defaultValue={Number(this.props.options.optimization)}
                        onMouseUp={this.onInput.bind(this)}/>
