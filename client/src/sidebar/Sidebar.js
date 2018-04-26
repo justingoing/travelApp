@@ -67,7 +67,8 @@ class Sidebar extends Component {
                               isInTrip={this.props.isInTrip}
                               addAllToTrip={this.props.addAllToTrip}
                               queryPlaces={this.props.queryPlaces}
-                              plan={this.props.plan}/>
+                              plan={this.props.plan}
+                              server={this.props.server}/>
               </Collapse>
               <ListGroupItem tag="button" href="#options"
                              onClick={this.toggleOptions}>Options

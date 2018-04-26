@@ -19,7 +19,7 @@ class Header extends Component {
     this.toggleStaff = this.toggleStaff.bind(this);
     this.toggleInstructions = this.toggleInstructions.bind(this);
     this.toggleOptions = this.toggleOptions.bind(this);
-    this.setPort = this.setPort.bind(this)
+    this.setPort = this.setPort.bind(this);
 
     this.state = {
       pageShown: false,
@@ -32,7 +32,7 @@ class Header extends Component {
   componentDidMount() {
     const height = this.divElement.clientHeight;
 
-    this.props.updateSize({header: height})
+    this.props.updateSize({header: height});
     this.height = height;
   }
 
@@ -52,8 +52,17 @@ class Header extends Component {
     this.setState({optionsShown: !this.state.optionsShown});
   }
 
-  setPort(e) {
-    console.log("port", e.target.value)
+  setPort() {
+    let portNum = document.getElementById("portSearch").value;
+    let index = location.host.indexOf(':');
+    let newhost = location.host.substring(0, index+1) + portNum;
+    console.info("Changing to new server: " + newhost);
+    window.alert("Changing to new server: " + newhost);
+    this.props.setServer(newhost);
+    /*
+      We DON'T want to set location.host because that will try downloading a 
+      new client, so we just set a variable to query a different server instead
+     */
   }
 
   makeStaff(img, link, name) {
@@ -158,9 +167,9 @@ class Header extends Component {
                     <br/>
                     <p>Port Number:</p>
                     <div className="input-group" role="group">
-                      <input type="text" className="form-control" id="mySearch" placeholder="31416"/>
+                      <input type="text" className="form-control" id="portSearch" placeholder="31416"/>
                       <button className="btn btn-primary " style={{border: "#FFF", backgroundColor: "#59595B"}}
-                              onClick={(e) => this.setPort(e)} type="button">Set Port</button>
+                              onClick={(e) => this.setPort()} type="button">Set Port</button>
                     </div>
                   </Collapse>
                 </ListGroup>

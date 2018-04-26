@@ -17,7 +17,7 @@ class Destinations extends Component {
 
     searchResponse(){
       //POST request
-      return fetch('http://' + location.host + '/query', {
+      return fetch('http://' + this.props.server + '/query', {
           method: "POST",
           body: JSON.stringify(this.props.query),
           header: {'Access-Control-Allow-Origin':'*'}
