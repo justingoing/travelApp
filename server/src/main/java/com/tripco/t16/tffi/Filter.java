@@ -39,7 +39,7 @@ public class Filter {
     continents.add("North America");
     continents.add("Oceania");
     continents.add("South America");
-    String cont = "airports.continent";
+    String cont = "continents.name";
 
     ArrayList<Filter> tmp = new ArrayList<>();
     tmp.add(new Filter(att, vals));

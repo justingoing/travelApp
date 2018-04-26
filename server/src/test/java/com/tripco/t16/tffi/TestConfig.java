@@ -42,7 +42,7 @@ public class TestConfig {
     //String test = "{\"type\":\"config\",\"version\":4,\"filters\":[{\"attribute\":\"airports.type\",\"values\":[\"heliport\",\"small_airport\",\"seaplane_base\",\"closed\",\"balloonport\",\"medium_airport\",\"large_airport\"]},{\"attribute\":\"airports.continent\",\"values\":[\"Africa\",\"Antartica\",\"Asia\",\"Europe\",\"North America\",\"Oceania\",\"South America\"]}],\"maps\":[\"svg\",\"kml\"],\"optimization\":0,\"optimizations\":[],\"units\":[\"kilometers\",\"miles\",\"nautical miles\",\"user defined\"]}";
     String test = "{\"type\":\"config\",\"version\":4,\"filters\":[{\"attribute\":\"airports.type\","
         + "\"values\":[\"heliport\",\"small_airport\",\"seaplane_base\",\"closed\",\"balloonport\","
-        + "\"medium_airport\",\"large_airport\"]},{\"attribute\":\"airports.continent\",\"values\":"
+        + "\"medium_airport\",\"large_airport\"]},{\"attribute\":\"continents.name\",\"values\":"
         + "[\"Africa\",\"Antartica\",\"Asia\",\"Europe\",\"North America\",\"Oceania\",\"South America\"]}],"
         + "\"maps\":[\"svg\",\"kml\"],\"optimization\":3,"
         + "\"optimizations\":[{\"label\":\"3-opt\",\"description\":\""
