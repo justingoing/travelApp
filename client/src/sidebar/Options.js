@@ -6,6 +6,11 @@ import {
   DropdownItem
 } from 'reactstrap';
 
+import Cookies from 'universal-cookie';
+
+const cookieHelper = new Cookies();
+
+
 /* Options allows the user to change the parameters for planning
  * and rendering the trip map and itinerary.
  * The options reside in the parent object so they may be shared with the Trip object.
@@ -18,11 +23,21 @@ class Options extends Component {
     this.toggleUnitsChooser = this.toggleUnitsChooser.bind(this);
     this.setMap = this.setMap.bind(this);
     this.setUnits = this.setUnits.bind(this);
+    this.loadCookies = this.loadCookies.bind(this);
 
     this.state = {
       unitsChooserOpen: false,
-      mapTypeChooserOpen: false,
-    }
+      mapTypeChooserOpen: false
+    };
+
+    // cookie keys, avoid magic strings
+    this.cookiesKeys = {
+      distanceUnits: "distanceUnits",
+      mapType: "mapType"
+    };
+
+    // Update components with cookies from last session
+    this.loadCookies();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -39,17 +54,36 @@ class Options extends Component {
     });
   }
 
+  loadCookies() {
+    console.log("COOKIES!!!!");
+    console.log(cookieHelper.get(this.cookiesKeys.distanceUnits));
+    console.log(cookieHelper.get(this.cookiesKeys.mapType));
+
+    let distanceCookie = cookieHelper.get(this.cookiesKeys.distanceUnits);
+    if(distanceCookie)
+      this.props.updateOptions(distanceCookie);
+
+    let mapCookie = cookieHelper.get(this.cookiesKeys.mapType);
+    if(mapCookie)
+      this.props.updateMapType(mapCookie);
+  }
+
   toggleMapChooser(e, value) {
     e.preventDefault();
     this.setState({mapTypeChooserOpen: !this.state.mapTypeChooserOpen});
   }
 
   setMap(e, value) {
-    this.props.updateMapType(value === "kml" ? "kml" : "svg");
+    let set = value === "kml" ? "kml" : "svg";
+    cookieHelper.set(this.cookiesKeys.mapType, set);
+    //document.cookie = "mapType=" + set;
+    this.props.updateMapType(set);
   }
 
   setUnits(e, value) {
     let set = value === "kilometers" ? "kilometers" : "miles";
+    cookieHelper.set(this.cookiesKeys.distanceUnits, set);
+    //document.cookie = "distanceUnits=" + set;
     this.props.updateOptions(set);
   }
 
@@ -62,12 +96,12 @@ class Options extends Component {
     return (
         <div id="options" className="card">
           <div className="card-body">
-            <div class="row">
-              <div class="col-5">
+            <div className="row">
+              <div className="col-5">
                 <p>Units: </p>
               </div>
-              <div class="col-7">
-                <div class="pull-right">
+              <div className="col-7">
+                <div className="pull-right">
                   <ButtonDropdown isOpen={this.state.unitsChooserOpen}
                                   toggle={(e) => this.toggleUnitsChooser(e)}
                                   style={{width: "135px", border: "#FFF", backgroundColor: "#59595B"}}>
@@ -85,13 +119,13 @@ class Options extends Component {
               </div>
             </div>
 
-            <div class="row">
-              <div class="col-5">
+            <div className="row">
+              <div className="col-5">
 
                 <p>MapType: </p>
               </div>
-              <div class="col-7">
-                <div class="pull-right">
+              <div className="col-7">
+                <div className="pull-right">
                   <ButtonDropdown isOpen={this.state.mapTypeChooserOpen}
                                   toggle={(e) => this.toggleMapChooser(e)}
                                   style={{width: "135px", border: "#FFF", backgroundColor: "#59595B"}}>
@@ -109,11 +143,11 @@ class Options extends Component {
               </div>
             </div>
 
-            <div class="row">
-              <div class="col-5">
+            <div className="row">
+              <div className="col-5">
                 <p>Optimization</p>
               </div>
-              <div class="col-7">
+              <div className="col-7">
                 <input id="typeinp" type="range" min="0" max="1" step=".01"
                        defaultValue={Number(this.props.options.optimization)}
                        onMouseUp={this.onInput.bind(this)}/>
