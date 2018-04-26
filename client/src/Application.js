@@ -22,6 +22,7 @@ class Application extends Component {
     this.addAllToTrip = this.addAllToTrip.bind(this);
     this.plan = this.plan.bind(this);
     this.saveTFFI = this.saveTFFI.bind(this);
+    this.saveKML = this.saveKML.bind(this);
     this.reverseTrip = this.reverseTrip.bind(this);
     this.setNewStart = this.setNewStart.bind(this);
     this.updateSize = this.updateSize.bind(this);
@@ -314,6 +315,27 @@ class Application extends Component {
    */
   saveTFFI(){
     //Create saver object and contents
+    let Saver = require('file-saver');
+    let blob = new Blob([JSON.stringify(this.state.trip)], {type: "text/plain;charset=utf-8"});
+
+    //Create title
+    let title = this.state.trip.title;
+    if (title === "") {
+      title = "Trip.json"
+    } else {
+      title += ".json";
+    }
+
+    //Save file
+    Saver.saveAs(blob, title);
+  }
+
+  /*
+   * Saves the KML file to the local file system.
+   */
+  saveKML(){
+    /*
+    //Create saver object and contents
     var Saver = require('file-saver');
     var blob = new Blob([JSON.stringify(this.state.trip)], {type: "text/plain;charset=utf-8"});
 
@@ -326,7 +348,9 @@ class Application extends Component {
     }
 
     //Save file
-    Saver.saveAs(blob, title);
+    Saver.saveAs(blob, title);*/
+
+    alert("This functionality is not supported yet! Coming soon...");
   }
 
   reverseTrip() {
@@ -388,6 +412,7 @@ class Application extends Component {
           <div className="row" style={{maxHeight: "100%"}}>
             <Sidebar plan={this.plan}
                      saveTFFI={this.saveTFFI}
+                     saveKML={this.saveKML}
                      reverseTrip={this.reverseTrip}
                      setNewStart={this.setNewStart}
                      updateOptions={this.updateOptions}
