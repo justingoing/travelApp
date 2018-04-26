@@ -2,7 +2,7 @@ package com.tripco.t16.tffi;
 
 import com.google.gson.Gson;
 import com.tripco.t16.calc.Optimization;
-import com.tripco.t16.planner.Map;
+import com.tripco.t16.planner.map.Map;
 import com.tripco.t16.planner.Unit;
 import java.util.ArrayList;
 

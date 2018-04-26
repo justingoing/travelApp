@@ -1,4 +1,4 @@
-package com.tripco.t16.planner;
+package com.tripco.t16.planner.map;
 
 import java.util.ArrayList;
 
