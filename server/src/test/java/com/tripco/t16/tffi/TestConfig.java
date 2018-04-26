@@ -21,7 +21,7 @@ public class TestConfig {
     test.version = TFFI.VERSION;
     test.filters = Filter.getFilters();
     test.maps = Map.getMaps();
-    ArrayList<Optimization> optimizations = new ArrayList<>();
+    ArrayList<Optimization> optimizations = Optimization.getOptimizations();
     test.optimization = optimizations.size();
     test.optimizations = optimizations;
     test.units = Unit.getUnits();
@@ -39,7 +39,17 @@ public class TestConfig {
 
   @Test
   public void testGetConfig(){
-    String test = "{\"type\":\"config\",\"version\":4,\"filters\":[{\"attribute\":\"airports.type\",\"values\":[\"heliport\",\"small_airport\",\"seaplane_base\",\"closed\",\"balloonport\",\"medium_airport\",\"large_airport\"]}],\"maps\":[\"svg\",\"kml\"],\"optimization\":0,\"optimizations\":[],\"units\":[\"kilometers\",\"miles\",\"nautical miles\",\"user defined\"]}";
+    String test = "{\"type\":\"config\",\"version\":4,\"filters\":[{\"attribute\":\"airports.type\","
+        + "\"values\":[\"heliport\",\"small_airport\",\"seaplane_base\",\"closed\",\"balloonport\","
+        + "\"medium_airport\",\"large_airport\"]}],\"maps\":[\"svg\",\"kml\"],\"optimization\":3,"
+        + "\"optimizations\":[{\"label\":\"3-opt\",\"description\":\""
+        + "Three-opt improves upon 2-opt by considering an additional pair (3 total) of edges, and "
+        + "seeing if any swaps of those edges make the trip shorter.\"},{\"label\":\"2-opt\","
+        + "\"description\":\"Two-opt improves upon nearest-neighbor by swapping each pair of edges, "
+        + "and seeing if the swap makes the trip shorter.\"},{\"label\":\"nearest-neighbor\","
+        + "\"description\":\"Nearest neighbor optimizes the path by choosing the nearest city when "
+        + "deciding which city to go to next.\"}],\"units\":[\"kilometers\",\"miles\","
+        + "\"nautical miles\",\"user defined\"]}";
     Config test1 = new Config();
     String testJson = test1.getConfig();
     System.out.println(testJson);
