@@ -155,6 +155,28 @@ public class Trip {
     }
   }
 
+  public static double foundMinuteParse(int degreeSymbol, int minuteSymbol, String conv){
+    double minutes = 0;
+    if (conv.charAt(degreeSymbol + 1) == ' ') {
+      minutes = Double.parseDouble(conv.substring(degreeSymbol + 2, minuteSymbol));
+    } else {
+      minutes = Double.parseDouble(conv.substring(degreeSymbol + 1, minuteSymbol));
+    }
+    minutes /= 60; //convert minutes to degrees
+    return minutes;
+  }
+
+  public static double foundSecondParse(int minuteSymbol, int secondSymbol, String conv){
+    double seconds = 0;
+    if (conv.charAt(minuteSymbol + 1) == ' ') {
+      seconds = Double.parseDouble(conv.substring(minuteSymbol + 2, secondSymbol));
+    } else {
+      seconds = Double.parseDouble(conv.substring(minuteSymbol + 1, secondSymbol));
+    }
+    seconds /= 3600; //convert seconds to degrees
+    return seconds;
+  }
+
   /**
    * Conver the lat/long string to a decimal value for distance calculating
    *
@@ -185,34 +207,18 @@ public class Trip {
       if (current == '\'' || current == '′') {
         minuteSymbol = i;
         foundMinute = true;
+        minutes = foundMinuteParse(degreeSymbol, minuteSymbol, conv);
       }
 
       if (current == '\"' || current == '″') {
         secondSymbol = i;
         foundSecond = true;
+        seconds = foundSecondParse(minuteSymbol, secondSymbol, conv);
       }
 
       if (current == '°' || current == 'º') {
         degreeSymbol = i;
       }
-    }
-
-    if (foundSecond) {
-      if (conv.charAt(minuteSymbol + 1) == ' ') {
-        seconds = Double.parseDouble(conv.substring(minuteSymbol + 2, secondSymbol));
-      } else {
-        seconds = Double.parseDouble(conv.substring(minuteSymbol + 1, secondSymbol));
-      }
-      seconds /= 3600; //convert seconds to degrees
-    }
-    if (foundMinute) {
-      if (conv.charAt(degreeSymbol + 1) == ' ') {
-        minutes = Double.parseDouble(conv.substring(degreeSymbol + 2, minuteSymbol));
-      } else {
-        minutes = Double.parseDouble(conv.substring(degreeSymbol + 1, minuteSymbol));
-      }
-
-      minutes /= 60; //convert minutes to degrees
     }
 
     if (foundMinute == true && foundSecond == true) { //input has both minutes and seconds
