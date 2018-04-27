@@ -95,7 +95,8 @@ class Sidebar extends Component {
                              onClick={this.toggleSave}>Save Files
               </ListGroupItem>
               <Collapse isOpen={this.state.collapseSave}>
-                <Save saveTFFI={this.props.saveTFFI} saveKML={this.props.saveKML}/>
+                <Save saveTFFI={this.props.saveTFFI}
+                      saveKML={this.props.saveKML} map={this.props.trip.options.map}/>
               </Collapse>
             </ListGroup>
           </div>

@@ -58,7 +58,7 @@ public class Trip {
     this.coords = placesToCoords();
     this.distances = legDistances();
     if (options != null && options.map != null && options.map.equals("kml")) {
-      this.map = KML.getWorldKML(this.places, this.coords);
+      this.map = KML.getWorldKML(this.places, this.coords, title);
     } else {
       this.map = SVG.getWorldSVG(this.coords);
     }
