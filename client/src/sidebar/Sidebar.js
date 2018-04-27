@@ -89,7 +89,7 @@ class Sidebar extends Component {
                              onClick={this.toggleLoad}>Load Files
               </ListGroupItem>
               <Collapse isOpen={this.state.collapseLoad}>
-                <LoadFile updateTrip={this.props.updateTrip}/>
+                <LoadFile plan={this.props.plan} updateTrip={this.props.updateTrip}/>
               </Collapse>
               <ListGroupItem isOpen={this.state.collapseSave} tag="button" href="#save"
                              onClick={this.toggleSave}>Save Files
