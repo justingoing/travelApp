@@ -69,13 +69,13 @@ public class Find {
     try {
       Class.forName(driver);
 
-      String queryString = query.query = "\'%" + query.query + "%\'";
-      String searchLookup = lookup + "(airports.id LIKE " + query.query
-          + " OR airports.name LIKE " + query.query
-          + " OR airports.municipality LIKE " + query.query
-          + " OR airports.keywords LIKE " + query.query
-          + " OR country.name LIKE " + query.query
-          + " OR region.name LIKE " + query.query
+      String queryString = "\'%" + query.query + "%\'";
+      String searchLookup = lookup + "(airports.id LIKE " + queryString
+          + " OR airports.name LIKE " + queryString
+          + " OR airports.municipality LIKE " + queryString
+          + " OR airports.keywords LIKE " + queryString
+          + " OR country.name LIKE " + queryString
+          + " OR region.name LIKE " + queryString
           + ") ";
               //loop through array list of filters
           System.out.println("Filters size is " + query.filters.size());
