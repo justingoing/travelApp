@@ -15,6 +15,7 @@ class LoadFile extends Component {
     reader.onload = function (e) {
       let object = JSON.parse(reader.result);
       props.updateTrip(object);
+      props.plan(object);
     };
     reader.readAsText(event.target.files[0]);
   }
