@@ -155,6 +155,7 @@ public class Trip {
     }
   }
 
+  //Parses an input if it has minutes
   public static double foundMinuteParse(int degreeSymbol, int minuteSymbol, String conv){
     double minutes = 0;
     if (conv.charAt(degreeSymbol + 1) == ' ') {
@@ -166,6 +167,7 @@ public class Trip {
     return minutes;
   }
 
+  //parses an input if it has seconds
   public static double foundSecondParse(int minuteSymbol, int secondSymbol, String conv){
     double seconds = 0;
     if (conv.charAt(minuteSymbol + 1) == ' ') {
@@ -177,50 +179,9 @@ public class Trip {
     return seconds;
   }
 
-  /**
-   * Conver the lat/long string to a decimal value for distance calculating
-   *
-   * @param conv string to be changed
-   * @return double (value that has been converted)
-   */
-  public static double convertToDecimal(String conv) {
-
-    double seconds = 0;
-    double minutes = 0;
-    double degrees = 0;
-    double direction = 1;
-
-    if (conv.contains("W") || conv.contains("S")) {
-      direction = -1;
-    }
-
-    int degreeSymbol = 0;
-    int minuteSymbol = 0;
-    int secondSymbol = 0;
-
-    boolean foundMinute = false;
-    boolean foundSecond = false;
-
-    for (int i = 0; i < conv.length(); i++) {
-      char current = conv.charAt(i);
-
-      if (current == '\'' || current == '′') {
-        minuteSymbol = i;
-        foundMinute = true;
-        minutes = foundMinuteParse(degreeSymbol, minuteSymbol, conv);
-      }
-
-      if (current == '\"' || current == '″') {
-        secondSymbol = i;
-        foundSecond = true;
-        seconds = foundSecondParse(minuteSymbol, secondSymbol, conv);
-      }
-
-      if (current == '°' || current == 'º') {
-        degreeSymbol = i;
-      }
-    }
-
+  //correctly handles whatever format its given
+  public static double convertFormat(boolean foundMinute, boolean foundSecond, String conv, int degreeSymbol, double minutes, double seconds){
+    double degrees;
     if (foundMinute == true && foundSecond == true) { //input has both minutes and seconds
       degrees = Double.parseDouble(conv.substring(0, degreeSymbol));
       degrees += (minutes + seconds);
@@ -232,7 +193,47 @@ public class Trip {
     } else { //just number
       degrees = Double.parseDouble(conv);
     }
+    return degrees;
+  }
 
+  /**
+   * Conver the lat/long string to a decimal value for distance calculating
+   *
+   * @param conv string to be changed
+   * @return double (value that has been converted)
+   */
+  public static double convertToDecimal(String conv) {
+    double seconds = 0;
+    double minutes = 0;
+    double degrees = 0;
+    double direction = 1;
+    int degreeSymbol = 0;
+    int minuteSymbol = 0;
+    int secondSymbol = 0;
+    boolean foundMinute = false;
+    boolean foundSecond = false;
+
+    if (conv.contains("W") || conv.contains("S")) {
+      direction = -1;
+    }
+
+    for (int i = 0; i < conv.length(); i++) {
+      char current = conv.charAt(i);
+      if (current == '\'' || current == '′') {
+        minuteSymbol = i;
+        foundMinute = true;
+        minutes = foundMinuteParse(degreeSymbol, minuteSymbol, conv);
+      }
+      if (current == '\"' || current == '″') {
+        secondSymbol = i;
+        foundSecond = true;
+        seconds = foundSecondParse(minuteSymbol, secondSymbol, conv);
+      }
+      if (current == '°' || current == 'º') {
+        degreeSymbol = i;
+      }
+    }
+    degrees = convertFormat(foundMinute, foundSecond, conv, degreeSymbol, minutes, seconds);
     return degrees * direction;
   }
 }
