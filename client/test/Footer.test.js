@@ -17,6 +17,8 @@ test('Footer correctly renders the correct number and name.', () => {
   //     <Footer number={info.number} name={info.name}/>
   // );
 
+  //something
+
   //const ele = wrapper.find('#footer');             //(2)
   expect('t00 Double Aughts').toBe('t00 Double Aughts');       //(3)
 });
