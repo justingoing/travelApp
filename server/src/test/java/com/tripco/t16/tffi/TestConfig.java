@@ -39,9 +39,12 @@ public class TestConfig {
 
   @Test
   public void testGetConfig(){
+    //String test = "{\"type\":\"config\",\"version\":4,\"filters\":[{\"attribute\":\"airports.type\",\"values\":[\"heliport\",\"small_airport\",\"seaplane_base\",\"closed\",\"balloonport\",\"medium_airport\",\"large_airport\"]},{\"attribute\":\"airports.continent\",\"values\":[\"Africa\",\"Antartica\",\"Asia\",\"Europe\",\"North America\",\"Oceania\",\"South America\"]}],\"maps\":[\"svg\",\"kml\"],\"optimization\":0,\"optimizations\":[],\"units\":[\"kilometers\",\"miles\",\"nautical miles\",\"user defined\"]}";
     String test = "{\"type\":\"config\",\"version\":4,\"filters\":[{\"attribute\":\"airports.type\","
         + "\"values\":[\"heliport\",\"small_airport\",\"seaplane_base\",\"closed\",\"balloonport\","
-        + "\"medium_airport\",\"large_airport\"]}],\"maps\":[\"svg\",\"kml\"],\"optimization\":3,"
+        + "\"medium_airport\",\"large_airport\"]},{\"attribute\":\"continents.name\",\"values\":"
+        + "[\"Africa\",\"Antartica\",\"Asia\",\"Europe\",\"North America\",\"Oceania\",\"South America\"]}],"
+        + "\"maps\":[\"svg\",\"kml\"],\"optimization\":3,"
         + "\"optimizations\":[{\"label\":\"3-opt\",\"description\":\""
         + "Three-opt improves upon 2-opt by considering an additional pair (3 total) of edges, and "
         + "seeing if any swaps of those edges make the trip shorter.\"},{\"label\":\"2-opt\","
