@@ -1,0 +1,19 @@
+package com.tripco.t16.planner.map;
+
+/**
+ * Inner class for passing around coordinates nicely
+ */
+public class Point {
+
+  public double x;
+  public double y;
+
+  public Point(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+
+  public String toString() {
+    return "(" + this.x + ", " + this.y + ")";
+  }
+}

@@ -9,6 +9,18 @@ class Save extends Component {
   }
 
   render() {
+    let kmlPanel = this.props.map === "kml" ? (
+        <div>
+          <br/>
+            <div className="row">
+            <div className="col-5">
+            <button className="btn btn-primary "
+                    style={{border: "#FFF", backgroundColor: "#59595B", width: "100px"}}
+                    onClick={this.props.saveKML} type="button">Save KML</button>
+          </div>
+        </div>
+    </div>) : (<div></div>);
+
     return (
         <div className="card">
           <div className="card-body">
@@ -19,14 +31,7 @@ class Save extends Component {
                         onClick={this.props.saveTFFI} type="button">Save Trip</button>
               </div>
             </div>
-            <br/>
-            <div className="row">
-              <div className="col-5">
-                <button className="btn btn-primary "
-                        style={{border: "#FFF", backgroundColor: "#59595B", width: "100px"}}
-                        onClick={this.props.saveKML} type="button">Save KML</button>
-              </div>
-            </div>
+            {kmlPanel}
           </div>
         </div>
     );
