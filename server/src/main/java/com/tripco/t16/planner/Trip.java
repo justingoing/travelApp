@@ -156,65 +156,47 @@ public class Trip {
   }
 
   /**
-   * Conver the lat/long string to a decimal value for distance calculating
+   * Parse minutes when found
    *
-   * @param conv string to be changed
-   * @return double (value that has been converted)
+   * @param degreeSymbol, minuteSymbol, conv
+   * @return correct minutes for calc
    */
-  public static double convertToDecimal(String conv) {
-
-    double seconds = 0;
+  public static double foundMinuteParse(int degreeSymbol, int minuteSymbol, String conv){
     double minutes = 0;
-    double degrees = 0;
-    double direction = 1;
-
-    if (conv.contains("W") || conv.contains("S")) {
-      direction = -1;
+    if (conv.charAt(degreeSymbol + 1) == ' ') {
+      minutes = Double.parseDouble(conv.substring(degreeSymbol + 2, minuteSymbol));
+    } else {
+      minutes = Double.parseDouble(conv.substring(degreeSymbol + 1, minuteSymbol));
     }
+    minutes /= 60; //convert minutes to degrees
+    return minutes;
+  }
 
-    int degreeSymbol = 0;
-    int minuteSymbol = 0;
-    int secondSymbol = 0;
-
-    boolean foundMinute = false;
-    boolean foundSecond = false;
-
-    for (int i = 0; i < conv.length(); i++) {
-      char current = conv.charAt(i);
-
-      if (current == '\'' || current == '′') {
-        minuteSymbol = i;
-        foundMinute = true;
-      }
-
-      if (current == '\"' || current == '″') {
-        secondSymbol = i;
-        foundSecond = true;
-      }
-
-      if (current == '°' || current == 'º') {
-        degreeSymbol = i;
-      }
+  /**
+   * Parse Seconds when found
+   *
+   * @param minuteSymbol, secondSymbol, conv
+   * @return correct seconds for calc
+   */
+  public static double foundSecondParse(int minuteSymbol, int secondSymbol, String conv){
+    double seconds = 0;
+    if (conv.charAt(minuteSymbol + 1) == ' ') {
+      seconds = Double.parseDouble(conv.substring(minuteSymbol + 2, secondSymbol));
+    } else {
+      seconds = Double.parseDouble(conv.substring(minuteSymbol + 1, secondSymbol));
     }
+    seconds /= 3600; //convert seconds to degrees
+    return seconds;
+  }
 
-    if (foundSecond) {
-      if (conv.charAt(minuteSymbol + 1) == ' ') {
-        seconds = Double.parseDouble(conv.substring(minuteSymbol + 2, secondSymbol));
-      } else {
-        seconds = Double.parseDouble(conv.substring(minuteSymbol + 1, secondSymbol));
-      }
-      seconds /= 3600; //convert seconds to degrees
-    }
-    if (foundMinute) {
-      if (conv.charAt(degreeSymbol + 1) == ' ') {
-        minutes = Double.parseDouble(conv.substring(degreeSymbol + 2, minuteSymbol));
-      } else {
-        minutes = Double.parseDouble(conv.substring(degreeSymbol + 1, minuteSymbol));
-      }
-
-      minutes /= 60; //convert minutes to degrees
-    }
-
+  /**
+   * finish putting into correct format
+   *
+   * @param foundMinute, foundSecond, conv, degreeSymbol, minutes, seconds
+   * @return degrees in correct format
+   */
+  public static double convertFormat(boolean foundMinute, boolean foundSecond, String conv, int degreeSymbol, double minutes, double seconds){
+    double degrees;
     if (foundMinute == true && foundSecond == true) { //input has both minutes and seconds
       degrees = Double.parseDouble(conv.substring(0, degreeSymbol));
       degrees += (minutes + seconds);
@@ -226,7 +208,47 @@ public class Trip {
     } else { //just number
       degrees = Double.parseDouble(conv);
     }
+    return degrees;
+  }
 
+  /**
+   * Conver the lat/long string to a decimal value for distance calculating
+   *
+   * @param conv string to be changed
+   * @return double (value that has been converted)
+   */
+  public static double convertToDecimal(String conv) {
+    double seconds = 0;
+    double minutes = 0;
+    double degrees = 0;
+    double direction = 1;
+    int degreeSymbol = 0;
+    int minuteSymbol = 0;
+    int secondSymbol = 0;
+    boolean foundMinute = false;
+    boolean foundSecond = false;
+
+    if (conv.contains("W") || conv.contains("S")) {
+      direction = -1;
+    }
+
+    for (int i = 0; i < conv.length(); i++) {
+      char current = conv.charAt(i);
+      if (current == '\'' || current == '′') {
+        minuteSymbol = i;
+        foundMinute = true;
+        minutes = foundMinuteParse(degreeSymbol, minuteSymbol, conv);
+      }
+      if (current == '\"' || current == '″') {
+        secondSymbol = i;
+        foundSecond = true;
+        seconds = foundSecondParse(minuteSymbol, secondSymbol, conv);
+      }
+      if (current == '°' || current == 'º') {
+        degreeSymbol = i;
+      }
+    }
+    degrees = convertFormat(foundMinute, foundSecond, conv, degreeSymbol, minutes, seconds);
     return degrees * direction;
   }
 }
