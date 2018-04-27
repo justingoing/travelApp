@@ -155,7 +155,12 @@ public class Trip {
     }
   }
 
-  //Parses an input if it has minutes
+  /**
+   * Parse minutes when found
+   *
+   * @param degreeSymbol, minuteSymbol, conv
+   * @return correct minutes for calc
+   */
   public static double foundMinuteParse(int degreeSymbol, int minuteSymbol, String conv){
     double minutes = 0;
     if (conv.charAt(degreeSymbol + 1) == ' ') {
@@ -167,7 +172,12 @@ public class Trip {
     return minutes;
   }
 
-  //parses an input if it has seconds
+  /**
+   * Parse Seconds when found
+   *
+   * @param minuteSymbol, secondSymbol, conv
+   * @return correct seconds for calc
+   */
   public static double foundSecondParse(int minuteSymbol, int secondSymbol, String conv){
     double seconds = 0;
     if (conv.charAt(minuteSymbol + 1) == ' ') {
@@ -179,7 +189,12 @@ public class Trip {
     return seconds;
   }
 
-  //correctly handles whatever format its given
+  /**
+   * finish putting into correct format
+   *
+   * @param foundMinute, foundSecond, conv, degreeSymbol, minutes, seconds
+   * @return degrees in correct format
+   */
   public static double convertFormat(boolean foundMinute, boolean foundSecond, String conv, int degreeSymbol, double minutes, double seconds){
     double degrees;
     if (foundMinute == true && foundSecond == true) { //input has both minutes and seconds
