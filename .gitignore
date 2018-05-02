@@ -13,3 +13,5 @@ target/
 client/package-lock.json
 package-lock.json
 *.DS_Store*
+
+client/coverage/
