@@ -105,7 +105,12 @@ class DestCard extends Component {
     return (
         <div className="card" style={{width: '16rem'}}
              onMouseEnter={() => this.toggleCardButton(true)}
-             onMouseLeave={() => this.toggleCardButton(false)}>
+             onMouseLeave={() => this.toggleCardButton(false)}
+             style={{
+               minHeight: "200px",
+               maxHeight: "200px",
+               minWidth: "250px",
+             }}>
           <div className="card-body" id={this.state.domString + "card"}>
             <h6 className="card-title h-100">
               <div className="row">
