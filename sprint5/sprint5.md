@@ -49,44 +49,54 @@ are underestimating tasks. We want to focus heavily on creating the best UI poss
 
 Statistic | Planned | Completed
 --- | ---: | ---:
-Tasks |  24   | 0 
-Story Points |  55  | 0 
+Tasks |  24   | 22 
+Story Points |  55  | 113 
 
 ## Daily Scrums
 
 Date | Tasks done  | Tasks in progress | Impediments 
 :--- | :--- | :--- | :--- 
-*date* | *@task only* | *@task only* | none
+
  04/17 | 2 | #298, #312, #302, #160, #114, #321 | none
  04/18 | 2 | #298, #312, #302, #160, #114, #321 | none
  04/19 | 18  | #331, #328, #306, #290, #321 | none (several duplicate tasks)
  04/22 | 30 | #321, #328, #331 | none
  04/24 | 32 | #296, #327, #321, #331, #330 | none
  04/26 | 46 | #281. #313, #330, #331, #365 | none
+ 04/30 | 46 | #281. #313, #330, #331, #365 | none
+ 05/02 | 61 | none | none
+ 
 
 ## Review
 
 #### Completed epics in Sprint Backlog 
-* *user story*:  *comments*
-* 
+* Revamp Itinerary : Changed itinerary to horizontal, allowed user to click for more information.
+* Redo-UI : Made the most user-friendly UI we could imagine.
+* TFFI Update : Added limits, optimizations.
+* Interop : Tested multiple teams, with our Config, Query, and Plan APIs.
+* Shorter Trips #3 : 3-opt Completed.
+* Staff Page : Added our pictures with links to resumes.
+* System Testing : Implemented.
+* Save Options as Defaults for Future Use : Cookies enabled.
 
 #### Incomplete epics in Sprint Backlog 
-* *user story*: *explanation...*
-*
+* Speed up Computation on the Server : Did not have a chance to multithread.
 
 #### What went well
-* *something*
-*
+* Re-did UI early in the sprint allowing us to focus on interop later in the sprint.
+* Pick up tasks and finish them quickly
+* Communication allowed us to avoid merge conflicts much better than previous sprints.
 
 #### Problems encountered and resolutions
-* *something*
-*
+* Jest testing was a struggle. Googling eventually gave us some insight.
+* We chose to change the initial template of UI layout to increase user friendliness.
+
 
 ## Retrospective
 
 Topic | Teamwork | Process | Tools
 :--- | :--- | :--- | :---
-What we will change this time |  |  | 
-What we did well |  |  | 
-What we need to work on |  |  |
-What we will change next time | More regular meetings | Continue breaking down tasks into manageable sizes. | Continue using GitHub to communicate and do code reviews.
+What we will change this time | More regular meetings | Continue breaking down tasks into manageable sizes. | Continue using GitHub to communicate and do code reviews.
+What we did well | Communicate, and work together to accomplish tasks | We planned well, completing good chunks of story points out at a time. | Learned Jest, used IntelliJ testing.
+What we need to work on | Nothing | Don't code day of deployment | Jest
+
