@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.lang.Object;
 
 /**
  * The Find class supports TFFI so it can easily be converted to/from Json by Gson. Used for
@@ -65,6 +66,7 @@ public class Find {
    */
   private void queryDB(Query query, String user, String password, boolean shouldPrint) {
 
+    System.out.println("Inside queryDB");
 
     try {
       Class.forName(driver);
@@ -78,15 +80,20 @@ public class Find {
           + " OR region.name LIKE " + queryString
           + ") ";
               //loop through array list of filters
-          System.out.println("Filters size is " + query.filters.size());
-          for(int i = 0; i < query.filters.size(); i++) {
+          //System.out.println("Filters size is " + query.filters.size());
+          if(query.filters == null) {
+            System.out.println("no filters");
+          }
+          else {
+            for (int i = 0; i < query.filters.size(); i++) {
               searchLookup += "AND (" + query.filters.get(i).attribute + " = '"
-                  + query.filters.get(i).values.get(0) + "'";
-              for(int j = 1; j < query.filters.get(i).values.size(); j++) {
-                  searchLookup += " OR " + query.filters.get(i).attribute + " = '"
-                      + query.filters.get(i).values.get(j) + "'";
+                      + query.filters.get(i).values.get(0) + "'";
+              for (int j = 1; j < query.filters.get(i).values.size(); j++) {
+                searchLookup += " OR " + query.filters.get(i).attribute + " = '"
+                        + query.filters.get(i).values.get(j) + "'";
               }
               searchLookup += ")";
+            }
           }
 
           if (query.limit == null) {
