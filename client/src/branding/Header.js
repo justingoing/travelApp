@@ -72,7 +72,7 @@ class Header extends Component {
              src={img}
              style={{maxHeight: "75", border: "solid", borderWidth: "2px"}}/>
           <div className="ml-3" style={{margin: "auto"}}>
-            <a href={link} style={{textAlign:"center", color:"#59595B"}}>{name}</a>
+            <a href={link} target="_blank" style={{textAlign:"center", color:"#59595B"}}>{name}</a>
           </div>
         </div>
       </div>);
