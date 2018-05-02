@@ -185,22 +185,27 @@ class Application extends Component {
   updateTrip(tffi) {
     console.log("hey", this.state.config);
     console.log("defaulttrip, ", this.getDefaultTrip(this.state.config));
-
+    
+    let defaultTFFI = this.getDefaultTrip(this.state.config);
+    
     let copyTFFI = Object.assign(this.getDefaultTrip(this.state.config),
         this.state.trip);
     Object.assign(copyTFFI, tffi);
     console.log("copyTFFI, ", copyTFFI);
 
+    let copyOptionsTFFI = Object.assign(defaultTFFI.options, tffi.options);
+    
+    
     let nextTFFI = {
       version: copyTFFI.version,
       type: copyTFFI.type,
       title: copyTFFI.title,
       options: {
-        distance: copyTFFI.options.distance,
-        userUnit: copyTFFI.options.userUnit,
-        userRadius: copyTFFI.options.userRadius,
-        optimization: copyTFFI.options.optimization,
-        map: copyTFFI.options.map
+        distance: copyOptionsTFFI.distance,
+        userUnit: copyOptionsTFFI.userUnit,
+        userRadius: copyOptionsTFFI.userRadius,
+        optimization: copyOptionsTFFI.optimization,
+        map: copyOptionsTFFI.map
       },
       places: copyTFFI.places,
       distances: copyTFFI.distances,
