@@ -48,6 +48,7 @@ class DestCard extends Component {
     e.preventDefault();
     this.props.removeDestFromTrip(this.state.tripPosition);
     this.toggleCardInfo();
+    this.props.plan();
   }
 
   toggleCardInfo() {
@@ -107,8 +108,8 @@ class DestCard extends Component {
              onMouseEnter={() => this.toggleCardButton(true)}
              onMouseLeave={() => this.toggleCardButton(false)}
              style={{
-               minHeight: "200px",
-               maxHeight: "200px",
+               minHeight: "175px",
+               maxHeight: "175px",
                minWidth: "250px",
              }}>
           <div className="card-body" id={this.state.domString + "card"}>

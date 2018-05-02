@@ -120,7 +120,7 @@ class Application extends Component {
         userUnit: "",
         userRadius: "",
         optimization: "0",
-        map: serverConfig.maps.includes("kml") ? "kml" : "svg"
+        map: "kml"//serverConfig.maps.includes("kml") ? "kml" : "svg"
       },
       places: [],
       distances: [],
@@ -183,31 +183,31 @@ class Application extends Component {
   }
 
   updateTrip(tffi) {
-    console.log("hey", this.state.config);
-    console.log("defaulttrip, ", this.getDefaultTrip(this.state.config));
 
+    let defaultTFFI = this.getDefaultTrip(this.state.config);
+    
     let copyTFFI = Object.assign(this.getDefaultTrip(this.state.config),
         this.state.trip);
     Object.assign(copyTFFI, tffi);
-    console.log("copyTFFI, ", copyTFFI);
 
+    let copyOptionsTFFI = Object.assign(defaultTFFI.options, tffi.options);
+    
+    
     let nextTFFI = {
       version: copyTFFI.version,
       type: copyTFFI.type,
       title: copyTFFI.title,
       options: {
-        distance: copyTFFI.options.distance,
-        userUnit: copyTFFI.options.userUnit,
-        userRadius: copyTFFI.options.userRadius,
-        optimization: copyTFFI.options.optimization,
-        map: copyTFFI.options.map
+        distance: copyOptionsTFFI.distance,
+        userUnit: copyOptionsTFFI.userUnit,
+        userRadius: copyOptionsTFFI.userRadius,
+        optimization: copyOptionsTFFI.optimization,
+        map: copyOptionsTFFI.map
       },
       places: copyTFFI.places,
       distances: copyTFFI.distances,
       map: copyTFFI.map
     };
-
-    console.log("nextTFFI, ", nextTFFI);
 
     nextTFFI = this.checkOptionsV1(nextTFFI, tffi);
 
@@ -437,6 +437,7 @@ class Application extends Component {
                      server={this.state.server}
             />
             <Display trip={this.state.trip}
+                     plan={this.plan}
                      setNewStart={this.setNewStart}
                      removeDestFromTrip={this.removeDestFromTrip}/>
             <Footer number={this.props.number} name={this.props.name}/>
