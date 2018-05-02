@@ -140,7 +140,7 @@ class Destinations extends Component {
             <br/>
             <div className="filters">
                 <Dropdown  isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                  <DropdownToggle caret>
+                  <DropdownToggle caret style={{ border: "#FFF", backgroundColor: "#59595B"}}>
                     Filters
                   </DropdownToggle>
                   <DropdownMenu style={{ maxHeight: "200px", overflowY: "scroll"}}>
