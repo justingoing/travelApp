@@ -7,11 +7,6 @@ install:
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
-  - mysql -u root -e 'CREATE DATABASE testDB;'
-  - mysql -u root  testDB -e 'CREATE TABLE testDB.airports(id VARCHAR(255), name VARCHAR(255), municipality VARCHAR(255), keywords VARCHAR(255));'
-  - mysql -u root -e "INSERT INTO testDB.airports(id, name, municipality, keywords) VALUES('DIA', 'Denver International Airport', 'DEN', 'Denver');"
-  - mysql -u root -e "INSERT INTO testDB.airports(id, name, municipality, keywords) VALUES('SMA', 'Sterling Municial Airport', 'STE', 'Sterling');"
-  - ./cc-test-reporter before-build
 script:
   - mvn prepare-package
   - npm test --prefix client
@@ -19,8 +14,6 @@ cache:
   directories:
   - $HOME/.m2
   - client/node_modules
-addons:
-  mariadb: '10.0'
 after_script:
   - mv target/site/jacoco/jacoco.xml ./
   - sed -i 's_com/_server/src/main/java/com/_g' jacoco.xml
@@ -29,8 +22,4 @@ after_script:
   - mv client/coverage/lcov.info ./coverage
   - ./cc-test-reporter format-coverage --output coverage/codeclimate.lcov.json
   - ./cc-test-reporter sum-coverage coverage/codeclimate.*.json
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
   - ./cc-test-reporter upload-coverage
-
-
-
