@@ -19,8 +19,6 @@ cache:
   directories:
   - $HOME/.m2
   - client/node_modules
-addons:
-  mariadb: '10.0'
 after_script:
   - mv target/site/jacoco/jacoco.xml ./
   - sed -i 's_com/_server/src/main/java/com/_g' jacoco.xml
