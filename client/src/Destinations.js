@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import SearchTable from './SearchTable';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 /* Destinations reside in the parent object so they may be shared
  * with the Trip object.
@@ -13,7 +14,17 @@ class Destinations extends Component {
   constructor(props) {
     super(props);
     this.sendSearch = this.sendSearch.bind(this);
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      dropdownOpen: false
+    };
   }
+
+    toggle(){
+      this.setState(prevState => ({
+        dropdownOpen: !prevState.dropdownOpen
+      }));
+    }
 
     searchResponse(){
       //POST request
@@ -46,14 +57,16 @@ class Destinations extends Component {
         for(let a = 0; a < f.length; a++) {
             var test = a;
             var vals = f[test].values;
-            addition.push(f[test].attribute);
+            //addition.push(f[test].attribute);
             for(let i = 0; i < vals.length; i++) {
                 //console.log(f[test].attribute + " " + vals[i]);
-                addition.push(<label><input type="checkbox"  onClick={(e) => this.check(f[a].values[i], f[a].attribute)}/>{vals[i]}&emsp;</label>);
+                addition.push(<DropdownItem><label><input type="checkbox"  onClick={(e) =>
+                this.check(f[a].values[i], f[a].attribute)}/>{vals[i]}</label></DropdownItem>);
             }
         }
         return addition;
     }
+
     check(name, attrib) {
         //console.log("check called on " + name + " with " + attrib);
         if(this.props.query.filters.length == 0) {
@@ -114,45 +127,6 @@ class Destinations extends Component {
                 return;
             }
         }
-
-        /*for(let s = 0; s < this.props.query.filters.length; s++) {
-            if(this.props.query.filters[s].attribute == attrib) { //if it finds the attribute already...
-                for(let j = 0; j < this.props.query.filters[s].values.length; j++) {
-                    if(this.props.query.filters[s].values[j] == name) {
-                        let removeQuery = this.props.query;
-                        if(1 == this.props.query.filters[s].values.length) {
-                            System.out.println("REMOVING when size 1")
-                            removeQuery.filters[s].pop(); //if only one value then empty filters entirely
-                            return;
-                        }
-                        else if(j == this.props.query.filters[s].values.length -1 ) {
-                            System.out.println("REMOVING from end")
-                            removeQuery.filters[s].values.pop();
-                        }
-                        System.out.println("REMOVING from middle")
-                        removeQuery.filters[s].values.splice(j, 1);
-                        this.props.updateQuery(removeQuery);
-                        return;
-                    }
-                    else {
-                        System.out.println("ADDING to end because not in yet")
-                        let addQuery = this.props.query;
-                        addQuery.filters[s].values.push(name);
-                        this.props.updateQuery(addQuery);
-                        return;
-                    }
-                }
-            }
-            else if(s == this.props.query.length-1) { //no more filters to check so need to add new attribute
-                let newQuery = this.props.query;
-                newQuery.filters.push({
-                    "attribute": attrib,
-                    "values": [name]
-                });
-                this.props.updateQuery(newQuery);
-                return;
-            }
-        }*/
     }
 
   render() {
@@ -163,11 +137,16 @@ class Destinations extends Component {
               <input type="text" className="form-control" id="mySearch" placeholder="Search for a place..."/>
               <button className="btn btn-primary " style={{border: "#FFF", backgroundColor: "#59595B"}} onClick={this.sendSearch} type="button">Search</button>
             </div>
-
+            <br/>
             <div className="filters">
-              Filter by:
-                <br/>
-                <div>{this.makeChecks()}</div>
+                <Dropdown  isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                  <DropdownToggle caret style={{ border: "#FFF", backgroundColor: "#59595B"}}>
+                    Filters
+                  </DropdownToggle>
+                  <DropdownMenu style={{ maxHeight: "200px", overflowY: "scroll"}}>
+                    {this.makeChecks()}
+                  </DropdownMenu>
+                </Dropdown>
             </div>
             <br/>
             <SearchTable destinations={this.props.query} addToTrip={this.props.addToTrip}
