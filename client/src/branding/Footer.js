@@ -35,13 +35,13 @@ class Footer extends Component {
               }) => {
                 return (
                     <div className="row" id="footer" style={this.getStyle(style)}>
-                      <div className="col-6-m">
-                        <img className="img-fluid"
+                      <div className="col-6-md">
+                        <img className="img-fluid pl-2 ml-4"
                              src="http://www.cs.colostate.edu/~davematt/logos/CSU_logos/CSU-Official-wrdmrk-357-617_Rev.png"
                              style={{maxHeight: "75"}}/>
                       </div>
-                      <div className="col-6-m">
-                        <p className="text-white">
+                      <div className="col-6-xl mx-auto my-auto">
+                        <p className="text-white my-0">
                           <b>&#8195;TripCo t{this.props.number} {this.props.name} &copy; Copyright
                             2018</b>
                         </p>
