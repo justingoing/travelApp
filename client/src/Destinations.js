@@ -57,7 +57,7 @@ class Destinations extends Component {
         for(let a = 0; a < f.length; a++) {
             var test = a;
             var vals = f[test].values;
-            addition.push(f[test].attribute);
+            //addition.push(f[test].attribute);
             for(let i = 0; i < vals.length; i++) {
                 //console.log(f[test].attribute + " " + vals[i]);
                 addition.push(<DropdownItem><label><input type="checkbox"  onClick={(e) =>
