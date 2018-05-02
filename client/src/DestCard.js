@@ -21,7 +21,6 @@ class DestCard extends Component {
 
     let domString = this.props.destination.name.replace(/\s/g, '')
     .replace(/[0-9]/g, '').replace(/[^a-z]/gi, '').toLowerCase();
-    console.log("DOM STRING " + domString);
 
     this.state = {
       destination: this.props.destination,
@@ -166,7 +165,7 @@ class DestCard extends Component {
                 </div>
               </Popover>
             </h6>
-            {"Next Destination: " + this.props.distance + " miles"}
+            {"Next Destination: " + this.props.distance + " " + this.props.trip.options.distance}
           </div>
         </div>
     )
