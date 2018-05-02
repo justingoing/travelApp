@@ -437,6 +437,7 @@ class Application extends Component {
                      server={this.state.server}
             />
             <Display trip={this.state.trip}
+                     plan={this.plan}
                      setNewStart={this.setNewStart}
                      removeDestFromTrip={this.removeDestFromTrip}/>
             <Footer number={this.props.number} name={this.props.name}/>

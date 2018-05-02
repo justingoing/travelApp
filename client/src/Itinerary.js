@@ -33,8 +33,11 @@ class Itinerary extends Component {
       destRows.push(
           <td>
             <DestCard destination={dest} distance={dist} tripPosition={i}
+                      plan={this.props.plan}
                       reorderItinerary={this.props.setNewStart}
-                      removeDestFromTrip={this.props.removeDestFromTrip}/>
+                      removeDestFromTrip={this.props.removeDestFromTrip}
+                      trip={this.props.trip}
+            />
           </td>
       );
     }

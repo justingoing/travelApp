@@ -21,7 +21,6 @@ class DestCard extends Component {
 
     let domString = this.props.destination.name.replace(/\s/g, '')
     .replace(/[0-9]/g, '').replace(/[^a-z]/gi, '').toLowerCase();
-    console.log("DOM STRING " + domString);
 
     this.state = {
       destination: this.props.destination,
@@ -49,6 +48,7 @@ class DestCard extends Component {
     e.preventDefault();
     this.props.removeDestFromTrip(this.state.tripPosition);
     this.toggleCardInfo();
+    this.props.plan();
   }
 
   toggleCardInfo() {
@@ -106,7 +106,12 @@ class DestCard extends Component {
     return (
         <div className="card" style={{width: '16rem'}}
              onMouseEnter={() => this.toggleCardButton(true)}
-             onMouseLeave={() => this.toggleCardButton(false)}>
+             onMouseLeave={() => this.toggleCardButton(false)}
+              style={{
+                  minHeight: "200px",
+                  maxHeight: "200px",
+                  minWidth: "250px",
+              }}>
           <div className="card-body" id={this.state.domString + "card"}>
             <h6 className="card-title h-100">
               <div className="row">
@@ -166,7 +171,7 @@ class DestCard extends Component {
                 </div>
               </Popover>
             </h6>
-            {"Next Destination: " + this.props.distance + " miles"}
+            {"Next Destination: " + this.props.distance + " " + this.props.trip.options.distance}
           </div>
         </div>
     )
