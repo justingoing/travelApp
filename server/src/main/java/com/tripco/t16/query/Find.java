@@ -86,13 +86,15 @@ public class Find {
           }
           else {
             for (int i = 0; i < query.filters.size(); i++) {
-              searchLookup += "AND (" + query.filters.get(i).attribute + " = '"
-                      + query.filters.get(i).values.get(0) + "'";
-              for (int j = 1; j < query.filters.get(i).values.size(); j++) {
-                searchLookup += " OR " + query.filters.get(i).attribute + " = '"
-                        + query.filters.get(i).values.get(j) + "'";
+              if(query.filters.get(i).values.size() > 0) {
+                searchLookup += "AND (" + query.filters.get(i).attribute + " = '"
+                        + query.filters.get(i).values.get(0) + "'";
+                for (int j = 1; j < query.filters.get(i).values.size(); j++) {
+                  searchLookup += " OR " + query.filters.get(i).attribute + " = '"
+                          + query.filters.get(i).values.get(j) + "'";
+                }
+                searchLookup += ")";
               }
-              searchLookup += ")";
             }
           }
 
