@@ -183,15 +183,12 @@ class Application extends Component {
   }
 
   updateTrip(tffi) {
-    console.log("hey", this.state.config);
-    console.log("defaulttrip, ", this.getDefaultTrip(this.state.config));
-    
+
     let defaultTFFI = this.getDefaultTrip(this.state.config);
     
     let copyTFFI = Object.assign(this.getDefaultTrip(this.state.config),
         this.state.trip);
     Object.assign(copyTFFI, tffi);
-    console.log("copyTFFI, ", copyTFFI);
 
     let copyOptionsTFFI = Object.assign(defaultTFFI.options, tffi.options);
     
@@ -211,8 +208,6 @@ class Application extends Component {
       distances: copyTFFI.distances,
       map: copyTFFI.map
     };
-
-    console.log("nextTFFI, ", nextTFFI);
 
     nextTFFI = this.checkOptionsV1(nextTFFI, tffi);
 
