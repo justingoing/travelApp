@@ -76,8 +76,8 @@ class SearchTable extends Component {
       <div id="SearchTable">
         <button className="btn btn-primary " style={{border: "#FFF", backgroundColor: "#59595B"}} onClick={(e) => this.props.addAllToTrip()}>+ All</button>
         <br/>
-        <div className="table-responsive">
-            <table className="table table-responsive" style={{maxHeight: "30%", overflow: "scroll", display: "inline-block"}}>
+        <div className="container px-0">
+            <table className="table" style={{maxHeight: "30%", width: "100%", overflowY: "scroll", display: "inline-block"}}>
             <thead>
             <tr className="table-info">
                 <th className="align-middle" style={{color: "#FFF", backgroundColor: "#1E4D2B"}}>Name</th>
