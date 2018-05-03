@@ -133,12 +133,11 @@ class Destinations extends Component {
     return (
         <div id="destinations" className="card">
           <div className="card-body">
-            <div className="input-group" role="group">
+            <div className="input-group my-2" role="group">
               <input type="text" className="form-control" id="mySearch" placeholder="Search for a place..."/>
               <button className="btn btn-primary " style={{border: "#FFF", backgroundColor: "#59595B"}} onClick={this.sendSearch} type="button">Search</button>
             </div>
-            <br/>
-            <div className="filters">
+            <div className="filters my-2">
                 <Dropdown  isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                   <DropdownToggle caret style={{ border: "#FFF", backgroundColor: "#59595B"}}>
                     Filters
@@ -148,7 +147,6 @@ class Destinations extends Component {
                   </DropdownMenu>
                 </Dropdown>
             </div>
-            <br/>
             <SearchTable destinations={this.props.query} addToTrip={this.props.addToTrip}
             isInTrip={this.props.isInTrip} queryPlaces={this.props.queryPlaces}
             plan={this.props.plan} addAllToTrip={this.props.addAllToTrip}/>
